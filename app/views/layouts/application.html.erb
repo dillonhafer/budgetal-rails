@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />  
+    <title><%= content_for?(:title) ? yield(:title) : "Budget Worksheet" %></title>
+    
+    <!-- Included CSS Files -->
+    <%= stylesheet_link_tag    "application" %>
+    
+    <!-- Included JS Files  -->
+    <%= javascript_include_tag "application" %>
+    
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+      <% if flash[:notice] %>
+        <div class='alert-box success'><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:error] %>
+        <div class='alert-box error'><%= flash[:error] %></div>
+      <% end %>
+      
+      <nav class="top-bar">
+        <ul>
+          <!-- Title Area -->
+          <li class="name">
+            <h1>
+              <%= link_to "Budget Worksheet", root_path %>
+            </h1>
+          </li>        
+        </ul>
+
+        <section>
+          <!-- Left Nav Section -->
+          <ul class="right">
+            <li class="divider show-for-medium-and-up"></li>
+            <li>
+              <%= link_to "[link]", root_path %>
+            </li>
+          </ul>
+
+          <ul class="right">
+            <li class="divider show-for-medium-and-up"></li>
+            <li>
+              <%= link_to "[link]", root_path %>
+            </li>
+          </ul>
+        </section>
+      </nav>
+    
+  <div class="row">
+    <div class="twelve columns">
+      <%= yield %>
+    </div>
+  </div>
+  </body>
+</html>
