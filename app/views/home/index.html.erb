@@ -1,2 +1,26 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<style>
+  #month_links div a {background: #69F; color: white; border-radius: 20px; text-align: center; padding: 10% 17%;}
+  #month_links div a.two {padding: 10% 11%;}
+  #month_links div a:hover, #month_links div a.active {background: #333;}
+</style>
+
+<div class="row" id="month_links">
+  <% @budgets.each do |b| %>
+    <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), class: "#{'two' if b.month.to_i > 9} #{('active' if b.id == params[:budget_id])}" %></div>
+  <% end %>
+<div>
+
+<br />
+<hr />
+
+<% if @budget %>
+  
+  <h1><%= @date %></h1>
+  <%= number_to_currency @budget.monthly_income %>
+
+<% else %>
+
+  <h1>Home</h1>
+  <p>Get started by choosing a month above</p>
+
+<% end %>

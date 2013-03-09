@@ -1,3 +1,3 @@
 class Budget < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :month, :monthly_income
 end
