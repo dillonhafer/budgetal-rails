@@ -1,3 +1,4 @@
 var style = $(".meter").attr('style');
 $(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>").find('.meter').attr('style', style);
 $(".ajax-container.detail-cash-flow").html("<%= escape_javascript(render("cashflow")) %>");
+$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
