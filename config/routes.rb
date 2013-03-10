@@ -1,9 +1,15 @@
 Fpu::Application.routes.draw do
+
+
   resources :budgets
   resources :budget_categories
   resources :budget_items
   resources :budget_item_expenses
   resources :home, path: 'my-budgets'
+  
+  get '/contact' => 'welcome#contact', as: "contact"
+  get "/tos" => 'welcome#tos', as: "tos"
+  get "/about" => 'welcome#about', as: "about"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -53,7 +59,7 @@ Fpu::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
