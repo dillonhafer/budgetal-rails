@@ -12,7 +12,7 @@
 
   .bi-name {display: inline-block;width: 100%;padding: 0 0 15px;}
 
-  .expenses {background: white; padding: 15px 15px; border-bottom: 1px solid #CCC;margin-bottom: 16px !important; display: none;}
+  .ajax-container.hide {background: white; padding: 15px 15px; border-bottom: 1px solid #CCC;margin-bottom: 16px !important; display: none;}
   .expense-item {border-bottom: 1px dashed #CCC; padding: 15px 5px;}
 </style>
 
@@ -68,13 +68,19 @@ $(document).ready(function() {
   });
 
   $(".add-budget-link").live('click', function() {
-    $(this).parent().parent().parent().find('div.hide').fadeIn();
-    $(this).parent().parent().parent().find('div.hide').find('input[type="submit"]').fadeIn("fast");
-    $(this).parent().parent().parent().find('div.hide').find('a.cancel').fadeIn("fast");
+    $(this).parent().parent().parent().find('div.new-budget-item').fadeIn();
+    $(this).parent().parent().parent().find('div.new-budget-item').find('input[type="submit"]').fadeIn("fast");
+    $(this).parent().parent().parent().find('div.new-budget-item').find('a.cancel').fadeIn("fast");
+  });
+
+  $(".add-expense-link").live('click', function() {
+    $(this).parent().parent().parent().find('div.new-expense').fadeIn();
+    $(this).parent().parent().parent().find('div.new-expense').find('input[type="submit"]').fadeIn("fast");
+    $(this).parent().parent().parent().find('div.new-expense').find('a.cancel').fadeIn("fast");
   });
 
   $(".show-expenses").live('click', function() {
-    $(this).parent().parent().parent().next('.expenses').slideToggle("fast");
+    $(this).parent().parent().parent().next('.ajax-container.hide').slideToggle("fast");
   });
 
   $('input').live('focus', function() {

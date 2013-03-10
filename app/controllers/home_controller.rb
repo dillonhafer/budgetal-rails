@@ -13,7 +13,7 @@ class HomeController < ApplicationController
       
       @budget_remaining = @budget.monthly_income - amount_budgeted
       @percentage_used = (100 - (@budget_remaining / @budget.monthly_income * 100).to_i)
-      @percentage_used = @percentage_used > 100 ? 100 : @percentage_used
+      @percentage_used = @percentage_used > 100 ? 100 : @percentage_used      
     end
   end
 end

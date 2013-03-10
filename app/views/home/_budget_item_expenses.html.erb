@@ -1,0 +1,38 @@
+<% bi.budget_item_expenses.each do |bie| %>
+  <div class="row expense-item">
+    <div class="one columns"><%= bie.date.strftime("%m/%d") %></div>
+    <div class="five columns">
+      <%= bie.name %>
+    </div>
+    <div class="three columns">
+      <%= number_to_currency bie.amount %>
+    </div>
+    <div class="three columns">
+      <%= link_to 'x', budget_item_expense_path(bie), method: :delete, class: 'delete-bi', data: {remote: true, confirm: 'Are you sure?'} %>
+    </div>  
+  </div>
+<% end %>
+
+  <div class="row hide new-expense" style="padding-top: 15px;">
+    <%= form_for BudgetItemExpense.new, html: {data: {remote: true}} do |f| %>
+    <div class="two columns">
+      <%= f.text_field :date, id: "bi-#{bi.id}", placeholder: Date.today.strftime("%Y-%m-%d"), class: 'datepicker required' %>
+    </div>
+    <div class="four columns">
+      <%= f.hidden_field :budget_item_id, value: bi.id %>
+      <%= f.text_field :name, placeholder: 'Name', class: 'required' %>
+    </div>
+    <div class="three columns">
+      <%= f.text_field :amount, placeholder: "0.00", class: 'required' %>
+    </div>
+    <div class="three columns">                        
+      <%= f.submit "save", class: 'tiny success nice button radius' %>
+      <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius add-budget-expense-cancel' %>
+    </div>
+    <% end %>
+  </div>
+
+<div class="row">
+  <br />
+  <div class="large-10 large-offset-2 columns"><%= link_to "Add an expense", 'javascript:void(0)', class: 'add-expense-link small success button nice radius' %></div>
+</div>
