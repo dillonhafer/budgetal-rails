@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20130309203629) do
   create_table "budget_categories", :force => true do |t|
     t.integer  "budget_id"
     t.string   "name"
-    t.integer  "percentage"
+    t.string   "percentage"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

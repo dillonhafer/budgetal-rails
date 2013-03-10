@@ -106,13 +106,16 @@
 // $topBarBreakPoint: 940px; // Change to 9999px for always mobile layout
 // $topBarNavToggleSize: 8px;
 
-#month_links {margin-top: 20px;}
-#month_links div a {background: $mainColor; color: white; border-radius: 20px; text-align: center; width: 36px;display: block;height: 36px;padding: 12px;}
+#month_links {margin-top: 20px; text-align: center;}
+#month_links div a {background: $mainColor; color: white; border-radius: 20px; text-align: center; width: 36px;display: block;height: 36px;padding: 12px;margin: 0 auto;}
 #month_links div a.tfwo {padding: 10% 11%;}
 #month_links div a:hover, #month_links div a.active {background: #333;}
 #month_links div a {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}  
 #budget-remainder {text-align: center;}
 #greeting {min-height: 500px;}
+a.delete-bi {border: 1px solid #CCC;padding: 5px 8px;color: #AAA;background: #DDD;border-radius: 3px;box-shadow: 0 1px 3px #DDD;}
+a.delete-bi:hover {border: 1px solid #333;background: #333; color:white;box-shadow: 0 1px 3px #DDD;}
+a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
 
 @import 'foundation';
 

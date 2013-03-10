@@ -1,49 +1,80 @@
 <div class="row">
       <% @budget.budget_categories.order(:id).each do |c| %>
-        <div class="eight columns">
+        <div class="nine columns">
           <ul class="accordion">
             <li class="active">
               <div class="title">      
+                  <div class="six columns left">
                   <h5><%= c.name %> </h5>
+                  </div>
+                  <div class="three columns">
+                    Spent
+                  </div>
+                  <div class="three columns">
+                    Budgeted
+                  </div>
               </div>
               <div class="content">
+                <hr />
+                <% c.budget_items.order(:id).each do |bi| %>
                   <div class="row">
+                    <%= form_for bi, html: {data: {remote: true}} do |f| %>
                     <div class="six columns">
-                      
+                      <span class="bi-name"><%= bi.name %></span>
+                      <span class="bi-name-input hide"><%= f.text_field :name %></span>
                     </div>
                     <div class="three columns">
-                      Spent
+                      <%= number_to_currency bi.budget_item_expenses.sum :amount %>
                     </div>
                     <div class="three columns">
-                      Budgeted
-                    </div>
-                  </div>
-                  <% c.budget_items.order(:id).each do |bi| %>
-                    <div class="row">
-                      <div class="six columns">
-                        <%= bi.name %>
-                      </div>
-                      <div class="three columns">
-                        <%= number_to_currency bi.budget_item_expenses.sum :amount %>
-                      </div>
-                      <div class="three columns">
-                        <div class="row">
-                          <div class="two columns">
-                            $
-                          </div>
-                          <div class="ten columns">
-                            <%= form_for bi, html: {data: {remote: true}} do |f| %>
-                              <%= f.text_field :amount_budgeted %>
-                              <%= f.submit "save", class: 'tiny success nice button radius' %>
-                            <% end %>
-                          </div>
+                      <div class="row">
+                        <div class="eight columns">
+                            <span class="bi-name"><%= number_to_currency bi.amount_budgeted %></span>
+                            <span class="bi-name-input hide"><%= f.text_field :amount_budgeted, placeholder: "$0.00" %></span>
+                            <%= f.submit "save", class: 'tiny success nice button radius' %>
+                            <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius' %>
+                        </div>
+                        <div class="four columns">
+                          <%= link_to 'x', budget_item_path(bi), method: :delete, class: 'delete-bi', data: {remote: true, confirm: 'Are you sure? This will delete all expenses too!'} %>
                         </div>
                       </div>
                     </div>
-                  <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+                <div class="row hide">
+                <%= form_for BudgetItem.new, html: {data: {remote: true}} do |f| %>
+                  <div class="six columns">
+                    <%= f.hidden_field :budget_category_id, value: c.id %>
+                    <%= f.text_field :name, placeholder: 'Name' %>
+                  </div>
+                  <div class="three columns">
+                    $0.00
+                  </div>
+                  <div class="three columns">
+                    <div class="row">
+                      <div class="eight columns">
+                          <%= f.text_field :amount_budgeted, placeholder: "0.00" %>
+                          <%= f.submit "save", class: 'tiny success nice button radius' %>
+                          <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius add-budget-cancel' %>
+                      </div>                      
+                    </div>
+                  </div>
+                <% end %>
+                </div>
+                <div class="row">
+                  <div class="large-10 large-offset-2 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button nice radius' %></div>
+                </div>
               </div>
             </li>
           </ul>
         </div>
-      <% end %>
+        <div class="three columns">
+          <h5>Percentage used:</h5>
+          <%= (c.budget_items.sum(:amount_budgeted) / (c.budget.monthly_income) * 100).round %>%
+          
+          <h5>Ideal:</h5>
+          <%= c.percentage %>
+        </div>
+      <% end %>      
     </div>

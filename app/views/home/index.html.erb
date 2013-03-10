@@ -1,7 +1,16 @@
 <style>
-  
+  ul.accordion > li.active .title::after {border-color: #FAFAFA;}
+  ul.accordion > li.active .title, ul.accordion > li.active .content {background: #FAFAFA;}
+  ul.accordion > li.active .title:hover {cursor: default;}
+  ul.accordion {box-shadow: 0 3px 6px #EEE;}
+
+  input[type="submit"]{position: absolute;left: 100%;top: 4px;display: none;z-index: 999;}
+  a.cancel {position: absolute;left: 150%;top: 4px;display: none;z-index: 999;}  
+  .bi-name {display: inline-block;width: 100%;padding: 0 0 15px;}
 </style>
 <script>
+$(document).ready(function() {
+
   $('#month_links div a').live('click', function() {
     $('#month_links div a').removeClass('active');
     $(this).addClass('active');
@@ -21,11 +30,42 @@
     $(this).parent().submit();
   });
 
+  $('input[type="text"]').live('focus', function() {    
+    $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
+    $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
+  })
 
+  $('a.cancel').live('click', function() {    
+    $(this).prev('input[type="submit"]').fadeOut("fast");
+    $(this).fadeOut("fast");
+  })
+
+  $(".add-budget-cancel").live('click', function() {
+    $(this).parent().parent().parent().parent().parent().fadeOut();
+  });
+
+  $(".edit_budget_item div span.bi-name").live('hover', function() {
+    $(this).hide();
+    $(this).next('.bi-name-input').show();
+  })
+  $(".edit_budget_item").live('mouseleave', function() {
+    if ($(this).find('.bi-name-input').first().find('input').is(':focus') || $(this).find('.bi-name-input').last().find('input').is(':focus')) {
+    } else {
+      $(this).find('.bi-name').show();
+      $(this).find('.bi-name-input').hide();
+    }
+  });
+
+  $(".add-budget-link").live('click', function() {
+    $(this).parent().parent().parent().find('div.hide').fadeIn();
+    $(this).parent().parent().parent().find('div.hide').find('input[type="submit"]').fadeIn("fast");
+    $(this).parent().parent().parent().find('div.hide').find('a.cancel').fadeIn("fast");
+  });
+});
 </script>
 <div class="row small-block-grid-2 hide-for-small" id="month_links">
   <% @budgets.each do |b| %>
-    <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %></div>
+    <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.id %></div>
   <% end %>
 
 </div>
@@ -43,7 +83,7 @@
 
 <div id="greeting" class="animated ">
   <h2>Home</h2>
-  <p>Get started by choosing a month above</p>  
+  <p>Get started by choosing a month above</p>
 </div>
 
 <div id="month-view" class="animated ">

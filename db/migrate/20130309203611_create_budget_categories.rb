@@ -3,7 +3,7 @@ class CreateBudgetCategories < ActiveRecord::Migration
     create_table :budget_categories do |t|
       t.references :budget
       t.string :name
-      t.integer :percentage
+      t.string :percentage
       t.timestamps
     end
   end
