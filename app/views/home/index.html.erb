@@ -2,31 +2,32 @@
   #month_links div a {background: #69F; color: white; border-radius: 20px; text-align: center; padding: 10% 17%;}
   #month_links div a.two {padding: 10% 11%;}
   #month_links div a:hover, #month_links div a.active {background: #333;}
+  #month_links div a {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
 </style>
+<script>
+  $('#month_links div a').live('click', function() {
+    $('#month_links div a').removeClass('active');
+    $(this).addClass('active');
+    $('#greeting').fadeOut();
+    $('#month-view').addClass('fadeInUpBig');    
+  });
+</script>
 
-<div class="row" id="month_links">
+<div class="row small-block-grid-2" id="month_links">
   <% @budgets.each do |b| %>
-    <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), class: "#{'two' if b.month.to_i > 9} #{('active' if b.id == params[:budget_id])}" %></div>
+    <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %></div>
   <% end %>
-<div>
+</div>
 
 <br />
 <hr />
 
-<% if @budget %>
-  
-  <h1><%= @date %></h1>
-  <%= form_for @budget do |f| %>
-    <%= f.label :monthly_income, "$" %>
-    <%= f.text_field :monthly_income, style: 'width: 100px;display:block' %>
-  <% end %>
-
-  <% @budget.budget_categories.each do |c| %>
-    <%= c.name %>
-  <% end %>
-<% else %>
-
+<div id="greeting" class="animated ">
   <h1>Home</h1>
   <p>Get started by choosing a month above</p>
+</div>
 
-<% end %>
+<div id="month-view" class="animated ">
+  <div class="ajax-container overview"></div>
+  <div class="ajax-container detail-cash-flow"></div>
+</div>

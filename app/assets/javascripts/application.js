@@ -25,4 +25,13 @@ $(document).ready(function() {
   $(document).foundationAccordion();
   
   $("#loading").hide();  
+
+  /* Flash to headers */
+  $(document).ajaxComplete(function(event, request){
+    var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));    
+    if(!flash) return;
+    if(flash.notice) { console.log(flash.notice+'fil'); $(".error").remove(); $("#contentmain").before($('<div class="alert-box success" style="display: none;"></div>').html("dillon"+flash.notice)); $(".success").slideDown(400).delay(3000).slideUp(250); $.getScript(window.location); }
+    if(flash.errors) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box error" style="display: none;"></div>').html(flash.errors)); $(".error").slideDown(400); } 
+    $(".error").click(function() { $(this).slideUp(); });
+  });
 });

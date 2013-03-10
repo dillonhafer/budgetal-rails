@@ -1,0 +1,49 @@
+<div class="row">
+      <% @budget.budget_categories.order(:id).each do |c| %>
+        <div class="eight columns">
+          <ul class="accordion">
+            <li class="active">
+              <div class="title">      
+                  <h5><%= c.name %> </h5>
+              </div>
+              <div class="content">
+                  <div class="row">
+                    <div class="six columns">
+                      
+                    </div>
+                    <div class="three columns">
+                      Spent
+                    </div>
+                    <div class="three columns">
+                      Budgeted
+                    </div>
+                  </div>
+                  <% c.budget_items.order(:id).each do |bi| %>
+                    <div class="row">
+                      <div class="six columns">
+                        <%= bi.name %>
+                      </div>
+                      <div class="three columns">
+                        <%= number_to_currency bi.budget_item_expenses.sum :amount %>
+                      </div>
+                      <div class="three columns">
+                        <div class="row">
+                          <div class="two columns">
+                            $
+                          </div>
+                          <div class="ten columns">
+                            <%= form_for bi, html: {data: {remote: true}} do |f| %>
+                              <%= f.text_field :amount_budgeted %>
+                              <%= f.submit "save", class: 'tiny success nice button radius' %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+              </div>
+            </li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
