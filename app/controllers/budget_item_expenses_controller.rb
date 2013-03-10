@@ -15,6 +15,20 @@ class BudgetItemExpensesController < ApplicationController
     end
   end
 
+  def update
+    bi = BudgetItemExpense.find params[:id]
+    if bi.update_attributes params[:budget_item_expense]
+      respond_to do |format|
+        format.html { redirect_to root_path(budget_id: bi.budget_item.budget_category.budget.id), notice: 'Updated Budget Item Expense' }
+        format.json { flash[:notice] = "Updated Budget Item Expense"; }
+      end
+    else
+      respond_to do |format|
+        format.html { flash[:error] = "Something went wrong!"; redirect_to root_path(budget_id: bi.budget_item.budget_category.budget.id) }
+        format.json { flash[:error] = "Something went wrong!"; }
+      end
+    end
+  end
 
   def destroy
     bi = BudgetItemExpense.find params[:id]
