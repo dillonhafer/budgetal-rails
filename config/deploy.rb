@@ -1,25 +1,40 @@
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
+require 'bundler/capistrano'
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+set :application, "fpu"
 
-role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-role :app, "your app-server here"                          # This may be the same as your `Web` server
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-role :db,  "your slave db-server here"
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
 
-# if you want to clean up old releases on each deploy uncomment this:
-# after "deploy:restart", "deploy:cleanup"
+role :app, "50.116.23.78"
+role :web, "50.116.23.78"
+role :db, "50.116.23.78", :primary => true
 
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
+set :deploy_to, "/var/www/intense-money.com"
+set :deploy_via, :remote_cache
+set :use_sudo, false
 
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+set :scm, :git
+set :repository, "git@dev.dillonhafer.com:/var/git/intense-money.com.git"
+set :branch, "master"
+
+set :user, "fpu"
+
+after "deploy:update_code" do
+  #run "ln -s #{shared_path}/database.yml #{release_path}/config/database.yml"
+  #run "ln -s #{shared_path}/1001303134.pem #{release_path}/config/1001303134.pem"
+  #run "ln -s #{shared_path}/videos #{release_path}/public/videos"
+  run "cd #{release_path} ; RAILS_ENV=production bundle exec rake assets:precompile --trace"
+  # Fix group so cached javascripts and stylesheets can be generated
+  #run "chgrp FBCS #{release_path}/public/javascripts"
+  #run "chgrp FBCS #{release_path}/public/stylesheets"
+end
+
+namespace :deploy do
+  task :start, :roles => :app do
+    restart
+  end
+  
+  task :restart, :roles => :app do
+    run "touch #{File.join(current_path, "tmp", "restart.txt")}"
+  end
+end
