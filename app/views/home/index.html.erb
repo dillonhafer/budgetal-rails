@@ -1,30 +1,49 @@
 <style>
-  #month_links div a {background: #69F; color: white; border-radius: 20px; text-align: center; padding: 10% 17%;}
-  #month_links div a.two {padding: 10% 11%;}
-  #month_links div a:hover, #month_links div a.active {background: #333;}
-  #month_links div a {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
+  
 </style>
 <script>
   $('#month_links div a').live('click', function() {
     $('#month_links div a').removeClass('active');
     $(this).addClass('active');
     $('#greeting').fadeOut();
-    $('#month-view').addClass('fadeInUpBig');    
-  });
-</script>
+    /*
+    */    
+    if ($('#month-view').hasClass('fadeInUpBig') ) {
+      $('#month-view').removeClass('fadeInUpBig');
+      $('#month-view').addClass('fadeInUpBig2');
+    } else {
+      $('#month-view').removeClass('fadeInUpBig2');
+      $('#month-view').addClass('fadeInUpBig');  
+    }
+  });  
 
-<div class="row small-block-grid-2" id="month_links">
+  $('#budget-month').live('change', function() {
+    $(this).parent().submit();
+  });
+
+
+</script>
+<div class="row small-block-grid-2 hide-for-small" id="month_links">
   <% @budgets.each do |b| %>
     <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %></div>
   <% end %>
+
 </div>
 
-<br />
+<div class="row show-for-small">
+  <div class="twelve columns">
+    <br />
+    <%= form_tag root_path, remote: true do %>  
+      <%= select_tag :budget_id, options_for_select( @budgets.map {|b| [(Date.new( 1, b.id).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>    
+    <% end %>
+  </div>
+</div>
+
 <hr />
 
 <div id="greeting" class="animated ">
-  <h1>Home</h1>
-  <p>Get started by choosing a month above</p>
+  <h2>Home</h2>
+  <p>Get started by choosing a month above</p>  
 </div>
 
 <div id="month-view" class="animated ">

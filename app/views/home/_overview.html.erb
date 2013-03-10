@@ -1,10 +1,21 @@
-<h1><%= @date %></h1>
+<h4><%= @date %> 2013</h4>
 
 <%= form_for @budget, html: {data: {remote: true}} do |f| %>
-  <div class="row">
-    <div class="two columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= f.label :monthly_income, "Monthly Income: $" %></b></div>
-    <div class='ten columns'><%= f.text_field :monthly_income, style: 'width: 100px;display:block' %></div>
+<div class="row">
+  <div class="twelve columns">
+      <div class="two columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= f.label :monthly_income, "Monthly Income: $" %></b></div>
+      <div class='two columns'><%= f.text_field :monthly_income, style: 'width: 100px;display:block' %></div>
+      <div id="budget-remainder" class="eight columns">
+        <div class="progress"><span class="meter" style="width: 0%"></span></div>
+        <h5><%= number_to_currency @budget_remaining %> Remaining to budget</h5>
+        <script>        
+        $(".meter").animate(
+            {"width": "<%= @percentage_used %>%"},
+            "slow");
+        </script>        
+      </div>
   </div>
+</div>
+
 <% end %>
 
-<p><%= number_to_currency @budget_remaining %> Remaining to budget</p>
