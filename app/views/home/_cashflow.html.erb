@@ -7,11 +7,14 @@
                   <div class="six columns left">
                   <h5><%= c.name %> </h5>
                   </div>
-                  <div class="three columns">
+                  <div class="two columns">
                     Spent
                   </div>
-                  <div class="three columns">
+                  <div class="two columns">
                     Budgeted
+                  </div>
+                  <div class="two columns">
+                    Difference
                   </div>
               </div>
               <div class="content">
@@ -24,13 +27,13 @@
                       <span class="bi-name"><%= bi.name %></span>
                       <span class="bi-name-input hide"><%= f.text_field :name, class: 'required' %></span>
                     </div>
-                    <div class="three columns budget-spent-<%= bi.id %>">
+                    <div class="two columns budget-spent-<%= bi.id %>">
                       <%= number_to_currency bi.budget_item_expenses.sum :amount %>
                     </div>
-                    <div class="three columns">
+                    <div class="two columns">
                       <div class="row">
                         <div class="eight columns">
-                            <span class="bi-name"><%= number_to_currency bi.amount_budgeted %></span>
+                            <span class="bi-name blue"><%= number_to_currency bi.amount_budgeted %></span>
                             <span class="bi-name-input hide"><%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %></span>
                             <%= f.submit "save", class: 'tiny success nice button radius' %>
                             <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius' %>
@@ -40,6 +43,9 @@
                         </div>
                       </div>
                     </div>
+                    <div class="two columns budget-difference-<%= bi.id %>">
+                      <%= render partial: 'budget_difference', locals: {bi: bi} %>
+                    </div>
                     <% end %>
                   </div>
                   <div class="ajax-container expenses_<%= bi.id %> hide">
@@ -48,14 +54,15 @@
                 <% end %>
                 <div class="row hide new-budget-item">
                 <%= form_for BudgetItem.new, html: {data: {remote: true}} do |f| %>
-                  <div class="six columns">
+                  <div class="one columns"></div>
+                  <div class="five columns">
                     <%= f.hidden_field :budget_category_id, value: c.id %>
                     <%= f.text_field :name, placeholder: 'Name', class: 'required' %>
                   </div>
-                  <div class="three columns">
+                  <div class="two columns">
                     $0.00
                   </div>
-                  <div class="three columns">
+                  <div class="two columns">
                     <div class="row">
                       <div class="eight columns">
                           <%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %>
@@ -64,6 +71,7 @@
                       </div>                      
                     </div>
                   </div>
+                  <div class="two columns"></div>
                 <% end %>
                 </div>
                 <div class="row">

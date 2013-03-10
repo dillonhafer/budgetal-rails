@@ -5,7 +5,7 @@
   ul.accordion {box-shadow: 0 3px 6px #EEE;}
 
   input[type="submit"]{position: absolute;left: 100%;top: 4px;display: none;z-index: 999;}
-  a.cancel {position: absolute;left: 150%;top: 4px;display: none;z-index: 999;}  
+  a.cancel {position: absolute;left: 180%;top: 4px;display: none;z-index: 999;}  
 
   .new_budget_item_expense div input[type="submit"]{left:0;position: auto;top: 4px;display: none;z-index: 999;}
   .new_budget_item_expense div a.cancel {left:30%;position: auto;top: 4px;display: none;z-index: 999;}  
@@ -14,6 +14,10 @@
 
   .ajax-container.hide {background: white; padding: 15px 15px; border-bottom: 1px solid #CCC;margin-bottom: 16px !important; display: none;}
   .expense-item {border-bottom: 1px dashed #CCC; padding: 15px 5px;}
+
+  .blue {color: #69F;}
+  .red {color: red;}
+  .green {color: green;}
 </style>
 
 <script>
@@ -40,11 +44,13 @@ $(document).ready(function() {
   $('input[type="text"]').live('focus', function() {    
     $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
+    $(this).parent().parent().parent().find('a.delete-bi').fadeOut("fast");
   })
 
   $('a.cancel').live('click', function() {    
     $(this).prev('input[type="submit"]').fadeOut("fast");
     $(this).fadeOut("fast");
+    $(this).parent().parent().find('a.delete-bi').fadeIn("fast");
   })
 
   $(".add-budget-cancel").live('click', function() {

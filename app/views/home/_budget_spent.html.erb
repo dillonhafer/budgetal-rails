@@ -1,1 +1,7 @@
-<%= number_to_currency bi.budget_item_expenses.sum :amount %>
+<% if bi.budget_item_expenses.sum(:amount) > bi.amount_budgeted %>
+  <span class="red"><%= number_to_currency bi.budget_item_expenses.sum :amount %></span>
+<% elsif bi.budget_item_expenses.sum(:amount) < bi.amount_budgeted %>
+  <span class="green"><%= number_to_currency bi.budget_item_expenses.sum :amount %></span>
+<% else %>
+  <span class="blue"><%= number_to_currency bi.budget_item_expenses.sum :amount %></span>
+<% end %>
