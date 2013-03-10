@@ -77,7 +77,7 @@
                     </div>
                     <div class="row">
                       <br />
-                      <div class="large-10 large-offset-2 columns"><%= link_to "Add an expense", 'javascript:void(0)', class: 'add-budget-link small button nice radius' %></div>
+                      <div class="large-10 large-offset-2 columns"><%= link_to "Add an expense", 'javascript:void(0)', class: 'add-budget-link small success button nice radius' %></div>
                     </div>                  
                   </div>
                 <% end %>
@@ -113,7 +113,7 @@
           <%= (c.budget_items.sum(:amount_budgeted) / (c.budget.monthly_income) * 100).round %>%
           
           <h5>Ideal:</h5>
-          <%= c.percentage %>
+          <%= c.percentage %>          
         </div>
       <% end %>      
     </div>

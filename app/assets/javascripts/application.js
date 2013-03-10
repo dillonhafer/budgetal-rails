@@ -14,6 +14,7 @@
 //= require jquery.min
 //= require jquery_ujs
 //= require foundation
+//= require raphael-min
 //= require_tree .
 
 $(document).ready(function() {

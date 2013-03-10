@@ -74,7 +74,7 @@ $(document).ready(function() {
   });
 
   $(".show-expenses").live('click', function() {
-    $(this).parent().parent().parent().next('.expenses').slideToggle();
+    $(this).parent().parent().parent().next('.expenses').slideToggle("fast");
   });
 
   $('input').live('focus', function() {
