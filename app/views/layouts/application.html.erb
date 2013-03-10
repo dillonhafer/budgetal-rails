@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />  
-    <title><%= content_for?(:title) ? yield(:title) : "Budget Worksheet" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Intense-Money.com" %></title>
     
     <!-- Included CSS Files -->
     <%= stylesheet_link_tag    "application" %>
@@ -27,7 +27,7 @@
           <!-- Title Area -->
           <li class="name">
             <h1>
-              <%= link_to "Budget Worksheet", root_path %>
+              <%= link_to "Intense-Money.com", root_path, :title => "Intense-Money.com" %>
             </h1>
           </li>        
         </ul>
@@ -55,5 +55,94 @@
       <%= yield %>
     </div>
   </div>
+
+  <footer id="footermain" class="container">
+  <div class="row spacing top bottom hide-on-phones">
+    <div class="four columns">
+      <h5><%= link_to "Home", root_path, :title => "Home" %></h5>
+      <h5><%= link_to "About", root_path, :title => "About" %></h5>
+      <ul>
+        <li><%= link_to "Jack Schaap", root_path, :title => "Jack Schaap" %></li>
+        <li><%= link_to "About our Ministry", root_path, :title => "About our ministry" %></li>
+        <li><%= link_to "Partner with Us", root_path, :title => "Partner with us" %></li>
+      </ul>
+      <h5><%= link_to "TV & Radio Broadcast", root_path, :title => "TV & radio broadcast" %></h5>
+      <ul>
+        <li><%= link_to "This Week's Message", root_path, :title => "This week's message" %></li>
+        <li><%= link_to "Broadcast Listings", root_path, :title => "Broadcast listings" %></li>
+      </ul>
+    </div>
+    <div class="four columns">
+      <h5><%= link_to "Store", root_path, :title => "Store" %></h5>
+      <ul>
+        <li><%= link_to "Featured Items", root_path, :title => "Featured items" %></li>
+        <%#= link_to "Books", books_path, :title => "Books" %>
+        <%#= link_to "Messages", messages_path, :title => "Messages" %>
+        <li><%= link_to "Shopping Cart (#{3})", root_path, :title => "Shopping cart" %></li>
+      </ul>
+      <h5><%= link_to "Resources", root_path, :title => "Resources" %></h5>
+      <ul>
+        <li><%= link_to "Resources", root_path, :title => "Online Bible" %></li>
+        <li><%= link_to "Daily Bible Reading", root_path, :title => "Daily Bible reading" %></li>
+      </ul>
+      <h5>Subscribe</h5>
+      <div id="mc_embed_signup">
+        <%= form_tag "http://pulse18.us4.list-manage.com/subscribe/post?u=494ccab021d14005c68bcb36e&id=80c6d4c054", :method => "post", :id => "mc-embedded-subscribe-form", :name => "mc-embedded-subscribe-form", :class => "nice", :target => "_blank" do %>
+          <%= label_tag "mce-EMAIL", "Subscribe to our emails" %>
+          <%= email_field_tag :email, nil, :id => "mce-EMAIL", :name => "EMAIL", :placeholder => "email@domain.com", :class => "input-text full-width" %>
+          <%= submit_tag :subscribe, :id => "mc-embedded-subscribe", :name => "subscribe", :class => "button nice radius", :value => "Subscribe" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="four columns">
+      <h5><%= link_to "Give", root_path, :title => "Donate" %></h5>
+      <h5><%= link_to "Contact", root_path, :title => "Contact us" %></h5>
+      <ul>
+        <li>
+          <ul class="vcard">
+            <li>559 State Street<br />
+              Hammond, IN 46320</li>
+            <li class="tel"><a href="tel:855-785-7318">(855) PULSE-18</a></li>
+          </ul>
+        </li>
+      </ul>
+      <% if false %>
+      <h5><%= link_to "My Account", root_path, :title => "My account" %></h5>
+      <ul>
+        <li><%= link_to "Edit My Account", root_path, :title => "Edit my account" %></li>
+        <li><%= link_to "Sign Out", root_path, :title => "Sign out" %></li>
+      </ul>
+      <% end %>
+      <h5>Follow Us</h5>
+      <ul class="social">
+        <li><%= link_to image_tag("/assets/social/facebook-16px.png") + " Become a fan on Facebook", "https://www.facebook.com/pages/Pulse-18/170288019749708", :title => "Become a fan on Facebook" %></li>
+        <li><%= link_to image_tag("/assets/social/twitter-16px.png") + " Follow us on Twitter", "https://www.twitter.com/pulse_18", :title => "Follow us on Twitter" %></li>
+        <li><%= link_to image_tag("/assets/social/google-plus-16px.png") + " Find us on Google+", "https://plus.google.com/b/106610123304630750020/", :title => "Find us on Google+" %></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row spacing top bottom show-on-phones">
+    <dl>
+      <dd><%= link_to "About", root_path, :title => "About" %></dd>
+      <dd><%= link_to "Broadcast", root_path, :title => "TV & radio broadcast" %></dd>
+      <dd><%= link_to "Resources", root_path, :title => "Resources" %></dd>
+      <dd><%= link_to "Store", root_path, :title => "Store" %></dd>
+      <dd><%= link_to "Give", root_path, :title => "Give" %></dd>
+      <dd><%= link_to "Contact", root_path, :title => "Contact us" %></dd>
+      <% if false %>
+      <dd><%= link_to "My Account", root_path, :title => "My account" %>
+      <dd><%= link_to "Sign Out", root_path, :title => "Sign out" %></dd>
+      <% else %>
+      <dd><%= link_to "Sign In", root_path, :title => "Sign in" %></dd>
+      <% end %>
+    </dl>
+  </div>
+  <div class="row">
+    <div class="twelve columns centered">
+      <p id="copyright">Copyright &copy; <%= Date.today.year %> Pulse 18 Communications. All Rights Reserved. <%= link_to "Contact", root_path, :title => "Contact us" %> | <%= link_to "Terms of Service", root_path, :title => "Terms of service" %>.</p>
+    </div>
+  </div>
+<iframe id="dl"></iframe>
+</footer><!--#footermain-->
   </body>
 </html>

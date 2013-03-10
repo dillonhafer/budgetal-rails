@@ -3,7 +3,7 @@ Fpu::Application.routes.draw do
   resources :budget_categories
   resources :budget_items
   resources :budget_item_expenses
-
+  resources :home, path: 'my-budgets'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
