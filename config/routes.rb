@@ -6,6 +6,7 @@ Fpu::Application.routes.draw do
   resources :budget_items
   resources :budget_item_expenses
   resources :home, path: 'my-budgets'
+  match '/my-budgets' => 'home#index', as: 'my_budgets'
   
   get '/contact' => 'welcome#contact', as: "contact"
   get "/tos" => 'welcome#tos', as: "tos"

@@ -125,7 +125,7 @@ a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: backgrou
   }
   ul {line-height: 130%; margin-bottom: 15px;
     li, li a {color: #888}
-    li {margin-bottom: 5px; 
+    li {margin-bottom: 5px; list-style-type:none;
       a:hover {color: #444;}
       a > img {position: relative; margin-right: 3px; top: 2px;}
     }

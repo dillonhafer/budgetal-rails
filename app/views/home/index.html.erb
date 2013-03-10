@@ -96,7 +96,7 @@ $(document).ready(function() {
 </script>
 <div class="row small-block-grid-2 hide-for-small" id="month_links">
   <% @budgets.each do |b| %>
-    <div class="one column"><%= link_to b.month, root_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.id %></div>
+    <div class="one column"><%= link_to b.month, my_budgets_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.id %></div>
   <% end %>
 
 </div>
@@ -104,7 +104,7 @@ $(document).ready(function() {
 <div class="row show-for-small">
   <div class="twelve columns">
     <br />
-    <%= form_tag root_path, remote: true do %>  
+    <%= form_tag my_budgets_path, remote: true do %>  
       <%= select_tag :budget_id, options_for_select( @budgets.map {|b| [(Date.new( 1, b.id).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>    
     <% end %>
   </div>
