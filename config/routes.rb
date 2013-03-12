@@ -5,7 +5,7 @@ Fpu::Application.routes.draw do
   resources :budget_item_expenses
   resources :home, path: 'my-budgets'
   resources :sessions
-  resources :users
+  resources :users, path: 'sign-up'
 
   match 'sign-up' => 'users#new', as: 'sign_up'
   match '/my-budgets' => 'home#index', as: 'my_budgets'
