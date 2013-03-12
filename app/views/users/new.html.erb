@@ -1,0 +1,22 @@
+<h4>Add a new user</h4>
+<hr />
+<%= form_for @user, :html => {:class => "nice"} do |f| %>
+<%= field_set_tag do %>
+<%= f.error_messages %>
+<%= f.label :email, "Username" %>
+<%= f.text_field :email, :placeholder => "Username", :class => "input-text" %>
+
+<%= f.label :password %>
+<%= f.password_field :password, :placeholder => "••••••", :class => "input-text" %>
+
+<%= f.label :password_confirmation %>
+<%= f.password_field :password_confirmation, :placeholder => "••••••", :class => "input-text" %>
+
+<%= f.label :admin do %>  
+  <%= f.check_box :admin %>Make user an admin?
+<% end %>
+
+<%= f.submit "Create User", :class => "yellow button nice radius" %>
+<br /><br />
+<% end %>
+<% end %>

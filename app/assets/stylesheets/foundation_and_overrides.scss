@@ -1,5 +1,5 @@
 @import "foundation/common/ratios";
-@import url(http://fonts.googleapis.com/css?family=Tenor+Sans);
+@import url(https://fonts.googleapis.com/css?family=Tenor+Sans);
 
 // Settings file containing Foundation defaults
 
@@ -118,13 +118,13 @@ a.delete-bi:hover {border: 1px solid #333;background: #333; color:white;box-shad
 a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
 
 /* #footermain */
-#footermain {margin-top: 20px;
+#footermain {margin-top: 0px; background: #222; border-top: 2px solid $mainColor; padding-top: 10px;
   h5 { font-size: 16px; color: $mainColor; margin-bottom: 10px;
     a {padding: 3px 10px 5px; position: relative; top: -3px; left: -10px;}
     a:hover {background-color: #f4f4f4;}
   }
   ul {line-height: 130%; margin-bottom: 15px;
-    li, li a {color: #888}
+    li, li a {color: #999}
     li {margin-bottom: 5px; list-style-type:none;
       a:hover {color: #444;}
       a > img {position: relative; margin-right: 3px; top: 2px;}
@@ -134,11 +134,11 @@ a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: backgrou
   .twelve.columns.centered { font-size: 11px; color: #888; text-align: center;}
   .vcard {border: 0; padding: 0; margin: 0;}
   
-  & .show-on-phones { font-size: 12px; text-align: center; margin-bottom: 15px;
+  & .show-for-small { font-size: 12px; text-align: center; margin-bottom: 15px; margin-top: 15px;
     dd {display: inline-block; margin-right: 10px;
       &:last-child {margin-right: 0;}
-      a {color: #222;
-        &:hover, &:focus {color: $mainColor;}
+      a {color: $mainColor;
+        &:hover, &:focus {color: #999;}
       }
     }
   }

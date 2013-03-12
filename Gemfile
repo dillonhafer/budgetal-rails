@@ -18,9 +18,11 @@ group :assets do
   gem 'uglifier'
   gem 'compass-rails'
   gem 'zurb-foundation', '~> 3.1.1'
+  gem 'foundation-icons-sass-rails'
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'animate-rails'
 
 # To use ActiveModel has_secure_password

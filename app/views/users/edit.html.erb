@@ -1,0 +1,25 @@
+<h4>Edit User</h4>
+<hr />
+<%= form_for @user, :html => {:class => "nice"} do |f| %>
+  <%= f.error_messages %>
+  <%= field_set_tag do %>
+  <h4>User: <%= @user.email %></h4>
+
+  <%= f.label :email, "Username" %>
+  <%= f.text_field :email, :class => "input-text" %>
+
+  <span class='label radius'>Leave password fields blank if you don't want to change the password</span>
+  <%= f.label :password %>
+  <%= f.password_field :password, :class => "input-text" %>
+
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, :class => "input-text" %>
+
+  <%= f.label :admin do %>
+    <%= f.check_box :admin %>Admin?
+  <% end %>
+
+  <%= f.submit "Update User", :class => "yellow button nice radius" %>
+  <br /><br />
+  <% end %>
+<% end %>
