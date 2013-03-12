@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :budgets
   attr_accessible :email, :password, :password_confirmation
   attr_accessor :password
   
@@ -8,7 +9,10 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates :password, :length => {:minimum => 6}, :on => :create
 
+  EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   validates :email, :presence => true, :uniqueness => true
+  validates :email, :presence => true, :format => {:with => EMAIL_REGEX}
+
 
   def self.authenticate(email, password)
     user = find_by_email(email)

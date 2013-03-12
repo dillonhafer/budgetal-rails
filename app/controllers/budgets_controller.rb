@@ -1,6 +1,5 @@
 class BudgetsController < ApplicationController
-  def new
-  end
+  before_filter :confirm_correct_user
 
   def update
     @budget = Budget.find params[:id]
@@ -12,6 +11,7 @@ class BudgetsController < ApplicationController
     end
   end
 
-  def show
+  def confirm_correct_user    
+    redirect_to logout_path if Budget.find(params[:id]).user_id != current_user.id
   end
 end
