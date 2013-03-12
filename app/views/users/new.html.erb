@@ -1,22 +1,86 @@
-<h4>Add a new user</h4>
-<hr />
-<%= form_for @user, :html => {:class => "nice"} do |f| %>
-<%= field_set_tag do %>
-<%= f.error_messages %>
-<%= f.label :email, "Username" %>
-<%= f.text_field :email, :placeholder => "Username", :class => "input-text" %>
+      <h3>Register</h3>
+      <h5 class="subheader">Sign up for your own account.</h5>
+      <hr />
+      <div class="panel plain">
+        <%= form_for @user, :html => {:id => "register", :class => "nice"} do |f| -%>
+          <div class="already-a-member">
+            Already a member? <%= link_to "Sign in", "#", data: {reveal_id: "signInUp"}, :title => "Sign in to your account" %>
+          </div> 
+          <%= f.error_messages %>
+        
+          
+            <%= field_set_tag do %>
+              <%= f.label :email %>
+              <%= f.text_field :email, :class => "input-text required" %>
 
-<%= f.label :password %>
-<%= f.password_field :password, :placeholder => "••••••", :class => "input-text" %>
+              <%= f.label :password %>
+              <%= f.password_field :password, :class => "input-text required" %>
 
-<%= f.label :password_confirmation %>
-<%= f.password_field :password_confirmation, :placeholder => "••••••", :class => "input-text" %>
+              <%= f.label :password_confirmation %>
+              <%= f.password_field :password_confirmation, :class => "input-text required" %>
 
-<%= f.label :admin do %>  
-  <%= f.check_box :admin %>Make user an admin?
-<% end %>
+            <br /><br />
+            <% end %>          
 
-<%= f.submit "Create User", :class => "yellow button nice radius" %>
-<br /><br />
-<% end %>
-<% end %>
+          <div class="scrollpane_container">
+            <div class="scrollpane">
+              <p>By clicking the button, &quot;Sign me up,&quot; you agree to the terms below:</p><hr />
+              <p>Welcome to the web site of the Intense-Money.com (the &quot;Operator,&quot; &quot;we&quot; or &quot;us&quot;), www.intense-money.com (the &quot;Site&quot;). The Operator is the sole owner of the Site. These Terms of Service (&quot;Terms&quot;) govern your access to and use of the services and the Site. By accessing and using the Site, you agree to be bound by these Terms. We reserve the right to amend, modify, change, or alter these Terms at any time. Please check our Terms periodically for changes. Your continued use of the Site after we publish changes signifies your acceptance of our current Terms.</p>
+              <h3>Our Intellectual Property Rights</h3>
+              <p>All materials displayed on the Site, including but not limited to audio, video, images, and text (the &quot;Content&quot;), are either owned by or licensed to us. No Content from the Site may be reproduced, republished, redistributed, transmitted, posted, uploaded, copied, publicly displayed, sold, or otherwise used except as provided in these Terms without the express written consent of the Operator.</p>
+              <p>We maintain the Site for your personal use. You may freely browse the Site. You may download a personal copy of materials displayed on the Site to any single computer for your personal, noncommercial use. You must keep intact all copyright, trademark and other notices contained in your personal copies. You may not reproduce, republish, redistribute, transmit, post, upload, copy, publicly display, sell, or use any materials displayed on the Site for public or commercial use on any other Web site or otherwise without the express written consent of the Operator. Modifications or alterations of any materials displayed on the Site is a violation of the Operator's copyright and other proprietary rights.</p>
+              <h3>Links</h3>
+              <p>The Site may provide links to external web sites not operated or owned by the Operator. Access to any other sites linked to the Site is at your own risk. We assume no responsibility for the content of or services offered by linked third-party web sites. Allegations and claims made on third-party web sites to or from the Site reflect only the views of their authors and not the Operator.</p>
+              <p>Unless otherwise set forth in an express written agreement with you and the Operator, you may link your web site to the home page of the Site.</p>
+              <h3>Termination of Service</h3>
+              <p>The Operator may change, suspend, discontinue, or terminate your access to parts of the Site or the entire Site without notice or liability at any time in the Operator's exclusive discretion, without prejudice to any legal or equitable remedies available to the Operator, for any reason or purpose, including, but not limited to, conduct that the Operator believes violates these Terms of Use or other policies or guidelines posted on the Site or conduct which the Operator believes is harmful to the Operator's business or to other information providers. Upon any termination of this agreement, you shall immediately discontinue your use and access of the Site and destroy all materials and Content obtained from it.</p>
+              <h3>Choice of Law</h3>
+              <p>These Terms and any disputes relevant to these Terms or the Site will be goverened by the laws of the State of Illinois in the United States of America, without regard to its principles of conflicts of laws. Any claim relating to these Terms or the Site shall be exclusively prosecuted in a federal or state court of competent jurisdiction of our choosing and you hereby consent to the jurisdiction of such court solely for such purposes and you further waive any argument that any such court does not have jurisdiction over such dispute or that venue in any such court is not appropriate or convenient. You will further agree to accept service of process by certified mail, return receipt requested at the address designated by you. The Operator will be entitled to recover court costs and reasonable attorneys' fees and expenses incurred in successfully proving any breach of these Terms.</p>
+              <h3>Disclaimer</h3>
+              <p>The Operator makes no warranties or representations as to the accuracy of the information in the Site. The Operator assumes no liability or responsibility for any errors or omissions in the content of the Site. If you choose to access and browse the Site, you do so on your own initiative and risk and are responsible for compliance with all applicable laws in all countries, states, provinces, country or any other jurisdictions.</p>
+              <p>THE CONTENT AND MATERIALS IN THE SITE ARE PROVIDED &quot;AS IS&quot; AND WITHOUT WARRANTIES OF ANY KIND EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMISSIBLE PURSUANT TO APPLICABLE LAW, THE OPERATOR PARTIES DISCLAIM WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF ACCURACY, MERCHANTABILITY, AND FITNESS FOR A PARTICULAR PURPOSE. THE OPERATOR PARTIES DO NOT WARRANT OR REPRESENT THAT THE INFORMATION CONTAINED IN THE SITE IS ACCURATE, COMPLETE, CORRECTLY SEQUENCED, RELIABLE, OR TIMELY, OR THAT THE SITE WILL BE UNINTERRUPTED OF FREE OF ERRORS AND/OR VIRUSES. YOU SPECIFICALLY ACKNOWLEDGE THAT THE OPERATOR PARTIES ARE NOT LIABLE FOR THE DEFAMATORY, OFFENSIVE, OR ILLEGAL CONDUCT OF OTHER USERS OF THE SITE OR THIRD PARTIES AND THAT THE RISK OF INJURY FROM THE FOREGOING RESTS ENTIRELY WITH YOU. YOU USE THIS SITE AT YOUR SOLE RISK.</p>
+              <p>UNDER NO CIRCUMSTANCES, INCLUDING BUT NOT LIMITED TO BREACH OF CONTRACT, TORT OR NEGLIGENCE, WILL THE OPERATOR PARTIES BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, PUNITIVE, OR CONSEQUENTIAL DAMAGES THAT ARISE OUT OF OR IN CONNECTION WITH ANY FAILURE OF PERFORMANCE, ERRORS, INACCURACIES, OMISSIONS, DEFECTS, UNTIMELINESS, INTERRUPTIONS, DELETION, DELAY IN OPERATION OR TRANSMISSION, COMPUTER VIRUS, COMMUNICATION LINE FAILURE, THEFT OR DESTRUCTION OR UNAUTHORIZED ACCESS TO, ALTERATION OF, OR USE OF RECORD, OR UNAUTHENTICITY OF ANY OPERATOR PARTIES' AGGREGATE LIABILITY TO YOU FOR ANY LOSS, DAMAGE, OR CLAIM RELATED TO OR ARISING OUT OF THIS SITE EXCEED THE TOTAL AMOUNTS PAID BY YOU FOR ACCESSING THIS SITE, IF ANY.</p>
+              <h3>Notice of Copyright Infringement</h3>
+              <p>If you believe in good faith that your copyrighted work has been reproduced on or linked from the Site without authorization in a way that constitutes copyright infringement, please provide us with the following information:</p>
+              <ol>
+                <li>identification of the copyrighted work claimed to have been infrlinged;</li>
+                <li>identification of the allegedly infringing material on the Site that is requested to be removed;</li>
+                <li>your name, address, and daytime telephone number, and an e-mail address if available, so that we may contact you if necessary;</li>
+                <li>a statement that you have a good-faith belief that the use of the copyrighted work is not authorized by the copyright owner, its agent, or the law;</li>
+                <li>a statement that the information in the notification is accurate, and under penalty of perjury, that the signatory is authorized to act on behalf of the owner of an exclusive copyright right that is allegedly infringed; and</li>
+                <li>an electronic or physical signature of the copyright owner or someone authorized on the owner's behalf to assert infringement of copyright and to submit the statement.</li>
+              </ol>
+              <p>The copyright agent for notice of claims of infringement on the Site is:</p>
+              <p>DMCA Agent<br />
+                Intense-Money.com<br />
+                1839 Randolf, Chicago, IL 60803<br />
+                Phone: (855) 555-1234
+                Email: <%= mail_to "copyright@intense-money.com" %></p>
+              </div>
+          </div>
+          <%= f.submit "Sign me up", :class => "blue button success nice radius" %>
+        <% end -%>
+      </div>
+
+      <div id="signInUp" class="reveal-modal medium">
+  <h2>Welcome back!</h2>
+  <p class="lead">Sign in below.</p>
+  <div class='row'>
+    <div class='twelve columns'>
+      <hr />
+      <%= form_tag sessions_path, :class => "nice" do %>
+        <%= field_set_tag do %>
+          <%= label_tag "Email" %>
+          <%= text_field_tag :email, params[:email], :class => "input-text required" %>
+
+          <%= label_tag :password %>
+          <%= password_field_tag :password, nil, :class => "input-text required" %>
+
+        <%= submit_tag "Log in", :class => "blue button nice radius" %>
+        <br /><br />
+        <% end %>
+      <% end %>
+    </div>      
+  </div>  
+  <a class="close-reveal-modal">&#215;</a>
+</div>

@@ -1,16 +1,23 @@
 Fpu::Application.routes.draw do
-
-
   resources :budgets
   resources :budget_categories
   resources :budget_items
   resources :budget_item_expenses
   resources :home, path: 'my-budgets'
+  resources :sessions
+  resources :users
+
+  match 'sign-up' => 'users#new', as: 'sign_up'
   match '/my-budgets' => 'home#index', as: 'my_budgets'
   
   get '/contact' => 'welcome#contact', as: "contact"
   get "/tos" => 'welcome#tos', as: "tos"
   get "/about" => 'welcome#about', as: "about"
+
+  get 'sign-out' => 'sessions#destroy', :as => 'logout'
+  get 'sign-in' => 'sessions#create', :as => 'login'
+  get 'my-account' => 'users#my_account', :as => 'my_account'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

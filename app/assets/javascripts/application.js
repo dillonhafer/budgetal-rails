@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery.min
+//= require jquery.validate
 //= require jquery_ujs
 //= require foundation
 //= require jquery.ui.all

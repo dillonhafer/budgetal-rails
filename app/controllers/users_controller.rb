@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :require_admin, except: %w{my_account create}
+  before_filter :require_admin, except: %w{my_account new create}
   before_filter :require_user, only: %w{my_account}
 
   def index
@@ -11,15 +11,14 @@ class UsersController < ApplicationController
   end
 
   def my_account
-    @bw_file = BwFile.new
-    @sent_files = BwFile.where user_id: current_user.id
+    
   end
 
   def create
     @user = User.new params[:user]
     if @user.save
       session[:user_id] = @user.id
-      redirect_to my_account_path, :notice => "Welcome to BW Send!"
+      redirect_to my_budgets_path, :notice => "Welcome to Intense-Money!"
     else
       render 'new'
     end

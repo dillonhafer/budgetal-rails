@@ -1,6 +1,47 @@
 @import "foundation/common/ratios";
 @import url(https://fonts.googleapis.com/css?family=Tenor+Sans);
 
+
+
+@mixin font-size($size,$i: "") {
+  font-size: #{$size}px#{$i}; font-size: #{($size/10)}rem#{$i};
+}
+@mixin round {border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px}
+@mixin round-custom($radius) {border-radius: $radius; -moz-border-radius: $radius; -webkit-border-radius: $radius;}
+@mixin round-top-left($radius) {border-top-left-radius: $radius; -moz-border-radius-topleft: $radius; -webkit-border-top-left-radius: $radius;}
+@mixin round-top-right($radius) {border-top-right-radius: $radius; -moz-border-radius-topright: $radius; -webkit-border-top-right-radius: $radius;}
+@mixin round-bottom-left($radius) {border-bottom-left-radius: $radius; -moz-border-radius-bottomleft: $radius; -webkit-border-bottom-left-radius: $radius;}
+@mixin round-bottom-right($radius) {border-bottom-right-radius: $radius; -moz-border-radius-bottomright: $radius; -webkit-border-bottom-right-radius: $radius;}
+
+
+/* .error */
+.error {background: #f4f4f4 url(/assets/layout/bg.gif);
+  #contentmain {background: none;}
+  h3 {
+    @media (max-width: 767px) {img {max-height: 75px;}}
+  }
+  h2 {letter-spacing: -1px;
+    @media (max-width: 767px) {@include font-size(25);}
+  }
+  .error-links {color: #999; margin: 40px 0;
+    a {margin: 0 7px;
+      &:first-child {margin-left: 0;}
+      &:last-child {margin-right: 0;}
+    }
+  }
+  
+  &:hover { cursor: pointer; }
+}
+
+/* .errorExplanation */
+.errorExplanation {@include font-size(13); font-weight: normal!important; color: #fefefe; text-shadow: 0 1px rgba(0,0,0,0.3); background-color: #c00000; border: 1px solid rgba(0,0,0,0.1); padding: 6px 7px; margin-bottom: 12px; display: block;
+  h2 {@include font-size(12,!important); letter-spacing: normal!important; color: #fefefe;}
+  ul {margin-left: 10px;
+    li {margin-bottom: 0;}
+  }
+  p, ul {margin-bottom: 5px;}
+}
+
 // Settings file containing Foundation defaults
 
 // Grid Settings
@@ -121,7 +162,7 @@ a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: backgrou
 #footermain {margin-top: 0px; background: #222; border-top: 2px solid $mainColor; padding-top: 10px;
   h5 { font-size: 16px; color: $mainColor; margin-bottom: 10px;
     a {padding: 3px 10px 5px; position: relative; top: -3px; left: -10px;}
-    a:hover {background-color: #f4f4f4;}
+    a:hover {background-color: #f4f4f4;border-radius: 8px;}
   }
   ul {line-height: 130%; margin-bottom: 15px;
     li, li a {color: #999}
@@ -141,6 +182,24 @@ a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: backgrou
         &:hover, &:focus {color: #999;}
       }
     }
+  }
+}
+
+/* --------------------------------------------------
+:: Plugins
+-------------------------------------------------- */
+/* .scrollpane */
+.scrollpane_container {background: #f0f0f0; padding: 7px; margin-bottom: 10px; @include round}
+.scrollpane {height: 200px; text-shadow: 0 1px #fefefe; display: block; overflow: auto; outline: none;
+  p, ul, li {@include font-size(12); color: #666}
+  p {line-height: 130%!important;
+    &:first-child, &:last-child {margin-bottom: 0;}
+  }
+  li {margin-bottom: 7px;}
+  h3 {@include font-size(15)}
+  hr {margin: 10px 0;}
+  @media (max-width: 767px) {
+    p {@include font-size(14,!important)}
   }
 }
 

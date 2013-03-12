@@ -10,7 +10,12 @@
     
     <!-- Included JS Files  -->
     <%= javascript_include_tag "application" %>
-    
+    <script>
+      $(document).ready(function(){
+        $('#new_user').validate();
+        $('form.nice').validate();
+      });
+    </script>
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -33,19 +38,38 @@
 
         <section>
           <!-- Left Nav Section -->
+          <% if current_user %>
           <ul class="right">
             <li class="divider show-for-medium-and-up"></li>
             <li>
-              <%= link_to "[help]", root_path %>
+                <%= link_to "Sign Out", logout_path %>
             </li>
           </ul>
 
           <ul class="right">
             <li class="divider show-for-medium-and-up"></li>
             <li>
-              <%= link_to "[my account]", root_path %>
+              <%= link_to "My Account [#{current_user.email}]", my_account_path %>
             </li>
           </ul>
+
+          <ul class="right">
+            <li class="divider show-for-medium-and-up"></li>
+            <li>
+                <%= link_to "Budgets", my_budgets_path %>
+            </li>
+          </ul>
+
+          <% else %>
+
+          <ul class="right">
+            <li class="divider show-for-medium-and-up"></li>
+            <li>
+                <%= link_to "Sign In", "#", data: {reveal_id: "signInUp"} %>
+            </li>
+          </ul>
+
+          <% end %>
         </section>
       </nav>
     

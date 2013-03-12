@@ -1,0 +1,42 @@
+ <div id="signInUp" class="reveal-modal large">
+  <h2>Welcome to financial peace!</h2>
+  <p class="lead">Sign in or create an account.</p>
+  <div class='row'>
+    <div class='six columns'>
+      <h4>Sign in</h4>
+      <hr />
+      <%= form_tag sessions_path, :class => "nice" do %>
+        <%= field_set_tag do %>
+          <%= label_tag "Email" %>
+          <%= text_field_tag :email, params[:email], :class => "input-text required" %>
+
+          <%= label_tag :password %>
+          <%= password_field_tag :password, nil, :class => "input-text required" %>
+
+        <%= submit_tag "Sign in", :class => "blue button nice radius" %>
+        <br /><br />
+        <% end %>
+      <% end %>
+    </div>  
+    <div class='six columns'>
+      <h4>Sign up</h4>
+      <hr />
+      <%= form_for @user, :class => "nice" do |f| %>
+        <%= field_set_tag do %>
+          <%= f.label :email %>
+          <%= f.text_field :email, :class => "input-text required" %>
+
+          <%= f.label :password %>
+          <%= f.password_field :password, :class => "input-text required" %>
+
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, :class => "input-text required" %>
+
+        <%= f.submit "Sign me up", :class => "blue button success nice radius" %>
+        <br /><br />
+        <% end %>
+      <% end %>
+    </div>  
+  </div>  
+  <a class="close-reveal-modal">&#215;</a>
+</div>
