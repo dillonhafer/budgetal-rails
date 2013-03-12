@@ -5,10 +5,10 @@
   ul.accordion {box-shadow: 0 3px 6px #EEE;}
 
   input[type="submit"]{position: absolute;left: 100%;top: 4px;display: none;z-index: 999;}
-  a.cancel {position: absolute;left: 180%;top: 4px;display: none;z-index: 999;}  
+  a.cancel {position: absolute;left: 180%;top: 4px;display: none;z-index: 999;}
 
   .new_budget_item_expense div input[type="submit"]{left:0;position: auto;top: 4px;display: none;z-index: 999;}
-  .new_budget_item_expense div a.cancel {left:30%;position: auto;top: 4px;display: none;z-index: 999;}  
+  .new_budget_item_expense div a.cancel {left:30%;position: auto;top: 4px;display: none;z-index: 999;}
 
   .bi-name {display: inline-block;width: 100%;padding: 0 0 15px;}
 
@@ -21,33 +21,33 @@
 </style>
 
 <script>
-$(document).ready(function() {  
+$(document).ready(function() {
   $('#month_links div a').live('click', function() {
     $('#month_links div a').removeClass('active');
     $(this).addClass('active');
     $('#greeting').fadeOut();
     /*
-    */    
+    */
     if ($('#month-view').hasClass('fadeInUpBig') ) {
       $('#month-view').removeClass('fadeInUpBig');
       $('#month-view').addClass('fadeInUpBig2');
     } else {
       $('#month-view').removeClass('fadeInUpBig2');
-      $('#month-view').addClass('fadeInUpBig');  
+      $('#month-view').addClass('fadeInUpBig');
     }
-  });  
+  });
 
   $('#budget-month').live('change', function() {
     $(this).parent().submit();
   });
 
-  $('input[type="text"]').live('focus', function() {    
+  $('input[type="text"]').live('focus', function() {
     $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
     $(this).parent().parent().parent().find('a.delete-bi').fadeOut("fast");
   })
 
-  $('a.cancel').live('click', function() {    
+  $('a.cancel').live('click', function() {
     $(this).prev('input[type="submit"]').fadeOut("fast");
     $(this).fadeOut("fast");
     $(this).parent().parent().find('a.delete-bi').fadeIn("fast");
@@ -64,7 +64,11 @@ $(document).ready(function() {
   $(".edit_budget_item div span.bi-name").live('hover', function() {
     $(this).hide();
     $(this).next('.bi-name-input').show();
-  })
+  });
+  $(".edit_budget_item div span.bi-name").live("touchstart", function() {
+    $(this).hide();
+    $(this).next('.bi-name-input').show();
+  });
   $(".edit_budget_item").live('mouseleave', function() {
     if ($(this).find('.bi-name-input').first().find('input').is(':focus') || $(this).find('.bi-name-input').last().find('input').is(':focus')) {
     } else {
@@ -104,8 +108,8 @@ $(document).ready(function() {
 <div class="row show-for-small">
   <div class="twelve columns">
     <br />
-    <%= form_tag my_budgets_path, remote: true do %>  
-      <%= select_tag :budget_id, options_for_select( @budgets.map {|b| [(Date.new( 1, b.id).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>    
+    <%= form_tag my_budgets_path, remote: true do %>
+      <%= select_tag :budget_id, options_for_select( @budgets.map {|b| [(Date.new( 1, b.id).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>
     <% end %>
   </div>
 </div>

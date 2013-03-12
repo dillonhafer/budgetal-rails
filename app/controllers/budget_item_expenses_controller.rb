@@ -1,6 +1,6 @@
 class BudgetItemExpensesController < ApplicationController
   before_filter :confirm_correct_user, only: %w{ update destroy }
-  before_filter :confirm_correct_create, only: %w{ create }
+  #before_filter :confirm_correct_create, only: %w{ create }
 
   def create
     @bi = BudgetItemExpense.new params[:budget_item_expense]
@@ -44,11 +44,11 @@ class BudgetItemExpensesController < ApplicationController
     end
   end
 
-  def confirm_correct_user    
+  def confirm_correct_user
     redirect_to logout_path if BudgetItemExpense.find(params[:id]).budget_item.budget_category.budget.user_id != current_user.id
   end
 
-  def confirm_correct_create    
+  def confirm_correct_create
     redirect_to logout_path if BudgetItem.find(params[:budget_item_id][:budget_category_id]).budget_category.budget.user_id != current_user.id
   end
 end
