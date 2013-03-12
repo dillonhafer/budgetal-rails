@@ -105,11 +105,11 @@
       </div>
     </div>
     <div class="four columns">      
-      <% if false %>
-      <h5><%= link_to "My Account", root_path, :title => "My account" %></h5>
+      <% if current_user %>
+      <h5><%= link_to "My Account", my_account_path, :title => "My account" %></h5>
       <ul>
-        <li><%= link_to "Edit My Account", root_path, :title => "Edit my account" %></li>
-        <li><%= link_to "Sign Out", root_path, :title => "Sign out" %></li>
+        <li><%= link_to "Budgets", my_budgets_path, :title => "Edit my account" %></li>
+        <li><%= link_to "Sign Out", logout_path, :title => "Sign out" %></li>
       </ul>
       <% end %>
       <h5>Follow Us</h5>
@@ -124,11 +124,11 @@
     <dl>
       <dd><%= link_to "About", about_path, :title => "About" %></dd>
       <dd><%= link_to "Contact", contact_path, :title => "Contact us" %></dd>
-      <% if false %>
-      <dd><%= link_to "My Account", root_path, :title => "My account" %>
-      <dd><%= link_to "Sign Out", root_path, :title => "Sign out" %></dd>
+      <% if current_user %>
+      <dd><%= link_to "My Account", my_account_path, :title => "My account" %>
+      <dd><%= link_to "Sign Out", logout_path, :title => "Sign out" %></dd>
       <% else %>
-      <dd><%= link_to "Sign In", root_path, :title => "Sign in" %></dd>
+      <dd><%= link_to "Sign In", "#", data: {reveal_id: "signInUp"} %></dd>
       <% end %>
     </dl>
   </div>
