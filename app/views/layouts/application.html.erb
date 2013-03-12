@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />  
-    <title><%= content_for?(:title) ? yield(:title) : "Intense-Money.com" %></title>
+    <title>Intense-Money.com</title>
     
     <!-- Included CSS Files -->
     <%= stylesheet_link_tag    "application" %>
@@ -42,21 +42,21 @@
           <ul class="right">
             <li class="divider show-for-medium-and-up"></li>
             <li>
-                <%= link_to "Sign Out", logout_path %>
+                <%= link_to "Sign Out", logout_path, title: 'logout', title: 'Logout' %>
             </li>
           </ul>
 
           <ul class="right">
             <li class="divider show-for-medium-and-up"></li>
             <li>
-              <%= link_to "My Account [#{current_user.email}]", my_account_path %>
+              <%= link_to "My Account [#{current_user.email}]", my_account_path, title: 'My Account' %>
             </li>
           </ul>
 
           <ul class="right">
             <li class="divider show-for-medium-and-up"></li>
             <li>
-                <%= link_to "Budgets", my_budgets_path %>
+                <%= link_to "Budgets", my_budgets_path, title: 'Budgets' %>
             </li>
           </ul>
 
@@ -65,7 +65,7 @@
           <ul class="right">
             <li class="divider show-for-medium-and-up"></li>
             <li>
-                <%= link_to "Sign In", "#", data: {reveal_id: "signInUp"} %>
+                <%= link_to "Sign In", "#", data: {reveal_id: "signInUp"}, title: "Sign In" %>
             </li>
           </ul>
 
@@ -128,7 +128,7 @@
       <dd><%= link_to "My Account", my_account_path, :title => "My account" %>
       <dd><%= link_to "Sign Out", logout_path, :title => "Sign out" %></dd>
       <% else %>
-      <dd><%= link_to "Sign In", "#", data: {reveal_id: "signInUp"} %></dd>
+      <dd><%= link_to "Sign In", "#", data: {reveal_id: "signInUp"}, title: 'Sign In' %></dd>
       <% end %>
     </dl>
   </div>
