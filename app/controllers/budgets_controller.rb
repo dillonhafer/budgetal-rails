@@ -12,6 +12,12 @@ class BudgetsController < ApplicationController
   end
 
   def confirm_correct_user    
-    redirect_to logout_path if Budget.find(params[:id]).user_id != current_user.id
+    if Budget.find(params[:id]).user_id != current_user.id
+      if request.xhr?        
+        render :js => "window.location = '#{logout_path}'"
+      else
+        redirect_to logout_path
+      end
+    end
   end
 end

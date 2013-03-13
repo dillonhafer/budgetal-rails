@@ -48,11 +48,23 @@ class BudgetItemsController < ApplicationController
     BudgetItem.find(params[:id]).budget_category.budget.id
   end
 
-  def confirm_correct_user    
-    redirect_to logout_path if Budget.find(budget_id).user_id != current_user.id
+  def confirm_correct_user        
+    if Budget.find(budget_id).user_id != current_user.id
+      if request.xhr?        
+        render :js => "window.location = '#{logout_path}'"
+      else
+        redirect_to logout_path
+      end
+    end
   end
 
   def confirm_correct_create    
-    redirect_to logout_path if BudgetCategory.find(params[:budget_item][:budget_category_id]).budget.user_id != current_user.id
+    if BudgetCategory.find(params[:budget_item][:budget_category_id]).budget.user_id != current_user.id
+      if request.xhr?        
+        render :js => "window.location = '#{logout_path}'"
+      else
+        redirect_to logout_path
+      end
+    end
   end
 end

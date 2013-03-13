@@ -19,7 +19,11 @@ class HomeController < ApplicationController
     budget = Budget.find(params[:budget_id]) if params[:budget_id]
     
     if budget && budget.user_id != current_user.id
-      redirect_to logout_path
+      if request.xhr?
+        render :js => "window.location = '#{logout_path}'"
+      else        
+        redirect_to logout_path
+      end
     end
   end
 end

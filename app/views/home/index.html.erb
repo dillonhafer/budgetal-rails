@@ -65,8 +65,8 @@ $(document).ready(function() {
   });
 
   $(".edit_budget_item div span.bi-name").live('hover', function() {
-    $(this).hide();
-    $(this).next('.bi-name-input').show();
+    $(this).parent().parent().find('.bi-name').hide();
+    $(this).parent().parent().find('.bi-name-input').show();    
   });
   $(".edit_budget_item div span.bi-name").live("touchstart", function() {
     $(this).hide();

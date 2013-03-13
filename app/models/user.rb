@@ -41,7 +41,8 @@ class User < ActiveRecord::Base
   def create_initial_budgets
     counter = 1
     12.times do
-      b = Budget.create(:month => counter, :monthly_income => '0000.00')
+      b = Budget.create(:monthly_income => '0000.00')
+      b.month = counter
       b.user_id = self.id
       b.save
       counter += 1

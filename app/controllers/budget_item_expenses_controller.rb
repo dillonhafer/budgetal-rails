@@ -1,6 +1,6 @@
 class BudgetItemExpensesController < ApplicationController
   before_filter :confirm_correct_user, only: %w{ update destroy }
-  #before_filter :confirm_correct_create, only: %w{ create }
+  before_filter :confirm_correct_create, only: %w{ create }
 
   def create
     @bi = BudgetItemExpense.new params[:budget_item_expense]
@@ -45,10 +45,22 @@ class BudgetItemExpensesController < ApplicationController
   end
 
   def confirm_correct_user
-    redirect_to logout_path if BudgetItemExpense.find(params[:id]).budget_item.budget_category.budget.user_id != current_user.id
+    if BudgetItemExpense.find(params[:id]).budget_item.budget_category.budget.user_id != current_user.id
+      if request.xhr?
+        render :js => "window.location = '#{logout_path}'"
+      else        
+        redirect_to logout_path
+      end
+    end
   end
 
   def confirm_correct_create
-    redirect_to logout_path if BudgetItem.find(params[:budget_item_id][:budget_category_id]).budget_category.budget.user_id != current_user.id
+    if BudgetItem.find(params[:budget_item_expense][:budget_item_id]).budget_category.budget.user_id != current_user.id
+      if request.xhr?
+        render :js => "window.location = '#{logout_path}'"
+      else        
+        redirect_to logout_path
+      end
+    end
   end
 end
