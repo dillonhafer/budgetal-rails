@@ -22,10 +22,20 @@
                 <% c.budget_items.order(:id).each do |bi| %>
                   <div class="row">
                     <%= form_for bi, html: {data: {remote: true}} do |f| %>
-                    <div class="one columns"><%= link_to '[+]', 'javascript:void(0)', class: 'show-expenses' %></div>
+                    <div class="one columns">
+                      <span class="bi-name">
+                        <%= link_to '[+]', 'javascript:void(0)', class: 'show-expenses' %><%= is_envelope? bi %>
+                      </span>
+
+                      <span class="bi-name-input hide">
+                        <label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label>
+                      </span>
+                    </div>
                     <div class="five columns">
                       <span class="bi-name"><%= bi.name %></span>
-                      <span class="bi-name-input hide"><%= f.text_field :name, class: 'required' %></span>
+                      <span class="bi-name-input hide">                        
+                        <%= f.text_field :name, class: 'required' %>
+                      </span>
                     </div>
                     <div class="two columns budget-spent-<%= bi.id %>">
                       <%= number_to_currency bi.budget_item_expenses.sum :amount %>
@@ -33,7 +43,7 @@
                     <div class="two columns">
                       <div class="row">
                         <div class="eight columns">
-                            <span class="bi-name blue"><%= number_to_currency bi.amount_budgeted %></span>
+                            <span class="bi-name blue"><%= number_to_currency bi.amount_budgeted %></span>                            
                             <span class="bi-name-input hide"><%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %></span>
                             <%= f.submit "save", class: 'tiny success nice button radius' %>
                             <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius' %>
@@ -54,7 +64,7 @@
                 <% end %>
                 <div class="row hide new-budget-item">
                 <%= form_for BudgetItem.new, html: {data: {remote: true}} do |f| %>
-                  <div class="one columns"></div>
+                  <div class="one columns"><span class="bi-name-input"><label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label></span></div>
                   <div class="five columns">
                     <%= f.hidden_field :budget_category_id, value: c.id %>
                     <%= f.text_field :name, placeholder: 'Name', class: 'required' %>
@@ -83,7 +93,7 @@
         </div>
         <div class="three columns">
           <h5>Percentage used:</h5>
-          <%= (c.budget_items.sum(:amount_budgeted) / (c.budget.monthly_income) * 100).round %>%
+          <%= c.budget.monthly_income.to_f > 0.0 ? (c.budget_items.sum(:amount_budgeted).to_f / c.budget.monthly_income.to_f * 100).round : "0" %>%
           
           <h5>Ideal:</h5>
           <%= c.percentage %>          

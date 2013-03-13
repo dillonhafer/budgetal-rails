@@ -3,19 +3,14 @@ class HomeController < ApplicationController
   before_filter :raise_hell
 
   def index
-    @budgets = Budget.where(:user_id => current_user.id).order :id
+    @budgets = Budget.where(:user_id => current_user.id).order("month::integer")
     @budget = Budget.where(id: params[:budget_id].to_i, user_id: current_user.id).first if params[:budget_id]
 
     if @budget
-      @date = Date.new( 1, @budget.id).strftime("%B")
-      
-      amount_budgeted = 0.00
-      @budget.budget_categories.each do |bc|
-        amount_budgeted += bc.budget_items.sum(:amount_budgeted)      
-      end
-      
-      @budget_remaining = @budget.monthly_income - amount_budgeted
-      used = (100 - (@budget_remaining / @budget.monthly_income * 100).to_i)
+      @date = Date.new( 1, @budget.month.to_i).strftime("%B")
+      amount_budgeted = Budget.where(id: @budget.id, user_id: current_user.id).joins(:budget_items).sum(:amount_budgeted).to_f      
+      @budget_remaining = @budget.monthly_income.to_f - amount_budgeted
+      used = (100 - (@budget_remaining / @budget.monthly_income.to_f * 100))
       @percentage_used = used > 100 ? 100 : used
     end
   end  

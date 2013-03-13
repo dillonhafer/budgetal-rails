@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312033713) do
+ActiveRecord::Schema.define(:version => 20130313023406) do
 
   create_table "budget_categories", :force => true do |t|
     t.integer  "budget_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20130312033713) do
     t.decimal  "amount_budgeted",    :precision => 10, :scale => 2
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
+    t.boolean  "envelope"
   end
 
   create_table "budgets", :force => true do |t|

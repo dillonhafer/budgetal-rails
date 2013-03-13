@@ -1,103 +1,36 @@
-<h1>Your Account</h1>
+<h3>Your Account</h3>
+<h4 class="subheader">And you only</h4>
 <hr />
+
 <div class='row'>
-  <div class='two columns centered'>
-    <%= link_to "Send File", 'javascript:void(0)', data: {reveal_id: 'send_file'}, class: 'large button radius success' %>
+  <div class='six columns centered'>
+    There really isn't anything here yet :(...
   </div>
 </div>
 
-<br>
-<br>
-<div class='row'>
-  <div class='twelve columns'>
-    <div class='panel'>
-      <h3>Your files</h3>
-      <dl class="tabs">
-        <dd class="active"><a href="#sent">Sent</a></dd>
-        <dd><a href="#received">Received</a></dd>
-      </dl>
-      <ul class="tabs-content">
-        <li class="active" id="sentTab">
-          <table class='file-table'>
-            <thead>
-              <tr>
-                <th>File Name</th><th>Receiver</th><th>Date Uploaded</th><th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @sent_files.each do |file| %>
-              <tr>
-                <td><%= file.binary_file.original_file_name %><i class='general foundicon-mic'></i> <%= link_to 'Music.mp3', 'javascript:void(0)' %></td><td>mailer@boondockwalker.com</td><td><%= Date.today %></td><td><i class='general foundicon-trash'></i> <i class='general foundicon-inbox'></i></td>
-              </tr>
-              <% end %>
-              <tr>
-                <td><i class='general foundicon-photo'></i> <%= link_to 'Photo.png', 'javascript:void(0)' %></td><td>mailer@boondockwalker.com</td><td><%= Date.today %></td><td><i class='general foundicon-trash'></i> <i class='general foundicon-inbox'></i></td>
-              </tr>
-              <tr>
-                <td><i class='general foundicon-video'></i> <%= link_to 'Video.mp4', 'javascript:void(0)' %></td><td>mailer@boondockwalker.com</td><td><%= Date.today %></td><td><i class='general foundicon-trash'></i> <i class='general foundicon-inbox'></i></td>
-              </tr>
-              <tr>
-                <td><i class='general foundicon-page'></i> <%= link_to 'Document.pdf', 'javascript:void(0)' %></td><td>mailer@boondockwalker.com</td><td><%= Date.today %></td><td><i class='general foundicon-trash'></i> <i class='general foundicon-inbox'></i></td>
-              </tr>                            
-              <tr>
-                <td><i class='general foundicon-paper-clip'></i> <%= link_to 'Other.app', 'javascript:void(0)' %></td><td>mailer@boondockwalker.com</td><td><%= Date.today %></td><td><%= link_to root_path do; "<i class='red general foundicon-trash'></i>".html_safe; end  %> <i class='general foundicon-inbox'></i></td>
-              </tr>                            
-            </tbody>
-          </table>
-        </li>
-        <li id="receivedTab">
-          <table class='file-table'>
-            <thead>
-              <tr>
-                <th>File Name</th><th>Date Uploaded</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Bar.mp3</td><td><%= Date.yesterday %></td>
-              </tr>
-            </tbody>
-          </table>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<% content_for :reveal_modal do %>
-<div id="send_file" class="reveal-modal [expand, xlarge, large, medium, small]">
-  <h2>Send file!</h2>
-  <p class="lead">just choose a file</p>
-  <%= form_for @bw_file, :url => bw_files_path, :html => { :multipart => true } do |f| %>
-  <div class="row">
-    <div class="twelve columns" style='padding:0;'>
-      <div class="row collapse">
-        <div class="two mobile-one columns">
-          <span class="prefix"><i class='general foundicon-mail'></i></span>
-        </div>
-        <div class="ten mobile-three columns">
-          <%= f.email_field :receiver_email, placeholder: 'email@example.com' %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="twelve columns" style='padding:0;'>
-      <div class="row collapse">
-        <div class="two mobile-one columns">
-          <span class="prefix"><i class='general foundicon-paper-clip'></i></span>
-        </div>
-        <div class="ten mobile-three columns">
-          <%= f.file_field :binary_file, class: 'input-text radius' %>
-        </div>
-      </div>
-    </div>
-  </div>
-    <%= submit_tag "Send", class: 'blue button nice radius full-width' %>
-    <br>
-    <br>
-    <%= link_to "Cancel", 'javascript:void($("a.close-reveal-modal").click())', class: 'alert button nice radius full-width' %>
-  <% end %>
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-<% end %>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
