@@ -20,7 +20,8 @@
   .green {color: green;}
 
   .general.foundicon-mail {position: relative; left: 20px; top: -2px; vertical-align: middle;}
-  .bi-name-input .general.foundicon-mail {position: relative; left: 24px; top: -20px; vertical-align: middle;}  
+  .bi-name-input .general.foundicon-mail {position: relative; left: 40px; top: -20px; vertical-align: middle;}  
+  input[type="checkbox"] {position: relative; left: 15px; top: 0px; vertical-align: middle;}  
 </style>
 
 <script>
@@ -53,6 +54,10 @@ $(document).ready(function() {
   $('a.cancel').live('click', function() {
     $(this).prev('input[type="submit"]').fadeOut("fast");
     $(this).fadeOut("fast");
+    $(this).parent().parent().find('.bi-name').show();
+    $(this).parent().parent().find('.bi-name-input').hide();
+    $(this).parent().parent().parent().parent().find('.bi-name').show();
+    $(this).parent().parent().parent().parent().find('.bi-name-input').hide();
     $(this).parent().parent().find('a.delete-bi').fadeIn("fast");
   })
 
@@ -66,16 +71,20 @@ $(document).ready(function() {
 
   $(".edit_budget_item div span.bi-name").live('hover', function() {
     $(this).parent().parent().find('.bi-name').hide();
-    $(this).parent().parent().find('.bi-name-input').show();    
+    $(this).parent().parent().find('.show-expenses').hide();
+    $(this).parent().parent().find('.show-expenses').next('.foundicon-mail').hide();    
+    $(this).parent().parent().find('.bi-name-input').show();
   });
   $(".edit_budget_item div span.bi-name").live("touchstart", function() {
-    $(this).hide();
-    $(this).next('.bi-name-input').show();
+    $(this).parent().parent().find('.bi-name').hide();
+    $(this).parent().parent().find('.bi-name-input').show();    
   });
   $(".edit_budget_item").live('mouseleave', function() {
-    if ($(this).find('.bi-name-input').first().find('input').is(':focus') || $(this).find('.bi-name-input').last().find('input').is(':focus')) {
+    if ($(this).find('.bi-name-input').find('input[type="text"]').is(':focus')) {
     } else {
       $(this).find('.bi-name').show();
+      $(this).find('.show-expenses').show();
+      $(this).find('.show-expenses').next('.foundicon-mail').show();
       $(this).find('.bi-name-input').hide();
     }
   });
@@ -92,8 +101,8 @@ $(document).ready(function() {
     $(this).parent().parent().parent().find('div.new-expense').find('a.cancel').fadeIn("fast");
   });
 
-  $(".show-expenses").live('click', function() {
-    $(this).parent().parent().parent().next('.ajax-container.hide').slideToggle("fast");
+  $(".show-expenses").live('click', function() {    
+    $(this).parent().parent().parent().parent().next('.ajax-container.hide').slideToggle("fast");
   });
 
   $('input').live('focus', function() {
