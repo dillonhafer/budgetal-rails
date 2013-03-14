@@ -1,8 +1,18 @@
 <style>
   ul.accordion > li.active .title::after {border-color: #FAFAFA;}
-  ul.accordion > li.active .title, ul.accordion > li.active .content {background: #FAFAFA;}
+  ul.accordion > li.active {
+    background: rgb(238,238,238); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+
+  }
   ul.accordion > li.active .title:hover {cursor: default;}
-  ul.accordion {box-shadow: 0 3px 6px #EEE;}
+  ul.accordion {box-shadow: 0 3px 6px #DDD;}
 
   input[type="submit"]{position: absolute;left: 100%;top: 4px;display: none;z-index: 999;}
   a.cancel {position: absolute;left: 180%;top: 4px;display: none;z-index: 999;}
@@ -11,8 +21,14 @@
   .new_budget_item_expense div a.cancel {left:30%;position: auto;top: 4px;display: none;z-index: 999;}
 
   .bi-name {display: inline-block;width: 100%;padding: 0 0 15px;}
-
-  .ajax-container.hide {background: white; padding: 15px 15px; border-bottom: 1px solid #CCC;margin-bottom: 16px !important; display: none;}
+  .ajax-container.hide {background: white; padding: 15px 15px; border-top: 1px dashed #CCC; border-bottom: 1px solid #CCC;margin-bottom: 16px !important; display: none;
+    background: #F6F6F6; 
+  }
+  
+  .panel {
+    background: #F6F6F6; 
+  }
+    
   .expense-item {border-bottom: 1px dashed #CCC; padding: 15px 5px;}
 
   .blue {color: #69F;}
@@ -26,6 +42,7 @@
 
 <script>
 $(document).ready(function() {
+
   $('#month_links div a').live('click', function() {
     $('#month_links div a').removeClass('active');
     $(this).addClass('active');

@@ -25,6 +25,7 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'animate-rails'
+gem 'joyride-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

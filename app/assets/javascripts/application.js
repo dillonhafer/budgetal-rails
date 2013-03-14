@@ -16,6 +16,8 @@
 //= require jquery_ujs
 //= require foundation
 //= require jquery.ui.all
+//= require jquery.joyride-2.0.3
+//= require jquery.cookie
 //= require_tree .
 
 $(document).ready(function() {
@@ -25,7 +27,7 @@ $(document).ready(function() {
     });
   }
   $(document).foundationAccordion();
-  
+
   $("#loading").hide();  
 
   /* Flash to headers */

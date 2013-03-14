@@ -4,7 +4,8 @@
           <ul class="accordion">
             <li class="active">
               <div class="title">      
-                  <div class="six columns left">
+                  <div class="one columns left"><img src="/assets/<%= c.name %>.png"/></div>
+                  <div class="five columns left">
                   <h5><%= c.name %> </h5>
                   </div>
                   <div class="two columns">
@@ -85,18 +86,22 @@
                 <% end %>
                 </div>
                 <div class="row">
-                  <div class="large-10 large-offset-2 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button nice radius' %></div>
+                  <div class="large-10 large-offset-2 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button nice radius shadow' %></div>
                 </div>
               </div>
             </li>
           </ul>
         </div>
         <div class="three columns">
-          <h5>Percentage used:</h5>
-          <%= c.budget.monthly_income.to_f > 0.0 ? (c.budget_items.sum(:amount_budgeted).to_f / c.budget.monthly_income.to_f * 100).round : "0" %>%
-          
-          <h5>Ideal:</h5>
-          <%= c.percentage %>          
+          <br />
+          <br />
+          <br />
+          <div class="panel">
+            <h6>Used:
+            <%= c.budget.monthly_income.to_f > 0.0 ? (c.budget_items.sum(:amount_budgeted).to_f / c.budget.monthly_income.to_f * 100).round : "0" %>%
+            </h6>
+            <h6>Ideal: <%= c.percentage %></h6>            
+          </div>
         </div>
       <% end %>      
     </div>

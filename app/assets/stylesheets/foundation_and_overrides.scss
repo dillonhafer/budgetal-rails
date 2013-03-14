@@ -12,6 +12,16 @@
 @mixin round-top-right($radius) {border-top-right-radius: $radius; -moz-border-radius-topright: $radius; -webkit-border-top-right-radius: $radius;}
 @mixin round-bottom-left($radius) {border-bottom-left-radius: $radius; -moz-border-radius-bottomleft: $radius; -webkit-border-bottom-left-radius: $radius;}
 @mixin round-bottom-right($radius) {border-bottom-right-radius: $radius; -moz-border-radius-bottomright: $radius; -webkit-border-bottom-right-radius: $radius;}
+@mixin shadow {box-shadow: 0 1px 2px rgba(#000,0.2); -moz-box-shadow: 0 1px 2px rgba(#000,0.2); -webkit-box-shadow: 0 1px 2px rgba(#000,0.2);}
+@mixin shadow-big {box-shadow: 0 1px 4px rgba(#000,0.3); -moz-box-shadow: 0 1px 4px rgba(#000,0.3); -webkit-box-shadow: 0 2px 4px rgba(#000,0.3);}
+@mixin shadow-custom($x,$y,$spread,$color,$opacity){box-shadow: $x $y $spread rgba($color,$opacity); -moz-box-shadow: $x $y $spread rgba($color,$opacity); -webkit-box-shadow: $x $y $spread rgba($color,$opacity);}
+@mixin no-shadow {box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
+@mixin text-shadow($color){
+  
+}
+@mixin transition($type: "background-color"){
+  transition: $type 0.15s ease-in-out; -moz-transition: $type 0.15s ease-in-out; -webkit-transition: $type 0.15s ease-in-out; -o-transition: $type 0.15s ease-in-out;
+}
 
 
 /* .error */
@@ -57,7 +67,7 @@
 
 // Colors Settings
 
- $mainColor: #2BA1DC;
+ $mainColor: #496494;
 // $secondaryColor: #e9e9e9;
 // $alertColor: #c60f13;
 // $successColor: #5da423;
@@ -133,9 +143,8 @@
 // $tooltipBackgroundOpacityScreenSmall: 0.85;
 
 // Top Bar Settings
-
 // $topBarBgColor: #222;
-// $topBarHeight: 45px;
+ $topBarHeight: 60px;
  $topBarBtmMargin: 0px;
 // $topBarTitleWeight: bold;
 // $topBarTitleSize: ms(1);
@@ -202,14 +211,15 @@ a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: backgrou
     p {@include font-size(14,!important)}
   }
 }
-
+.panel {@include shadow}
 /* #copyright */
 #copyright {font-size: 11px}
-
+.blue {color: $mainColor;}
 /* Miscellaneous */
 #fb-root {display: none;}
 iframe#dl {width: 1px; height: 1px; border: 0; display: none;}
-
-
+a {@include transition}
 @import 'foundation';
 @import 'foundation-icons';
+.alert-box {text-align: center; width: 100%; border-left: 0; border-right: 0; padding: 10px 0; margin: 0; position: absolute !important; z-index: 11;top:60px !important;border-radius: 0 !important;}
+$reveal-default-width:   90%;

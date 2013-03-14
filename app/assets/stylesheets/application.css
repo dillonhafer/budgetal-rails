@@ -13,6 +13,7 @@
  *= require_tree .
  *= require animate
  *= require jquery.ui.all
+ *= require joyride-2.0.3
  */
 
 body {background: url(/assets/bg.gif) !important}
@@ -20,10 +21,8 @@ body {background: url(/assets/bg.gif) !important}
 nav.top-bar {
   background-image: url(web_sprite_bgs.gif);
 }
-#contentmain {background: white; border: 1px solid #CCC;border-top: none; box-shadow: 0 1px 7px #AAA;}
-.panel {margin-left: 15px !important;}
+#contentmain {background: url(/assets/bg.gif);border-top: none; min-height: 450px}
 
-.alert-box {text-align: center; width: 100%; border-left: 0; border-right: 0; padding: 10px 0; margin: 0; position: absolute; z-index: 11;top:45px;border-radius: 0;}
 
 @-webkit-keyframes fadeInUpBig2 {
   0% {
