@@ -16,12 +16,12 @@
  *= require joyride-2.0.3
  */
 
-body {background: url(/assets/bg.gif) !important}
+body, html {background: url(/assets/bg.gif) !important; height: 100% !important;}
 
 nav.top-bar {
   background-image: url(web_sprite_bgs.gif);
 }
-#contentmain {background: url(/assets/bg.gif);border-top: none; min-height: 450px}
+#contentmain {background: url(/assets/bg.gif);border-top: none; min-height: 80%;height: auto !important;  }
 
 
 @-webkit-keyframes fadeInUpBig2 {

@@ -23,7 +23,6 @@
   transition: $type 0.15s ease-in-out; -moz-transition: $type 0.15s ease-in-out; -webkit-transition: $type 0.15s ease-in-out; -o-transition: $type 0.15s ease-in-out;
 }
 
-
 /* .error */
 .error {background: #f4f4f4 url(/assets/layout/bg.gif);
   #contentmain {background: none;}
@@ -168,7 +167,7 @@ a.delete-bi:hover {border: 1px solid #333;background: #333; color:white;box-shad
 a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
 
 /* #footermain */
-#footermain {margin-top: 0px; background: #222; border-top: 2px solid $mainColor; padding-top: 10px;
+#footermain {clear: both;margin-top: 0px; background: #222; border-top: 2px solid $mainColor; padding-top: 10px; width: 100%;
   h5 { font-size: 16px; color: $mainColor; margin-bottom: 10px;
     a {padding: 3px 10px 5px; position: relative; top: -3px; left: -10px;}
     a:hover {background-color: #f4f4f4;border-radius: 8px;}
