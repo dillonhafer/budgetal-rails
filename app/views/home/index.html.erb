@@ -137,7 +137,7 @@ $(document).ready(function() {
 <div class="row show-for-small">
   <div class="twelve columns">
     <br />
-    <%= form_tag my_budgets_path, remote: true do %>
+    <%= form_tag my_budgets_path, method: 'get', remote: true do %>
       <%= select_tag :budget_id, options_for_select( @budgets.map {|b| [(Date.new( 1, b.month.to_i).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>
     <% end %>
   </div>

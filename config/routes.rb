@@ -8,7 +8,7 @@ Fpu::Application.routes.draw do
   resources :users, path: 'sign-up'
 
   match 'sign-up' => 'users#new', as: 'sign_up'
-  match '/my-budgets' => 'home#index', as: 'my_budgets'
+  match '/my-budgets' => 'home#index', as: 'my_budgets'  
   
   get '/contact' => 'welcome#contact', as: "contact"
   get "/tos" => 'welcome#tos', as: "tos"
