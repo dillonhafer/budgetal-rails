@@ -1,4 +1,13 @@
 <style>
+  #quickNav {
+    position: fixed;
+    left: 0;
+    top: 90px;
+  }
+  #quickNav ul li {
+    list-style-type: none;
+    padding: 4px 12px;
+  }
   ul.accordion > li.active .title::after {border-color: #FAFAFA;}
   ul.accordion > li.active {
     background: rgb(238,238,238); /* Old browsers */
@@ -125,8 +134,39 @@ $(document).ready(function() {
   $('input').live('focus', function() {
     $(this).closest('form').validate();
   });
+
+  $(document).ready(function(){
+  $(".quickNavLink").click(function(e){
+    e.preventDefault();
+ 
+    var id     = $(this).attr("href");
+    var offset = $(id).offset();
+ 
+    $("html, body").animate({
+      scrollTop: offset.top
+    }, 100);
+  });
+});
 });
 </script>
+
+<div id="quickNav">
+  <ul>
+    <li><a href="#Charity" class="quickNavLink"><img src="/assets/Charity.png" /></a></li>
+    <li><a href="#Saving" class="quickNavLink"><img src="/assets/Saving.png" /></a></li>
+    <li><a href="#Housing" class="quickNavLink"><img src="/assets/Housing.png" /></a></li>
+    <li><a href="#Utilities" class="quickNavLink"><img src="/assets/Utilities.png" /></a></li>
+    <li><a href="#Food" class="quickNavLink"><img src="/assets/Food.png" /></a></li>
+    <li><a href="#Clothing" class="quickNavLink"><img src="/assets/Clothing.png" /></a></li>
+    <li><a href="#Transportation" class="quickNavLink"><img src="/assets/Transportation.png" /></a></li>
+    <li><a href="#Medical-Health" class="quickNavLink"><img src="/assets/Medical/Health.png" /></a></li>
+    <li><a href="#Insurance" class="quickNavLink"><img src="/assets/Insurance.png" /></a></li>
+    <li><a href="#Personal" class="quickNavLink"><img src="/assets/Personal.png" /></a></li>
+    <li><a href="#Recreation" class="quickNavLink"><img src="/assets/Recreation.png" /></a></li>
+    <li><a href="#Debts" class="quickNavLink"><img src="/assets/Debts.png" /></a></li>
+  </ul>
+</div>
+
 <div class="row small-block-grid-2 hide-for-small" id="month_links">
   <% @budgets.each do |b| %>
     <div class="one column"><%= link_to b.month, my_budgets_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>

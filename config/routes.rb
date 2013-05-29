@@ -1,4 +1,4 @@
-Fpu::Application.routes.draw do
+Budgets::Application.routes.draw do
   resources :budgets
   resources :budget_categories
   resources :budget_items

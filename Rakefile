@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Fpu::Application.load_tasks
+Budgets::Application.load_tasks

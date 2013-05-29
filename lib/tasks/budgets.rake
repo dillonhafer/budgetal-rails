@@ -1,4 +1,4 @@
-namespace :fpu do
+namespace :budgets do
   desc "Create a year of template budgets"
   task :budgets => :environment do
     counter = 1
