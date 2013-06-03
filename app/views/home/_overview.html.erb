@@ -2,23 +2,32 @@
 <h3 style="text-align: left"><%= @date %> 2013</h3>
 
 <%= form_for @budget, html: {data: {remote: true}} do |f| %>
-<div class="row">
-  <div class="twelve columns">
-      <div class="two columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= f.label :monthly_income, "Monthly Income: $" %></b></div>
-      <div class='two columns'><%= f.text_field :monthly_income, style: 'width: 100px;display:block' %></div>
-      <div id="budget-remainder" class="eight columns">
-        <div class="progress round"><span class="meter" style=""></span></div>
-        <h5><%= number_to_currency @budget_remaining %> Remaining to budget</h5>
-        <script>        
-        $(".meter").animate(
-            {"width": "<%= @percentage_used %>%"},
-            "fast");
-            <% if @budget_remaining < 0 %>
-              $('.meter').css('background', 'red !important')              
-            <% end %>
-        </script>
+<div class="row">  
+    <div class="four columns">
+      <div class="row">
+        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Monthly Income:</b></div>
+        <div class='six columns'><%= f.text_field :monthly_income, class: 'green'  %></div>
       </div>
-  </div>
+      <div class="row" style="border-bottom: 1px solid #CCC;">
+        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
+        <div class='six columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@amount_spent) %></div>
+      </div>
+      <div class="row">
+        <div class='six columns offset-by-six' style="padding: 8px; font-size: 15px"><%= number_to_currency(@budget.monthly_income-@amount_spent) %></div>
+      </div>
+    </div>
+    <div id="budget-remainder" class="eight columns">
+      <div class="progress round"><span class="meter" style=""></span></div>
+      <h5><%= number_to_currency @budget_remaining %> Remaining to budget</h5>
+      <script>        
+      $(".meter").animate(
+          {"width": "<%= @percentage_used %>%"},
+          "fast");
+          <% if @budget_remaining < 0 %>
+            $('.meter').css('background', 'red !important')              
+          <% end %>
+      </script>
+    </div>
 </div>
 
 <% end %>
