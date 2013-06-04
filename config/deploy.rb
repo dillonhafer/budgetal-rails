@@ -17,6 +17,10 @@ ssh_options[:forward_agent] = true
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
 
+after "deploy:update_code" do
+  run "cd #{release_path} ; RAILS_ENV=production bundle exec rake assets:precompile --trace"
+end
+
 namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} unicorn server"
