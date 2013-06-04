@@ -7,6 +7,7 @@ class HomeController < ApplicationController
     @budget = Budget.where(id: params[:budget_id].to_i, user_id: current_user.id).first if params[:budget_id]
 
     if @budget
+      @amount_spent = 0.00
       @date = Date.new( 1, @budget.month.to_i).strftime("%B")
       amount_budgeted = Budget.where(id: @budget.id, user_id: current_user.id).joins(:budget_items).sum(:amount_budgeted).to_f      
       @budget_remaining = @budget.monthly_income.to_f - amount_budgeted
