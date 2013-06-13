@@ -7,4 +7,5 @@
   $(".budget-spent-<%= params[:c_id] %>").html("<%= escape_javascript(render(partial: 'budget_spent', locals: {bi: BudgetItem.find(params[:c_id])})) %>");
   $(".budget-difference-<%= params[:c_id] %>").html("<%= escape_javascript(render(partial: 'budget_difference', locals: {bi: BudgetItem.find(params[:c_id])})) %>");
 <% end %>
+$('title').text('month - Intense-Money.com');
 $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });

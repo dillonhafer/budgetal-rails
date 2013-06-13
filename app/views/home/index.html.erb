@@ -1,20 +1,29 @@
 <style>
-  #quickNav {
+  #greeting {
+    margin-top: 70px;
+    color: #64ad68;
+    margin-top: 50px;
+    text-align: center;
+  }  
+  #greeting h2 {    
+    text-align: center;
+    color: #64ad68;
+  }
+  #month_links {
+    margin-top: 65px;
+  }
+  .qn {
+    z-index: 99999;
     position: fixed;
-    left: 0;
-    top: 80px;
+    margin-bottom: 10px !important;
     background: white;
-    border-top: 2px solid #496494;
-    box-shadow: 1px 0px 8px #BBB;
-    height: 490px;
+    border-bottom: 2px solid #64ad68;
+    height: 50px !important;
+    padding-top: 10px !important;
+    width: 1000px !important;
   }
-  #quickNav ul li {
-    list-style-type: none;
-    padding: 4px 12px;
-  }
-  #quickNav ul li a img:hover {
-    box-shadow: 0 2px 5px #69F;
-    border-radius: 20px;
+  .qn img {
+    margin: 0 12px;
   }
   ul.accordion > li.active .title::after {border-color: #FAFAFA;}
   ul.accordion > li.active {
@@ -150,28 +159,25 @@ $(document).ready(function() {
     var offset = $(id).offset();
  
     $("html, body").animate({
-      scrollTop: offset.top
+      scrollTop: offset.top-135
     }, 850);
   });
 });
 });
 </script>
-
-<div id="quickNav">
-  <ul>
-    <li><a href="#Charity" class="quickNavLink"><img src="/assets/Charity.png" /></a></li>
-    <li><a href="#Saving" class="quickNavLink"><img src="/assets/Saving.png" /></a></li>
-    <li><a href="#Housing" class="quickNavLink"><img src="/assets/Housing.png" /></a></li>
-    <li><a href="#Utilities" class="quickNavLink"><img src="/assets/Utilities.png" /></a></li>
-    <li><a href="#Food" class="quickNavLink"><img src="/assets/Food.png" /></a></li>
-    <li><a href="#Clothing" class="quickNavLink"><img src="/assets/Clothing.png" /></a></li>
-    <li><a href="#Transportation" class="quickNavLink"><img src="/assets/Transportation.png" /></a></li>
-    <li><a href="#Medical-Health" class="quickNavLink"><img src="/assets/Medical/Health.png" /></a></li>
-    <li><a href="#Insurance" class="quickNavLink"><img src="/assets/Insurance.png" /></a></li>
-    <li><a href="#Personal" class="quickNavLink"><img src="/assets/Personal.png" /></a></li>
-    <li><a href="#Recreation" class="quickNavLink"><img src="/assets/Recreation.png" /></a></li>
-    <li><a href="#Debts" class="quickNavLink"><img src="/assets/Debts.png" /></a></li>
-  </ul>
+<div class="row small-block-grid-2 hide-for-small qn">
+  <div class="one column"><a href="#Charity" class="quickNavLink"><img src="/assets/Charity.png" /></a></div>
+  <div class="one column"><a href="#Saving" class="quickNavLink"><img src="/assets/Saving.png" /></a></div>
+  <div class="one column"><a href="#Housing" class="quickNavLink"><img src="/assets/Housing.png" /></a></div>
+  <div class="one column"><a href="#Utilities" class="quickNavLink"><img src="/assets/Utilities.png" /></a></div>
+  <div class="one column"><a href="#Food" class="quickNavLink"><img src="/assets/Food.png" /></a></div>
+  <div class="one column"><a href="#Clothing" class="quickNavLink"><img src="/assets/Clothing.png" /></a></div>
+  <div class="one column"><a href="#Transportation" class="quickNavLink"><img src="/assets/Transportation.png" /></a></div>
+  <div class="one column"><a href="#Medical-Health" class="quickNavLink"><img src="/assets/Medical/Health.png" /></a></div>
+  <div class="one column"><a href="#Insurance" class="quickNavLink"><img src="/assets/Insurance.png" /></a></div>
+  <div class="one column"><a href="#Personal" class="quickNavLink"><img src="/assets/Personal.png" /></a></div>
+  <div class="one column"><a href="#Recreation" class="quickNavLink"><img src="/assets/Recreation.png" /></a></div>
+  <div class="one column"><a href="#Debts" class="quickNavLink"><img src="/assets/Debts.png" /></a></div>
 </div>
 
 <div class="row small-block-grid-2 hide-for-small" id="month_links">
@@ -190,10 +196,10 @@ $(document).ready(function() {
   </div>
 </div>
 
-<hr />
+<hr style="border:none;border-bottom: 2px solid #64ad68;" />
 
 <div id="greeting" class="animated ">
-  <h2>Home</h2>
+  <h2>Welcome!</h2>
   <p>Get started by choosing a month above</p>
 </div>
 

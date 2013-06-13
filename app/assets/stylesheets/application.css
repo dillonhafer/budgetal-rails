@@ -16,14 +16,21 @@
  *= require joyride-2.0.3
  */
 
-body, html {background: url(/assets/bg.gif) !important; height: 100% !important;}
+body, html {background: white !important; height: 100% !important;}
+
+body {margin-top: 60px !important;}
 
 nav.top-bar {
-  background-image: url(web_sprite_bgs.gif);
+  background-color: #64ad68;
 }
-#contentmain {background: url(/assets/bg.gif);border-top: none; min-height: 80%;height: auto !important;  }
+#contentmain {background: white;border-top: none; min-height: 80%;height: auto !important;  }
 
-
+.panel h6 { color: whitesmoke; }
+.panel {
+  background: #64ad68 !important;
+  box-shadow: 0 1px 3px #666;
+  border: 1px solid whitesmoke;
+}
 @-webkit-keyframes fadeInUpBig2 {
   0% {
     opacity: 0;
