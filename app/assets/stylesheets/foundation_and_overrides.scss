@@ -157,7 +157,7 @@
 // $topBarNavToggleSize: 8px;
 
 #month_links {margin-top: 20px; text-align: center;}
-#month_links div a {background: $mainColor; color: white; border-radius: 20px; text-align: center; width: 36px;display: block;height: 36px;padding: 12px;margin: 0 auto;}
+#month_links div a {background: $mainColor; color: white; border-radius: 20px; text-align: center; width: 36px;display: block;height: 36px;padding: 12px 10px;margin: 0 auto;}
 #month_links div a.tfwo {padding: 10% 11%;}
 #month_links div a:hover, #month_links div a.active {background: #333;}
 #month_links div a {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}  
@@ -223,3 +223,12 @@ a {@include transition}
 @import 'foundation-icons';
 .alert-box {text-align: center; width: 100%; border-left: 0; border-right: 0; padding: 10px 0; margin: 0; position: absolute !important; z-index: 11;top:60px !important;border-radius: 0 !important;}
 $reveal-default-width:   90%;
+
+.top-bar ul > li.divider, .top-bar ul > li:hover {
+  @include transition;
+  background: #57935a;
+}
+
+.qn:after {
+  background: purple;
+};
