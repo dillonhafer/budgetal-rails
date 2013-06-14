@@ -35,7 +35,7 @@
                     <div class="five columns">
                       <span class="bi-name"><%= bi.name %></span>
                       <span class="bi-name-input hide">                        
-                        <%= f.text_field :name, class: 'required' %>
+                        <%= f.text_field :name, required:'' %>
                       </span>
                     </div>
                     <div class="two columns budget-spent-<%= bi.id %>">
@@ -45,7 +45,7 @@
                       <div class="row">
                         <div class="eight columns">
                             <span class="bi-name blue"><%= number_to_currency bi.amount_budgeted %></span>                            
-                            <span class="bi-name-input hide"><%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %></span>
+                            <span class="bi-name-input hide"><%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %></span>
                             <%= f.submit "save", class: 'tiny button' %>
                             <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button' %>
                         </div>
@@ -68,7 +68,7 @@
                   <div class="one columns"><span class="bi-name-input"><label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label></span></div>
                   <div class="five columns">
                     <%= f.hidden_field :budget_category_id, value: c.id %>
-                    <%= f.text_field :name, placeholder: 'Name', class: 'required' %>
+                    <%= f.text_field :name, placeholder: 'Name', required:'' %>
                   </div>
                   <div class="two columns">
                     $0.00
@@ -76,7 +76,7 @@
                   <div class="two columns">
                     <div class="row">
                       <div class="eight columns">
-                          <%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %>
+                          <%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %>
                           <%= f.submit "save", class: 'tiny button' %>
                           <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button add-budget-cancel' %>
                       </div>                      

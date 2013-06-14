@@ -6,7 +6,7 @@
     <div class="four columns">
       <div class="row">
         <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Monthly Income:</b></div>
-        <div class='six columns'><%= f.text_field :monthly_income, class: 'green'  %></div>
+        <div class='six columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'' %></div>
       </div>
       <div class="row" style="border-bottom: 1px solid #CCC;">
         <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>

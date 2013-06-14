@@ -8,4 +8,9 @@
   $(".budget-difference-<%= params[:c_id] %>").html("<%= escape_javascript(render(partial: 'budget_difference', locals: {bi: BudgetItem.find(params[:c_id])})) %>");
 <% end %>
 $('title').text('month - Intense-Money.com');
+$('.get-date').each( function() {
+  if ($(this).type == "text") {
+    $(this).addClass('datepicker');
+  }
+});
 $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });

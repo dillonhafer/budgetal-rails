@@ -91,6 +91,12 @@
 
 <script>
 $(document).ready(function() {  
+  $('.get-date').each( function() {
+    if ($(this).type == "text") {
+      $(this).addClass('datepicker');
+    }
+  });
+
   $('#month_links div a').live('click', function() {
     $('.qn').slideDown('fast');
     $('#month_links div a').removeClass('active');
@@ -112,6 +118,12 @@ $(document).ready(function() {
   });
 
   $('input[type="text"]').live('focus', function() {
+    $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
+    $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
+    $(this).parent().parent().parent().find('a.delete-bi').fadeOut("fast");
+  });
+
+  $('input[type="number"]').live('focus', function() {
     $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
     $(this).parent().parent().parent().find('a.delete-bi').fadeOut("fast");
@@ -174,10 +186,6 @@ $(document).ready(function() {
     } else {
       $(this).text("[+]");
     }
-  });
-
-  $('input').live('focus', function() {
-    $(this).closest('form').validate();
   });
 
   $(document).ready(function(){

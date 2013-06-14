@@ -162,8 +162,8 @@
 #month_links div a {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}  
 #budget-remainder {text-align: center;}
 #greeting {min-height: 500px;}
-a.delete-bi {border: 1px solid #CCC;padding: 5px 8px;color: #AAA;background: #DDD;border-radius: 3px;box-shadow: 0 1px 3px #DDD;}
-a.delete-bi:hover {border: 1px solid #333;background: #333; color:white;box-shadow: 0 1px 3px #DDD;}
+a.delete-bi {padding: 5px 10px;color: white;background: #333;border-radius: 50px;text-align: center;}
+a.delete-bi:hover {background: red; color:white;}
 a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
 
 /* #footermain */

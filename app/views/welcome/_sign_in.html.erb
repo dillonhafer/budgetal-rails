@@ -8,10 +8,10 @@
         <%= field_set_tag do %>
           <h4>Sign in</h4>
           <%= label_tag "Email" %>
-          <%= text_field_tag :email, params[:email], :class => "input-text required" %>
+          <%= email_field_tag :email, params[:email], :class => "input-text", required:'' %>
 
           <%= label_tag :password %>
-          <%= password_field_tag :password, nil, :class => "input-text required" %>
+          <%= password_field_tag :password, nil, :class => "input-text", required:'' %>
         <%= submit_tag "Sign in", :class => "button large full-width" %>
         <br /><br />
         <% end %>
@@ -23,13 +23,13 @@
         <%= field_set_tag do %>
         <h4>Sign up</h4>
           <%= f.label :email %>
-          <%= f.text_field :email, :class => "input-text required" %>
+          <%= f.email_field :email, :class => "input-text", required: '' %>
 
           <%= f.label :password %>
-          <%= f.password_field :password, :class => "input-text required" %>
+          <%= f.password_field :password, :class => "input-text", required:'' %>
 
           <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, :class => "input-text required" %>
+          <%= f.password_field :password_confirmation, :class => "input-text", required:'' %>
 
         <%= f.submit "Sign me up", :class => "button large full-width" %>
         <br /><br />

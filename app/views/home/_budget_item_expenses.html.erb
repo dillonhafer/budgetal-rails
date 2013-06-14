@@ -16,14 +16,14 @@
   <div class="row hide new-expense" style="padding-top: 15px;">
     <%= form_for BudgetItemExpense.new, html: {data: {remote: true}} do |f| %>
     <div class="two columns">
-      <%= f.text_field :date, id: "bi-#{bi.id}", placeholder: Date.today.strftime("%Y-%m-%d"), class: 'datepicker required' %>
+      <%= f.text_field :date, id: "bi-#{bi.id}", type: 'date', placeholder: Date.today.strftime("%Y-%m-%d"), class: 'get-date', required:'' %>
     </div>
     <div class="four columns">
       <%= f.hidden_field :budget_item_id, value: bi.id %>
-      <%= f.text_field :name, placeholder: 'Name', class: 'required' %>
+      <%= f.text_field :name, placeholder: 'Name', required:'' %>
     </div>
     <div class="three columns">
-      <%= f.text_field :amount, placeholder: "0.00", class: 'required' %>
+      <%= f.number_field :amount, step: 'any', min: '0', placeholder: "0.00", required:'' %>
     </div>
     <div class="three columns">                        
       <%= f.submit "save", class: 'tiny button' %>
