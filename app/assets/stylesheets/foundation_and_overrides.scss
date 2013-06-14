@@ -1,6 +1,5 @@
 @import "foundation/common/ratios";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic);
 
 
 @mixin font-size($size,$i: "") {
@@ -80,10 +79,10 @@
 
 // Typography Settings
 
- $headerFontFamily: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
+ $headerFontFamily: "Ubuntu", "Helvetica", Helvetica, Arial, sans-serif;
 // $headerFontWeight: bold;
 // $headerFontColor: #222;
- $bodyFontFamily: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
+ $bodyFontFamily: "Ubuntu", "Helvetica", Helvetica, Arial, sans-serif;
 // $bodyFontWeight: normal;
 // $bodyFontColor: $txtColor;
 
