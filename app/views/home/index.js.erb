@@ -19,3 +19,10 @@ $('.get-date').each( function() {
 });
 
 $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+
+$(".meter").animate({"width": "<%= @percentage_used %>%"}, "fast");
+<% if @budget_remaining < 0 %>
+  $('.meter').css('background', 'red')
+<% else %>
+  $('.meter').css('background', '')
+<% end %>

@@ -13,19 +13,18 @@
         <div class='six columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@amount_spent) %></div>
       </div>
       <div class="row">
-        <div class='six columns offset-by-six' style="padding: 8px; font-size: 15px"><%= number_to_currency(@budget.monthly_income-@amount_spent) %></div>
+        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@amount_spent < 0) %></b></div>
+        <div class='six columns' style="padding: 8px; font-size: 15px"><%= number_to_currency(@budget.monthly_income-@amount_spent) %></div>
       </div>
     </div>
     <div id="budget-remainder" class="eight columns">
       <div class="progress round"><span class="meter" style=""></span></div>
-      <h5><%= number_to_currency @budget_remaining %> Remaining to budget</h5>
+      <h5><%= remaining_to_budget %></h5>
       <script>        
-      $(".meter").animate(
-          {"width": "<%= @percentage_used %>%"},
-          "fast");
-          <% if @budget_remaining < 0 %>
-            $('.meter').css('background', 'red !important')              
-          <% end %>
+      $(".meter").animate({"width": "<%= @percentage_used %>%"}, "fast");
+      <% if @budget_remaining < 0 %>
+        $('.meter').css('background', 'red')      
+      <% end %>
       </script>
     </div>
 </div>
