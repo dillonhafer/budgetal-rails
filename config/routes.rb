@@ -19,7 +19,10 @@ Budgets::Application.routes.draw do
   get 'sign-out' => 'sessions#destroy', :as => 'logout'
   get 'sign-in' => 'sessions#create', :as => 'login'
   get 'my-account' => 'users#my_account', :as => 'my_account'
-
+  
+  resources :password_resets, path: 'password-resets'
+  get "/send-password-reset" => "password_resets#new", :as => "new_password_reset"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

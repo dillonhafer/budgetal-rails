@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313023406) do
+ActiveRecord::Schema.define(:version => 20130614194616) do
 
   create_table "budget_categories", :force => true do |t|
     t.integer  "budget_id"
@@ -23,11 +23,11 @@ ActiveRecord::Schema.define(:version => 20130313023406) do
 
   create_table "budget_item_expenses", :force => true do |t|
     t.integer  "budget_item_id"
-    t.decimal  "amount",                        :precision => 10, :scale => 2
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.string   "name"
+    t.decimal  "amount",         :precision => 10, :scale => 2
     t.date     "date"
-    t.string   "name",           :limit => nil
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   create_table "budget_items", :force => true do |t|
@@ -52,8 +52,10 @@ ActiveRecord::Schema.define(:version => 20130313023406) do
     t.string   "password_hash"
     t.string   "password_salt"
     t.boolean  "admin"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
 end

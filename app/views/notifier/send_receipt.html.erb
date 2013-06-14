@@ -1,0 +1,25 @@
+<p><small style="color: #999999">Please do not reply to this email. This email is automatically generated.</small></p>
+<h3>Thank you for your order, <%= @order.first_name %>!</p>
+<h4>Purchase information:</h4>
+<p>Order number: <%= @order.order_number %></p>
+<p>Email address: <%= @order.email %></p>
+<p>Billing address:<br />
+  <%= @order.billing_address_1 %><br />
+  <%= @order.billing_address_2 %><br />
+  <%= @order.billing_city %>, <%= @order.billing_state %> <%= @order.billing_zip %>
+  <%= number_to_phone @order.phone, :area_code => true %></p>
+<h4>Order summary:</h4>
+<p><b>Order #: <%= @order.order_number %></b><br />
+	Subtotal: <%= number_to_currency @order.total_price_of_products %><br />
+	Shipping: <%= number_to_currency @order.shipping_price %><br />	
+	<b>Grand total: <%= number_to_currency @order.total_price %></b></p>
+<p><small>Please allow 7-10 business days for shipping.</small></p>
+<ol>
+<% @order.line_items.each do |li| %>
+	<li><%= li.product.name %><br />
+		<%= number_to_currency li.product.price %><br />
+		Quantity:  <%= li.quantity %></li>
+<% end %>
+</ol>
+<p><small>You are receiving this email because you made an order at <%= link_to "www.FBCS.com", "http://www.FBCS.com", :title => "Pulse 18 Communications" %>.<br />
+  <small>Pulse 18 Communications &copy; 2012. All Rights Reserved. <%= link_to "www.FBCS.com", "http://www.FBCS.com", :title => "Pulse 18 Communications" %><small></p>

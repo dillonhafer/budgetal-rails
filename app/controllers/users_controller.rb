@@ -30,7 +30,6 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    params[:user][:email].downcase!
     if @user.update_attributes params[:user]
       redirect_to my_account_path, :notice => "Updated Info"
     else
