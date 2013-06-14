@@ -46,8 +46,8 @@
                         <div class="eight columns">
                             <span class="bi-name blue"><%= number_to_currency bi.amount_budgeted %></span>                            
                             <span class="bi-name-input hide"><%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %></span>
-                            <%= f.submit "save", class: 'tiny success nice button radius' %>
-                            <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius' %>
+                            <%= f.submit "save", class: 'tiny button' %>
+                            <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button' %>
                         </div>
                         <div class="four columns">
                           <%= link_to 'x', budget_item_path(bi), method: :delete, class: 'delete-bi', data: {remote: true, confirm: 'Are you sure? This will delete all expenses too!'} %>
@@ -77,8 +77,8 @@
                     <div class="row">
                       <div class="eight columns">
                           <%= f.text_field :amount_budgeted, placeholder: "0.00", class: 'required' %>
-                          <%= f.submit "save", class: 'tiny success nice button radius' %>
-                          <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius add-budget-cancel' %>
+                          <%= f.submit "save", class: 'tiny button' %>
+                          <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button add-budget-cancel' %>
                       </div>                      
                     </div>
                   </div>
@@ -86,7 +86,7 @@
                 <% end %>
                 </div>
                 <div class="row">
-                  <div class="large-10 large-offset-2 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button nice radius shadow' %></div>
+                  <div class="large-10 large-offset-2 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button shadow' %></div>
                 </div>
               </div>
             </li>

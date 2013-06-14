@@ -1,5 +1,5 @@
  <div id="signInUp" class="reveal-modal" style="width: 90%; margin: 0 -45%;">
-  <h3 class="blue">Welcome to financial peace!</h3>
+  <h3 class="blue">Welcome to Intense-Money.com</h3>
   <p class="lead">Sign in or create an account.</p>
   <hr />
   <div class='row'>
@@ -12,7 +12,7 @@
 
           <%= label_tag :password %>
           <%= password_field_tag :password, nil, :class => "input-text required" %>
-        <%= submit_tag "Sign in", :class => "blue button nice radius large full-width" %>
+        <%= submit_tag "Sign in", :class => "button large full-width" %>
         <br /><br />
         <% end %>
       <% end %>
@@ -31,7 +31,7 @@
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation, :class => "input-text required" %>
 
-        <%= f.submit "Sign me up", :class => "blue button large full-width success nice radius" %>
+        <%= f.submit "Sign me up", :class => "button large full-width" %>
         <br /><br />
         <% end %>
       <% end %>

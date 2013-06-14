@@ -26,13 +26,13 @@
       <%= f.text_field :amount, placeholder: "0.00", class: 'required' %>
     </div>
     <div class="three columns">                        
-      <%= f.submit "save", class: 'tiny success nice button radius' %>
-      <%= link_to "cancel", 'javascript:void(0)', class: 'tiny success cancel alert nice button radius add-budget-expense-cancel' %>
+      <%= f.submit "save", class: 'tiny button' %>
+      <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button add-budget-expense-cancel' %>
     </div>
     <% end %>
   </div>
 
 <div class="row">
   <br />
-  <div class="large-10 large-offset-2 columns"><%= link_to "Add an expense", 'javascript:void(0)', class: 'add-expense-link small success button nice radius' %></div>
+  <div class="large-10 large-offset-2 columns"><%= link_to "Add an expense", 'javascript:void(0)', class: 'add-expense-link small button' %></div>
 </div>

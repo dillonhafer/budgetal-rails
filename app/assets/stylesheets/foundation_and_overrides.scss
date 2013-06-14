@@ -221,14 +221,10 @@ iframe#dl {width: 1px; height: 1px; border: 0; display: none;}
 a {@include transition}
 @import 'foundation';
 @import 'foundation-icons';
-.alert-box {text-align: center; width: 100%; border-left: 0; border-right: 0; padding: 10px 0; margin: 0; position: absolute !important; z-index: 11;top:60px !important;border-radius: 0 !important;}
+.alert-box {text-align: center; width: 100%; border-left: 0; border-right: 0; padding: 14px 0 !important; margin: 0; position: fixed !important; z-index: 999999;top:60px !important;border-radius: 0 !important;background-color: #333 !important;}
 $reveal-default-width:   90%;
 
 .top-bar ul > li.divider, .top-bar ul > li:hover {
   @include transition;
   background: #57935a;
 }
-
-.qn:after {
-  background: purple;
-};
