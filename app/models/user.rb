@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   
   before_save :encrypt_password  
+  before_save :downcase_email  
 
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create
@@ -15,7 +16,7 @@ class User < ActiveRecord::Base
 
 
   def self.authenticate(email, password)
-    user = find_by_email(email)
+    user = find_by_email(email.downcase)
     if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user
     else
@@ -28,6 +29,10 @@ class User < ActiveRecord::Base
       self.password_salt = BCrypt::Engine.generate_salt
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end
+  end
+
+  def downcase_email
+    self.email = self.email.downcase
   end
 
   def admin?

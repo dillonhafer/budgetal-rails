@@ -66,6 +66,15 @@
             </li>
           </ul>
 
+          <% if current_user.admin? %>
+          <ul class="right">
+            <li class="divider show-for-medium-and-up"></li>
+            <li>
+                <%= link_to "Admin Panel", admin_path, title: 'Admin' %>
+            </li>
+          </ul>
+          <% end %>
+
           <% else %>
 
           <ul class="right">

@@ -1,24 +1,37 @@
+<style>
+h3 {
+  color: #64ad68;
+}
+.header {
+  font-weight: bold;
+  text-align: right;
+}
+</style>
+
 <h3>Your Account</h3>
 <h4 class="subheader">And you only</h4>
 <hr />
 
+
 <div class='row'>
-  <div class='six columns centered'>
-    There really isn't anything here yet :(...
+  <div class='two columns header'>
+    Email:
+  </div>
+  <div class='nine columns'>
+    <%= current_user.email %>
+    <%= link_to "Update Account Info", edit_user_path, class: 'right' %>
+  </div>
+</div>
+<br />
+<div class='row'>
+  <div class='two columns header'>
+    Join Date:
+  </div>
+  <div class='nine columns'>
+    <%= current_user.created_at.strftime("%B %d, %Y") %>
   </div>
 </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 <br />
 <br />
 <br />

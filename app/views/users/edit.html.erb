@@ -15,11 +15,8 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation, :class => "input-text" %>
 
-  <%= f.label :admin do %>
-    <%= f.check_box :admin %>Admin?
-  <% end %>
-
-  <%= f.submit "Update User", :class => "yellow button nice radius" %>
+  <%= f.submit "Update Info", :class => "yellow button" %>
+  <%= link_to 'Cancel', my_account_path, class: 'button alert' %>
   <br /><br />
   <% end %>
 <% end %>

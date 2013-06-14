@@ -7,6 +7,8 @@ Budgets::Application.routes.draw do
   resources :sessions
   resources :users, path: 'sign-up'
 
+  get '/edit-my-account' => 'users#edit', as: 'edit_user'
+  get '/admin' => 'users#index', as: 'admin'
   match 'sign-up' => 'users#new', as: 'sign_up'
   match '/my-budgets' => 'home#index', as: 'my_budgets'  
   

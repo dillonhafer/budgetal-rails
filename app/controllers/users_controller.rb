@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :require_admin, except: %w{my_account new create}
+  before_filter :require_admin, except: %w{my_account new create edit update}
   before_filter :require_user, only: %w{my_account}
 
   def index
@@ -10,8 +10,7 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def my_account
-    
+  def my_account    
   end
 
   def create
@@ -22,17 +21,18 @@ class UsersController < ApplicationController
       @user.create_initial_budgets
     else
       render 'new'
-    end
+    end    
   end
 
   def edit
-    @user = User.find params[:id]
+    @user = current_user
   end
 
   def update
-    @user = User.find params[:id]
+    @user = current_user
+    params[:user][:email].downcase!
     if @user.update_attributes params[:user]
-      redirect_to users_path, :notice => "Updated user"
+      redirect_to my_account_path, :notice => "Updated Info"
     else
       render "edit"
     end
@@ -43,5 +43,5 @@ class UsersController < ApplicationController
     user.destroy
     user.save
     redirect_to users_path, :notice => "Deleted user."    
-  end
+  end  
 end
