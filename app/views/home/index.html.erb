@@ -1,4 +1,8 @@
 <style>
+  a.show-expenses {
+    font-weight: bold;
+    font-size: 23px;
+  }
   .qn:after {
     width: 1000px;    
     margin: 0 auto;
@@ -181,10 +185,12 @@ $(document).ready(function() {
 
   $(".show-expenses").live('click', function() {    
     $(this).parent().parent().parent().parent().next('.ajax-container.hide').fadeToggle("fast");
-    if ($(this).text() == '[+]') {
-      $(this).text("[-]"); 
+    if ($(this).text() == '+') {
+      $(this).text("-");
+      $(this).css('color', 'red')
     } else {
-      $(this).text("[+]");
+      $(this).text("+");
+      $(this).css('color', '#64ad68')
     }
   });
 
