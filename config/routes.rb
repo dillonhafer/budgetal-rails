@@ -1,4 +1,7 @@
 Budgets::Application.routes.draw do
+  get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics' 
+  get "monthly-statistics/:year/:month" => "monthly_statistics#show", as: 'monthly_statistic'
+
   resources :budgets
   resources :budget_categories
   resources :budget_items
