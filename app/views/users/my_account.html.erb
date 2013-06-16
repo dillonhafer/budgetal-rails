@@ -29,9 +29,17 @@ h3 {
   </div>
   <div class='nine columns'>
     <%= current_user.created_at.strftime("%B %d, %Y") %>
+    <%= link_to "Statistics (for geeks)", monthly_statistics_path, class: 'right' %>
   </div>
 </div>
 
+<br />
+<div class='row'>
+  <div class='two columns header'>
+  </div>
+  <div class='nine columns'>
+  </div>
+</div>
 <br />
 <br />
 <br />
