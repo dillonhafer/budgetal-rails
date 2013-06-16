@@ -1,4 +1,4 @@
-<% bi.budget_item_expenses.each do |bie| %>
+<% bi.budget_item_expenses.order(:date).each do |bie| %>
   <div class="row expense-item">
     <div class="one columns"><%= bie.date.strftime("%m/%d") %></div>
     <div class="five columns">
