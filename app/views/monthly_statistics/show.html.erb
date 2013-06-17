@@ -1,2 +1,28 @@
-<h1>MonthlyStatistics#show</h1>
-<p>Find me in app/views/monthly_statistics/show.html.erb</p>
+<style>
+  #greeting {
+    margin-top: 70px;
+    color: #64ad68;
+    margin-top: 50px;
+    text-align: center;
+  }  
+  #greeting h2 {    
+    text-align: center;
+    color: #64ad68;
+  }
+ h2 {color: #64ad68;}
+</style>
+
+<h2><%= @date %></h2>
+<h3 class="subheader">Here's how you did</h3>
+<hr />
+
+<% if @budget %>
+  <%= number_to_currency @budget.monthly_income %>
+<% else %>
+ 
+<div id="greeting" class="animated ">
+  <h2>Uh-oh!</h2>
+  <p>It looks like you don't have a budget for this month</p>
+</div>
+
+<% end %>

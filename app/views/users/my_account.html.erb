@@ -29,7 +29,7 @@ h3 {
   </div>
   <div class='nine columns'>
     <%= current_user.created_at.strftime("%B %d, %Y") %>
-    <%= link_to "Statistics (for geeks)", monthly_statistics_path, class: 'right' %>
+    <span class="right"><%= link_to "Statistics", monthly_statistics_path %> (for geeks)</span>
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :require_user
-  before_filter :raise_hell
+  before_filter :raise_error
 
   def index
     @budgets = Budget.where(:user_id => current_user.id).order("month::integer")
@@ -14,17 +14,13 @@ class HomeController < ApplicationController
       used = (100 - (@budget_remaining / @budget.monthly_income.to_f * 100))
       @percentage_used = used > 100 ? 100 : used
     end
-  end  
+  end
 
-  def raise_hell
+  def raise_error
     budget = Budget.find(params[:budget_id]) if params[:budget_id]
     
     if budget && budget.user_id != current_user.id
-      if request.xhr?
-        render :js => "window.location = '#{logout_path}'"
-      else        
-        redirect_to logout_path
-      end
+      request.xhr? ? render(js: "window.location = '#{logout_path}'") : redirect_to(logout_path)
     end
   end
 end
