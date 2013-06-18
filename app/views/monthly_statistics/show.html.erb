@@ -1,3 +1,5 @@
+<script src="/assets/highcharts.js"></script>
+
 <style>
   #greeting {
     margin-top: 70px;
@@ -17,12 +19,50 @@
 <hr />
 
 <% if @budget %>
-  <%= number_to_currency @budget.monthly_income %>
+  <div id="container"></div>
+  <script>
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Percentage used, <%= @date %>'
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Percentag Budgeted',
+                data: [                    
+                <% @budget.budget_categories.each do |c| %>
+                  ["<%= c.name %>", <%= c.budget.monthly_income.to_f > 0.0 ? (c.budget_items.sum(:amount_budgeted).to_f / c.budget.monthly_income.to_f * 100).round : 0.0 %>]<%= ',' unless c == @budget.budget_categories.last %>
+                <% end %>
+                ]
+            }]
+        });
+    });
+    </script>
 <% else %>
  
-<div id="greeting" class="animated ">
-  <h2>Uh-oh!</h2>
-  <p>It looks like you don't have a budget for this month</p>
-</div>
+  <div id="greeting" class="animated ">
+    <h2>Uh-oh!</h2>
+    <p>It looks like you don't have a budget for this month</p>
+  </div>
 
 <% end %>
