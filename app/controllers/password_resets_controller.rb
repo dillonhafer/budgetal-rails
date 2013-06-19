@@ -49,7 +49,7 @@ class PasswordResetsController < ApplicationController
     user = User.find_by_email params[:email]
     unless user.blank?
       if user.admin?
-        redirect_to "/404"
+        redirect_to root_path, :notice => "Password reset email sent."
       end
     end
   end
