@@ -14,7 +14,7 @@ class Budget < ActiveRecord::Base
       JOIN budget_categories bc ON bc.budget_id=b.id
       JOIN budget_items bi ON bi.budget_category_id=bc.id
       JOIN budget_item_expenses bie ON bie.budget_item_id=bi.id
-      WHERE b.id = #{id}
+      WHERE bc.id = #{id}
     END_SQL
     total_expense.first["sum"].to_f
   end
