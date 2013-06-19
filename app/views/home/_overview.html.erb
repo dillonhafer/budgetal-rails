@@ -14,7 +14,7 @@
       </div>
       <div class="row">
         <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@amount_spent < 0) %></b></div>
-        <div class='six columns' style="padding: 8px; font-size: 15px"><%= number_to_currency(@budget.monthly_income-@amount_spent) %></div>
+        <div class='six columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
       </div>
     </div>
     <div id="budget-remainder" class="eight columns">

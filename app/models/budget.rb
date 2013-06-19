@@ -16,12 +16,16 @@ class Budget < ActiveRecord::Base
       JOIN budget_categories bc ON bc.budget_id=b.id
       JOIN budget_items bi ON bi.budget_category_id=bc.id
       JOIN budget_item_expenses bie ON bie.budget_item_id=bi.id
-      WHERE bc.id = #{id}
+      WHERE b.id = #{id}
     END_SQL
     total_expense.first["sum"].to_f
   end
 
   def year
     2013
+  end
+
+  def difference
+    monthly_income-total_expenses
   end
 end
