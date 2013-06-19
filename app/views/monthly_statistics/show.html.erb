@@ -51,7 +51,7 @@
                 name: 'Percentag Budgeted',
                 data: [                    
                 <% @budget.budget_categories.each do |c| %>
-                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(1) %>]<%= ',' unless c == @budget.budget_categories.last %>
+                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(1) * 100 %>]<%= ',' unless c == @budget.budget_categories.last %>
                 <% end %>
                 ]
             }]
@@ -59,7 +59,7 @@
     });
     </script>
     <% @budget.budget_categories.each do |c| %>
-      <%= c.name %> | <%= c.id %> | <%= c.total_spent %> | <%= @budget.monthly_income %> | <%= (c.total_spent/@budget.monthly_income).round(1) %><br />
+      <%= c.name %> | <%= c.id %> | <%= c.total_spent %> | <%= @budget.monthly_income %> | <%= (c.total_spent/@budget.monthly_income).round(1) * 100 %><br />
     <% end %>
 <% else %>
  
