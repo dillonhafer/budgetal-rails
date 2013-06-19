@@ -29,7 +29,7 @@
                 plotShadow: false
             },
             title: {
-                text: 'Percentage used, <%= @date %>'
+                text: 'Percentage Spent, <%= @date %>'
             },
             tooltip: {
               pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -43,24 +43,22 @@
                         color: '#000000',
                         connectorColor: '#000000',
                         format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                    }
+                    },
+                    showInLegend: true
                 }
             },
             series: [{
                 type: 'pie',
-                name: 'Percentag Budgeted',
+                name: 'Percentage Spent',
                 data: [                    
                 <% @budget.budget_categories.each do |c| %>
-                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(1) * 100 %>]<%= ',' unless c == @budget.budget_categories.last %>
+                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(2) * 100 %>]<%= ',' unless c == @budget.budget_categories.last %>
                 <% end %>
                 ]
             }]
         });
     });
-    </script>
-    <% @budget.budget_categories.each do |c| %>
-      <%= c.name %> | <%= c.id %> | <%= c.total_spent %> | <%= @budget.monthly_income %> | <%= (c.total_spent/@budget.monthly_income).round(1) * 100 %><br />
-    <% end %>
+    </script>    
 <% else %>
  
   <div id="greeting" class="animated ">

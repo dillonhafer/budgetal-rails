@@ -7,6 +7,8 @@ class Budget < ActiveRecord::Base
   has_many :budget_items, through: :budget_categories
   validates_presence_of :monthly_income
 
+  scope :ordered, order('month::integer')
+
   def total_expenses
     total_expense = ActiveRecord::Base.connection.select_all <<-END_SQL
       SELECT SUM(bie.amount)

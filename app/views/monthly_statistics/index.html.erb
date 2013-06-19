@@ -6,18 +6,12 @@ h2 {
 <h2>Monthly Statistics</h2>
 <h3 class="subheader">see how you're doing</h3>
 
-<ul>
-<% current_user.budgets.order(:month).each do |b| %>
-  <li><%= link_to b.month, monthly_statistic_path(year: b.year, month: b.month) %></li>
+<div class="row">
+<div class="large-6 columns">
+<% current_user.budgets.ordered.each do |b| %>
+  <%= link_to Date.new(2013, b.month.to_i).strftime("%B %Y"), monthly_statistic_path(year: b.year, month: b.month), class: 'button full-width' %>
+  <br />
 <% end %>
-</ul>
-
-
-<ul>
-  <li>Test</li>
-  <li>Test</li>
-  <li>Test</li>
-  <li>Test</li>
-  <li>Test</li>
-  <li>Test</li>
-</ul>
+</div>
+</div>
+  <br />
