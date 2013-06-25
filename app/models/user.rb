@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     Notifier.password_reset(self).deliver
   end
 
+  def send_welcome_email
+    Notifier.new_user(self).deliver
+  end
+
   def generate_token(column)
     begin
       self[column] = SecureRandom.urlsafe_base64

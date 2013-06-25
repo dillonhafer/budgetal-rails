@@ -16,6 +16,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new params[:user]
     if @user.save
+      @user.send_welcome_email
       session[:user_id] = @user.id
       redirect_to my_budgets_path, :notice => "Welcome to Intense-Money!"
       @user.create_initial_budgets
