@@ -225,5 +225,9 @@ $reveal-default-width:   90%;
 
 .top-bar ul > li.divider, .top-bar ul > li:hover {
   @include transition;
-  background: #57935a;
+  background: transparent;
+}
+
+.top-bar ul > li > a {  
+  text-transform: uppercase;
 }

@@ -37,12 +37,18 @@
     color: #64ad68;
   }
   #month_links {
-    margin-top: 65px;
+    
+  }
+  .qn_fix {
+    position: fixed;
+    top: 0;
+    margin-bottom: 10px !important;
+  }
+  .qn_fix_body {
+    margin-top: 70px !important;
   }
   .qn {
-    z-index: 99999;
-    position: fixed;
-    margin-bottom: 10px !important;
+    z-index: 99999;    
     background: white;
     border-bottom: 2px solid #64ad68;
     height: 50px !important;
@@ -95,6 +101,17 @@
 
 <script>
 $(document).ready(function() {  
+
+  $(window).scroll(function() {
+    if (window.scrollY >= 60) {
+      $('.qn').addClass('qn_fix');
+      $('#month_links').addClass('qn_fix_body');
+    } else {
+      $('.qn').removeClass('qn_fix');
+      $('#month_links').removeClass('qn_fix_body');
+    }
+  });
+
   $('.get-date').each( function() {
     if ($(this).type == "text") {
       $(this).addClass('datepicker');

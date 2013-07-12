@@ -32,7 +32,7 @@
         <div class='alert-box' style='background: red !important;'><%= flash[:error] %></div>
       <% end %>
       
-      <nav class="top-bar fixed">
+      <nav class="top-bar">
         <ul>
           <!-- Title Area -->
           <li class="name">
@@ -46,21 +46,21 @@
           <!-- Left Nav Section -->
           <% if current_user %>
           <ul class="right">
-            <li class="divider show-for-medium-and-up"></li>
+            <li class=" show-for-medium-and-up"></li>
             <li>
                 <%= link_to "Sign Out", logout_path, title: 'logout', title: 'Logout' %>
             </li>
           </ul>
 
           <ul class="right">
-            <li class="divider show-for-medium-and-up"></li>
+            <li class=" show-for-medium-and-up"></li>
             <li>
               <%= link_to "My Account [#{current_user.email}]", my_account_path, title: 'My Account' %>
             </li>
           </ul>
 
           <ul class="right">
-            <li class="divider show-for-medium-and-up"></li>
+            <li class=" show-for-medium-and-up"></li>
             <li>
                 <%= link_to "Budgets", my_budgets_path, title: 'Budgets' %>
             </li>
@@ -68,7 +68,7 @@
 
           <% if current_user.admin? %>
           <ul class="right">
-            <li class="divider show-for-medium-and-up"></li>
+            <li class=" show-for-medium-and-up"></li>
             <li>
                 <%= link_to "Admin Panel", admin_path, title: 'Admin' %>
             </li>
@@ -78,7 +78,7 @@
           <% else %>
 
           <ul class="right">
-            <li class="divider show-for-medium-and-up"></li>
+            <li class=" show-for-medium-and-up"></li>
             <li>
                 <%= link_to "Sign In", "#", data: {reveal_id: "signInUp"}, title: "Sign In" %>
             </li>
