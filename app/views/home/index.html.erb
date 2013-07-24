@@ -102,6 +102,23 @@
 <script>
 $(document).ready(function() {  
 
+  $('select#budget_item_expense_name').live('change', function() {
+    var select_value = $(this).val();
+    if (select_value === 'Add a new item') {
+      $(this).hide();
+      $(this).after("<input type='text' id='budget_item_expense_name' name='budget_item_expense[name]' placeholder='Enter a name' class='input-text' required />");
+      $(this).next('input').focus();
+    }
+  });
+
+  $('input#budget_item_expense_name').live('blur', function() {
+    var select_value = $(this).val();
+    if (select_value === '') {
+      $(this).prev('select').show().focus();
+      $(this).remove();
+    }
+  });
+
   $(window).scroll(function() {
     if (window.scrollY >= 60) {
       $('.qn').addClass('qn_fix');

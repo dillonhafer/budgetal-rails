@@ -20,7 +20,7 @@
     </div>
     <div class="four columns">
       <%= f.hidden_field :budget_item_id, value: bi.id %>
-      <%= f.text_field :name, placeholder: 'Name', required:'' %>
+      <%= f.select :name, bi.past_expenses, prompt: '', required:'' %>
     </div>
     <div class="three columns">
       <%= f.number_field :amount, step: 'any', min: '0', placeholder: "0.00", required:'' %>
