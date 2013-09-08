@@ -21,7 +21,7 @@ class BudgetItemsController < ApplicationController
     bi = BudgetItem.find params[:id]
     if bi.update_attributes params[:budget_item]
       respond_to do |format|
-        format.html { redirect_to my_budgets_path(budget_id: budget_id), notice: 'Updated Budget Item' }
+        format.html { redirect_to my_budgets_path(month: bi.budget_category.budget.month, year: bi.budget_category.budget.year), notice: 'Updated Budget Item' }
         format.json { flash[:notice] = "Updated Budget Item"; }
       end
     else

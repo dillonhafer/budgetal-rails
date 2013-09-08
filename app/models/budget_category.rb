@@ -14,4 +14,13 @@ class BudgetCategory < ActiveRecord::Base
     END_SQL
     total_spent.first["sum"].to_f
   end
+
+  def budget_remaining
+    self.budget_items.sum(:amount_budgeted) - self.total_spent
+  end
+
+  def percent_used
+    percent = self.total_spent / self.budget_items.sum(:amount_budgeted) * 100
+    percent > 100 ? 100 : percent
+  end
 end

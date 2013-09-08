@@ -3,11 +3,26 @@
         <div class="nine columns">
           <ul class="accordion">
             <li class="active">
-              <div id="<%= c.name.gsub('/', '-') %>" class="title">      
-                  <div class="one columns left"><img src="/assets/<%= c.name %>.png"/></div>
-                  <div class="five columns left">
+              <div id="<%= c.name.gsub('/', '-') %>" class="title row">      
+                <div class="one columns left"><img src="/assets/<%= c.name %>.png"/></div>
+                <div class="five columns left">
                   <h5><%= c.name %> </h5>
-                  </div>
+                </div>
+                <div class="six columns">
+                  <span style='color: green'>Spent: <%= number_to_currency c.total_spent %></span><span style='color: #69F' class='right'>Remaining: <%= number_to_currency c.budget_remaining %></span>
+                  <div class="progress round"><span id='<%= c.id %>' class="meter" style="background: #69F; width: <%= c.percent_used %>%;"></span></div>
+                  <script>                    
+                  <% if c.budget_remaining < 0 %>
+                    $('#<%= c.id %>').css('background', 'red')      
+                    $('#<%= c.id %>').parent().prev('.right').css('color', 'red')
+                  <% end %>
+                  </script>
+                </div>                  
+              </div>
+              <div class="content">
+                <div class="row">
+                  <hr />
+                  <div class='six columns'>&nbsp;</div>
                   <div class="two columns">
                     Spent
                   </div>
@@ -16,10 +31,9 @@
                   </div>
                   <div class="two columns">
                     Difference
-                  </div>
-              </div>
-              <div class="content">
-                <hr />
+                  </div>              
+                </div>              
+                <br />
                 <% c.budget_items.order(:id).each do |bi| %>
                   <div class="row">
                     <%= form_for bi, html: {data: {remote: true}} do |f| %>
