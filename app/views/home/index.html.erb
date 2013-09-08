@@ -101,6 +101,11 @@
 
 <script>
 $(document).ready(function() {  
+  $('title').text('<%= page_title(params[:month]) %> <%= params[:year] %>'+' - Intense-Money.com');
+
+  $('.month_links').live('click', function() {
+    $('#month-view').fadeOut();
+  });
 
   $('select#budget_item_expense_name').live('change', function() {
     var select_value = $(this).val();
@@ -259,28 +264,31 @@ $(document).ready(function() {
 
 <div class="row small-block-grid-2 hide-for-small" id="month_links">
   <% @budgets.each do |b| %>
-    <div class="one column"><%= link_to b.month, my_budgets_path(budget_id: b.id), data: {remote: true}, class: "#{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>
+    <div class="one column"><%= link_to b.month, my_budgets_path(month: b.month, year: 2013), data: {remote: true}, class: "#{'active' if b.month == params[:month]} #{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>
   <% end %>
-
 </div>
 
 <div class="row show-for-small">
   <div class="twelve columns">
     <br />
-    <%= form_tag my_budgets_path, method: 'get', remote: true do %>
-      <%= select_tag :budget_id, options_for_select( @budgets.map {|b| [(Date.new( 1, b.month.to_i).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>
+    <%= form_tag my_budgets_path, remote: true do %>
+      <%= select_tag :year, options_for_select( [2013] ), prompt: 'Select a year' %>
+      <%= select_tag :month, options_for_select( @budgets.map {|b| [(Date.new( 1, b.month.to_i).strftime("%B")), b.id] }), prompt: 'Select a month', id: 'budget-month' %>
     <% end %>
   </div>
 </div>
 
 <hr style="border:none;border-bottom: 2px solid #64ad68;" />
 
+
+<% if @budget %>
+<div id="month-view" class="">
+  <div class="ajax-container overview"><%= render 'overview' %></div>
+  <div class="ajax-container detail-cash-flow"><%= render 'cashflow' %></div>
+</div>
+<% else %>
 <div id="greeting" class="animated ">
   <h2>Welcome!</h2>
   <p>Get started by choosing a month above</p>
 </div>
-
-<div id="month-view" class="animated ">
-  <div class="ajax-container overview"></div>
-  <div class="ajax-container detail-cash-flow"></div>
-</div>
+<% end %>

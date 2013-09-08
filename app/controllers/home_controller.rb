@@ -1,10 +1,12 @@
 class HomeController < ApplicationController
-  before_filter :require_user
-  before_filter :raise_error
+  before_filter :require_user  
 
   def index
-    @budgets = Budget.where(:user_id => current_user.id).order("month::integer")
-    @budget = Budget.where(id: params[:budget_id].to_i, user_id: current_user.id).first if params[:budget_id]
+    year = params[:year] || Date.today.year
+    month = params[:month] || Date.today.month
+
+    @budgets = current_user.budgets.order("month::integer")
+    @budget = @budgets.where(month: month.to_s).first
 
     if @budget
       @amount_spent = @budget.total_expenses
@@ -13,14 +15,6 @@ class HomeController < ApplicationController
       @budget_remaining = @budget.monthly_income.to_f - amount_budgeted
       used = (100 - (@budget_remaining / @budget.monthly_income.to_f * 100))
       @percentage_used = used > 100 ? 100 : used
-    end
-  end
-
-  def raise_error
-    budget = Budget.find(params[:budget_id]) if params[:budget_id]
-    
-    if budget && budget.user_id != current_user.id
-      request.xhr? ? render(js: "window.location = '#{logout_path}'") : redirect_to(logout_path)
     end
   end
 end

@@ -1,4 +1,5 @@
 Budgets::Application.routes.draw do
+  root :to => 'welcome#index'
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics' 
   get "monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
 
@@ -6,14 +7,14 @@ Budgets::Application.routes.draw do
   resources :budget_categories
   resources :budget_items
   resources :budget_item_expenses
-  resources :home, path: 'my-budgets'
   resources :sessions
   resources :users, path: 'sign-up'
 
   get '/edit-my-account' => 'users#edit', as: 'edit_user'
   get '/admin' => 'users#index', as: 'admin'
   match 'sign-up' => 'users#new', as: 'sign_up'
-  match '/my-budgets' => 'home#index', as: 'my_budgets'  
+  match '/my-budgets/:year/:month' => 'home#index', as: 'my_budgets'  
+  resources :home, path: 'my-budgets'
   
   get '/contact' => 'welcome#contact', as: "contact"
   get "/tos" => 'welcome#tos', as: "tos"
@@ -75,7 +76,6 @@ Budgets::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

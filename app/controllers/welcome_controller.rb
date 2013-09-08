@@ -1,17 +1,19 @@
 class WelcomeController < ApplicationController
+  before_filter :new_user
+
   def index
-    @user = User.new
   end
 
   def tos
-    @user = User.new
   end
 
   def about
-    @user = User.new
   end
 
   def contact
+  end
+
+  def new_user
     @user = User.new
   end
 end

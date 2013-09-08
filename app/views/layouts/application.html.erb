@@ -62,7 +62,7 @@
           <ul class="right">
             <li class=" show-for-medium-and-up"></li>
             <li>
-                <%= link_to "Budgets", my_budgets_path, title: 'Budgets' %>
+                <%= link_to "Budgets", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Budgets' %>
             </li>
           </ul>
 
@@ -123,7 +123,7 @@
       <% if current_user %>
       <h5><%= link_to "My Account", my_account_path, :title => "My account" %></h5>
       <ul>
-        <li><%= link_to "Budgets", my_budgets_path, :title => "Edit my account" %></li>
+        <li><%= link_to "Budgets", my_budgets_path(year: Date.today.year, month: Date.today.month), :title => "Edit my account" %></li>
         <li><%= link_to "Sign Out", logout_path, :title => "Sign out" %></li>
       </ul>
       <% end %>

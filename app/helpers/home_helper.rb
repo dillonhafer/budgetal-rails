@@ -4,6 +4,10 @@ module HomeHelper
     Date.new( 1, n).strftime("%b")
   end
 
+  def page_title(n)
+    Date.new( 1, n.to_i).strftime("%B")
+  end
+
   def is_envelope?(budget_item)
     return "<i class='general foundicon-mail blue'></i>".html_safe if budget_item.envelope
   end
