@@ -4,6 +4,14 @@ module HomeHelper
     Date.new( 1, n).strftime("%b")
   end
 
+  def is_active?(year, month)
+    if (year.to_s == params[:year].to_s && month.to_s == params[:month].to_s)
+      'active'
+    else
+      'not-active'
+    end
+  end
+
   def page_title(n)
     Date.new( 1, n.to_i).strftime("%B")
   end

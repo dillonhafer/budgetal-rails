@@ -263,8 +263,8 @@ $(document).ready(function() {
 </div>
 
 <div class="row small-block-grid-2 hide-for-small" id="month_links">
-  <% @budgets.each do |b| %>
-    <div class="one column"><%= link_to b.month, my_budgets_path(month: b.month, year: 2013), data: {remote: true}, class: "#{'active' if b.month == params[:month]} #{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>
+  <% @budgets.each do |b| %>  
+    <div class="one column"><%= link_to b.month, my_budgets_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>
   <% end %>
 </div>
 
