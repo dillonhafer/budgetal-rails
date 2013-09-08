@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:email], params[:password])
     if user
       session[:user_id] = user.id
-      redirect_to my_budgets_path, :notice => "Logged in!"
+      redirect_to my_budgets_path(month: Date.today.month, year: Date.today.year), :notice => "Logged in!"
     else
       flash[:error] = "Invalid email or password"
       redirect_to root_path
