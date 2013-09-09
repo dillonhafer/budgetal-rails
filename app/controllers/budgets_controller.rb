@@ -1,23 +1,20 @@
 class BudgetsController < ApplicationController
-  before_filter :confirm_correct_user
+  def new
+    next_month = Date.today.advance(months: 1)
+    if current_user.budgets.where(month: next_month.month.to_s, year: next_month.year.to_s).any?
+      redirect_to my_budgets_path(month: next_month.month.to_s, year: next_month.year.to_s)
+    else
+      Budget.create_template(next_month.month, next_month.year, current_user.id)
+    end
+  end
 
   def update
-    @budget = Budget.find params[:id]
+    @budget = current_user.budgets.find params[:id]
     if @budget.update_attributes params[:budget]
       redirect_to my_budgets_path(budget_id: @budget.id), notice: "Updated Budget"
     else
       flash[:error] = "something went wrong!"
       redirect_to my_budgets_path
-    end
-  end
-
-  def confirm_correct_user    
-    if Budget.find(params[:id]).user_id != current_user.id
-      if request.xhr?        
-        render :js => "window.location = '#{logout_path}'"
-      else
-        redirect_to logout_path
-      end
     end
   end
 end

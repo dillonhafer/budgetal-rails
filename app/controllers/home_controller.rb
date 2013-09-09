@@ -2,10 +2,10 @@ class HomeController < ApplicationController
   before_filter :require_user  
 
   def index
-    year = params[:year] || Date.today.year
+    year  = params[:year]
     month = params[:month] || Date.today.month
 
-    @budgets = current_user.budgets.order("month::integer")
+    @budgets = current_user.budgets.order("created_at desc").limit(17)    
     @budget = @budgets.where(month: month.to_s, year: year.to_s).first
 
     if @budget
@@ -15,6 +15,8 @@ class HomeController < ApplicationController
       @budget_remaining = @budget.monthly_income.to_f - amount_budgeted
       used = (100 - (@budget_remaining / @budget.monthly_income.to_f * 100))
       @percentage_used = used > 100 ? 100 : used
+    else
+      @new_budget = Budget.new
     end
   end
 end

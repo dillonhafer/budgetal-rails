@@ -97,6 +97,31 @@
   .general.foundicon-mail {position: relative; left: 20px; top: -2px; vertical-align: middle;}
   .bi-name-input .general.foundicon-mail {position: relative; left: 40px; top: -20px; vertical-align: middle;}  
   input[type="checkbox"] {position: relative; left: 15px; top: 0px; vertical-align: middle;}  
+  #budget-list {
+    float: left;width: 100%;height: 100px;overflow: scroll;
+  }
+  #scolling_window:before {
+    content: 'foo';
+  }
+  #relateLeft {
+    display: block;
+    background: #64AD68;
+    width: 15px;
+    height: 60px;
+    position: absolute;
+    z-index: 100;
+    top: 70px;
+  }
+  #relateRight {
+    display: block;
+    background: #64AD68;
+    width: 15px;
+    height: 60px;
+    position: absolute;
+    z-index: 100;
+    top: 70px;
+    right: 0;
+  }
 </style>
 
 <script>
@@ -125,7 +150,7 @@ $(document).ready(function() {
   });
 
   $(window).scroll(function() {
-    if (window.scrollY >= 60) {
+    if (window.scrollY >= 74) {
       $('.qn').addClass('qn_fix');
       $('#month_links').addClass('qn_fix_body');
     } else {
@@ -234,17 +259,26 @@ $(document).ready(function() {
   });
 
   $(document).ready(function(){
-  $(".quickNavLink").click(function(e){
-    e.preventDefault();
- 
-    var id     = $(this).attr("href");
-    var offset = $(id).offset();
- 
-    $("html, body").animate({
-      scrollTop: offset.top-135
-    }, 850);
+    $(".quickNavLink").click(function(e){
+      e.preventDefault();
+   
+      var id     = $(this).attr("href");
+      var offset = $(id).offset();
+   
+      $("html, body").animate({
+        scrollTop: offset.top-135
+      }, 850);
+    });
+
+    $('#relateLeft').live("click", function(evt) {
+      evt.preventDefault();
+      $('#budget-list').animate({scrollLeft:'-=260'}, 'slow'); 
+    });
+      $('#relateRight').live("click", function(evt) {
+      evt.preventDefault();
+      $('#budget-list').animate({scrollLeft:'+=260'}, 'slow'); 
+    });
   });
-});
 });
 </script>
 <div class="row small-block-grid-2 hide-for-small qn">
@@ -262,10 +296,13 @@ $(document).ready(function() {
   <div class="one column"><a href="#Debts" class="quickNavLink" title="Debts"><img src="/assets/Debts.png" /></a></div>
 </div>
 
-<div class="row small-block-grid-2 hide-for-small" id="month_links">
-  <% @budgets.each do |b| %>  
-    <div class="one column"><%= link_to b.month, my_budgets_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>
-  <% end %>
+<div id='budget-list'>
+  <div class="hide-for-small" id="month_links" style='float: left;width: 150%'>    
+    <% @budgets.reverse.each do |b| %>  
+      <div class="monthy left" style='width:80px;display:inline'><%= link_to b.month, my_budgets_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month.to_i > 9}" %><br /><%= find_short_month b.month.to_i %></div>
+    <% end %>
+    <div class="left" style='width:80px;display:inline'><%= link_to '+', new_budget_path, class: 'nice button blue' %><br />New</div>    
+  </div>
 </div>
 
 <div class="row show-for-small">
@@ -280,7 +317,6 @@ $(document).ready(function() {
 
 <hr style="border:none;border-bottom: 2px solid #64ad68;" />
 
-
 <% if @budget %>
 <div id="month-view" class="">
   <div class="ajax-container overview"><%= render 'overview' %></div>
@@ -289,6 +325,7 @@ $(document).ready(function() {
 <% else %>
 <div id="greeting" class="animated ">
   <h2>Welcome!</h2>
-  <p>Get started by choosing a month above</p>
+  <p>You don't have a budget for this month! You can create a new one below.</p>
+  <%= link_to "Create a budget", new_budget_path(year: params[:year], month: params[:month]), class: 'button nice' %>
 </div>
 <% end %>

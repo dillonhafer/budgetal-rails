@@ -1,6 +1,5 @@
 class Budget < ActiveRecord::Base
-  attr_accessible :monthly_income  
-  attr_accessor :year
+  attr_accessible :monthly_income, :month, :year, :user_id  
 
   belongs_to :user
   has_many :budget_categories
@@ -21,11 +20,23 @@ class Budget < ActiveRecord::Base
     total_expense.first["sum"].to_f
   end
 
-  def year
-    2013
-  end
-
   def difference
     monthly_income-total_expenses
+  end
+
+  def self.create_template(month, year, user_id)
+    budget = Budget.create(month: month, year: year, user_id: user_id, monthly_income: '0.00')
+    budget.budget_categories.create(name: 'Charity', percentage: '10-15%')
+    budget.budget_categories.create(name: 'Saving', percentage: '10-15%')
+    budget.budget_categories.create(name: 'Housing', percentage: '25-35%')
+    budget.budget_categories.create(name: 'Utilities', percentage: '5-10%')
+    budget.budget_categories.create(name: 'Food', percentage: '5-15%')
+    budget.budget_categories.create(name: 'Clothing', percentage: '2-7%')
+    budget.budget_categories.create(name: 'Transportation', percentage: '10-15%')
+    budget.budget_categories.create(name: 'Medical/Health', percentage: '5-10%')
+    budget.budget_categories.create(name: 'Insurance', percentage: '10-25%')
+    budget.budget_categories.create(name: 'Personal', percentage: '5-10%')
+    budget.budget_categories.create(name: 'Recreation', percentage: '5-10%')
+    budget.budget_categories.create(name: 'Debts', percentage: '0%')
   end
 end

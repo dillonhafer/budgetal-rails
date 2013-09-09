@@ -1,5 +1,5 @@
 <br />
-<h3 style="text-align: left"><%= @date %> 2013</h3>
+<h3 style="text-align: left"><%= @date %> <%= @budget.year %></h3>
 
 <%= form_for @budget, html: {data: {remote: true}} do |f| %>
 <div class="row">  
