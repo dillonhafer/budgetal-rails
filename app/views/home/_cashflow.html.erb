@@ -111,10 +111,12 @@
           <br />
           <br />
           <div class="panel">
-            <h6>Used:
-            <%= c.budget.monthly_income.to_f > 0.0 ? (c.budget_items.sum(:amount_budgeted).to_f / c.budget.monthly_income.to_f * 100).round : "0" %>%
+            <h6 class='p-budgeted'>
+              <%= c.budget.monthly_income.to_f > 0.0 ? (c.budget_items.sum(:amount_budgeted).to_f / c.budget.monthly_income.to_f * 100).round : "0" %>%
             </h6>
-            <h6>Ideal: <%= c.percentage %></h6>            
+            <h6 class='p-recommended'>
+              <%= c.percentage %>
+            </h6>
           </div>
         </div>
       <% end %>      

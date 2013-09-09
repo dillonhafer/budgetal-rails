@@ -27,10 +27,14 @@ nav.top-bar {
 #contentmain {background: white;border-top: none; min-height: 80%;height: auto !important;  }
 
 .panel h6 { color: whitesmoke; }
-.panel {
-  background: #64ad68 !important;
-  box-shadow: 0 1px 3px #666;
-  border: 1px solid whitesmoke;
+.panel {  
+  text-align:center;
+  position: relative;
+  left: -30px;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 @-webkit-keyframes fadeInUpBig2 {
   0% {
