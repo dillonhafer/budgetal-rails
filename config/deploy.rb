@@ -9,7 +9,7 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :scm, "git"
-set :repository, "git@github.com:thealtair/budgets.git"
+set :repository, "git@bitbucket.org:dhafer/budgets.git"
 set :branch, "master"
 
 default_run_options[:pty] = true
