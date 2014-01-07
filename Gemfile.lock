@@ -36,6 +36,12 @@ GEM
       sass (>= 3.2)
       thor
     builder (3.0.4)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     chunky_png (1.2.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -59,6 +65,7 @@ GEM
       sass-rails (>= 3.1.1)
     fssm (0.2.10)
     haml (3.1.8)
+    highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -85,6 +92,13 @@ GEM
       sass (>= 3.2.0)
       sassy-math (>= 1.5)
     multi_json (1.7.7)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.7.0)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -150,6 +164,7 @@ PLATFORMS
 DEPENDENCIES
   animate-rails
   bcrypt-ruby
+  capistrano (~> 2.15.5)
   coffee-rails (~> 3.2.1)
   compass-rails
   dynamic_form

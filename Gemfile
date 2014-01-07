@@ -31,7 +31,7 @@ gem 'joyride-rails'
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'capistrano', '~> 2.15.5'
 
 # Use unicorn as the app server
 gem 'unicorn'
