@@ -25,7 +25,7 @@ class Budget < ActiveRecord::Base
   end
 
   def self.create_template(month, year, user_id)
-    budget = Budget.create(month: month, year: year, user_id: user_id, monthly_income: '0.00')
+    budget = Budget.create(month: month, year: year, user_id: user_id, monthly_income: 4000.00)
     budget.budget_categories.create(name: 'Charity', percentage: '10-15%')
     budget.budget_categories.create(name: 'Saving', percentage: '10-15%')
     budget.budget_categories.create(name: 'Housing', percentage: '25-35%')
@@ -38,5 +38,6 @@ class Budget < ActiveRecord::Base
     budget.budget_categories.create(name: 'Personal', percentage: '5-10%')
     budget.budget_categories.create(name: 'Recreation', percentage: '5-10%')
     budget.budget_categories.create(name: 'Debts', percentage: '0%')
+    return budget
   end
 end
