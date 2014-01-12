@@ -1,5 +1,5 @@
 <br />
-<h3 style="text-align: left"><%= @date %> <%= params[:year] %></h3>
+<h3 style="text-align: left"><%= @budget.pretty_date %> <%= params[:year] %></h3>
 
 <%= form_for @budget, html: {data: {remote: true}} do |f| %>
 <div class="row">  
@@ -10,10 +10,10 @@
       </div>
       <div class="row" style="border-bottom: 1px solid #CCC;">
         <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
-        <div class='six columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@amount_spent) %></div>
+        <div class='six columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@budget.total_expenses) %></div>
       </div>
       <div class="row">
-        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@amount_spent < 0) %></b></div>
+        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@budget.total_expenses < 0) %></b></div>
         <div class='six columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
       </div>
     </div>
@@ -21,8 +21,8 @@
       <div class="progress round"><span class="meter" style=""></span></div>
       <h5><%= remaining_to_budget %></h5>
       <script>        
-      $(".meter").animate({"width": "<%= @percentage_used %>%"}, "fast");
-      <% if @budget_remaining < 0 %>
+      $(".meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
+      <% if @budget.amount_remaining < 0 %>
         $('.meter').css('background', 'red')      
       <% end %>
       </script>

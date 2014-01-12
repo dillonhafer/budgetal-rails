@@ -6,6 +6,16 @@ class Budget < ActiveRecord::Base
   has_many :budget_items, through: :budget_categories
   validates_presence_of :monthly_income
 
+  validates_numericality_of :month,
+    only_integer: true,
+    less_than_or_equal_to: 12,
+    greater_than_or_equal_to: 1
+    
+  validates_numericality_of :year, 
+    only_integer: true,
+    less_than_or_equal_to: 2020,
+    greater_than_or_equal_to: 2013
+
   scope :ordered, order('month::integer')
 
   def total_expenses
@@ -39,5 +49,22 @@ class Budget < ActiveRecord::Base
     budget.budget_categories.create(name: 'Recreation', percentage: '5-10%')
     budget.budget_categories.create(name: 'Debts', percentage: '0%')
     return budget
+  end
+
+  def pretty_date
+    Date.new( 1, month.to_i).strftime("%B")
+  end
+
+  def amount_budgeted
+    Budget.where(id: id).joins(:budget_items).sum(:amount_budgeted).to_f
+  end
+
+  def amount_remaining
+    monthly_income.to_f - amount_budgeted
+  end
+
+  def percent_used
+    used = (100 - (amount_remaining / monthly_income.to_f * 100))
+    return (used > 100) ? 100 : used
   end
 end
