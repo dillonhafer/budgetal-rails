@@ -20,6 +20,7 @@ class Notifier < ActionMailer::Base
   end
 
   def new_website(user)
+    @user = user
     mail(:from => "Budgetal <no-reply@budgetal.com>", :to => @user.email, :subject => "We're getting a makeover!")
   end
 end
