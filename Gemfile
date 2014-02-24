@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'dotenv-rails'
 gem 'rails', '3.2.15'
 
 # Bundle edge Rails instead:
