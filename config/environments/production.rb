@@ -53,8 +53,7 @@ Budgets::Application.configure do
 
   # Enable threaded mode
   # config.threadsafe!
-  config.action_mailer.deliver_method :sendmail
-  config.action_mailer.openssl_verify_mode :none
+  config.action_mailer.deliver_method :sendmail, {openssl_verify_mode: 'none'}  
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
