@@ -21,7 +21,7 @@ end
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['.env', 'bin', 'log', 'tmp/pids', 'tmp/cache', 'public/system']
+set :shared_paths, ['.env', 'log', 'config/database.yml', 'tmp/pids', 'tmp/cache', 'public/system']
 
 # Optional settings:
 set :user, 'deployer'

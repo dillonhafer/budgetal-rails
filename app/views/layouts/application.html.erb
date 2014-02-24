@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />  
-    <title>Intense-Money.com</title>
+    <title>Budgetal.com</title>
     
     <!-- Included CSS Files -->
     <%= stylesheet_link_tag    "application" %>
@@ -37,7 +37,7 @@
           <!-- Title Area -->
           <li class="name">
             <h1>
-              <%= link_to "Intense-Money.com", root_path, :title => "Intense-Money.com" %>
+              <%= link_to "Budgetal.com", root_path, :title => "Budgetal.com" %>
             </h1>
           </li>        
         </ul>
@@ -112,7 +112,7 @@
     <div class="four columns">      
       <h5>Subscribe</h5>
       <div id="mc_embed_signup">
-        <%= form_tag "http://Intense-Money.us5.list-manage.com/subscribe/post?u=bc2a9d494fff8ae1914635487&amp;id=5481dbf0aa", :method => "post", :id => "mc-embedded-subscribe-form", :name => "mc-embedded-subscribe-form", :class => "nice", :target => "_blank" do %>
+        <%= form_tag "http://Budgetal.us5.list-manage.com/subscribe/post?u=bc2a9d494fff8ae1914635487&amp;id=5481dbf0aa", :method => "post", :id => "mc-embedded-subscribe-form", :name => "mc-embedded-subscribe-form", :class => "nice", :target => "_blank" do %>
           <%= label_tag "mce-EMAIL", "Subscribe to our emails" %>
           <%= email_field_tag :email, nil, :id => "mce-EMAIL", :name => "EMAIL", :placeholder => "email@domain.com", :class => "input-text full-width" %>
           <%= submit_tag :subscribe, :id => "mc-embedded-subscribe", :name => "subscribe", :class => "button", :value => "Subscribe" %>
@@ -129,7 +129,7 @@
       <% end %>
       <h5>Follow Us</h5>
       <ul class="social">
-        <li><%= link_to image_tag("/assets/social/facebook-16px.png") + " Become a fan on Facebook", "https://www.facebook.com/pages/Intense-Moneycom/150223185143423", :title => "Become a fan on Facebook" %></li>
+        <li><%= link_to image_tag("/assets/social/facebook-16px.png") + " Become a fan on Facebook", "https://www.facebook.com/pages/Budgetalcom/150223185143423", :title => "Become a fan on Facebook" %></li>
         <li><%= link_to image_tag("/assets/social/twitter-16px.png") + " Follow us on Twitter", "https://www.twitter.com/intense_money", :title => "Follow us on Twitter" %></li>
         <li><%= link_to image_tag("/assets/social/google-plus-16px.png") + " Find us on Google+", "https://plus.google.com/116367545922617019542/", :title => "Find us on Google+" %></li>
       </ul>
@@ -149,7 +149,7 @@
   </div>
   <div class="row">
     <div class="twelve columns centered">
-      <p id="copyright">Copyright &copy; <%= Date.today.year %> Intense-Money.com. All Rights Reserved. <%= link_to "Contact", contact_path, :title => "Contact us" %> | <%= link_to "Terms of Service", tos_path, :title => "Terms of service" %>.</p>
+      <p id="copyright">Copyright &copy; <%= Date.today.year %> Budgetal.com. All Rights Reserved. <%= link_to "Contact", contact_path, :title => "Contact us" %> | <%= link_to "Terms of Service", tos_path, :title => "Terms of service" %>.</p>
     </div>
   </div>
 <iframe id="dl"></iframe>
