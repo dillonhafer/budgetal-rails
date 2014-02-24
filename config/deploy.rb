@@ -21,7 +21,7 @@ end
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/fbcs.pem', '.env', 'bin', 'log', 'vendor/bundle', 'tmp/pids', 'tmp/cache', 'public/system', 'public/vbx']
+set :shared_paths, ['.env', 'bin', 'log', 'vendor/bundle', 'tmp/pids', 'tmp/cache', 'public/system']
 
 # Optional settings:
 set :user, 'deployer'
