@@ -21,8 +21,8 @@ body, html {background: white !important; height: 100% !important;}
 body {margin-top: 0px !important;}
 
 nav.top-bar {
-  background-color: #64ad68;
-  border-top: 5px solid green;
+  background-color: #6699FF;
+  border-top: 5px solid #3366CC;
 }
 #contentmain {background: white;border-top: none; min-height: 80%;height: auto !important;  }
 
