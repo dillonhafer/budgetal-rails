@@ -3,29 +3,29 @@
 
 <%= form_for @budget, html: {data: {remote: true}} do |f| %>
 <div class="row">  
-    <div class="four columns">
+    <div class="large-4 columns">
       <div class="row">
-        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Monthly Income:</b></div>
-        <div class='six columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'' %></div>
+        <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Monthly Income:</b></div>
+        <div class='large-6 columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'' %></div>
       </div>
       <div class="row" style="border-bottom: 1px solid #CCC;">
-        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
-        <div class='six columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@budget.total_expenses) %></div>
+        <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
+        <div class='large-6 columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@budget.total_expenses) %></div>
       </div>
       <div class="row">
-        <div class="six columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@budget.total_expenses < 0) %></b></div>
-        <div class='six columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
+        <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@budget.total_expenses < 0) %></b></div>
+        <div class='large-6 columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
       </div>
     </div>
     <div id="budget-remainder" class="eight columns">
       <div class="progress round"><span class="meter" style=""></span></div>
       <h5><%= remaining_to_budget %></h5>
-      <script>        
-      $(".meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
-      <% if @budget.amount_remaining < 0 %>
-        $('.meter').css('background', 'red')      
+      <% content_for :ready do %>       
+        $(".meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
+        <% if @budget.amount_remaining < 0 %>
+          $('.meter').css('background', 'red')      
+        <% end %>
       <% end %>
-      </script>
     </div>
 </div>
 

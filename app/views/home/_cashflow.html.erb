@@ -1,35 +1,35 @@
 <div class="row">
       <% @budget.budget_categories.order(:id).each do |c| %>
-        <div class="nine columns">
+        <div class="large-11 columns">
           <ul class="accordion">
             <li class="active">
               <div id="<%= c.name.gsub('/', '-') %>" class="title row">      
-                <div class="one columns left"><img src="/assets/<%= c.name %>.png"/></div>
-                <div class="five columns left">
+                <div class="large-1 columns left"><img src="/assets/<%= c.name %>.png"/></div>
+                <div class="large-5 columns left">
                   <h5><%= c.name %> </h5>
                 </div>
-                <div class="six columns">
+                <div class="large-6 columns">
                   <span style='color: green'>Spent: <%= number_to_currency c.total_spent %></span><span style='color: #69F' class='right'>Remaining: <%= number_to_currency c.budget_remaining %></span>
                   <div class="progress round"><span id='<%= c.id %>' class="meter" style="background: #69F; width: <%= c.percent_used %>%;"></span></div>
-                  <script>                    
-                  <% if c.budget_remaining < 0 %>
-                    $('#<%= c.id %>').css('background', 'red')      
-                    $('#<%= c.id %>').parent().prev('.right').css('color', 'red')
+                  <% content_for :ready do %>                    
+                    <% if c.budget_remaining < 0 %>
+                      $('#<%= c.id %>').css('background', 'red')      
+                      $('#<%= c.id %>').parent().prev('.right').css('color', 'red')
+                    <% end %>
                   <% end %>
-                  </script>
                 </div>                  
               </div>
               <div class="content">
                 <div class="row">
                   <hr />
-                  <div class='six columns'>&nbsp;</div>
-                  <div class="two columns">
+                  <div class='large-6 columns'>&nbsp;</div>
+                  <div class="large-2 columns">
                     Spent
                   </div>
-                  <div class="two columns">
+                  <div class="large-2 columns">
                     Budgeted
                   </div>
-                  <div class="two columns">
+                  <div class="large-2 columns">
                     Difference
                   </div>              
                 </div>              
@@ -37,7 +37,7 @@
                 <% c.budget_items.order(:id).each do |bi| %>
                   <div class="row">
                     <%= form_for bi, html: {data: {remote: true}} do |f| %>
-                    <div class="one columns">
+                    <div class="large-1 columns">
                       <span class="bi-nam">
                         <%= link_to '+', 'javascript:void(0)', class: 'show-expenses' %><%= is_envelope? bi %>
                       </span>
@@ -46,29 +46,29 @@
                         <label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label>
                       </span>
                     </div>
-                    <div class="five columns">
+                    <div class="large-5 columns">
                       <span class="bi-name"><%= bi.name %></span>
                       <span class="bi-name-input hide">                        
                         <%= f.text_field :name, required:'' %>
                       </span>
                     </div>
-                    <div class="two columns budget-spent-<%= bi.id %>">
+                    <div class="large-2 columns budget-spent-<%= bi.id %>">
                       <%= number_to_currency bi.budget_item_expenses.sum :amount %>
                     </div>
-                    <div class="two columns">
+                    <div class="large-2 columns">
                       <div class="row">
-                        <div class="eight columns">
+                        <div class="large-8 columns">
                             <span class="bi-name blue"><%= number_to_currency bi.amount_budgeted %></span>                            
                             <span class="bi-name-input hide"><%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %></span>
                             <%= f.submit "save", class: 'tiny button' %>
                             <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button' %>
                         </div>
-                        <div class="four columns">
+                        <div class="large-4 columns">
                           <%= link_to 'x', budget_item_path(bi), method: :delete, class: 'delete-bi', data: {remote: true, confirm: 'Are you sure? This will delete all expenses too!'} %>
                         </div>
                       </div>
                     </div>
-                    <div class="two columns budget-difference-<%= bi.id %>">
+                    <div class="large-2 columns budget-difference-<%= bi.id %>">
                       <%= render partial: 'budget_difference', locals: {bi: bi} %>
                     </div>
                     <% end %>
@@ -79,24 +79,24 @@
                 <% end %>
                 <div class="row hide new-budget-item">
                 <%= form_for BudgetItem.new, html: {data: {remote: true}} do |f| %>
-                  <div class="one columns"><span class="bi-name-input"><label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label></span></div>
-                  <div class="five columns">
+                  <div class="large-1 columns"><span class="bi-name-input"><label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label></span></div>
+                  <div class="large-5 columns">
                     <%= f.hidden_field :budget_category_id, value: c.id %>
                     <%= f.text_field :name, placeholder: 'Name', required:'' %>
                   </div>
-                  <div class="two columns">
+                  <div class="large-2 columns">
                     $0.00
                   </div>
-                  <div class="two columns">
+                  <div class="large-2 columns">
                     <div class="row">
-                      <div class="eight columns">
+                      <div class="large-8 columns">
                           <%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %>
                           <%= f.submit "save", class: 'tiny button' %>
                           <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button add-budget-cancel' %>
                       </div>                      
                     </div>
                   </div>
-                  <div class="two columns"></div>
+                  <div class="large-2 columns"></div>
                 <% end %>
                 </div>
                 <div class="row">
@@ -106,7 +106,7 @@
             </li>
           </ul>
         </div>
-        <div class="three columns">
+        <div class="large-1 columns">
           <br />
           <br />
           <br />
@@ -123,5 +123,5 @@
     </div>
 
     <script>
-      window.history.pushState({"html": $('#month-view').html(),"pageTitle":document.title},"", '/my-budgets/<%= params[:year] %>/<%= params[:month] %>');
+      window.history.pushState({"html": document.getElementById('month-view').innerHTML,"pageTitle":document.title},"", '/my-budgets/<%= params[:year] %>/<%= params[:month] %>');
     </script>

@@ -1,97 +1,75 @@
 <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
   <head>
-    <meta charset="utf-8" />
-    <!-- Set the viewport width to device width for mobile -->
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />  
-    <title>Budgetal.com</title>
-    
-    <!-- Included CSS Files -->
-    <%= stylesheet_link_tag    "application" %>
-    
-    <!-- Included JS Files  -->
-    <%= javascript_include_tag "application" %>
-      <script type="text/javascript">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="With the First Baptist Church of Streetsboro's website you can stayed involved and up-to-date on what's happening at FBC." />
+    <meta name="keywords" content="fbcs, faith, streetsboro, first, baptist, church, fbc, fbcstreetsboro.org, fbcstreetsboro.net,  fbcstreetsboro.com" />
+    <meta name="apple-itunes-app" content="app-id=, app-argument=Budgetal" />
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-39276937-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      </script>  
+    <title><%= yield(:title) %>Budgetal</title>
+    <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <%= stylesheet_link_tag "application" %>
     <%= csrf_meta_tags %>
+
+    <style>
+      <%= yield(:styles) %>
+    </style>
   </head>
   <body>
-      <% if flash[:notice] %>
-        <div class='alert-box'><%= flash[:notice] %></div>
-      <% end %>
-      <% if flash[:error] %>
-        <div class='alert-box' style='background: red !important;'><%= flash[:error] %></div>
-      <% end %>
-      
-      <nav class="top-bar">
-        <ul>
-          <!-- Title Area -->
+    <% if flash[:notice] %>
+      <div class='alert-box'><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:error] %>
+      <div class='alert-box' style='background: red !important;'><%= flash[:error] %></div>
+    <% end %>
+    <div class="contain-to-grid">
+      <nav class="top-bar" data-topbar>
+        <ul class="title-area">
           <li class="name">
-            <h1>
-              <%= link_to "Budgetal.com", root_path, :title => "Budgetal.com" %>
-            </h1>
-          </li>        
+            <h1><a href="/" title="Budgetal"><%= image_tag "logo.png", style: 'width: 55px; margin-right: 10px' %> Budgetal</a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
         </ul>
-
-        <section>
-          <!-- Left Nav Section -->
-          <% if current_user %>
-          <ul class="right">
-            <li class=" show-for-medium-and-up"></li>
-            <li>
-                <%= link_to "Sign Out", logout_path, title: 'logout', title: 'Logout' %>
-            </li>
+        <section class="top-bar-section">
+        <!-- Right Nav Section -->
+          <ul class="right">        
+            <li<%#= is_active? "about" %>><%#= link_to "About", about_path, title: "About" %></li>
+            
+            <li<%#= is_active? "ministries" %>><%#= link_to "Ministries", ministries_path, title: "Ministries" %></li>
+            
+            <li<%#= is_active? "media" %>><%#= link_to "Media", broadcast_path, title: "Media" %></li>
+            
+            <li<%#= is_active? "resources" %>><%#= link_to "Resources", resources_path, title: "Resources" %></li>          
+            
+            <li<%#= is_active? "donations" %>><%#= link_to "Give", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MZPW3QR6ECZWY", title: "Give", :target => "_blank" %></li>
+            
+            <li<%#= is_active? "contact" %>><%#= link_to "Contact", contact_path, title: "Contact us" %></li>            
+            <% if current_user %>
+              <li><%= link_to "Budgets", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Budgets' %></li>
+              <li><%= link_to "My Account [#{current_user.email}]", my_account_path, title: 'My Account' %></li>
+              <%#= link_to "My Account", edit_devise_user_registration_path, title: "My account" %>
+              <% if current_user.admin? %>
+                <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
+              <% end %>                        
+                <li><%= link_to "Sign Out", logout_path, title: 'logout', title: 'Logout' %><%#= link_to('Sign out', destroy_devise_user_session_path, method: :delete, title: 'Sign out') %></li>
+            <% else %>
+              <li><%= link_to "Sign in / Sign up", "#", data: {reveal_id: "signInUp"}, title: "Sign In" %></li>
+            <% end %>
           </ul>
-
-          <ul class="right">
-            <li class=" show-for-medium-and-up"></li>
-            <li>
-              <%= link_to "My Account [#{current_user.email}]", my_account_path, title: 'My Account' %>
-            </li>
-          </ul>
-
-          <ul class="right">
-            <li class=" show-for-medium-and-up"></li>
-            <li>
-                <%= link_to "Budgets", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Budgets' %>
-            </li>
-          </ul>
-
-          <% if current_user.admin? %>
-          <ul class="right">
-            <li class=" show-for-medium-and-up"></li>
-            <li>
-                <%= link_to "Admin Panel", admin_path, title: 'Admin' %>
-            </li>
-          </ul>
-          <% end %>
-
-          <% else %>
-
-          <ul class="right">
-            <li class=" show-for-medium-and-up"></li>
-            <li>
-                <%= link_to "Sign In", "#", data: {reveal_id: "signInUp"}, title: "Sign In" %>
-            </li>
-          </ul>
-
-          <% end %>
-        </section>
-      </nav>
-    
-  <div id="contentmain" class="row">
-    <div class="twelve columns">
-      <%= yield %>
+        </section>  
+      </nav><!--#navmain.hide-for-small-->  
     </div>
-  </div>
+
+    <div id="contentmain" class="row">
+      <div class="large-12 columns">
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= javascript_include_tag "application" %>
+    <script><%= yield(:ready) %></script>    
   </body>
 </html>

@@ -1,6 +1,6 @@
+require 'bcrypt'
 class User < ActiveRecord::Base
   has_many :budgets
-  attr_accessible :email, :password, :password_confirmation
   attr_accessor :password
   
   before_save :encrypt_password 
@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates :password, :length => {:minimum => 6}, :on => :create
 
-  EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+  EMAIL_REGEX = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i
   validates :email, :presence => true, :uniqueness => true
   validates :email, :presence => true, :format => {:with => EMAIL_REGEX}
 

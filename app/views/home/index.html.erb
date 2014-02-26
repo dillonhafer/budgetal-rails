@@ -92,7 +92,7 @@
   .blue {color: #69F;}
   .red {color: red;}
   .green {color: green;}
-  img {height: 27px; width: 27px;}
+  #contentmain img {height: 27px; width: 27px;}
   #footermain img {height: 16px; width: 16px;}
   .general.foundicon-mail {position: relative; left: 20px; top: -2px; vertical-align: middle;}
   .bi-name-input .general.foundicon-mail {position: relative; left: 40px; top: -20px; vertical-align: middle;}  
@@ -124,15 +124,15 @@
   }
 </style>
 
-<script>
+<% content_for :ready do %>
 $(document).ready(function() {  
   $('title').text('<%= page_title(params[:month]) %> <%= params[:year] %>'+' - Intense-Money.com');
 
-  $('.month_links').live('click', function() {
+  $('.month_links').on('click', function() {
     $('#month-view').fadeOut();
   });
 
-  $('select#budget_item_expense_name').live('change', function() {
+  $('select#budget_item_expense_name').on('change', function() {
     var select_value = $(this).val();
     if (select_value === 'Add a new item') {
       $(this).hide();
@@ -141,7 +141,7 @@ $(document).ready(function() {
     }
   });
 
-  $('input#budget_item_expense_name').live('blur', function() {
+  $('input#budget_item_expense_name').on('blur', function() {
     var select_value = $(this).val();
     if (select_value === '') {
       $(this).prev('select').show().focus();
@@ -165,7 +165,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#month_links div a').live('click', function() {
+  $('#month_links div a').on('click', function() {
     $('.qn').slideDown('fast');
     $('#month_links div a').removeClass('active');
     $(this).addClass('active');
@@ -181,23 +181,23 @@ $(document).ready(function() {
     }
   });
 
-  $('#budget-month').live('change', function() {
+  $('#budget-month').on('change', function() {
     $(this).parent().submit();
   });
 
-  $('input[type="text"]').live('focus', function() {
+  $('input[type="text"]').on('focus', function() {
     $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
     $(this).parent().parent().parent().find('a.delete-bi').fadeOut("fast");
   });
 
-  $('input[type="number"]').live('focus', function() {
+  $('input[type="number"]').on('focus', function() {
     $(this).parent().parent().parent().find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('a.cancel').fadeIn("fast");
     $(this).parent().parent().parent().find('a.delete-bi').fadeOut("fast");
   })
 
-  $('a.cancel').live('click', function() {
+  $('a.cancel').on('click', function() {
     $(this).prev('input[type="submit"]').fadeOut("fast");
     $(this).fadeOut("fast");
     $(this).parent().parent().find('.bi-name').show();
@@ -207,25 +207,25 @@ $(document).ready(function() {
     $(this).parent().parent().find('a.delete-bi').fadeIn("fast");
   })
 
-  $(".add-budget-cancel").live('click', function() {
+  $(".add-budget-cancel").on('click', function() {
     $(this).parent().parent().parent().parent().parent().fadeOut();
   });
 
-  $(".add-budget-expense-cancel").live('click', function() {
+  $(".add-budget-expense-cancel").on('click', function() {
     $(this).parent().parent().parent().fadeOut();
   });
 
-  $(".edit_budget_item div span.bi-name").live('hover', function() {
+  $(".edit_budget_item div span.bi-name").on('hover', function() {
     $(this).parent().parent().find('.bi-name').hide();
     $(this).parent().parent().find('.show-expenses').hide();
     $(this).parent().parent().find('.show-expenses').next('.foundicon-mail').hide();    
     $(this).parent().parent().find('.bi-name-input').show();
   });
-  $(".edit_budget_item div span.bi-name").live("touchstart", function() {
+  $(".edit_budget_item div span.bi-name").on("touchstart", function() {
     $(this).parent().parent().find('.bi-name').hide();
     $(this).parent().parent().find('.bi-name-input').show();    
   });
-  $(".edit_budget_item").live('mouseleave', function() {
+  $(".edit_budget_item").on('mouseleave', function() {
     if ($(this).find('.bi-name-input').find('input[type="text"]').is(':focus')) {
     } else {
       $(this).find('.bi-name').show();
@@ -235,19 +235,19 @@ $(document).ready(function() {
     }
   });
 
-  $(".add-budget-link").live('click', function() {
+  $(".add-budget-link").on('click', function() {
     $(this).parent().parent().parent().find('div.new-budget-item').fadeIn();
     $(this).parent().parent().parent().find('div.new-budget-item').find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('div.new-budget-item').find('a.cancel').fadeIn("fast");
   });
 
-  $(".add-expense-link").live('click', function() {
+  $(".add-expense-link").on('click', function() {
     $(this).parent().parent().parent().find('div.new-expense').fadeIn();
     $(this).parent().parent().parent().find('div.new-expense').find('input[type="submit"]').fadeIn("fast");
     $(this).parent().parent().parent().find('div.new-expense').find('a.cancel').fadeIn("fast");
   });
 
-  $(".show-expenses").live('click', function() {    
+  $(".show-expenses").on('click', function() {    
     $(this).parent().parent().parent().parent().next('.ajax-container.hide').fadeToggle("fast");
     if ($(this).text() == '+') {
       $(this).text("-");
@@ -270,46 +270,46 @@ $(document).ready(function() {
       }, 850);
     });
 
-    $('#relateLeft').live("click", function(evt) {
+    $('#relateLeft').on("click", function(evt) {
       evt.preventDefault();
       $('#budget-list').animate({scrollLeft:'-=260'}, 'slow'); 
     });
-      $('#relateRight').live("click", function(evt) {
+      $('#relateRight').on("click", function(evt) {
       evt.preventDefault();
       $('#budget-list').animate({scrollLeft:'+=260'}, 'slow'); 
     });
   });
 });
-</script>
+<% end %>
+
 <div class="row small-block-grid-2 hide-for-small qn">
-  <div class="one column"><a href="#Charity" class="quickNavLink" title="Charity"><img src="/assets/Charity.png" /></a></div>
-  <div class="one column"><a href="#Saving" class="quickNavLink" title="Saving"><img src="/assets/Saving.png" /></a></div>
-  <div class="one column"><a href="#Housing" class="quickNavLink" title="Housing"><img src="/assets/Housing.png" /></a></div>
-  <div class="one column"><a href="#Utilities" class="quickNavLink" title="Utilities"><img src="/assets/Utilities.png" /></a></div>
-  <div class="one column"><a href="#Food" class="quickNavLink" title="Food"><img src="/assets/Food.png" /></a></div>
-  <div class="one column"><a href="#Clothing" class="quickNavLink" title="Clothing"><img src="/assets/Clothing.png" /></a></div>
-  <div class="one column"><a href="#Transportation" class="quickNavLink" title="Transportation"><img src="/assets/Transportation.png" /></a></div>
-  <div class="one column"><a href="#Medical-Health" class="quickNavLink" title="Health"><img src="/assets/Medical/Health.png" /></a></div>
-  <div class="one column"><a href="#Insurance" class="quickNavLink" title="Insurance"><img src="/assets/Insurance.png" /></a></div>
-  <div class="one column"><a href="#Personal" class="quickNavLink" title="Personal"><img src="/assets/Personal.png" /></a></div>
-  <div class="one column"><a href="#Recreation" class="quickNavLink" title="Recreation"><img src="/assets/Recreation.png" /></a></div>
-  <div class="one column"><a href="#Debts" class="quickNavLink" title="Debts"><img src="/assets/Debts.png" /></a></div>
+  <div class="large-1 column"><a href="#Charity" class="quickNavLink" title="Charity"><img src="/assets/Charity.png" /></a></div>
+  <div class="large-1 column"><a href="#Saving" class="quickNavLink" title="Saving"><img src="/assets/Saving.png" /></a></div>
+  <div class="large-1 column"><a href="#Housing" class="quickNavLink" title="Housing"><img src="/assets/Housing.png" /></a></div>
+  <div class="large-1 column"><a href="#Utilities" class="quickNavLink" title="Utilities"><img src="/assets/Utilities.png" /></a></div>
+  <div class="large-1 column"><a href="#Food" class="quickNavLink" title="Food"><img src="/assets/Food.png" /></a></div>
+  <div class="large-1 column"><a href="#Clothing" class="quickNavLink" title="Clothing"><img src="/assets/Clothing.png" /></a></div>
+  <div class="large-1 column"><a href="#Transportation" class="quickNavLink" title="Transportation"><img src="/assets/Transportation.png" /></a></div>
+  <div class="large-1 column"><a href="#Medical-Health" class="quickNavLink" title="Health"><img src="/assets/Medical/Health.png" /></a></div>
+  <div class="large-1 column"><a href="#Insurance" class="quickNavLink" title="Insurance"><img src="/assets/Insurance.png" /></a></div>
+  <div class="large-1 column"><a href="#Personal" class="quickNavLink" title="Personal"><img src="/assets/Personal.png" /></a></div>
+  <div class="large-1 column"><a href="#Recreation" class="quickNavLink" title="Recreation"><img src="/assets/Recreation.png" /></a></div>
+  <div class="large-1 column"><a href="#Debts" class="quickNavLink" title="Debts"><img src="/assets/Debts.png" /></a></div>
 </div>
 
 <div id='budget-list'>
   <div class="hide-for-small" id="month_links" style='float: left;width: 150%'>    
     <% @budgets.each do |b| %>  
-      <div class="monthy left" style='width:80px;display:inline'><%= link_to b.month, my_budgets_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month > 9}" %><br /><%= find_short_month b.month %></div>
-    <% end %>
-    <div class="left" style='width:80px;display:inline'><%= link_to '+', new_budget_path, class: 'nice button blue' %><br />New</div>    
+      <div class="monthy left"><%= link_to b.month, my_budgets_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month > 9}" %><br /><%= find_short_month b.month %></div>
+    <% end %>    
   </div>
 </div>
 
 <div class="row show-for-small">
-  <div class="twelve columns">
+  <div class="large-12 columns">
     <br />
     <%= form_tag my_budgets_path, remote: true do %>
-      <%= select_tag :year, options_for_select( [2013] ), prompt: 'Select a year' %>
+      <%= select_tag :year, options_for_select( [2013, 2014] ), prompt: 'Select a year' %>
       <%= select_tag :month, options_for_select( @budgets.map {|b| [(Date.new( b.year, b.month, 1).strftime("%B")), 1] }), prompt: 'Select a month', id: 'budget-month' %>
     <% end %>
   </div>

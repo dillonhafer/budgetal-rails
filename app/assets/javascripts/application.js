@@ -5,20 +5,19 @@
 // or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
 //
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
+// compiled file.
 //
-// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
-// GO AFTER THE REQUIRES BELOW.
+// Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
+// about supported directives.
 //
 //= require jquery
-//= require jquery.min
-//= require jquery.validate
 //= require jquery_ujs
 //= require foundation
-//= require jquery.ui.all
-//= require jquery.joyride-2.0.3
-//= require jquery.cookie
+//= require foundation/foundation.topbar
+//= require jquery_nested_form
 //= require_tree .
+
+$(document).foundation();
 
 $(document).ready(function() {
   if ($(".alert-box").length){
@@ -26,9 +25,6 @@ $(document).ready(function() {
       $(this).delay(3000).fadeOut(250);
     });
   }
-  $(document).foundationAccordion();
-
-  $("#loading").hide();  
 
   /* Flash to headers */
   $(document).ajaxComplete(function(event, request){
@@ -39,3 +35,4 @@ $(document).ready(function() {
     $(".error").click(function() { $(this).slideUp(); });
   });
 });
+$(function(){ $(document).foundation(); });

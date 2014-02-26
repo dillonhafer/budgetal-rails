@@ -19,7 +19,7 @@ h3 {
   </div>
   <div class='nine columns'>
     <%= current_user.email %>
-    <%= link_to "Update Account Info", edit_user_path, class: 'right' %>
+    <%= link_to "Update Account Info", edit_user_path(current_user), class: 'right' %>
   </div>
 </div>
 <br />

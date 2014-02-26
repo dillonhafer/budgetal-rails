@@ -10,20 +10,13 @@
  *
  *= require_self
  *= require foundation_and_overrides
- *= require_tree .
- *= require animate
- *= require jquery.ui.all
- *= require joyride-2.0.3
+ *= require_tree . 
  */
 
 body, html {background: white !important; height: 100% !important;}
 
 body {margin-top: 0px !important;}
 
-nav.top-bar {
-  background-color: #6699FF;
-  border-top: 5px solid #3366CC;
-}
 #contentmain {background: white;border-top: none; min-height: 80%;height: auto !important;  }
 
 .panel h6 { color: whitesmoke; }
@@ -118,4 +111,20 @@ nav.top-bar {
 
 .centered {
   text-align: center;
+}
+
+h6.p-budgeted {
+  background: #6699FF;
+  padding: 12px 6px;
+  width: 50px;
+}
+
+h6.p-recommended {
+  text-align:center;
+  border: 1px solid #6699FF;
+  padding: 6px;
+  width: 50px;
+  color: #6699FF;
+  font-size: 10px;
+  border-left: 1px solid #DDD
 }
