@@ -1,11 +1,11 @@
 <div class="row">
       <% @budget.budget_categories.order(:id).each do |c| %>
         <div class="large-11 columns">
-          <ul class="accordion">
-            <li class="active">
-              <div id="<%= c.name.gsub('/', '-') %>" class="title row">      
-                <div class="large-1 columns left"><%= image_tag "#{c.name}.png" %></div>
-                <div class="large-5 columns left">
+          <ul class="main-budget-categories">
+            <li>
+              <div id="<%= c.name.gsub('/', '-') %>" class="row">      
+                <div class="large-1 columns centered"><%= image_tag "#{c.name}.png" %></div>
+                <div class="large-5 columns">
                   <h5><%= c.name %> </h5>
                 </div>
                 <div class="large-6 columns">
@@ -19,9 +19,8 @@
                   <% end %>
                 </div>                  
               </div>
-              <div class="content">
-                <div class="row">
                   <hr />
+                <div class="row">
                   <div class='large-6 columns'>&nbsp;</div>
                   <div class="large-2 columns">
                     Spent
@@ -37,7 +36,7 @@
                 <% c.budget_items.order(:id).each do |bi| %>
                   <div class="row">
                     <%= form_for bi, html: {data: {remote: true}} do |f| %>
-                    <div class="large-1 columns">
+                    <div class="large-1 columns centered">
                       <span class="bi-nam">
                         <%= link_to '+', 'javascript:void(0)', class: 'show-expenses' %><%= is_envelope? bi %>
                       </span>
@@ -100,9 +99,8 @@
                 <% end %>
                 </div>
                 <div class="row">
-                  <div class="large-10 large-offset-2 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button shadow' %></div>
+                  <div class="large-11 large-offset-1 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button shadow' %></div>
                 </div>
-              </div>
             </li>
           </ul>
         </div>
