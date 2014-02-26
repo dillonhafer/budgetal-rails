@@ -318,12 +318,12 @@ $(document).ready(function() {
 <hr style="border:none;border-bottom: 2px solid #6699FF;" />
 
 <% if @budget %>
-<div id="month-view" class="">
+<div id="month-view">
   <div class="ajax-container overview"><%= render 'overview' %></div>
   <div class="ajax-container detail-cash-flow"><%= render 'cashflow' %></div>
 </div>
 <% else %>
-<div id="greeting" class="animated ">
+<div id="greeting">
   <h2>Welcome!</h2>
   <p>You don't have a budget for this month! You can create a new one below.</p>
   <%= link_to "Create a budget", new_budget_path(year: params[:year], month: params[:month]), class: 'button nice' %>
