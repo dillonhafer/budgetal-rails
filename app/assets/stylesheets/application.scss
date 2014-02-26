@@ -143,7 +143,8 @@ h6.p-recommended {
       width: 36px;
       display: block;
       height: 36px;
-      padding: 10px 10px 10px 9px;
+      font-size: 14px;
+      padding: 12px 10px 10px 9px;
       margin: 0 auto;
 
       &.tfwo {padding: 10% 11%;}
@@ -160,3 +161,5 @@ h6.p-recommended {
 a.delete-bi {padding: 5px 10px;color: white;background: #333;border-radius: 50px;text-align: center;}
 a.delete-bi:hover {background: red; color:white;}
 a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
+
+.progress.blue-meter { .meter {background: #6699FF;}}

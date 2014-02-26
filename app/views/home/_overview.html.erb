@@ -17,8 +17,8 @@
         <div class='large-6 columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
       </div>
     </div>
-    <div id="budget-remainder" class="eight columns">
-      <div class="progress round"><span class="meter" style=""></span></div>
+    <div id="budget-remainder" class="large-8 columns">
+      <div class="progress blue-meter"><span class="meter"></span></div>
       <h5><%= remaining_to_budget %></h5>
       <% content_for :ready do %>       
         $(".meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
