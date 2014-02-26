@@ -128,3 +128,35 @@ h6.p-recommended {
   font-size: 10px;
   border-left: 1px solid #DDD
 }
+
+#month_links {
+  margin-top: 20px; text-align: center;
+  div {
+    width:80px;
+    display:inline;      
+    
+    a {
+      background: #6699FF;
+      color: white;
+      border-radius: 20px;
+      text-align: center;
+      width: 36px;
+      display: block;
+      height: 36px;
+      padding: 10px 10px 10px 9px;
+      margin: 0 auto;
+
+      &.tfwo {padding: 10% 11%;}
+      &:hover, &.active {
+        background: #333 !important;
+      }
+      transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;
+    }
+  }
+}
+
+#budget-remainder {text-align: center;}
+#greeting {min-height: 500px;}
+a.delete-bi {padding: 5px 10px;color: white;background: #333;border-radius: 50px;text-align: center;}
+a.delete-bi:hover {background: red; color:white;}
+a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}

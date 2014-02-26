@@ -298,7 +298,7 @@ $(document).ready(function() {
 </div>
 
 <div id='budget-list'>
-  <div class="hide-for-small" id="month_links" style='float: left;width: 150%'>    
+  <div class="hide-for-small" id="month_links">    
     <% @budgets.each do |b| %>  
       <div class="monthy left"><%= link_to b.month, my_budgets_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month > 9}" %><br /><%= find_short_month b.month %></div>
     <% end %>    
