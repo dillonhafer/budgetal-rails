@@ -5,7 +5,7 @@ class MonthlyStatisticsController < ApplicationController
   end
 
   def show
-    @date = Date.new(params[:year].to_i, params[:month].to_i).strftime("%B %Y")
-    @budget = Budget.find_by_month_and_user_id(params[:month], current_user.id)
+    @date   = Date.new(params[:year].to_i, params[:month].to_i).strftime("%B %Y")
+    @budget = current_user.budgets.where(month: params[:month], year: params[:year]).first
   end
 end
