@@ -50,7 +50,7 @@
               <% end %>                        
                 <li><%= link_to "Sign Out", logout_path, title: 'logout', title: 'Logout' %><%#= link_to('Sign out', destroy_devise_user_session_path, method: :delete, title: 'Sign out') %></li>
             <% else %>
-              <li><%= link_to "Sign in / Sign up", "#", data: {reveal_id: "signInUp"}, title: "Sign In" %></li>
+              <li><%= link_to 'Sign in / Sign up', sign_in_modal_path, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In" %>
             <% end %>
           </ul>
         </section>  
@@ -79,6 +79,7 @@
     </div>
 
     <%= javascript_include_tag "application" %>
-    <script><%= yield(:ready) %></script>    
+    <script><%= yield(:ready) %></script>
+    <%= sign_in_modal unless current_user %>
   </body>
 </html>

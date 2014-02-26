@@ -1,11 +1,10 @@
-<style>h3 {color: #64ad68;}</style>
 <div id="contentmain" class="container">
   <div id="contentheader" class="row">
     <div class="five columns"><h4></h4></div>
   </div><!--#contentheader-->
   <div id="contentpage-wrapper" class="row">
-    <section id="contentpage" class="eight columns">
-      <h3>Reset Password</h3>
+    <section id="contentpage" class="large-8 columns">
+      <h3 class='blue-color'>Reset Password</h3>
       <h5 class="subheader">Enter your email address to reset your password.</h5>
       <hr />
       <div class=" plain">
@@ -14,7 +13,7 @@
             <%= email_field_tag :email, params[:email], :placeholder => "email@example.com", :class => "input-text medium", required: '' %>
           </div>
           <div class="actions">
-            <%= submit_tag "Send Password Reset Email", :class => "button medium yellow ", :style => "width: 254px;" %>
+            <%= submit_tag "Send Password Reset Email", :class => "button medium blue radius " %>
           </div>
         <% end %>
       </div>

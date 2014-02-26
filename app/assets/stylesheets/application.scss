@@ -168,6 +168,7 @@ a.delete-bi {padding: 5px 10px;color: white;background: #333;border-radius: 50px
 a.delete-bi:hover {background: red; color:white;}
 a.delete-bi {transition: background 0.20s ease-in-out; -moz-transition: background 0.20s ease-in-out; -webkit-transition: background 0.20s ease-in-out; -o-transition: background 0.20s ease-in-out;}
 
+.blue-color {color: #6699FF;}
 .progress.blue-meter { .meter {background: #6699FF;}}
 
 ul.main-budget-categories {  
@@ -183,7 +184,7 @@ ul.main-budget-categories {
   background: #6699FF; 
   color: white; 
 
-  &:hover {
+  &:hover, &:focus {
     background: darken(#6699FF,10%);
   }
 }

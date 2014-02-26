@@ -1,0 +1,1 @@
+$('#category-<%= @budget_category.id %> .new-budget-item').html("<%= escape_javascript(render(partial: 'home/budget_item', locals: {c: @budget_category})) %>");

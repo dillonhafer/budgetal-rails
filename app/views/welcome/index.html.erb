@@ -1,21 +1,25 @@
-<style>
-body {background-image: url(<%= asset_path 'PiggyBankHeader.jpg' %>) !important; background-position: 0, 1000px !important;}
-#contentmain {background: transparent;border-top: none; }
+<% content_for :styles do %>
+  body {
+    background-image: url(<%= asset_path 'PiggyBankHeader.jpg' %>) !important;
+    background-position: 0, 1000px !important;
+  }
+  #contentmain {
+    background: transparent;
+    border-top: none; 
+  }
+  h1 {
+    text-align: center;
+    margin: 40px;
+    font-size: 55px;
+    text-shadow: 0 -1px 1px #ddd;
+    color: #6699FF;
+  }
+<% end %>
 </style>
 
-<h1 style="text-align:center;margin: 40px;font-size: 55px;text-shadow: 0 -1px 1px #ddd;color: #6699FF;">Welcome to Freedom</h1>
-
-<br />
-<br />
-<br />
-<br />
-  <div class="row">
-    <div class="large-12 columns panel">
-      <p><h2 class='subheader centered'>Coming Soon!</h2></p> 
-    </div>    
-  </div> 
-
-<br />
-<br />
-<br />
-<%= render partial: 'sign_in' %>
+<h1>Welcome to Freedom</h1>
+<div class="row">
+  <div class="large-12 columns panel">
+    <p><h2 class='subheader centered'>Coming Soon!</h2></p> 
+  </div>    
+</div> 

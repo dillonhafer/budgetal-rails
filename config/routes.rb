@@ -23,7 +23,8 @@ Budgets::Application.routes.draw do
   get 'sign-out' => 'sessions#destroy', :as => 'logout'
   get 'sign-in' => 'sessions#create', :as => 'login'
   get 'my-account' => 'users#my_account', :as => 'my_account'
-  
+
+  get '/sign-in-up' => 'welcome#sign_in', as: 'sign_in_modal'  
   resources :password_resets, path: 'password-resets'
   get "/send-password-reset" => "password_resets#new"  
 end

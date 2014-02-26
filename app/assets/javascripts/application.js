@@ -22,7 +22,7 @@ $(document).foundation();
 $(document).ready(function() {
   if ($(".alert-box").length){
     $(".alert-box").hide().fadeIn(400,function(){
-      $(this).delay(3000).fadeOut(250);
+      $(this).delay(3000).fadeOut(250);      
     });
   }
 
@@ -30,7 +30,13 @@ $(document).ready(function() {
   $(document).ajaxComplete(function(event, request){
     var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));    
     if(!flash) return;
-    if(flash.notice) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box success" style="display: none;"></div>').html(flash.notice)); $(".success").slideDown(400).delay(3000).slideUp(250); $.getScript(window.location); }
+
+    if(flash.notice) { 
+      $(".error").remove(); 
+      $("#contentmain").before($('<div data-alert class="alert-box radius blue" style="display: none;position: fixed; top: 20px;"></div>').html(flash.notice));
+      $(".alert-box.radius.blue").fadeIn(400).delay(3000).fadeOut(250, function() {$(this).remove()});
+    }
+
     if(flash.errors) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box error" style="display: none;"></div>').html(flash.errors)); $(".error").slideDown(400); } 
     $(".error").click(function() { $(this).slideUp(); });
   });

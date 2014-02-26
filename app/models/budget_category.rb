@@ -1,6 +1,7 @@
 class BudgetCategory < ActiveRecord::Base
   belongs_to :budget
   has_many :budget_items
+  accepts_nested_attributes_for :budget_items, allow_destroy: true
   validates_presence_of :budget_id, :name, :percentage
 
    def total_spent    

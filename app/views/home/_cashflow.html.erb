@@ -2,7 +2,7 @@
       <% @budget.budget_categories.order(:id).each do |c| %>
         <div class="large-11 columns">
           <ul class="main-budget-categories">
-            <li>
+            <li id='category-<%= c.id %>'>
               <div id="<%= c.name.gsub('/', '-') %>" class="row">      
                 <div class="large-1 columns centered"><%= image_tag "#{c.name}.png" %></div>
                 <div class="large-5 columns">
@@ -19,22 +19,22 @@
                   <% end %>
                 </div>                  
               </div>
-                  <hr />
-                <div class="row">
-                  <div class='large-6 columns'>&nbsp;</div>
-                  <div class="large-2 columns">
-                    Spent
-                  </div>
-                  <div class="large-2 columns">
-                    Budgeted
-                  </div>
-                  <div class="large-2 columns">
-                    Difference
-                  </div>              
+              <hr />
+              <div class="row">
+                <div class='large-6 columns'>&nbsp;</div>
+                <div class="large-2 columns">
+                  Spent
+                </div>
+                <div class="large-2 columns">
+                  Budgeted
+                </div>
+                <div class="large-2 columns">
+                  Difference
                 </div>              
-                <br />
-                <% c.budget_items.order(:id).each do |bi| %>
-                  <div class="row">
+              </div>              
+              <br />
+                <% c.budget_items.order(:created_at).each do |bi| %>
+                  <div class="row hide">
                     <%= form_for bi, html: {data: {remote: true}} do |f| %>
                     <div class="large-1 columns centered">
                       <span class="bi-nam">
@@ -76,31 +76,8 @@
                     <%= render partial: 'budget_item_expenses', locals: {bi: bi} %>
                   </div>
                 <% end %>
-                <div class="row hide new-budget-item">
-                <%= form_for BudgetItem.new, html: {data: {remote: true}} do |f| %>
-                  <div class="large-1 columns"><span class="bi-name-input"><label><%= f.check_box :envelope %><i class='general foundicon-mail blue'></i></label></span></div>
-                  <div class="large-5 columns">
-                    <%= f.hidden_field :budget_category_id, value: c.id %>
-                    <%= f.text_field :name, placeholder: 'Name', required:'' %>
-                  </div>
-                  <div class="large-2 columns">
-                    $0.00
-                  </div>
-                  <div class="large-2 columns">
-                    <div class="row">
-                      <div class="large-8 columns">
-                          <%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %>
-                          <%= f.submit "save", class: 'tiny button radius blue' %>
-                          <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert radius button add-budget-cancel' %>
-                      </div>                      
-                    </div>
-                  </div>
-                  <div class="large-2 columns"></div>
-                <% end %>
-                </div>
-                <div class="row">
-                  <div class="large-3 columns centered"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button radius success' %></div>
-                  <div class='large-9 columns'></div>
+                <div class="row new-budget-item">
+                  <%= render partial: 'budget_item', locals: {c: c} %>               
                 </div>
             </li>
           </ul>

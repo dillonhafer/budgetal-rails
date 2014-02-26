@@ -1,0 +1,24 @@
+<div class='row'>
+  <div class="large-1 columns centered">
+    <a href='javascript:void(0)' class='show-expenses'>+</a>
+  </div>
+  <div class="large-5 columns">                    
+    <%= f.text_field :name, placeholder: 'Name', required:'' %>
+  </div>
+  <div class="large-2 columns">
+    <%= number_to_currency(f.object.budget_item_expenses.sum :amount) %>
+  </div>
+  <div class="large-2 columns">
+    <%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %>                    
+  </div>                  
+  <div class="large-2 columns">
+    <% if (f.object.amount_budgeted || 0)-f.object.budget_item_expenses.sum(:amount) > 0 %>
+      <span class="green"><%= number_to_currency f.object.amount_budgeted-f.object.budget_item_expenses.sum(:amount) %></span>
+    <% elsif (f.object.amount_budgeted || 0)-f.object.budget_item_expenses.sum(:amount) < 0 %>
+      <span class="red"><%= number_to_currency f.object.amount_budgeted-f.object.budget_item_expenses.sum(:amount) %></span>
+    <% else %>
+      <span class="blue"><%= number_to_currency (f.object.amount_budgeted || 0)-f.object.budget_item_expenses.sum(:amount) %></span>
+    <% end %>
+    <%= f.link_to_remove '×', class: 'tiny alert round button' %>
+  </div>
+</div>
