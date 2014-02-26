@@ -82,3 +82,7 @@ $(document).on('keyup', '#budget_monthly_income', function() {
 $(document).on('change', '#budget_monthly_income', function() {
   $('.edit_budget').submit();
 });
+
+$(document).on('nested:fieldRemoved', function(event){    
+  var field = event.field.remove();  
+})
