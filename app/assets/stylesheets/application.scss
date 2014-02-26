@@ -187,3 +187,15 @@ ul.main-budget-categories {
     background: darken(#6699FF,10%);
   }
 }
+
+.alert-box.blue {
+  color: white;
+  background: #69F;
+  border: none;
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  z-index: 999999;
+
+  a.close {color:white;}
+}

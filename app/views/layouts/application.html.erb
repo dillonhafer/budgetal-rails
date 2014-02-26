@@ -18,13 +18,7 @@
       <%= yield(:styles) %>
     </style>
   </head>
-  <body>
-    <% if flash[:notice] %>
-      <div class='alert-box'><%= flash[:notice] %></div>
-    <% end %>
-    <% if flash[:error] %>
-      <div class='alert-box' style='background: red !important;'><%= flash[:error] %></div>
-    <% end %>
+  <body>    
     <div class="contain-to-grid">
       <nav class="top-bar" data-topbar>
         <ul class="title-area">
@@ -65,6 +59,21 @@
 
     <div id="contentmain" class="row">
       <div class="large-12 columns">
+        <% if flash[:notice] %>
+          <br/>
+          <div data-alert class="alert-box blue radius">
+            <%= flash[:notice] %>
+            <a href="#" class="close">&times;</a>
+          </div>      
+        <% end %>
+        <% if flash[:error] %>
+          <br/>
+          <div data-alert class="alert-box alert radius">      
+            <%= flash[:error] %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+
         <%= yield %>
       </div>
     </div>
