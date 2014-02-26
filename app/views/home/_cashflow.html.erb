@@ -78,7 +78,7 @@
                 <% end %>
                 <div class="row hide new-budget-item">
                 <%= form_for BudgetItem.new, html: {data: {remote: true}} do |f| %>
-                  <div class="large-1 columns"><span class="bi-name-input"><label><%= f.check_box :envelope, style: 'float: left;' %><i class='general foundicon-mail blue'></i></label></span></div>
+                  <div class="large-1 columns"><span class="bi-name-input"><label><%= f.check_box :envelope %><i class='general foundicon-mail blue'></i></label></span></div>
                   <div class="large-5 columns">
                     <%= f.hidden_field :budget_category_id, value: c.id %>
                     <%= f.text_field :name, placeholder: 'Name', required:'' %>
@@ -90,8 +90,8 @@
                     <div class="row">
                       <div class="large-8 columns">
                           <%= f.number_field :amount_budgeted, step: 'any', min: '0', placeholder: "0.00", required:'' %>
-                          <%= f.submit "save", class: 'tiny button' %>
-                          <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert button add-budget-cancel' %>
+                          <%= f.submit "save", class: 'tiny button radius blue' %>
+                          <%= link_to "cancel", 'javascript:void(0)', class: 'tiny cancel alert radius button add-budget-cancel' %>
                       </div>                      
                     </div>
                   </div>
@@ -99,7 +99,8 @@
                 <% end %>
                 </div>
                 <div class="row">
-                  <div class="large-11 large-offset-1 columns"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button shadow' %></div>
+                  <div class="large-3 columns centered"><%= link_to "Add a budget item", 'javascript:void(0)', class: 'add-budget-link small button radius success' %></div>
+                  <div class='large-9 columns'></div>
                 </div>
             </li>
           </ul>

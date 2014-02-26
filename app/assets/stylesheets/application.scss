@@ -178,3 +178,12 @@ ul.main-budget-categories {
     @include shadow;
   }
 }
+
+.button.blue {
+  background: #6699FF; 
+  color: white; 
+
+  &:hover {
+    background: darken(#6699FF,10%);
+  }
+}
