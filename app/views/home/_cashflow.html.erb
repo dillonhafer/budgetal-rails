@@ -4,7 +4,7 @@
           <ul class="accordion">
             <li class="active">
               <div id="<%= c.name.gsub('/', '-') %>" class="title row">      
-                <div class="large-1 columns left"><img src="/assets/<%= c.name %>.png"/></div>
+                <div class="large-1 columns left"><%= image_tag "#{c.name}.png" %></div>
                 <div class="large-5 columns left">
                   <h5><%= c.name %> </h5>
                 </div>
