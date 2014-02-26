@@ -1,6 +1,7 @@
-class BudgetItem < ActiveRecord::Base
+class BudgetItem < ActiveRecord::Base  
   belongs_to :budget_category  
   has_many :budget_item_expenses
+  accepts_nested_attributes_for :budget_item_expenses, allow_destroy: true
   validates_presence_of :budget_category_id, :amount_budgeted, :name
 
   def past_expenses
@@ -20,4 +21,6 @@ class BudgetItem < ActiveRecord::Base
     expenses_array = expenses.map {|e| e["name"]}
     expenses_array.unshift('Add a new item')
   end
+
+  default_scope { order('created_at') } 
 end

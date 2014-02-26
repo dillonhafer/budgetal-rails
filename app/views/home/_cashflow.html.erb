@@ -20,18 +20,17 @@
                 </div>                  
               </div>
               <hr />
-              <div class="row">
-                <div class='large-6 columns'>&nbsp;</div>
-                <div class="large-2 columns">
+              <div class="row type-labels">                
+                <div class="large-2 large-offset-5 columns">
                   Spent
                 </div>
                 <div class="large-2 columns">
                   Budgeted
                 </div>
-                <div class="large-2 columns">
+                <div class="large-3 columns">
                   Difference
                 </div>              
-              </div>              
+              </div>
               <br />
                 <% c.budget_items.order(:created_at).each do |bi| %>
                   <div class="row hide">
@@ -66,15 +65,9 @@
                           <%= link_to 'x', budget_item_path(bi), method: :delete, class: 'delete-bi', data: {remote: true, confirm: 'Are you sure? This will delete all expenses too!'} %>
                         </div>
                       </div>
-                    </div>
-                    <div class="large-2 columns budget-difference-<%= bi.id %>">
-                      <%= render partial: 'budget_difference', locals: {bi: bi} %>
-                    </div>
+                    </div>                    
                     <% end %>
-                  </div>
-                  <div class="ajax-container expenses_<%= bi.id %> hide">
-                    <%= render partial: 'budget_item_expenses', locals: {bi: bi} %>
-                  </div>
+                  </div>                  
                 <% end %>
                 <div class="row new-budget-item">
                   <%= render partial: 'budget_item', locals: {c: c} %>               

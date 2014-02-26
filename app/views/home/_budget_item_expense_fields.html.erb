@@ -1,0 +1,12 @@
+<div class="row" style="padding-top: 15px;">  
+  <div class="large-3 large-offset-1 columns">
+    <%= f.text_field :date, type: 'date', placeholder: Date.today.strftime("%Y-%m-%d"), class: 'get-date', required:'' %>
+  </div>
+  <div class="large-4 columns">    
+    <%= f.text_field :name, required:'', placeholder: '(Rent Payment)' %>
+  </div>
+  <div class="large-2 columns">
+    <%= f.number_field :amount, step: 'any', min: '0', placeholder: "0.00", required:'' %>
+  </div>
+  <div class='large-2 columns centered'><%= f.link_to_remove '×', class: 'tiny alert round button' %></div>  
+</div>

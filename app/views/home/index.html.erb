@@ -126,10 +126,11 @@
     padding: 3px 10px !important;
     font-size: 18px !important;
   }
-  input[type="text"],input[type="number"] {
+  input[type="text"],input[type="number"],input[type="date"] {
     border: none;
     box-shadow: none;
   }
+  .type-labels div {text-decoration: underline;}
 </style>
 
 <% content_for :ready do %>
@@ -251,8 +252,8 @@ $(document).ready(function() {
     $(this).parent().parent().parent().find('div.new-expense').find('a.cancel').fadeIn("fast");
   });
 
-  $(".show-expenses").on('click', function() {    
-    $(this).parent().parent().parent().parent().next('.ajax-container.hide').fadeToggle("fast");
+  $(document).on('click', '.show-expenses', function() {    
+    $(this).parent().parent().next('.expense-list').toggleClass('hide');
     if ($(this).text() == '+') {
       $(this).text("-");
       $(this).css('color', 'red')

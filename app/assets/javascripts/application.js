@@ -34,7 +34,7 @@ $(document).ready(function() {
     if(flash.notice) { 
       $(".error").remove(); 
       $("#contentmain").before($('<div data-alert class="alert-box radius blue" style="display: none;position: fixed; top: 20px;"></div>').html(flash.notice));
-      $(".alert-box.radius.blue").fadeIn(400).delay(3000).fadeOut(250, function() {$(this).remove()});
+      $(".alert-box.radius.blue").fadeIn(400).delay(1000).fadeOut(250, function() {$(this).remove()});
     }
 
     if(flash.errors) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box error" style="display: none;"></div>').html(flash.errors)); $(".error").slideDown(400); } 
