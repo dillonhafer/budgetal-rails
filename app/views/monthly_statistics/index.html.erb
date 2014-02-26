@@ -1,17 +1,8 @@
-<style>
-h2 {
-  color: #6699FF;
-}
-</style>
-<h2>Monthly Statistics</h2>
+<h2 class='blue'>Monthly Statistics</h2>
 <h3 class="subheader">see how you're doing</h3>
 
-<div class="row">
-<div class="large-6 columns">
-<% current_user.budgets.ordered.each do |b| %>
-  <%= link_to Date.new(2013, b.month.to_i).strftime("%B %Y"), monthly_statistic_path(year: b.year, month: b.month), class: 'button full-width' %>
-  <br />
-<% end %>
-</div>
-</div>
-  <br />
+<ul class="large-block-grid-4">
+  <% current_user.budgets.ordered.each do |b| %>
+    <li><%= link_to Date.new(b.year.to_i, b.month.to_i).strftime("%B %Y"), monthly_statistic_path(year: b.year, month: b.month), class: 'button blue radius expand' %></li>
+  <% end %>
+</ul>

@@ -1,6 +1,4 @@
-<script src="/assets/highcharts.js"></script>
-
-<style>
+<% content_for :styles do %>
   #greeting {
     margin-top: 70px;
     color: #64ad68;
@@ -11,16 +9,15 @@
     text-align: center;
     color: #6699FF;
   }
- h2 {color: #6699FF;}
-</style>
+<% end %>
 
-<h2><%= @date %></h2>
+<h2 class='blue'><%= @date %></h2>
 <h3 class="subheader">Here's how you did</h3>
 <hr />
 
 <% if @budget %>
   <div id="container"></div>
-  <script>
+  <% content_for :ready do %>
     $(function () {
         $('#container').highcharts({
             chart: {
@@ -58,7 +55,7 @@
             }]
         });
     });
-    </script>    
+    <% end %>
 <% else %>
  
   <div id="greeting" class="animated ">
