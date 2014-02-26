@@ -13,8 +13,7 @@ Budgets::Application.routes.draw do
   get '/edit-my-account' => 'users#edit'
   get '/admin' => 'users#index', as: 'admin'
   match 'sign-up' => 'users#new', as: 'sign_up', via: [:get, :post]
-  match '/my-budgets/:year/:month' => 'home#index', as: 'my_budgets', via: [:get, :post]
-  resources :home, path: 'my-budgets'
+  match '/my-budgets/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]  
   
   get '/contact' => 'welcome#contact', as: "contact"
   get "/tos" => 'welcome#tos', as: "tos"
