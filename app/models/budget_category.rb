@@ -23,4 +23,12 @@ class BudgetCategory < ActiveRecord::Base
     percent = self.total_spent / self.budget_items.sum(:amount_budgeted) * 100
     percent > 100 ? 100 : percent
   end
+
+  def percent_of_budget
+    if budget.monthly_income.to_f > 0.0
+      (budget_items.sum(:amount_budgeted).to_f / budget.monthly_income.to_f * 100).round 
+    else
+      0
+    end
+  end
 end

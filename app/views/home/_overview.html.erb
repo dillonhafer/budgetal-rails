@@ -6,7 +6,7 @@
     <div class="large-4 columns">
       <div class="row">
         <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Monthly Income:</b></div>
-        <div class='large-6 columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'' %></div>
+        <div class='large-6 columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'', autofocus: true %></div>
       </div>
       <div class="row" style="border-bottom: 1px solid #CCC;">
         <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
@@ -18,12 +18,12 @@
       </div>
     </div>
     <div id="budget-remainder" class="large-8 columns">
-      <div class="progress blue-meter"><span class="meter"></span></div>
+      <div class="progress radius blue-meter"><span class="meter" style="width: <%= @budget.percent_used %>%"></span></div>
       <h5><%= remaining_to_budget %></h5>
       <% content_for :ready do %>       
-        $(".meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
+        $(".budget-remainder .meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
         <% if @budget.amount_remaining < 0 %>
-          $('.meter').css('background', 'red')      
+          $('.budget-remainder .meter').css('background', 'red')      
         <% end %>
       <% end %>
     </div>

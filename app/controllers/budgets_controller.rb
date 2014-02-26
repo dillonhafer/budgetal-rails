@@ -16,11 +16,18 @@ class BudgetsController < ApplicationController
 
   def update
     @budget = current_user.budgets.find params[:id]
-    if @budget.update_attributes params[:budget]
+    if @budget.update_attributes(budget_params)
+      flash[:notice] = "Updated budget"
       redirect_to my_budgets_path(year: @budget.year, month: @budget.month), notice: "Updated Budget"
     else
       flash[:error] = "something went wrong!"
       redirect_to my_budgets_path(year: @budget.year, month: @budget.month)
     end
+  end
+
+  private
+
+  def budget_params
+    params.require(:budget).permit(:monthly_income)
   end
 end

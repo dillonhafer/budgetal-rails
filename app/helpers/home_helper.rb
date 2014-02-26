@@ -26,7 +26,7 @@ module HomeHelper
     elsif @budget.amount_remaining == 0
       "<span style='color:#69F'>Congratulations! Your budget is balanced!</span>".html_safe
     else
-      "<span style='color:red'>#{number_to_currency @budget.amount_remaining.abs} Over budget!</span>".html_safe
+      "<span style='color:red'>#{number_to_currency @budget.amount_remaining.abs} Over budgeted!</span>".html_safe
     end
   end
 end

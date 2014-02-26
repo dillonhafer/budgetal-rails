@@ -41,4 +41,44 @@ $(document).ready(function() {
     $(".error").click(function() { $(this).slideUp(); });
   });
 });
+
 $(function(){ $(document).foundation(); });
+
+// Change month links
+$(document).on('click', '#month_links div a', function() {    
+  $('#month_links div a').removeClass('active');
+  $(this).addClass('active');
+  $('#greeting').fadeOut();    
+});
+
+// Nice scrolling for budget categories
+$(document).on('click', '.quickNavLink', function(e){
+    e.preventDefault();
+ 
+    var id     = $(this).attr("href");
+    var offset = $(id).offset();
+ 
+    $("html, body").animate({
+      scrollTop: offset.top-135
+    }, 850);
+  });    
+
+// Controls + and - drawer for expenses  
+$(document).on('click', '.show-expenses', function() {    
+  $(this).parent().parent().next('.expense-list').toggleClass('hide');
+  if ($(this).text() == '+') {
+    $(this).text("-");
+    $(this).css('color', 'red')
+  } else {
+    $(this).text("+");
+    $(this).css('color', '#6699FF')
+  }
+});
+
+$(document).on('keyup', '#budget_monthly_income', function() {
+  $('.edit_budget').submit();
+});
+
+$(document).on('change', '#budget_monthly_income', function() {
+  $('.edit_budget').submit();
+});

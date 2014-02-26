@@ -1,28 +1,10 @@
-var style = $(".meter").attr('style');
-$(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>").find('.meter').attr('style', style);
+$(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>");
 
-<% unless params[:was_budget].present? %>
-  $(".ajax-container.detail-cash-flow").html("<%= escape_javascript(render("cashflow")) %>");
+<% if @budget.amount_remaining < 0 %>
+  $('#budget-remainder .progress').addClass('alert')
 <% else %>
-  $(".ajax-container.expenses_<%= params[:c_id] %>").html("<%= escape_javascript(render(partial: 'budget_item_expenses', locals: {bi: BudgetItem.find(params[:c_id])})) %>");
-  $(".budget-spent-<%= params[:c_id] %>").html("<%= escape_javascript(render(partial: 'budget_spent', locals: {bi: BudgetItem.find(params[:c_id])})) %>");
-  $(".budget-difference-<%= params[:c_id] %>").html("<%= escape_javascript(render(partial: 'budget_difference', locals: {bi: BudgetItem.find(params[:c_id])})) %>");
+  $('#budget-remainder .progress').removeClass('alert')
 <% end %>
 
 var current_month = $('div.ajax-container.overview h3').first().text().trim();
-$('title').text(current_month+' - Intense-Money.com');
-
-$('.get-date').each( function() {
-  if ($(this).type == "text") {
-    $(this).addClass('datepicker');
-  }
-});
-
-$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-
-$(".meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
-<% if @budget.amount_remaining < 0 %>
-  $('.meter').css('background', 'red')
-<% else %>
-  $('.meter').css('background', '')
-<% end %>
+$('title').text(current_month+' - Budgetal.com');
