@@ -40,8 +40,8 @@ gem 'dynamic_form'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.2'
 
-# Use unicorn as the app server
-gem 'unicorn'
+# Use passenger as the app server
+gem 'passenger'
 
 # Lots o' forms
 gem 'nested_form'

@@ -121,6 +121,16 @@ namespace :pg do
   end
 end
 
+namespace :passenger do
+  task :restart do
+    queue %{
+      echo "-----> Restarting passenger"
+      #{echo_cmd %[mkdir -p tmp]}
+      #{echo_cmd %[touch tmp/restart.txt]}
+    }
+  end
+end
+
 # For help in making your deploy script, see the Mina documentation:
 #
 #  - http://nadarei.co/mina
