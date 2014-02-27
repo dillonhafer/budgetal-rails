@@ -10,11 +10,11 @@
       </div>
       <div class="row" style="border-bottom: 1px solid #CCC;">
         <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
-        <div class='large-6 columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@budget.total_expenses) %></div>
+        <div id='amount_spent' class='large-6 columns red' style="padding: 8px; font-size: 15px;"><%= number_to_currency(@budget.total_expenses) %></div>
       </div>
       <div class="row">
         <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@budget.total_expenses < 0) %></b></div>
-        <div class='large-6 columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
+        <div id='budget_difference' class='large-6 columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
       </div>
     </div>
     <div id="budget-remainder" class="large-8 columns">

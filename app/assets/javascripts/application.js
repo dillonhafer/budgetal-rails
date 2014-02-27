@@ -87,9 +87,14 @@ $(document).on('nested:fieldAdded', function(event){
   var field = event.field;
   field.addClass('is-new');
 });
+
 $(document).on('nested:fieldRemoved', function(event){    
     var field = event.field;
     if (field.hasClass('is-new')) {
       field.remove();
     }
+});
+
+$(document).on('submit', '.edit_budget', function(e){
+  e.preventDefault();
 });
