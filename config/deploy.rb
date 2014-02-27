@@ -64,12 +64,6 @@ end
 
 # Define unicorn commands
 namespace :deploy do
-  %w[start stop restart reload upgrade].each do |command|    
-    task command do         
-      queue "/etc/init.d/unicorn-budgetal-#{ENV['to']} #{command}"
-    end
-  end
-
   desc "build missing paperclip styles"
   task :build_missing_paperclip_styles do
     queue "cd #{deploy_to}/current/; RAILS_ENV=#{ENV['to']} bundle exec rake paperclip:refresh:missing_styles"
@@ -89,7 +83,7 @@ task deploy: :environment do
     invoke :'rails:assets_precompile'
 
     to :launch do
-      invoke :'deploy:restart'      
+      invoke :'passenger:restart'
     end
     
     invoke :'deploy:cleanup'
