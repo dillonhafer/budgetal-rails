@@ -83,6 +83,13 @@ $(document).on('change', '#budget_monthly_income', function() {
   $('.edit_budget').submit();
 });
 
+$(document).on('nested:fieldAdded', function(event){    
+  var field = event.field;
+  field.addClass('is-new');
+});
 $(document).on('nested:fieldRemoved', function(event){    
-  var field = event.field.remove();  
-})
+    var field = event.field;
+    if (field.hasClass('is-new')) {
+      field.remove();
+    }
+});
