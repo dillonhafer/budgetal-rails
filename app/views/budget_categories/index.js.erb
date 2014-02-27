@@ -1,4 +1,5 @@
 $(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>");
+$(".ajax-container.detail-cash-flow").html("<%= escape_javascript(render("cashflow")) %>");
 
 <% if @budget.amount_remaining < 0 %>
   $('#budget-remainder .progress').addClass('alert')
@@ -8,3 +9,9 @@ $(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>
 
 var current_month = $('div.ajax-container.overview h3').first().text().trim();
 $('title').text(current_month+' - Budgetal.com');
+
+$('.get-date').each(function() {
+  if( !$(this).hasClass('hasDatePicker') ) {
+    $(this).datepicker({dateFormat: 'yy-mm-dd'})
+  }
+});

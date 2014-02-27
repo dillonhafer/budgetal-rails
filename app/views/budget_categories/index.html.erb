@@ -41,4 +41,10 @@
       $('#month_links').removeClass('qn_fix_body');
     }
   });
+
+  $('.get-date').each(function() {
+    if( !$(this).hasClass('hasDatePicker') ) {
+      $(this).datepicker({dateFormat: 'yy-mm-dd'})
+    }
+  });
 <% end %>

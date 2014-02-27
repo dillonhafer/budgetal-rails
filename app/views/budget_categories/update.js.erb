@@ -6,3 +6,9 @@ $('#category-<%= @budget_category.id %> .meter').css('width', '<%= @budget_categ
 $('#category-<%= @budget_category.id %>').parent().parent().next('div').find('.p-budgeted').html('<%= @budget_category.percent_of_budget %>%');
 $('#amount_spent').html("<%= number_to_currency @budget_category.budget.total_expenses %>");
 $('#budget_difference').html("<%= number_to_currency @budget_category.budget.difference %>");
+
+$('.get-date').each(function() {
+  if( !$(this).hasClass('hasDatePicker') ) {
+    $(this).datepicker({dateFormat: 'yy-mm-dd'})
+  }
+});
