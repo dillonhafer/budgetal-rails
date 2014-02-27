@@ -3,3 +3,4 @@ $('#category-<%= @budget_category.id %> .spent').html('Spent: <%= number_to_curr
 $('#category-<%= @budget_category.id %> .remaining').html('Remaining: <%= number_to_currency @budget_category.budget_remaining %>');
 $('#category-<%= @budget_category.id %> .meter').css('width', '<%= @budget_category.percent_used %>%');
 $('#category-<%= @budget_category.id %>').parent().parent().next('div').find('.p-budgeted').html('<%= @budget_category.percent_of_budget %>%');
+$(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>");
