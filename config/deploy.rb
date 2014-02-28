@@ -115,7 +115,7 @@ namespace :pg do
   desc "Creates a postgres backup."
   task backup: :environment do
     backup_date = Time.now.strftime("%Y%m%d%H%M%S")
-    command     = "pg_dump -Fc budgetal_#{ENV['to']} > #{deploy_to}/db-backups/#{backup_date}.dump"
+    command     = "pg_dump -Fc budgets > #{deploy_to}/db-backups/#{backup_date}.dump"
     queue "echo -e '\e[32m----->\e[0m Dumping database\n       #{command}'"
     queue command
   end
