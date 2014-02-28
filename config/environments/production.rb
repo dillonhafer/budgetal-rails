@@ -53,6 +53,7 @@ Budgets::Application.configure do
 
   # Enable threaded mode
   # config.threadsafe!
+  config.action_mailer.default_url_options = { host: "www.budgetal.com" }
   config.action_mailer.deliver_method :sendmail
   ActionMailer::Base.smtp_settings[:openssl_verify_mode] = 'none'
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

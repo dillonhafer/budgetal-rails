@@ -14,10 +14,18 @@
 //= require jquery_ujs
 //= require foundation
 //= require foundation/foundation.topbar
+//= require foundation/foundation.abide
+//= require foundation/foundation.reveal
 //= require jquery_nested_form
 //= require_tree .
 
-$(document).foundation();
+$(document).foundation({
+  abide : {
+    patterns : {
+      password: /(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+    }
+  }
+});
 
 $(document).ready(function() {
   if ($(".alert-box").length){
@@ -33,11 +41,11 @@ $(document).ready(function() {
 
     if(flash.notice) { 
       $(".error").remove(); 
-      $("#contentmain").before($('<div data-alert class="alert-box radius blue" style="display: none;position: fixed; top: 20px;"></div>').html(flash.notice));
+      $("#contentmain").before($('<div data-alert class="alert-box radius blue" style="display: none;position: fixed; top: 20px;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.notice));
       $(".alert-box.radius.blue").fadeIn(400).delay(1000).fadeOut(250, function() {$(this).remove()});
     }
 
-    if(flash.errors) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box error" style="display: none;"></div>').html(flash.errors)); $(".error").slideDown(400); } 
+    if(flash.errors) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); } 
     $(".error").click(function() { $(this).slideUp(); });
   });
 });
@@ -86,6 +94,7 @@ $(document).on('change', '#budget_monthly_income', function() {
 $(document).on('nested:fieldAdded', function(event){      
   var field = event.field;
   field.find('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
+  field.find('.show-expenses').removeClass('show-expenses').css('color', 'white');
   field.addClass('is-new');
 });
 

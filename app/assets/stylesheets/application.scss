@@ -18,6 +18,15 @@
 @mixin shadow-custom($x,$y,$spread,$color,$opacity){box-shadow: $x $y $spread rgba($color,$opacity); -moz-box-shadow: $x $y $spread rgba($color,$opacity); -webkit-box-shadow: $x $y $spread rgba($color,$opacity);}
 @mixin no-shadow {box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
 
+.add-nested-item {
+  margin-left: 20px; margin-top: 25px;
+}
+
+@media (max-width: 767px) {
+  ul.button-group li, .button {display: inline-block !important; width: 100% !important;}
+  .add-nested-item {margin-left: 0; margin-top: 0;}
+}
+
 body, html {background: white !important; height: 100% !important;}
 
 body {margin-top: 0px !important;}
@@ -185,6 +194,15 @@ ul.main-budget-categories {
 
   &:hover, &:focus {
     background: darken(#6699FF,10%);
+  }
+}
+
+.button.dark-blue {
+  background: #6699CC; 
+  color: white; 
+
+  &:hover, &:focus {
+    background: darken(#6699CC,10%);
   }
 }
 

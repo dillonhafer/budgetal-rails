@@ -31,10 +31,10 @@
         <section class="top-bar-section">
         <!-- Right Nav Section -->
           <ul class="right">        
+            <% if current_user %>
             <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'><%= current_user.email %></a>
               <ul class="dropdown shadow">
-                <% if current_user %>
-                  <li><%= link_to "My Account", my_account_path, title: 'My Account' %></li>
+                  <li><%= link_to "My Account", edit_user_registration_path, title: 'My Account' %></li>
                   <li><%= link_to "Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
                   <!--
                   <li><%= link_to "Allocated Spending Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
@@ -43,13 +43,11 @@
                   <% if current_user.admin? %>
                   <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
                   <% end %>                                  
-                  <% end %>
               </ul>
-            </li>
-            <% if current_user %>
-            <li><%= link_to "Sign Out", logout_path, title: 'Sign Out' %><%#= link_to('Sign out', destroy_devise_user_session_path, method: :delete, title: 'Sign out') %></li>
+            </li>            
+            <li><%= link_to('Sign out', destroy_user_session_path, method: :delete, title: 'Sign out') %></li>
             <% else %>
-            <li><%= link_to 'Sign in / Sign up', sign_in_modal_path, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In" %>
+            <li><%= link_to 'Sign in / Sign up', new_user_session_url, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In" %></li>
             <% end %>
           </ul>
         </section>  
@@ -62,14 +60,14 @@
           <br/>
           <div data-alert class="alert-box blue radius">
             <%= flash[:notice] %>
-            <a href="#" class="close">&times;</a>
+            <a class="close-reveal-modal">&#215;</a>
           </div>      
         <% end %>
         <% if flash[:error] %>
           <br/>
           <div data-alert class="alert-box alert radius">      
             <%= flash[:error] %>
-            <a href="#" class="close">&times;</a>
+            <a class="close-reveal-modal">&#215;</a>
           </div>
         <% end %>
 

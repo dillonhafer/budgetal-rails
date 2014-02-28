@@ -1,29 +1,16 @@
 Budgets::Application.routes.draw do
   root :to => 'welcome#index'
-  get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics' 
-  get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
-
+  
+  devise_for :users, path: "sessions", path_names: { sign_in: 'sign-in', sign_out: 'sign-out', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'sign-up', sign_up: 'join' }
   resources :budgets
   resources :budget_categories
   resources :budget_items
-  resources :budget_item_expenses
-  resources :sessions
-  resources :users, path: 'sign-up'
-
-  get '/edit-my-account' => 'users#edit'
-  get '/admin' => 'users#index', as: 'admin'
-  match 'sign-up' => 'users#new', as: 'sign_up', via: [:get, :post]
-  match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]  
+  resources :budget_item_expenses  
   
-  get '/contact' => 'welcome#contact', as: "contact"
-  get "/tos" => 'welcome#tos', as: "tos"
-  get "/about" => 'welcome#about', as: "about"
-
-  get 'sign-out' => 'sessions#destroy', as: 'logout'
-  get 'sign-in' => 'sessions#create', as: 'login'
+  get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics' 
+  get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
+  
+  get '/admin' => 'users#index', as: 'admin'
   get 'my-account' => 'users#my_account', as: 'my_account'
-
-  get '/sign-in-up' => 'welcome#sign_in', as: 'sign_in_modal'  
-  resources :password_resets, path: 'password-resets'
-  get "/send-password-reset" => "password_resets#new"  
+  match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
 end

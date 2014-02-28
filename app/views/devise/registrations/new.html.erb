@@ -1,0 +1,45 @@
+<h2>Sign up</h2>
+<hr />
+<div class='row'>
+  <div class='large-4 columns'>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: {abide: ''}}) do |f| %>
+      <%= devise_error_messages! %>
+
+      <div>
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, required:'' %>
+        <small class="error">An email address is required.</small>
+      </div>
+
+      <div>
+        <%= f.label :first_name %><br />
+        <%= f.text_field :first_name, required:'', patter: 'alpha' %>
+        <small class="error">A first name is required.</small>
+      </div>
+
+      <div>
+        <%= f.label :last_name %><br />
+        <%= f.text_field :last_name, required:'', patter: 'alpha' %>
+        <small class="error">A last name is required.</small>
+      </div>
+
+      <div>
+        <%= f.label :password, class: 'left' %><br />
+        <%= f.password_field :password, required:'' %>
+        <small class="error">Passwords must be at least 8 characters with 1 capital letter, and 1 number.</small>
+      </div>
+
+      <div>
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, required:'', data: {equalto:'user_password'} %>
+        <small class="error">Password confirmation must match.</small>
+      </div>
+
+      <div><%= f.submit "Sign up", class: 'small blue button nice radius' %></div>
+    <% end %>
+  </div>
+  <div class='large-8 columns'>
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>

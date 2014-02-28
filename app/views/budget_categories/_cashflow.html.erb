@@ -1,6 +1,6 @@
 <div class="row">  
   <% @budget.budget_categories.order(:id).each do |c| %>
-    <div class="large-11 columns">
+    <div class="small-12 large-11 columns">
       <ul class="main-budget-categories">
         <li id='category-<%= c.id %>'>
           <div id="<%= c.name.gsub('/', '-') %>" class="row">      
@@ -38,7 +38,7 @@
         </li>
       </ul>
     </div>
-    <div class="large-1 columns">          
+    <div class="large-1 hide-for-small columns">          
       <div class="panel">
         <h6 class='p-budgeted'>
           <%= c.percent_of_budget %>%

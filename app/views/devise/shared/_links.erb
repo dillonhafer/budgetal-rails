@@ -1,0 +1,18 @@
+<ul class="button-group radius">
+  <%- if controller_name != 'sessions' %>
+    <li><%= link_to 'Sign In', new_user_session_path, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In", class: "tiny button dark-blue" %></li>
+
+  <% end -%>
+
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+    <li><%= link_to "Forgot your password?", new_password_path(resource_name), class: "tiny button  dark-blue" %></li>
+  <% end -%>
+
+  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <li><%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: "tiny button  dark-blue" %><br /></li>
+  <% end -%>
+
+  <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <li><%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: "tiny button  dark-blue" %><br /></li>
+  <% end -%>
+</ul>

@@ -1,0 +1,5 @@
+<% if request.xhr? %>
+  <%= yield %>
+<% else %>
+  <%= render template: "layouts/application.html.erb" %>
+<% end %>

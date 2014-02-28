@@ -1,0 +1,87 @@
+<style>
+.join-section a {
+  margin-top: 10%;
+}
+input[type="checkbox"] {
+  margin-bottom: 0;
+}
+input[name="commit"] {
+  width: 168px;
+  margin-right: 34px
+}
+
+@media (max-width: 767px) {
+  input[name="commit"] {
+    margin-right: 0px;
+  } 
+}
+</style>
+
+<div class='row'>
+  <div class='large-12 columns'>    
+    <h2 class="blue-color">Welcome to Budgetal.com</h2>
+  </div>
+</div>
+
+<div class='row'>
+  <div class='large-6 columns'>
+    <h2 class='subheader'>Sign in</h2>
+    <hr />
+  </div>
+  <div class='large-6 columns hide-for-small'>
+    <h2 class='subheader'>Join</h2>
+    <hr />    
+  </div>
+</div>
+
+<div class='row'>
+  <div class='large-5 columns'>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {data: {abide:''}}) do |f| %>
+      <div>
+        <%= f.label :email, class: 'left' %>
+        <% if devise_mapping.rememberable? -%>
+          <label class='right'><%= f.check_box :remember_me %> remember me</label>
+        <% end -%>    
+
+        <%= f.email_field :email, autofocus: true, required:'' %>
+        <small class="error">An email address is required.</small>
+      </div>
+
+      <div>
+        <%= f.label :password, class: 'left' %>
+        <%= f.password_field :password, required:'' %>
+        <small class="error">Password is required.</small>  
+      </div>
+
+  <div>
+    <ul class="button-group radius">
+      <li><%= f.submit "Sign in".html_safe, class: 'small blue button nice radius' %></li>
+
+    <%- if devise_mapping.omniauthable? %>
+      <%- resource_class.omniauth_providers.each do |provider| %>
+      <li>
+        <%= link_to omniauth_authorize_path(resource_name, provider), class: 'tiny facebook button nice radius ' do  %>
+        <%= image_tag "fb.png", style: 'height: 24px; width: 24px' %> Sign in with Facebook<br />
+        <% end %>
+      </li>
+      <% end -%>
+    <% end -%>  
+    </ul>
+    <%= render "devise/shared/links" %>
+  </div>
+  </div>
+<% end %>
+  <div class='large-7 columns centered join-section'>  
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+      <div class='show-for-small'>
+        <h2>Join</h2>
+        <hr />    
+      </div>
+      <%= link_to "Join", new_registration_path(resource_name), class: 'success button radius' %>
+    <% end -%>
+  </div>  
+</div>
+
+<% if request.xhr? %>
+  <a class="close-reveal-modal">&#215;</a>
+<% end %>
