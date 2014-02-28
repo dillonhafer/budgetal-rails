@@ -19,12 +19,12 @@
 @mixin no-shadow {box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
 
 .add-nested-item {
-  margin-left: 20px; margin-top: 25px;
+  margin-left: 20px !important; margin-top: 25px !important;
 }
 
 @media (max-width: 767px) {
   ul.button-group li, .button {display: inline-block !important; width: 100% !important;}
-  .add-nested-item {margin-left: 0; margin-top: 0;}
+  .add-nested-item {margin-left: 0 !important; margin-top: 0 !important;}
 }
 
 body, html {background: white !important; height: 100% !important;}
