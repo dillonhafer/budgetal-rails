@@ -196,6 +196,14 @@ ul.main-budget-categories {
     background: darken(#6699FF,10%);
   }
 }
+.button.yellow {
+  background: #FFD479; 
+  color: white; 
+
+  &:hover, &:focus {
+    background: darken(#FFD479,10%);
+  }
+}
 
 .button.dark-blue {
   background: #6699CC; 

@@ -25,7 +25,7 @@
 
 <div class="expense-list expenses_<%= f.object.id %> hide">  
   <%= f.fields_for :budget_item_expenses %>  
-  <%= f.link_to_add "Add an expense", :budget_item_expenses, class: 'tiny button radius success add-nested-item' %>
+  <%= f.link_to_add "Add an expense", :budget_item_expenses, class: 'tiny button radius yellow add-nested-item' %>
   <%= f.submit 'save', class: 'tiny radius button blue' %>
   <hr />
 </div>
