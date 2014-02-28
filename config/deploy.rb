@@ -131,6 +131,22 @@ namespace :passenger do
   end
 end
 
+namespace :maintenance do
+  task :on do
+    queue %{
+      echo "-----> Enabling maintenance mode"      
+      #{echo_cmd %[touch #{deploy_to}/current/public/maintenance]}
+    }
+  end
+
+  task :off do
+    queue %{
+      echo "-----> Disabling maintenance mode"      
+      #{echo_cmd %[rm #{deploy_to}/current/public/maintenance]}
+    }
+  end
+end
+
 # For help in making your deploy script, see the Mina documentation:
 #
 #  - http://nadarei.co/mina
