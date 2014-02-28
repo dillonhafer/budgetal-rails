@@ -14,20 +14,20 @@ h3 {
 
 
 <div class='row'>
-  <div class='two columns header'>
+  <div class='large-2 columns header'>
     Email:
   </div>
-  <div class='nine columns'>
+  <div class='large-9 columns'>
     <%= current_user.email %>
     <%= link_to "Update Account Info", edit_user_path(current_user), class: 'right' %>
   </div>
 </div>
 <br />
 <div class='row'>
-  <div class='two columns header'>
+  <div class='large-2 columns header'>
     Join Date:
   </div>
-  <div class='nine columns'>
+  <div class='large-9 columns'>
     <%= current_user.created_at.strftime("%B %d, %Y") %>
     <span class="right"><%= link_to "Statistics", monthly_statistics_path %> (for geeks)</span>
   </div>
@@ -35,23 +35,8 @@ h3 {
 
 <br />
 <div class='row'>
-  <div class='two columns header'>
+  <div class='large-2 columns header'>
   </div>
-  <div class='nine columns'>
+  <div class='large-9 columns'>
   </div>
 </div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />

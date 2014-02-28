@@ -963,9 +963,9 @@ $topbar-height: 70px;
 $topbar-title-font-size: rem-calc(16);
 
 // Style the top bar dropdown elements
-// $topbar-dropdown-bg: #333;
+$topbar-dropdown-bg: #3366CC;
 // $topbar-dropdown-link-color: #fff;
- $topbar-dropdown-link-bg: #111;
+//$topbar-dropdown-link-bg: #3366CC !important;
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
 // $topbar-dropdown-toggle-alpha: 0.4;
@@ -985,7 +985,7 @@ $topbar-link-bg-active-hover: darken(#DDD, 35%);
 
 // $topbar-button-font-size: 0.75rem;
 
-// $topbar-dropdown-label-color: #777;
+$topbar-dropdown-label-color: #777;
 // $topbar-dropdown-label-text-transform: uppercase;
 // $topbar-dropdown-label-font-weight: bold;
 // $topbar-dropdown-label-font-size: rem-calc(10);
@@ -1039,3 +1039,19 @@ $body-font: "Open Sans", Helvetica, Arial, sans-serif;
 $header-font: "Open Sans", "Lucida Grande", Helvetica, Arial, sans-serif;
 
 $break: 767px;
+
+.top-bar-section {
+  $dark-color: darken(#6699FF,7%);
+  ul.dropdown {    
+    li:not(.has-form) {
+      border-top: 1px solid $dark-color;
+      a:not(.button) {
+        line-height: 35px;
+
+        &:hover {
+          background: $dark-color;
+        }
+      }
+    }
+  }
+}

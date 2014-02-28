@@ -11,7 +11,8 @@
 
     <title><%= yield(:title) %>Budgetal</title>
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "application" %>    
+    <%= javascript_include_tag "vendor/modernizr" %>    
     <%= csrf_meta_tags %>
 
     <style>
@@ -30,27 +31,25 @@
         <section class="top-bar-section">
         <!-- Right Nav Section -->
           <ul class="right">        
-            <li<%#= is_active? "about" %>><%#= link_to "About", about_path, title: "About" %></li>
-            
-            <li<%#= is_active? "ministries" %>><%#= link_to "Ministries", ministries_path, title: "Ministries" %></li>
-            
-            <li<%#= is_active? "media" %>><%#= link_to "Media", broadcast_path, title: "Media" %></li>
-            
-            <li<%#= is_active? "resources" %>><%#= link_to "Resources", resources_path, title: "Resources" %></li>          
-            
-            <li<%#= is_active? "donations" %>><%#= link_to "Give", "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MZPW3QR6ECZWY", title: "Give", :target => "_blank" %></li>
-            
-            <li<%#= is_active? "contact" %>><%#= link_to "Contact", contact_path, title: "Contact us" %></li>            
+            <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'><%= current_user.email %></a>
+              <ul class="dropdown shadow">
+                <% if current_user %>
+                  <li><%= link_to "My Account", my_account_path, title: 'My Account' %></li>
+                  <li><%= link_to "Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
+                  <!--
+                  <li><%= link_to "Allocated Spending Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
+                  -->
+                  <li><%= link_to "Statistics (for geeks)", monthly_statistics_path, title: '(for geeks)' %></li>
+                  <% if current_user.admin? %>
+                  <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
+                  <% end %>                                  
+                  <% end %>
+              </ul>
+            </li>
             <% if current_user %>
-              <li><%= link_to "Budgets", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Budgets' %></li>
-              <li><%= link_to "My Account [#{current_user.email}]", my_account_path, title: 'My Account' %></li>
-              <%#= link_to "My Account", edit_devise_user_registration_path, title: "My account" %>
-              <% if current_user.admin? %>
-                <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
-              <% end %>                        
-                <li><%= link_to "Sign Out", logout_path, title: 'logout', title: 'Logout' %><%#= link_to('Sign out', destroy_devise_user_session_path, method: :delete, title: 'Sign out') %></li>
+            <li><%= link_to "Sign Out", logout_path, title: 'Sign Out' %><%#= link_to('Sign out', destroy_devise_user_session_path, method: :delete, title: 'Sign out') %></li>
             <% else %>
-              <li><%= link_to 'Sign in / Sign up', sign_in_modal_path, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In" %>
+            <li><%= link_to 'Sign in / Sign up', sign_in_modal_path, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In" %>
             <% end %>
           </ul>
         </section>  
