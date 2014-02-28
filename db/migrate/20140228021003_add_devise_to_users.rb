@@ -45,8 +45,8 @@ class AddDeviseToUsers < ActiveRecord::Migration
 
     # Set values
     User.connection.execute("update users set email=original_email")
-    User.connection.execute("update users set first_name=no")
-    User.connection.execute("update users set last_name=name")
+    User.connection.execute("update users set first_name='no'")
+    User.connection.execute("update users set last_name='name'")
   end
 
   def self.down
