@@ -8,6 +8,7 @@ Budgets::Application.routes.draw do
   resources :budget_items
   resources :budget_item_expenses  
   
+  get 'past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics' 
   get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
   

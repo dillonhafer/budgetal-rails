@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base  
   has_many :budgets
+  has_many :budget_categories, through: :budgets
+  has_many :budget_items, through: :budget_categories
+  has_many :budget_item_expenses, through: :budget_items
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -31,6 +34,10 @@ class User < ActiveRecord::Base
   def remove_admin
     self.admin = false
     self.save
+  end
+
+  def past_expenses(name)
+    budget_item_expenses.where("budget_item_expenses.name like ?", "#{name}%").pluck('DISTINCT budget_item_expenses.name')
   end
 
   private

@@ -20,7 +20,5 @@ class BudgetItem < ActiveRecord::Base
     expenses = BudgetItem.find_by_sql([sql, self.name])
     expenses_array = expenses.map {|e| e["name"]}
     expenses_array.unshift('Add a new item')
-  end
-
-  default_scope { order('created_at') } 
+  end  
 end
