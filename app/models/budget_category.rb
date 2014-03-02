@@ -1,18 +1,12 @@
 class BudgetCategory < ActiveRecord::Base
   belongs_to :budget
   has_many :budget_items
+  has_many :budget_item_expenses, through: :budget_items
   accepts_nested_attributes_for :budget_items, allow_destroy: true
   validates_presence_of :budget_id, :name, :percentage
 
-   def total_spent    
-    spent = ActiveRecord::Base.connection.select_all <<-END_SQL
-      SELECT SUM(bie.amount)
-      FROM budget_categories bc
-      JOIN budget_items bi ON bi.budget_category_id=bc.id
-      JOIN budget_item_expenses bie ON bie.budget_item_id=bi.id
-      WHERE bc.id = #{id}
-    END_SQL
-    spent.first["sum"].to_f    
+  def total_spent
+    budget_item_expenses.sum(:amount).to_f
   end
 
   def budget_remaining
