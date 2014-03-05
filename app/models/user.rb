@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   end
 
   def past_expenses(name)
-    budget_item_expenses.where("budget_item_expenses.name like ?", "#{name}%").pluck('DISTINCT budget_item_expenses.name')
+    budget_item_expenses.where("budget_item_expenses.name ilike ?", "#{name}%").pluck('DISTINCT budget_item_expenses.name')
   end
 
   private
