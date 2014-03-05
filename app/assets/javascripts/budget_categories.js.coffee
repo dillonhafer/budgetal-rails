@@ -29,11 +29,15 @@ jQuery ->
 
   $(document).on 'keyup', '.expense-item-field', () ->
     ul   = $(this).next('ul')
-    list = recent_expenses($(this).val())    
-    ul.html(list)
 
-    if $(this).val().length > 2 && list.length      
-      ul.css('left', '0')
+    if $(this).val().length > 2
+      list = recent_expenses($(this).val())
+      if list.length
+        ul.html(list)
+        ul.css('left', '0')
+      else
+        ul.css('left', '-9999px')
+        
     else
       ul.css('left', '-9999px')
 
