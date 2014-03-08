@@ -34,15 +34,13 @@
             <% if current_user %>
             <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'><%= current_user.email %></a>
               <ul class="dropdown shadow">
-                  <li><%= link_to "My Account", edit_user_registration_path, title: 'My Account' %></li>
-                  <li><%= link_to "Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
-                  <!--
-                  <li><%= link_to "Allocated Spending Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
-                  -->
-                  <li><%= link_to "Statistics (for geeks)", monthly_statistics_path, title: '(for geeks)' %></li>
-                  <% if current_user.admin? %>
-                  <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
-                  <% end %>                                  
+                <li><%= link_to "Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
+                <li><%= link_to "Allocated Spending Plans", my_allocation_plans_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
+                <li><%= link_to "Statistics (for geeks)", monthly_statistics_path, title: '(for geeks)' %></li>
+                <li><%= link_to "My Account", edit_user_registration_path, title: 'My Account' %></li>
+                <% if current_user.admin? %>
+                <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
+                <% end %>                                  
               </ul>
             </li>            
             <li><%= link_to('Sign out', destroy_user_session_path, method: :delete, title: 'Sign out') %></li>

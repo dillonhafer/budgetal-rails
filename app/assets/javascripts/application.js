@@ -29,8 +29,8 @@ $(document).foundation({
 
 $(document).ready(function() {
   if ($(".alert-box").length){
-    $(".alert-box").hide().fadeIn(400,function(){
-      $(this).delay(3000).fadeOut(250);      
+    $(".alert-box").fadeIn(400,function(){
+      $(this).delay(1000).fadeOut(250);      
     });
   }
 

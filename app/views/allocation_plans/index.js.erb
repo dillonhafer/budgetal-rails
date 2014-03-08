@@ -1,5 +1,5 @@
 $(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>");
-$(".ajax-container.detail-cash-flow").html("<%= escape_javascript(render("cashflow")) %>");
+//$(".ajax-container.detail-cash-flow").html("<%= escape_javascript(render("cashflow")) %>");
 
 <% if @budget.amount_remaining < 0 %>
   $('#budget-remainder .progress').addClass('alert')

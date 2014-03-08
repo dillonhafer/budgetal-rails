@@ -1,0 +1,51 @@
+<div class="row show-for-medium-down">
+  <div class="large-12 columns">
+    <br />
+    <%= form_tag my_allocation_plans_path, remote: true do %>
+      <%= select_tag :year, options_for_select( [2013, 2014] ), prompt: 'Select a year' %>
+      <%= select_tag :month, options_for_select( @budgets.map {|b| [(Date.new( b.year, b.month, 1).strftime("%B")), 1] }), prompt: 'Select a month', id: 'budget-month' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row small-block-grid-2 hide-for-medium-down qn">
+  <% %w{Charity Saving Housing Utilities Food Clothing Transportation Medical-Health Insurance Personal Recreation Debts}.each do |c| %>
+    <div class="large-1 column"><a href="#<%= c %>" class="quickNavLink" title="<%= c %>"><%= image_tag "#{c.gsub('-', '/')}.png" %></a></div>
+  <% end %>
+</div>
+
+<div id='budget-list' class='hide-for-medium-down'>
+  <div id="month_links">    
+    <% @budgets.each do |b| %>  
+      <div class="monthy left"><%= link_to b.month, my_allocation_plans_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month > 9}" %><br /><%= find_short_month b.month %></div>
+    <% end %>    
+  </div>
+</div>
+
+<hr style="border:none;border-bottom: 2px solid #6699FF;" />
+
+<div id="month-view">
+  <div class="ajax-container overview"><%= render 'overview' %></div>
+</div>
+
+<% content_for :ready do %>
+  $('title').text('<%= page_title(params[:month]) %> <%= params[:year] %>'+' - Budgetal.com');
+
+  $(window).scroll(function() {
+    if (window.scrollY >= 75) {
+      $('.qn').addClass('qn_fix');
+      $('#month_links').addClass('qn_fix_body');
+    } else {
+      $('.qn').removeClass('qn_fix');
+      $('#month_links').removeClass('qn_fix_body');
+    }
+  });
+
+  $('.get-date').each(function() {
+    if( !$(this).hasClass('hasDatePicker') ) {
+      $(this).datepicker({dateFormat: 'yy-mm-dd'})
+    }
+  });
+<% end %>
+
+<div id="new-allocation-plan" class="reveal-modal tiny" data-reveal></div>

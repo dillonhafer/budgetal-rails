@@ -1,6 +1,7 @@
 class BudgetItem < ActiveRecord::Base  
   belongs_to :budget_category  
   has_many :budget_item_expenses
+  has_many :allocation_plan_budget_items
   accepts_nested_attributes_for :budget_item_expenses, allow_destroy: true
   validates_presence_of :budget_category_id, :amount_budgeted, :name
 
@@ -20,5 +21,13 @@ class BudgetItem < ActiveRecord::Base
     expenses = BudgetItem.find_by_sql([sql, self.name])
     expenses_array = expenses.map {|e| e["name"]}
     expenses_array.unshift('Add a new item')
-  end  
+  end
+
+  def amount_allocated
+    allocation_plan_budget_items.sum(:amount_budgeted)
+  end
+
+  def remaining_allocations    
+    amount_budgeted - amount_allocated
+  end
 end
