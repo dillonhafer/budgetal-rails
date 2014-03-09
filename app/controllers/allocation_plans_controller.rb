@@ -1,7 +1,7 @@
 class AllocationPlansController < ApplicationController
   before_filter :require_user  
-  before_filter :check_date
-  before_filter :find_budget, only: %w{index create}
+  before_filter :check_date, except: [:edit]
+  before_filter :find_budget, only: %w{index create update}
 
   def new
     @new_allocation_plan = AllocationPlan.new
@@ -26,13 +26,17 @@ class AllocationPlansController < ApplicationController
     end
   end
 
+  def edit
+    @allocation_plan = AllocationPlan.find(params[:id])
+    render layout: !request.xhr?
+  end
+
   def update
-    @budget_category = BudgetCategory.find(params[:id])
-    @budget = @budget_category.budget
-    if @budget_category.update_attributes(budget_category_params)
-      flash[:notice] = 'Updated!'
+    @allocation_plan = @budget.allocation_plans.find(params[:id])
+    if @allocation_plan.update_attributes(allocation_plan_params)
+      redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Added pay period'
     else
-      flash[:error] = 'Something went wrong'
+      redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Something went wrong'
     end
   end
 

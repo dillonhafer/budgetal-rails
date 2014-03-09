@@ -28,6 +28,9 @@
   <div class="ajax-container overview"><%= render 'overview' %></div>
 </div>
 
+<div id="new-allocation-plan" class="reveal-modal tiny" data-reveal></div>
+<div id="edit-allocation-plan" class="reveal-modal tiny" data-reveal></div>
+
 <% content_for :ready do %>
   $('title').text('<%= page_title(params[:month]) %> <%= params[:year] %>'+' - Budgetal.com');
 
@@ -47,5 +50,3 @@
     }
   });
 <% end %>
-
-<div id="new-allocation-plan" class="reveal-modal tiny" data-reveal></div>
