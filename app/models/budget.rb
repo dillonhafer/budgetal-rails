@@ -15,7 +15,7 @@ class Budget < ActiveRecord::Base
     less_than_or_equal_to: 2020,
     greater_than_or_equal_to: 2013
 
-  scope :ordered, -> { order('month::integer desc, year::integer desc') }
+  scope :ordered, -> { order('year::integer desc, month::integer desc') }
 
   def total_expenses
     total_expense = ActiveRecord::Base.connection.select_all <<-END_SQL
