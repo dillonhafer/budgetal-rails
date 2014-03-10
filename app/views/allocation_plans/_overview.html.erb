@@ -29,7 +29,7 @@
               <li>
               <% @budget.budget_categories.order(:id).each do |c| %>
                 <div id="category-<%= c.id %>" class="row">      
-                  <div class="large-1 columns centered"><%= image_tag "#{c.name}.png" %></div>
+                  <div id="<%= c.name.gsub('/', '-') %>" class="large-1 columns centered"><%= image_tag "#{c.name}.png" %></div>
                   <div class="large-3 columns">
                     <h5><%= c.name %> </h5>
                   </div>                  
