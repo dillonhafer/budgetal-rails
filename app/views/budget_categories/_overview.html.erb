@@ -8,8 +8,9 @@
 <div class="row">  
     <div class="large-4 columns">
       <div class="row">
-        <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Monthly Income:</b></div>
-        <div class='large-6 columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'', autofocus: true %></div>
+        <div class="large-6 columns text-right" style="line-height: 2.3;"><b>Monthly Income:</b></div>
+        <div class='large-4 columns'><%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'', autofocus: true %></div>
+        <div class='large-2 columns'><%= link_to "<i class='fi-refresh'></i>".html_safe, '', onclick: '$(".edit_budget").submit()', class: 'tiny button round success', style: 'padding: 5px 11px; font-size: 16px' %></div>
       </div>
       <div class="row" style="border-bottom: 1px solid #CCC;">
         <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b>Amount Spent:</b></div>
@@ -18,7 +19,7 @@
       <div class="row">
         <div class="large-6 columns" style="text-align: right;vertical-align: middle;line-height: 2.3;"><b><%= "<span style='color:red' title='This is starting to pattern congress!'>Uh-Oh!</span>".html_safe if (@budget.monthly_income-@budget.total_expenses < 0) %></b></div>
         <div id='budget_difference' class='large-6 columns' style="padding: 8px; font-size: 15px"><%= number_to_currency @budget.difference %></div>
-      </div>
+      </div>      
     </div>
     <div id="budget-remainder" class="large-8 columns">
       <div class="progress radius blue-meter"><span class="meter" style="width: <%= @budget.percent_used %>%"></span></div>

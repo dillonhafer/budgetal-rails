@@ -83,14 +83,6 @@ $(document).on('click', '.show-expenses', function() {
   }
 });
 
-$(document).on('keyup', '#budget_monthly_income', function() {
-  $('.edit_budget').submit();
-});
-
-$(document).on('change', '#budget_monthly_income', function() {
-  $('.edit_budget').submit();
-});
-
 $(document).on('nested:fieldAdded', function(event){      
   var field = event.field;
   field.find('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
