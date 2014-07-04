@@ -73,7 +73,7 @@ $(document).on('click', '.quickNavLink', function(e){
 
 // Controls + and - drawer for expenses  
 $(document).on('click', '.show-expenses', function() {    
-  $(this).parent().parent().next('.expense-list').toggleClass('hide');
+  $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeInUp');  
   if ($(this).text() == '+') {
     $(this).text("-");
     $(this).css('color', 'red')
@@ -99,4 +99,18 @@ $(document).on('nested:fieldRemoved', function(event){
 
 $(document).on('submit', '.edit_budget', function(e){
   e.preventDefault();
+});
+
+$(document).on('click', '#hide_password', function() {
+  var is_hidden = $(this).hasClass('hidden_password');
+  if(is_hidden) {
+    $('input[name="user[password]"]').attr('type', 'text');
+    $('input[name="user[password_confirmation]"]').attr('type', 'text');
+    $('input[name="user[current_password]"]').attr('type', 'text');    
+  } else {
+    $('input[name="user[password]"]').attr('type', 'password');
+    $('input[name="user[password_confirmation]"]').attr('type', 'password');
+    $('input[name="user[current_password]"]').attr('type', 'password');
+  }
+  $(this).toggleClass('hidden_password')
 });

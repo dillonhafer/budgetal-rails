@@ -3,26 +3,30 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
   window.onpopstate = (e) ->
-     if e.state
-       console.log('title: '+e.state.html)
+     if e.state       
        document.title = e.state.pageTitle
        $('#month-view').html(e.state.html)
 
-  recent_expenses = (name) ->
+  recent_expenses = (ul, name) ->
     api_url       = "/past-expenses/#{name}.json"    
     expense_items = ""
     results       = ""
 
     jQuery.ajax
       url: api_url,
-      async:false,
+      async:true,
       success: (html) ->
-        expense_items = html      
+        expense_items = html              
+        for k,v of expense_items
+          results += "<li class='drop-item'>#{v}</li>"
         
-    for k,v of expense_items
-      results += "<li class='drop-item'>#{v}</li>"
-
-    results
+        if results.length
+          ul.html(results)
+          ul.css('left', '0')
+          ul.addClass('active-recent-expenses')
+        else
+          ul.css('left', '-9999px')
+          ul.removeClass('active-recent-expenses')
 
   $(document).on 'blur', '.expense-item-field', () ->
     $(this).next('ul').css('left', '-9999px')
@@ -67,15 +71,7 @@ jQuery ->
         ul.removeClass('active-recent-expenses')      
     else
       if $(this).val().length > 3
-        list = recent_expenses($(this).val())
-        if list.length
-          ul.html(list)
-          ul.css('left', '0')
-          ul.addClass('active-recent-expenses')
-        else
-          ul.css('left', '-9999px')
-          ul.removeClass('active-recent-expenses')
-
+        recent_expenses(ul, $(this).val())        
       else
         ul.css('left', '-9999px')
         ul.removeClass('active-recent-expenses')
