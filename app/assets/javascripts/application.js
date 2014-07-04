@@ -73,7 +73,7 @@ $(document).on('click', '.quickNavLink', function(e){
 
 // Controls + and - drawer for expenses  
 $(document).on('click', '.show-expenses', function() {    
-  $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeInUp');  
+  $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeIn');  
   if ($(this).text() == '+') {
     $(this).text("-");
     $(this).css('color', 'red')
