@@ -33,7 +33,7 @@ jQuery ->
 
   $(document).on 'keydown', '.expense-item-field', (event) ->
     ul = $(this).next('ul')
-    if event.keyCode == 13 || event.keyCode == 9
+    if event.keyCode == 13
       event.preventDefault()      
       if ul.find('li.active-li').length
         ul.find('li.active-li').trigger('mousedown')
@@ -45,7 +45,7 @@ jQuery ->
 
   $(document).on 'keyup', '.expense-item-field', (event) ->
     ul = $(this).next('ul')
-    if $.inArray(event.keyCode, [9, 13, 37, 38, 39, 40]) > -1
+    if $.inArray(event.keyCode, [13, 37, 38, 39, 40]) > -1
       if event.keyCode == 40
         if ul.find('.active-li').length
           existing = ul.find('.active-li')          
