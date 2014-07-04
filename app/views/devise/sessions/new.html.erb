@@ -18,70 +18,77 @@ input[name="commit"] {
 </style>
 
 <div class='row'>
-  <div class='large-12 columns'>    
-    <h2 class="blue-color">Welcome to Budgetal.com</h2>
-  </div>
-</div>
-
-<div class='row'>
-  <div class='large-6 columns'>
-    <h2 class='subheader'>Sign in</h2>
+  <div class='large-12 columns sign-in-section'>
+    <h2>Sign in</h2>
     <hr />
-  </div>
-  <div class='large-6 columns hide-for-small'>
-    <h2 class='subheader'>Join</h2>
-    <hr />    
-  </div>
-</div>
-
-<div class='row'>
-  <div class='large-5 columns'>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {data: {abide:''}}) do |f| %>
-      <div>
-        <%= f.label :email, class: 'left' %>
-        <% if devise_mapping.rememberable? -%>
-          <label class='right'><%= f.check_box :remember_me %> remember me</label>
-        <% end -%>    
+    <div class='clearfix'>
+      <%= f.label :email, class: 'left' %>
+      <% if devise_mapping.rememberable? -%>
+        <label class='right' style='color:#000;'><%= f.check_box :remember_me, tabindex: 3 %> remember me</label>
+      <% end -%>    
 
-        <%= f.email_field :email, autofocus: true, required:'' %>
-        <small class="error">An email address is required.</small>
-      </div>
+      <%= f.email_field :email, required:'', tabindex: 1 %>
+      <small class="error">An email address is required.</small>
+    </div>
 
-      <div>
-        <%= f.label :password, class: 'left' %>
-        <%= f.password_field :password, required:'' %>
-        <small class="error">Password is required.</small>  
-      </div>
+    <div class='clearfix'>    
+      <%= f.label :password, class: 'left' %><small class='right'><a id="hide_password" class='hidden_password' href="javascript:void(0)" /></a></small>
+      <%= f.password_field :password, required:'', tabindex: 2 %>
+      <small class="error">Password is required.</small>  
+    </div>
 
-  <div>
-    <ul class="button-group radius">
-      <li><%= f.submit "Sign in".html_safe, class: 'small blue button nice radius' %></li>
+    <div>
+      <ul class="button-group radius">
+        <li><%= f.submit "Sign in".html_safe, class: 'small button nice radius', tabindex: 4 %></li>
 
-    <%- if devise_mapping.omniauthable? %>
-      <%- resource_class.omniauth_providers.each do |provider| %>
-      <li>
-        <%= link_to omniauth_authorize_path(resource_name, provider), class: 'tiny facebook button nice radius ' do  %>
-        <%= image_tag "fb.png", style: 'height: 24px; width: 24px' %> Sign in with Facebook<br />
-        <% end %>
-      </li>
-      <% end -%>
-    <% end -%>  
-    </ul>
-    <%= render "devise/shared/links" %>
+      <%- if devise_mapping.omniauthable? %>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+        <li>
+          <%= link_to omniauth_authorize_path(resource_name, provider), class: 'tiny facebook button nice radius ' do  %>
+          <%= image_tag "fb.png", style: 'height: 24px; width: 24px' %> Sign in with Facebook<br />
+          <% end %>
+        </li>
+        <% end -%>
+      <% end -%>  
+      </ul>
+      <%= render "devise/shared/links" %>
+    </div>
+    <% end %>
+    <a id="join" onclick="$('.sign-in-section').addClass('hide');$('.join-section').removeClass('hide');">Join Us</a>
   </div>
-  </div>
-<% end %>
-  <div class='large-7 columns centered join-section'>  
-    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-      <div class='show-for-small'>
-        <h2>Join</h2>
-        <hr />    
-      </div>
-      <%= link_to "Join", new_registration_path(resource_name), class: 'success button radius' %>
+  <div class='large-12 columns hide join-section'>  
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>      
+      <h2>Join</h2>
+      <hr />                
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: {abide: ''}}) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div>
+          <%= f.label :email, for: 'new_user_email' %>
+          <%= f.email_field :email, required:'', id: 'new_user_email', placeholder: 'email@example.org', tabindex: 5 %>
+          <small class="error">An email address is required.</small>
+        </div>
+        
+        <div class='clearfix'>    
+          <%= f.label :password, for: 'new_user_password', class: 'left' %> <small class='right'><a id="hide_password" class='hidden_password' href="javascript:void(0)" /></a></small>
+          <%= f.password_field :password, required:'', id: 'new_user_password', id: 'new_user_password', pattern: 'password', tabindex: 7 %>
+          <small class="error">Passwords must be at least 8 characters with 1 capital letter, and 1 number.</small>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, for: 'new_user_password_confirmation' %>
+          <%= f.password_field :password_confirmation, required:'', id: 'new_user_password_confirmation', data: {equalto:'new_user_password'}, tabindex: 8 %>
+          <small class="error">Password confirmation must match.</small>
+        </div>
+
+        <div><%= f.submit "Sign up", class: 'small button nice radius', tabindex: 9 %></div>
+      <% end %>        
     <% end -%>
-  </div>  
+    <a onclick="$('.sign-in-section').removeClass('hide');$('.join-section').addClass('hide')">Sign In</a>
+  </div>
 </div>
 
-<% if request.xhr? %>
-  <a class="close-reveal-modal">&#215;</a>
-<% end %>
+<script>
+  $('form').foundation();
+</script>

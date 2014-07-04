@@ -1,5 +1,6 @@
 <% if request.xhr? %>
   <%= yield %>
+  <a class="close-reveal-modal">&#215;</a>
 <% else %>
   <%= render template: "layouts/application.html.erb" %>
 <% end %>
