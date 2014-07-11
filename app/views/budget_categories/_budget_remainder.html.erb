@@ -1,8 +1,0 @@
-<div class="progress radius blue-meter"><span class="meter" style="width: <%= @budget.percent_used %>%"></span></div>
-<h5><%= remaining_to_budget %></h5>
-<% content_for :ready do %>       
-  $(".budget-remainder .meter").animate({"width": "<%= @budget.percent_used %>%"}, "fast");
-  <% if @budget.amount_remaining < 0 %>
-    $('.budget-remainder .meter').css('background', 'red')      
-  <% end %>
-<% end %>

@@ -19,13 +19,13 @@ module BudgetCategoriesHelper
     return "<i class='general foundicon-mail blue'></i>".html_safe if budget_item.envelope
   end
 
-  def remaining_to_budget
-    if @budget.amount_remaining > 0.00
-      "#{number_to_currency @budget.amount_remaining} Remaining to budget"
-    elsif @budget.amount_remaining == 0
+  def remaining_to_budget(b)
+    if b.amount_remaining > 0.00
+      "#{number_to_currency b.amount_remaining} Remaining to budget"
+    elsif b.amount_remaining == 0
       "<span style='color:#69F'>Congratulations! Your budget is balanced!</span>".html_safe
     else
-      "<span style='color:red'>#{number_to_currency @budget.amount_remaining.abs} Over budgeted!</span>".html_safe
+      "<span style='color:red'>#{number_to_currency b.amount_remaining.abs} Over budgeted!</span>".html_safe
     end
   end
 end

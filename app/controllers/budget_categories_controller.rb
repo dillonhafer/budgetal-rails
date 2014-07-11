@@ -1,23 +1,21 @@
 class BudgetCategoriesController < ApplicationController
   before_filter :require_user  
   before_filter :check_date
+  before_filter :check_user, only: [:cajax]
 
   def index    
     year  = params[:year]
-    month = params[:month]
-    
-    @budgets = []
-    (1..12).each do |month|
-      @budgets << OpenStruct.new(month: month, year: Date.today.year)
-    end
+    month = params[:month]      
+    @budget = current_user.budgets.find_by(month: month.to_s, year: year.to_s) || Budget.create_template(month, year, current_user.id)
+  end
 
-    @budget = current_user.budgets.where(month: month.to_s, year: year.to_s).first || Budget.create_template(month, year, current_user.id)
+  def cajax
+    @c = BudgetCategory.find(params[:id])    
   end
 
   def update
-    @budget_category = BudgetCategory.find(params[:id])
-    @budget = @budget_category.budget
-    if @budget_category.update_attributes(budget_category_params)
+    @c = BudgetCategory.find(params[:id])    
+    if @c.update_attributes(budget_category_params)
       flash[:notice] = 'Updated!'
     else
       flash[:error] = 'Something went wrong'
@@ -30,6 +28,19 @@ class BudgetCategoriesController < ApplicationController
   end
 
   private
+
+  def check_user
+    @c = BudgetCategory.find(params[:id])
+    #if !@c.blank? && @c.budget.user_id != current_user.id
+    #  if request.xhr?
+    #    render(js: '$(".category-ajax").html("<h1 class=\'error-404 text-center\'>404 not found</h1>")') and return
+    #  end
+    #else
+    #  if request.xhr?
+    #    render(js: '$(".category-ajax").html("<h1 class=\'error-404 text-center\'>404 not found</h1>")') and return
+    #  end
+    #end
+  end
 
   def budget_category_params
     params.require(:budget_category).permit(:name, 

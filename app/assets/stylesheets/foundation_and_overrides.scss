@@ -1023,6 +1023,19 @@ $topbar-dropdown-label-color: #777;
   background: #000;
 }
 
+div.icon-bar > :hover {
+  background: #222;
+}
+
+div.icon-bar > .item:not(.header).active {
+  background: lighten(#222,2%);
+}
+
+div.icon-bar > .item.header {
+  padding: 10px 0px 10px !important;
+  &:hover {background: #333;cursor: default; *{cursor: default;}}
+  border-bottom: 1px solid #444;
+}
 $main: #6699FF;
 $pulse-light-grey: #C6822B;
 $pulse-grey: #666;
@@ -1054,4 +1067,14 @@ $break: 767px;
       }
     }
   }
+}
+
+div.icon-bar.label-right > * i, div.icon-bar.label-right > * img {
+  margin: 0px 0.6825rem 0px 0px;
+}
+
+img.mobile-icon {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.6825rem;
 }

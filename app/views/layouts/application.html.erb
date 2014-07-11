@@ -20,7 +20,7 @@
     </style>
   </head>
   <body>    
-    <div class="contain-to-grid">
+    
       <nav class="top-bar" data-topbar>
         <ul class="title-area">
           <li class="name">
@@ -50,9 +50,10 @@
           </ul>
         </section>  
       </nav><!--#navmain.hide-for-small-->  
-    </div>
+    
 
-    <div id="contentmain" class="row">
+
+    <div id="contentmain" class="row hide">
       <div class="large-12 columns">
         <% if flash[:notice] %>
           <br/>
@@ -67,11 +68,12 @@
             <%= flash[:error] %>
             <a class="close-reveal-modal">&#215;</a>
           </div>
-        <% end %>
-
-        <%= yield %>
+        <% end %>        
       </div>
     </div>
+
+
+    <%= yield %>
 
     <%= javascript_include_tag "application" %>
     <script><%= yield(:ready) %></script>

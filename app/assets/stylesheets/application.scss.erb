@@ -39,7 +39,7 @@ a#hide_password {
   .add-nested-item {margin-left: 0 !important; margin-top: 0 !important;}
 }
 
-body, html {background: white !important; height: 100% !important;}
+body, html {background: #e6e7eb !important; height: 100% !important;}
 
 body {margin-top: 0px !important;}
 
@@ -299,6 +299,7 @@ ul.main-budget-categories {
 }
 
 .main-budget-categories {
+  background: white;
   input[type="text"],input[type="number"] {
     border: none;
     box-shadow: none;
@@ -326,4 +327,25 @@ a.show-expenses {
 
 input[type="text"] {
   z-index: 88;
+}
+
+.header-row {
+  margin-top: 1rem;
+  h1, h2, h3, h4 {
+    background: #f6f6f9;
+    padding: 15px 20px;
+    color: black !important;  
+    margin: 0;  
+    text-transform: uppercase;
+  }
+  @include shadow;
+}
+
+a:active {
+  outline: none;
+}
+
+.error-404 {
+  margin-top: 1.2rem;
+  color: #69F;
 }

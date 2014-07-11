@@ -1,0 +1,40 @@
+<div class='row collapse'>
+  <div class='large-12 columns header-row'>
+    <h3>Monthly Overview</h3>
+  </div>  
+  <div class="small-12 large-12 columns">
+    <ul style='margin-left: 0' class="main-budget-categories">
+      <li style='border-top:none'>
+        <div class="row">
+          <div class="large-12 columns">
+            <span class='spent' style='color: green'>Spent: <%= number_to_currency b.total_expenses %></span><span style='color: #69F' class='right remaining'>Remaining: <%= number_to_currency b.amount_budgeted %></span>
+            <div class="progress radius"><span id='bs-<%= b.id %>' class="meter" style="background: #69F; width: <%= b.percent_spent %>%;"></span></div>
+            <% content_for :ready do %>                    
+              <% if b.percent_spent < 0 %>
+                $('#bs-<%= b.id %>').css('background', 'red')      
+                $('#bs-<%= b.id %>').parent().prev('.right').css('color', 'red')
+              <% end %>
+            <% end %>
+          </div>                  
+        </div>
+        <hr />
+        <%= form_for b, html: {data: {remote: true}} do |f| %>
+          <div class="row">
+            <div class="large-5 columns">
+              <div>
+                <%= f.label :monthly_income %>
+                <%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'', autofocus: true %>
+              </div>
+              <div>
+                <%= link_to "Update Monthly Income", '', onclick: '$(".edit_budget").submit()', class: 'tiny button radius success expand' %>            
+              </div>
+            </div>
+            <div class="large-7 columns text-center">
+              <br /><h5>You have <%= remaining_to_budget(b) %></h5>
+            </div>
+          </div>    
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

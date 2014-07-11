@@ -11,6 +11,8 @@ Budgets::Application.routes.draw do
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
   resources :allocation_plan_budget_items, path: '/budgets/:budget_id/allocation-plans/:id/budget-items/:budget_item_id'
   
+  match 'cajax/:year/:month/:id' => 'budget_categories#cajax', as: 'category_ajax', via: [:get, :post]
+
   get 'past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics' 
   get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'

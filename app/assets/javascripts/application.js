@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require foundation/foundation.offcanvas
 //= require foundation/foundation.topbar
+//= require foundation/foundation.tab
 //= require foundation/foundation.abide
 //= require foundation/foundation.reveal
 //= require jquery_nested_form
@@ -99,6 +101,13 @@ $(document).on('nested:fieldRemoved', function(event){
 
 $(document).on('submit', '.edit_budget', function(e){
   e.preventDefault();
+});
+
+$(document).on('click', 'a.item', function(e){
+  if (!$(this).hasClass('header')) {
+    $('a.item').removeClass('active');
+    $(this).addClass('active');    
+  }
 });
 
 $(document).on('click', '#hide_password', function() {
