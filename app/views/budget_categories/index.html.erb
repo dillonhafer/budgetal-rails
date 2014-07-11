@@ -6,10 +6,7 @@
       </section>
       <section class="right tab-bar-section">
         <h1 class="title"><%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></h1>
-      </section>
-      <section class="right-small">
-        <a class="right-off-canvas-toggle menu-icon"><span></span></a>
-      </section>
+      </section>      
     </nav>
 
     <aside class="left-off-canvas-menu">
@@ -50,7 +47,7 @@
     <% end %>
   </div>
 </div>
-<div style='' class='large-10 columns hide-for-small'>    
+<div class='large-10 columns hide-for-small'>    
   <div class='category-ajax'>
     <%= render partial: 'cajax', locals: {c: @budget.budget_categories.first} %>
   </div>    
