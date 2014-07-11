@@ -1,6 +1,8 @@
 // FOUNDATION SETTINGS
 //
 
+@import url(https://fonts.googleapis.com/css?family=Arvo:400,700,400italic);
+
 // Uncomment to use rem-calc() in your settings
 $rem-base: 16px;
 @import "foundation/_settings";
@@ -38,10 +40,12 @@ $rem-base: 16px;
 // We use these to control various global styles
 // $body-bg: #fff;
 // $body-font-color: #222;
-$body-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: "Arvo", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
-
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans' !important;
+}
 // We use this to control font-smoothing
 // $font-smoothing: antialiased;
 
@@ -1048,8 +1052,8 @@ $a-hover: darken($main,10%);
 a {color: $a; @include transition(color);}
 a:hover {color: $a-hover;}
 
-$body-font: "Open Sans", Helvetica, Arial, sans-serif;
-$header-font: "Open Sans", "Lucida Grande", Helvetica, Arial, sans-serif;
+$body-font: "Arvo", Helvetica, Arial, sans-serif;
+$header-font: "Arvo", "Lucida Grande", Helvetica, Arial, sans-serif;
 
 $break: 767px;
 
