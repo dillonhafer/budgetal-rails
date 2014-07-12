@@ -1,6 +1,5 @@
 <div class='<%= selector %>' style="width: 100%;max-width: 100%;height: 200px"></div>
-<%= javascript_include_tag "https://www.google.com/jsapi" %>
-<script type="text/javascript">
+<script type="text/javascript">  
   google.load("visualization", "1", {packages:["corechart"]});
   google.setOnLoadCallback(drawChart);
   function drawChart() {
@@ -21,9 +20,6 @@
       chart.draw(data, options);
     });
   }
-  
-  $(document).ready(function() {
-    drawChart()
-  });
+  <%= 'drawChart();' if request.xhr? %>    
 </script>
 

@@ -7,7 +7,7 @@ jQuery ->
        document.title = e.state.pageTitle
        $('#month-view').html(e.state.html)
 
-  recent_expenses = (ul, name) ->
+  recent_expenses = (ul, name, top) ->
     api_url       = "/past-expenses/#{name}.json"    
     expense_items = ""
     results       = ""
@@ -22,17 +22,19 @@ jQuery ->
         
         if results.length
           ul.html(results)
-          ul.css('left', '0')
+          ul.css('left', '37%')
+          ul.css('top', top-100)
           ul.addClass('active-recent-expenses')
         else
           ul.css('left', '-9999px')
           ul.removeClass('active-recent-expenses')
 
   $(document).on 'blur', '.expense-item-field', () ->
-    $(this).next('ul').css('left', '-9999px')
+    ul = $(this).parent().parent().parent().parent().next('ul')
+    ul.css('left', '-9999px')
 
   $(document).on 'keydown', '.expense-item-field', (event) ->
-    ul = $(this).next('ul')
+    ul = $(this).parent().parent().parent().parent().next('ul')
     if event.keyCode == 13
       event.preventDefault()      
       if ul.find('li.active-li').length
@@ -44,7 +46,10 @@ jQuery ->
       ul.removeClass('active-recent-expenses')      
 
   $(document).on 'keyup', '.expense-item-field', (event) ->
-    ul = $(this).next('ul')
+    $('input.active-input').removeClass('active-input')
+    $(this).addClass('active-input')
+    ul = $(this).parent().parent().parent().parent().next('ul')
+    top = $(this).offset().top
     if $.inArray(event.keyCode, [13, 37, 38, 39, 40]) > -1
       if event.keyCode == 40
         if ul.find('.active-li').length
@@ -75,11 +80,12 @@ jQuery ->
         ul.removeClass('active-recent-expenses')      
     else
       if $(this).val().length > 1
-        recent_expenses(ul, $(this).val())        
+        recent_expenses(ul, $(this).val(), top)        
       else
         ul.css('left', '-9999px')
         ul.removeClass('active-recent-expenses')
 
   $(document).on 'mousedown', '.drop-item', () ->
     expense = $(this).text()
-    $(this).parent().prev('input').val(expense)
+    $('input.active-input').val(expense).removeClass('active-input')
+

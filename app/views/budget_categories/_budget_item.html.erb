@@ -1,5 +1,5 @@
-<%= nested_form_for c, html: {data: {remote: true}} do |f| %>
-  <%= f.fields_for :budget_items %>
+<%= nested_form_for c, html: {data: {remote: true}} do |f| %>  
+  <%= f.fields_for :budget_items %>  
   <%= f.link_to_add "Add a budget item", :budget_items, class: 'tiny button radius success add-nested-item' %>
   <%= f.submit 'save', class: 'tiny radius button blue' %>
   <%= hidden_field_tag :year, params[:year] %>

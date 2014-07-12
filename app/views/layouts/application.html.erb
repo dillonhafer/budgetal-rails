@@ -53,8 +53,7 @@
     
     <%= yield %>
 
-    <%= javascript_include_tag "application" %>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <%= javascript_include_tag "application" %>    
     <script><%= yield(:ready) %></script>
     <%= sign_in_modal unless current_user %>    
   </body>
