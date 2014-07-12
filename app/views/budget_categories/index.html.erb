@@ -1,4 +1,4 @@
-<div class="off-canvas-wrap hide-for-medium-up" data-offcanvas>
+<div class="off-canvas-wrap hide-for-large-up" data-offcanvas>
   <div class="inner-wrap">
     <nav class="tab-bar">
       <section class="left-small">
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div style='padding-left: 0' class='large-2 medium-2 hide-for-small columns'>
+<div style='padding-left: 0' class='large-2 hide-for-medium-down columns'>
   <div style='width: 100%' class="icon-bar vertical six-up label-right">
     <a class='item header text-center' href='#'>
       <label><i class='fi-calendar'></i> <%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
@@ -54,7 +54,7 @@
     <% end %>
   </div>
 </div>
-<div class='large-10 columns hide-for-small'>    
+<div class='large-10 medium-10 columns hide-for-medium-down'>    
   <div class='category-ajax'>    
     <%= render partial: 'cajax', locals: {c: @budget.budget_categories.first} %>
   </div> 
