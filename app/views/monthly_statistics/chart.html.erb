@@ -6,7 +6,7 @@
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       ['Money', '%'],      
-      ['Spent',  <%= percent_used %>],      
+      ['Spent',  <%= percent_used.nan? ? 0 : percent_used.round %>],      
       ['Remaining', <%= 100 - (percent_used.nan? ? 0 : percent_used).round %>]
     ]);
 
