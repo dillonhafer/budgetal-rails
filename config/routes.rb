@@ -1,6 +1,8 @@
 Budgets::Application.routes.draw do
   root :to => 'welcome#index'
-  
+
+  get '/chart' => 'monthly_statistics#chart', as: 'chart'
+
   devise_for :users, path: "sessions", path_names: { sign_in: 'sign-in', sign_out: 'sign-out', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'sign-up', sign_up: 'join' }
   resources :users
   resources :budgets

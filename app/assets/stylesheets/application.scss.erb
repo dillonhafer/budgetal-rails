@@ -227,16 +227,12 @@ ul.main-budget-categories {
   }
 }
 
-.alert-box.blue {
-  color: white;
-  background: #69F;
-  border: none;
-  position: absolute;
-  width: 80%;
-  left: 10%;
+.alert-box.success {  
   z-index: 999999;
-
+  text-align: center;
+  width: 300px;  
   a.close {color:white;}
+  @include shadow;
 }
 
 .qn_fix {
@@ -348,4 +344,54 @@ a:active {
 .error-404 {
   margin-top: 1.2rem;
   color: #69F;
+}
+
+span.tooltip { 
+    z-index:10;
+    display:none !important;
+    padding:14px !important;
+    margin-top:-75px !important;
+    margin-left:75px !important;
+    width:200px !important;
+    color: black;
+    line-height:30px; 
+    text-align: left;
+    background: #DEDEDE;  
+    @include shadow-big;
+    @include vendor(border-radius, 3px);
+
+    p {  
+      label {color: black;}
+      padding: 8px;
+      padding-bottom: 0;
+      margin-bottom: 0;
+
+      input[type="submit"] {
+        margin-bottom: 5px;
+      }
+    }
+}
+
+span.tooltip:after {
+  right: 100%;
+  top: 40px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-right-color: #DEDEDE;
+  border-width: 12px;
+  margin-top: -12px;
+}
+
+span.tooltip:hover {
+  background: #DEDEDE !important;
+}
+
+span.tooltip.active { 
+  display:inline !important;
+  position:absolute;    
 }

@@ -49,6 +49,7 @@
         <h6>
           You have budgeted <%= number_to_currency c.total_budgeted %> (<%= c.percent_of_budget %>%) towards this category, we recommend you only budget <%= c.percentage %>.
         </h6>        
+        <%#= render template: 'monthly_statistics/chart', locals: {percent_used: (c.percent_used), selector: 'category-donut'} %>
       </li>
     </ul>
   </div>

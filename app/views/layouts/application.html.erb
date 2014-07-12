@@ -7,8 +7,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
     <meta name="description" content="With Budgetal.com's website you can stayed smart and organized to win with money." />
     <meta name="keywords" content="budget budgets budgetal money finance success cash plan win" />
-    <meta name="apple-itunes-app" content="app-id=, app-argument=Budgetal" />
-
+    <meta name="apple-itunes-app" content="app-id=, app-argument=Budgetal" />        
     <title><%= yield(:title) %>Budgetal</title>
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <%= stylesheet_link_tag "application" %>    
@@ -18,6 +17,7 @@
     <style>
       <%= yield(:styles) %>
     </style>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   <body>    
     
@@ -51,32 +51,11 @@
         </section>  
       </nav><!--#navmain.hide-for-small-->  
     
-
-
-    <div id="contentmain" class="row hide">
-      <div class="large-12 columns">
-        <% if flash[:notice] %>
-          <br/>
-          <div data-alert class="alert-box blue radius">
-            <%= flash[:notice] %>
-            <a class="close-reveal-modal">&#215;</a>
-          </div>      
-        <% end %>
-        <% if flash[:error] %>
-          <br/>
-          <div data-alert class="alert-box alert radius">      
-            <%= flash[:error] %>
-            <a class="close-reveal-modal">&#215;</a>
-          </div>
-        <% end %>        
-      </div>
-    </div>
-
-
     <%= yield %>
 
     <%= javascript_include_tag "application" %>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script><%= yield(:ready) %></script>
-    <%= sign_in_modal unless current_user %>
+    <%= sign_in_modal unless current_user %>    
   </body>
 </html>

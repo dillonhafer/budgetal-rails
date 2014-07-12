@@ -43,11 +43,11 @@ $(document).ready(function() {
 
     if(flash.notice) { 
       $(".error").remove(); 
-      $("#contentmain").before($('<div data-alert class="alert-box radius blue" style="display: none;position: fixed; top: 20px;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.notice));
-      $(".alert-box.radius.blue").fadeIn(400).delay(1000).fadeOut(250, function() {$(this).remove()});
+      $(".category-ajax").before($('<div data-alert class="alert-box radius success" style="display: none;position: fixed; top: 14px;z-index:99999"><a class="close-reveal-modal">&#215;</a></div>').html(flash.notice));
+      $(".alert-box.radius.success").fadeIn(400).delay(1000).fadeOut(250, function() {$(this).remove()});
     }
 
-    if(flash.errors) { $(".error").remove(); $("#contentmain").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); } 
+    if(flash.errors) { $(".error").remove(); $(".category-ajax").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); } 
     $(".error").click(function() { $(this).slideUp(); });
   });
 });
@@ -103,11 +103,11 @@ $(document).on('submit', '.edit_budget', function(e){
   e.preventDefault();
 });
 
-$(document).on('click', 'a.item', function(e){
-  if (!$(this).hasClass('header')) {
-    $('a.item').removeClass('active');
-    $(this).addClass('active');    
-  }
+$(document).on('click', 'a.item', function(e){    
+  $('a.item.active').removeClass('active');
+  $('span.tooltip.active').removeClass('active');
+  $(this).addClass('active');
+  $(this).next('span.tooltip').addClass('active');
 });
 
 $(document).on('click', '#hide_password', function() {
@@ -122,4 +122,16 @@ $(document).on('click', '#hide_password', function() {
     $('input[name="user[current_password]"]').attr('type', 'password');
   }
   $(this).toggleClass('hidden_password')
+});
+
+$(document).on('click', '#change-budget', function() {
+  var year  = $(this).prev('select').val()
+  var month = $(this).prev().prev('select').val()
+  window.location = '/cash-flow-plans/'+year+'/'+month
+});
+
+$(document).on('click', '.category-ajax', function(e) {
+  if ($('span.tooltip').hasClass('active')) {    
+    $('span.tooltip').removeClass('active')
+  }
 });

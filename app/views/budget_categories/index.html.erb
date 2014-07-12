@@ -37,8 +37,15 @@
 <div style='padding-left: 0' class='large-2 medium-2 hide-for-small columns'>
   <div style='width: 100%' class="icon-bar vertical six-up label-right">
     <a class='item header text-center' href='#'>
-      <label><%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
+      <label><i class='fi-calendar'></i> <%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
     </a>
+    <span class='tooltip'>
+      <p>          
+        <label for="month_change_budget_2i">Change Budget</label>
+        <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, default: Date.new(@budget.year.to_i, @budget.month.to_i), order: [:month, :year] %>          
+        <%= submit_tag 'change', id: 'change-budget', class: 'expand button radius tiny yellow expand' %>        
+      </p>
+    </span>
     <% @budget.budget_categories.order(:id).each do |c| %>
       <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: "item #{'active' if c == @budget.budget_categories.first}", remote: true do %>
         <%= image_tag "#{c.name}.png" %>
@@ -48,7 +55,7 @@
   </div>
 </div>
 <div class='large-10 columns hide-for-small'>    
-  <div class='category-ajax'>
+  <div class='category-ajax'>    
     <%= render partial: 'cajax', locals: {c: @budget.budget_categories.first} %>
-  </div>    
+  </div> 
 </div>

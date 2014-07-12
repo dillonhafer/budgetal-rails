@@ -16,7 +16,7 @@ class BudgetCategoriesController < ApplicationController
   def update
     @c = BudgetCategory.find(params[:id])    
     if @c.update_attributes(budget_category_params)
-      flash[:notice] = 'Updated!'
+      flash[:notice] = 'Changes saved!'
     else
       flash[:error] = 'Something went wrong'
     end
