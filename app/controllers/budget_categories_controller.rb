@@ -62,7 +62,7 @@ class BudgetCategoriesController < ApplicationController
   end
 
   def check_date
-    if params[:year].to_i > 2020
+    if params[:year].to_i > Time.now.advance(years: 1).year
       flash[:error] = "You can't go that far into the future. Who's to say we'd still be around?"
       redirect_to root_path
     elsif params[:year].to_i < 2013
