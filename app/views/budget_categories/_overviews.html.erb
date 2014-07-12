@@ -4,7 +4,7 @@
   </div>  
   <div class="small-12 large-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
-      <li style='border-top:none'>
+      <li style='border-top:none' data-equalizer-watch>
         <div class="row">
           <div class="large-12 columns">
             <span class='spent' style='color: green'>Spent: <%= number_to_currency b.total_expenses %></span><span style='color: #69F' class='right remaining'>Remaining: <%= number_to_currency b.amount_budgeted %></span>
@@ -34,7 +34,7 @@
             </div>
           </div>    
         <% end %>
-        <%#= render template: 'monthly_statistics/chart', locals: {percent_used: b.percent_spent, selector: 'monthly-donut'} %>
+        <%= render template: 'monthly_statistics/chart', locals: {percent_used: b.percent_spent, selector: 'monthly-donut'} %>
       </li>
     </ul>
   </div>
