@@ -12,14 +12,14 @@
   <div class="content <%= @budget.allocation_plans.first == plan ? 'active' : '' %>" id="panel-<%= plan.id %>">
     
     <div class='row collapse hide-for-medium-up'>
-      <div class='large-12 columns header-row'>
+      <div class='large-12 medium-12 columns header-row'>
         <h3><%= plan.tab_date.gsub('to','-') %> 
           <span class='right'>
             <%= link_to "<i class='fi-pencil'></i>".html_safe, edit_allocation_plan_path(plan.id), data: {reveal:'', reveal_id: 'edit-allocation-plan', reveal_ajax: true} %>            
           </span>
         </h3>
       </div>  
-      <div class="small-12 large-12 columns">
+      <div class="small-12 large-12 medium-12 columns">
         <ul style='margin-left: 0' class="main-budget-categories">
           <li style='border-top:none'>              
             <b>Pay Period Income:</b><br />
@@ -32,25 +32,25 @@
       </div>
     </div>    
 
-    <div class="large-8 columns">
+    <div class="large-8 medium-8 columns">
       <ul style="margin-left: 0">
         <li style='border-top:none; list-style-type:none'>
         <% @budget.budget_categories.order(:id).each do |c| %>                
           <div id="<%= vp + c.name.gsub('/', '-') %>" class='row collapse'>
-            <div class='large-12 columns header-row'>
+            <div class='large-12 medium-12 columns header-row'>
               <h3><%= c.name %></h3>
             </div>  
-            <div class="small-12 large-12 columns">
+            <div class="small-12 large-12 medium-12 columns">
               <ul style='margin-left: 0' class="main-budget-categories">
                 <li style='border-top:none' id='category-<%= c.id %>'>
                   <div class="row">                                  
-                    <div class="large-2 large-offset-4 columns">
+                    <div class="large-2 medium-2 large-offset medium-offset-4 columns">
                       Budgeted
                     </div>
-                    <div class="large-6 columns">
+                    <div class="large-6 medium-6 columns">
                       Remaining
                     </div>              
-                    <div class="large-4 columns">
+                    <div class="large-4 medium-4 columns">
                     </div> 
                   </div>
                   <br />                
@@ -67,16 +67,16 @@
         </li>
       </ul>
     </div>
-    <div class='large-4 columns'>
+    <div class='large-4 medium-4 columns'>
       <div class='row collapse fixer hide-for-small'>
-        <div class='large-12 columns header-row'>
+        <div class='large-12 medium-12 columns header-row'>
           <h3><%= plan.tab_date.gsub('to','-') %> 
             <span class='right'>
               <%= link_to "<i class='fi-pencil'></i>".html_safe, edit_allocation_plan_path(plan.id), data: {reveal:'', reveal_id: 'edit-allocation-plan', reveal_ajax: true} %>            
             </span>
           </h3>
         </div>  
-        <div class="small-12 large-12 columns">
+        <div class="small-12 large-12 medium-12 columns">
           <ul style='margin-left: 0' class="main-budget-categories">
             <li style='border-top:none'>              
               <b>Pay Period Income:</b><br />
