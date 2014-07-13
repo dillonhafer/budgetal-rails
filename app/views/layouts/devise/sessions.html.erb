@@ -1,5 +1,5 @@
 <% if request.xhr? %>
-    <% if Rails.production? %>
+    <% if Rails.env.production? %>
       <%= render template: 'shared/tracking.html' %>
     <% end %>
 
