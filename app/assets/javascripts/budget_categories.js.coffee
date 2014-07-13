@@ -1,6 +1,37 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+
+$(document).on 'click', '#change-budget', (e) ->
+  year  = $(this).prev('select').val()
+  month = $(this).prev().prev('select').val()
+  window.location = "/cash-flow-plans/#{year}/#{month}"
+
+$(document).on 'submit', '.edit_budget', (e) ->
+  e.preventDefault()
+
+$(document).on 'nested:fieldAdded', (event) ->
+  field = event.field
+  field.find('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
+  field.find('.show-expenses').removeClass('show-expenses').css('color', 'white')
+  field.addClass('is-new')
+
+$(document).on 'nested:fieldRemoved', (event) ->
+  field = event.field
+  if field.hasClass('is-new')
+    field.remove()
+
+$(document).on 'click', '.show-expenses', (e) ->    
+  $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeIn')
+  i = $(this).find('i')
+
+  if i.hasClass('fi-arrows-expand')
+    i.removeClass('fi-arrows-expand').addClass('fi-arrows-compress');
+    i.css('color', 'red')
+  else
+    i.removeClass('fi-arrows-compress').addClass('fi-arrows-expand');    
+    i.css('color', '#6699FF')
+
 jQuery ->
   window.onpopstate = (e) ->
      if e.state       

@@ -54,55 +54,6 @@ $(document).ready(function() {
 
 $(function(){ $(document).foundation(); });
 
-// Change month links
-$(document).on('click', '#month_links div a', function() {    
-  $('#month_links div a').removeClass('active');
-  $(this).addClass('active');
-  $('#greeting').fadeOut();    
-});
-
-// Nice scrolling for budget categories
-$(document).on('click', '.item.side-item', function(e){
-    e.preventDefault();
- 
-    var id     = $(this).attr("href");
-    var offset = $(".tabs-content .active "+id).offset();
- 
-    $("html, body").animate({
-      scrollTop: offset.top-5
-    }, 850);
-  });    
-
-// Controls + and - drawer for expenses  
-$(document).on('click', '.show-expenses', function() {    
-  $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeIn');  
-  if ($(this).text() == '+') {
-    $(this).text("-");
-    $(this).css('color', 'red')
-  } else {
-    $(this).text("+");
-    $(this).css('color', '#6699FF')
-  }
-});
-
-$(document).on('nested:fieldAdded', function(event){      
-  var field = event.field;
-  field.find('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
-  field.find('.show-expenses').removeClass('show-expenses').css('color', 'white');
-  field.addClass('is-new');
-});
-
-$(document).on('nested:fieldRemoved', function(event){    
-    var field = event.field;
-    if (field.hasClass('is-new')) {
-      field.remove();
-    }
-});
-
-$(document).on('submit', '.edit_budget', function(e){
-  e.preventDefault();
-});
-
 $(document).on('click', 'a.item', function(e){    
   $('a.item.active').removeClass('active');
   $('span.tooltip.active').removeClass('active');
@@ -122,18 +73,6 @@ $(document).on('click', '#hide_password', function() {
     $('input[name="user[current_password]"]').attr('type', 'password');
   }
   $(this).toggleClass('hidden_password')
-});
-
-$(document).on('click', '#change-budget', function() {
-  var year  = $(this).prev('select').val()
-  var month = $(this).prev().prev('select').val()
-  window.location = '/cash-flow-plans/'+year+'/'+month
-});
-
-$(document).on('click', '#change-spending', function() {
-  var year  = $(this).prev('select').val()
-  var month = $(this).prev().prev('select').val()
-  window.location = '/allocation-plans/'+year+'/'+month
 });
 
 $(document).on('click', '.category-ajax', function(e) {
