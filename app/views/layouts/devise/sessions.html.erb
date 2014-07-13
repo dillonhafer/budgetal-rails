@@ -1,4 +1,8 @@
 <% if request.xhr? %>
+    <% if Rails.production? %>
+      <%= render template: 'shared/tracking.html' %>
+    <% end %>
+
   <%= yield %>
   <a class="close-reveal-modal">&#215;</a>
 <% else %>

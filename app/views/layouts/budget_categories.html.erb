@@ -13,6 +13,9 @@
     <%= stylesheet_link_tag "application" %>    
     <%= javascript_include_tag "vendor/modernizr" %>    
     <%= csrf_meta_tags %>
+    <% if Rails.production? %>
+      <%= render template: 'shared/tracking.html' %>
+    <% end %>
 
     <style>
       <%= yield(:styles) %>
