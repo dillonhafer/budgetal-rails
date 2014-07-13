@@ -23,7 +23,7 @@
             <div class="large-5 columns">
               <div>
                 <%= f.label :monthly_income %>
-                <%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'', autofocus: true %>
+                <%= f.number_field :monthly_income, step: 'any', min: '0', class: 'green', required:'' %>
               </div>
               <div>
                 <%= link_to "Update Monthly Income", '', onclick: '$(".edit_budget").submit()', class: 'tiny button radius success expand' %>            
