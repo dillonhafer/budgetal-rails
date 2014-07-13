@@ -5,7 +5,7 @@
   <div class="small-12 large-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
       <li style='border-top:none' data-equalizer-watch>
-        <ul class="small-block-grid-1 large-block-grid-4">
+        <ul class="small-block-grid-1 large-block-grid-4 medium-block-grid-4">
           <% current_user.budgets.ordered.each do |b| %>
             <% date = Date.new(b.year.to_i, b.month.to_i).strftime("%B %Y") %>
             <% date = date.split.join('<br />') %>
