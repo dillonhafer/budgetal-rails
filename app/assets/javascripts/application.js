@@ -62,14 +62,14 @@ $(document).on('click', '#month_links div a', function() {
 });
 
 // Nice scrolling for budget categories
-$(document).on('click', '.quickNavLink', function(e){
+$(document).on('click', '.item.side-item', function(e){
     e.preventDefault();
  
     var id     = $(this).attr("href");
-    var offset = $(id).offset();
+    var offset = $(".tabs-content .active "+id).offset();
  
     $("html, body").animate({
-      scrollTop: offset.top-135
+      scrollTop: offset.top-5
     }, 850);
   });    
 
@@ -128,6 +128,12 @@ $(document).on('click', '#change-budget', function() {
   var year  = $(this).prev('select').val()
   var month = $(this).prev().prev('select').val()
   window.location = '/cash-flow-plans/'+year+'/'+month
+});
+
+$(document).on('click', '#change-spending', function() {
+  var year  = $(this).prev('select').val()
+  var month = $(this).prev().prev('select').val()
+  window.location = '/allocation-plans/'+year+'/'+month
 });
 
 $(document).on('click', '.category-ajax', function(e) {

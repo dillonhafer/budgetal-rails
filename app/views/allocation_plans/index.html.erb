@@ -1,32 +1,66 @@
-<div class="row show-for-medium-down">
-  <div class="large-12 columns">
-    <br />
-    <%= form_tag my_allocation_plans_path, remote: true do %>
-      <%= select_tag :year, options_for_select( [2013, 2014] ), prompt: 'Select a year' %>
-      <%= select_tag :month, options_for_select( @budgets.map {|b| [(Date.new( b.year, b.month, 1).strftime("%B")), 1] }), prompt: 'Select a month', id: 'budget-month' %>
-    <% end %>
+<div class="off-canvas-wrap hide-for-large-up" data-offcanvas>
+  <div class="inner-wrap">
+    <nav class="tab-bar">
+      <section class="left-small">
+        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+      </section>
+      <section class="right tab-bar-section">
+        <h1 class="title"><%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></h1>
+      </section>      
+    </nav>
+
+    <aside class="left-off-canvas-menu">
+      <ul class='off-canvas-list'>
+        <% @budget.budget_categories.order(:id).each do |c| %>
+          <li>
+          <%= link_to "#mobile#{c.name.gsub('/', '-')}", class: 'item' do %>
+            <%= image_tag "#{c.name}.png", class: 'mobile-icon' %>
+            <%= c.name %>
+          <% end %>
+          </li>
+        <% end %>            
+      </ul>
+    </aside>
+    <section class='main-section'>
+      <div class='row'>
+        <div class='small-12 columns'>
+          <div class='plan-ajax'>            
+            <%= render partial: 'overview', locals: {vp: 'mobile'} %>
+          </div>
+        </div>
+      </div>
+    </section>
+    <a class="exit-off-canvas"></a>
   </div>
 </div>
 
-<div class="row small-block-grid-2 hide-for-medium-down qn">
-  <% %w{Charity Saving Housing Utilities Food Clothing Transportation Medical-Health Insurance Personal Recreation Debts}.each do |c| %>
-    <div class="large-1 column"><a href="#<%= c %>" class="quickNavLink" title="<%= c %>"><%= image_tag "#{c.gsub('-', '/')}.png" %></a></div>
-  <% end %>
-</div>
-
-<div id='budget-list' class='hide-for-medium-down'>
-  <div id="month_links">    
-    <% @budgets.each do |b| %>  
-      <div class="monthy left"><%= link_to b.month, my_allocation_plans_path(month: b.month, year: b.year), data: {remote: true}, class: "#{is_active?(b.year, b.month)} #{'two' if b.month > 9}" %><br /><%= find_short_month b.month %></div>
-    <% end %>    
+<section>
+  <div style='padding-left: 0' class='large-2 hide-for-medium-down columns'>
+    <div style='width: 100%' class="icon-bar vertical six-up label-right">
+      <a class='item header text-center' href='#'>
+        <label><i class='fi-calendar'></i> <%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
+      </a>
+      <span class='tooltip'>
+        <p>          
+          <label for="month_change_budget_2i">Change Budget</label>
+          <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, end_year: Time.now.advance(years: 1).year, default: Date.new(@budget.year.to_i, @budget.month.to_i), order: [:month, :year] %>          
+          <%= submit_tag 'change', id: 'change-spending', class: 'expand button radius tiny yellow expand' %>        
+        </p>
+      </span>
+      <% @budget.budget_categories.order(:id).each do |c| %>
+        <%= link_to "#desktop#{c.name.gsub('/', '-')}", class: 'item side-item' do %>
+          <%= image_tag "#{c.name}.png" %>
+          <label><%= c.name %></label>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
-
-<hr style="border:none;border-bottom: 2px solid #6699FF;" />
-
-<div id="month-view">
-  <div class="ajax-container overview"><%= render 'overview' %></div>
-</div>
+  <div class='large-10 medium-10 columns hide-for-medium-down'>    
+    <div class='category-ajax'>  
+      <%= render partial: 'overview', locals: {vp: 'desktop'} %>      
+    </div> 
+  </div>
+</section>
 
 <div id="new-allocation-plan" class="reveal-modal tiny" data-reveal></div>
 <div id="edit-allocation-plan" class="reveal-modal tiny" data-reveal></div>
@@ -35,12 +69,10 @@
   $('title').text('<%= page_title(params[:month]) %> <%= params[:year] %>'+' - Budgetal.com');
 
   $(window).scroll(function() {
-    if (window.scrollY >= 75) {
-      $('.qn').addClass('qn_fix');
-      $('#month_links').addClass('qn_fix_body');
+    if (window.scrollY >= 122) {
+      $('.fixer').addClass('plan-fixer');      
     } else {
-      $('.qn').removeClass('qn_fix');
-      $('#month_links').removeClass('qn_fix_body');
+      $('.fixer').removeClass('plan-fixer');      
     }
   });
 

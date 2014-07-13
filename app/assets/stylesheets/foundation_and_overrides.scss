@@ -870,14 +870,12 @@ $sub-nav-active-bg-hover: darken($sub-nav-active-bg, 5%);
 
 // $include-html-tabs-classes: $include-html-classes;
 
-.tabs-content { border-top: 1px solid #6699FF;}
 // $tabs-navigation-padding: rem-calc(16);
 $tabs-navigation-bg-color: #6699FF;
 $tabs-navigation-active-bg-color: #fff;
 $tabs-navigation-font-color: white;
 .tabs dd.active a { background: lighten(#6699FF, 15%) !important;}
-
-.tabs-content.admin { border-top: 1px solid lighten(#6699FF, 10%);}
+.tabs dd.new a {background: darken(#69f, 15%) !important;}
 .tabs.admin {
   $admin-blue: lighten(#69F,7%);  
   $light-admin-blue: lighten($admin-blue, 10%);

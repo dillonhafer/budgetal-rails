@@ -3,6 +3,8 @@ class AllocationPlansController < ApplicationController
   before_filter :check_date, except: [:edit]
   before_filter :find_budget, only: %w{index create update}
 
+  layout 'budget_categories'
+  
   def new
     @new_allocation_plan = AllocationPlan.new
     render layout: !request.xhr?
