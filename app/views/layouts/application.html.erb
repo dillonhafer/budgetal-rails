@@ -52,7 +52,7 @@
       </nav><!--#navmain.hide-for-small-->  
     
     <%= yield %>
-
+    <%= render template: 'shared/footer' %>
     <%= javascript_include_tag "application" %>    
     <script><%= yield(:ready) %></script>
     <%= sign_in_modal unless current_user %>    
