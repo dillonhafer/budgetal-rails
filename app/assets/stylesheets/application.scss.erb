@@ -414,3 +414,74 @@ span.tooltip.active {
   #greeting h2, #greeting p {     
     color: $primary-color;
   }
+
+.copyright {
+  color: #666;
+  font-size: 0.85em;
+}
+
+.start-today {
+  background: #69f;
+  padding: 15px 0px;
+
+  h4 {
+    color: white;  
+    margin: 10px auto;
+  }
+  a {
+  margin-bottom: 0;
+  }
+}
+
+.footer {
+  background: none repeat scroll 0% 0% #333;
+  padding: 24px 0px 10px;
+
+  ul.footer-links {
+    margin: 0px;
+    display: inline-block;
+    padding-bottom: 0px;
+    color: #666;
+
+    li {
+      display: block;
+      float: left;
+      margin-left: 6px;
+      text-transform: uppercase;
+      font-weight: 400;
+      font-size: 0.85rem;
+      a {color: #666;}
+    }
+  }
+
+  ul.social-icons {
+    display: block;
+    float: right;
+    margin-bottom: 8px;
+    margin-top: 20px;
+
+    li {
+      list-style: none outside none;
+      display: block;
+      float: left;
+      margin-left: 10px;
+
+      a {
+        display: block;
+        height: 50px;
+        width: 50px;
+        background: url('<%= asset_path "social.png" %>') no-repeat scroll center 0px transparent;
+        &.twitter {
+          background-position: center 0px;
+        }
+        &.mail {
+          background-position: center -400px;
+        }
+      }
+    }
+  }
+}
+
+.budgetal-logo img {
+  height: 50px;
+}

@@ -1,28 +1,77 @@
-<% content_for :styles do %>
-  body {
-    background-image: url(<%= asset_path 'PiggyBankHeader.jpg' %>) !important;
-    background-position: 0, 1000px !important;
-  }
-  #contentmain {
-    background: transparent;
-    border-top: none; 
-  }  
-  h2.welcome {
-    background: rgba(102, 153, 255, 0.7);    
-    color:white !important;
-    padding: 20px;
-    position: relative;
-    bottom: -100px;    
-  }
-<% end %>
-</style>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="row">
-  <div class="large-12 columns">
-    <h2 class='centered welcome'>Your #1 wealth building tool is your income. <br>Know where it went.</h2>
-  </div>    
-</div> 
+<div class='row'>
+  <div class='large-8 columns'>  
+      <div class=''><%= image_tag 'showcase-sm.png' %></div>
+  </div>
+  <div class='large-4 columns' style='padding-top: 13%'>  
+    <h1>Budgetal.com</h1>
+    <p>Take control of your life, now and in the future. Get started today with our awesome, easy-to-use budgeting software!</p>
+  </div>
+</div>
+<section class='start-today'>
+  <div class="row collapse">
+    <div class="large-8 columns text-center">
+      <h4>Start taking control of your life today</h4>
+    </div>    
+    <div class="large-4 columns">
+      <%= link_to 'Join Now', new_user_session_url, data: {reveal_id: "signInUp", reveal_ajax: true}, class: 'button radius secondary expand', title: "Join Now" %>      
+    </div>
+  </div>
+</section>
+
+<section id="main-content">
+  <div class="row centered-text">
+    <div class="large-12 columns">
+      <br />
+      <br />
+      <h2 class='text-center'>Budgetal gives you the tools.</h2>
+      <h4 class="subheader text-center">You change your life.</h4>
+      <br />
+      <br />
+    </div>
+  </div>
+  <div class="row centered-text">
+    <div class="medium-4 large-4 columns">
+      <div class='text-center'>
+        <%= image_tag 'Saving.png' %>
+        <h4>Plan for Saving</h4>
+      </div>
+      <p>You must begin saving.<br>
+        Saving money will help you plan for expenses, chase away emergencies, and begin building wealth. Stop living pay check to pay check, and take control.
+      </p>
+    </div>
+    <div class="medium-4 large-4 columns">
+      <div class='text-center'>
+        <%= image_tag 'Charity.png' %>
+        <h4>Plan for Giving</h4>
+      </div>
+      <p>You must give.<br>
+        Saving money will help you plan for expenses, chase away emergencies, and begin building wealth. Stop living pay check to pay check, and take control.
+      </p>
+    </div>
+    <div class="medium-4 large-4 columns">
+      <div class='text-center'>
+        <%= image_tag 'Debts.png' %>
+        <h4>Plan for Freedom</h4>
+      </div>
+      <p>You must get out of debt.<br>
+        Saving money will help you plan for expenses, chase away emergencies, and begin building wealth. Stop living pay check to pay check, and take control.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="row">
+    <div class="medium-4 medium-4 push-8 columns">
+      <ul class="social-icons">
+        <li><a href="http://www.twitter.com/budgetal" class="twitter"></a></li>
+        <li><a href="https://budgetal.com/contact" class="mail"></a></li>
+      </ul>
+    </div>
+    <div class="medium-8 medium-8 pull-4 columns">
+      <a href="/" class="budgetal-logo"><%= image_tag 'logo.png' %></a>
+      
+      <p class="copyright">© 2013–<%= Date.today.year %> Budgetal.com. All rights reserved.</p>
+    </div>
+  </div>
+</div>
