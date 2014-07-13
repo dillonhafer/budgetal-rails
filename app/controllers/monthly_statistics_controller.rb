@@ -1,6 +1,6 @@
 class MonthlyStatisticsController < ApplicationController
   before_filter :require_user
-
+    
   def index
   end
 

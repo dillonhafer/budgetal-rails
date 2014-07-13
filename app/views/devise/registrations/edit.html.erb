@@ -1,63 +1,81 @@
-
+<% content_for :styles do %>
+input[type="text"], input[type="password"] {
+  border: 1px solid #DDD !important;
+}
+<% end %>
 <div class='row'>
-  <div class='large-7 columns'>
-    <h3 class='blue'>Your account</h3>
-    <h4 class="subheader">Make edits below</h4>
-    <hr />
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, data: {abide: ''} }) do |f| %>
-      <%= devise_error_messages! %>
+<div class='large-7 columns'>
+  <div class='row collapse'>
+    <div class='large-12 columns header-row'>
+      <h3>Your account</h3>
+    </div>  
+    <div class="small-12 large-12 columns">
+      <ul style='margin-left: 0' class="main-budget-categories">
+        <li style='border-top:none'>                  
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, data: {abide: ''} }) do |f| %>
+            <%= devise_error_messages! %>
 
-      <div><%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, required:'' %>
-        <small class="error">An email address is required.</small>
-      </div>
+            <div><%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, required:'' %>
+              <small class="error">An email address is required.</small>
+            </div>
 
-      <div>
-        <%= f.label :first_name %><br />
-        <%= f.text_field :first_name, required:'', pattern: 'alpha' %>
-        <small class="error">Your first name is required.</small>
-      </div>
+            <div>
+              <%= f.label :first_name %><br />
+              <%= f.text_field :first_name, required:'', pattern: 'alpha' %>
+              <small class="error">Your first name is required.</small>
+            </div>
 
-      <div>
-        <%= f.label :last_name %><br />
-        <%= f.text_field :last_name, required:'', pattern: 'alpha' %>
-        <small class="error">Your last name is required.</small>
-      </div>
+            <div>
+              <%= f.label :last_name %><br />
+              <%= f.text_field :last_name, required:'', pattern: 'alpha' %>
+              <small class="error">Your last name is required.</small>
+            </div>
 
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
 
-      <div>
-        <%= f.label :password, class: 'left' %> <small class='right blue'>(leave blank if you don't want to change it)</small> <br />
-        <%= f.password_field :password, autocomplete: "off" %>        
-      </div>
+            <div>
+              <%= f.label :password, class: 'left' %> <small class='right blue'>(leave blank if you don't want to change it)</small> <br />
+              <%= f.password_field :password, autocomplete: "off" %>        
+            </div>
 
-      <div>
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, required:'', data: {equalto:'user_password'} %>
-        <small class="error">Password confirmation must match.</small>
-      </div>
+            <div>
+              <%= f.label :password_confirmation %><br />
+              <%= f.password_field :password_confirmation, required:'', data: {equalto:'user_password'} %>
+              <small class="error">Password confirmation must match.</small>
+            </div>
 
-      <div>
-        <%= f.label :current_password, class: 'left' %><br />
-        <%= f.password_field :current_password, required:'' %>
-        <small class="error">We need your current password.</small>
-      </div>
+            <div>
+              <%= f.label :current_password, class: 'left' %><br />
+              <%= f.password_field :current_password, required:'' %>
+              <small class="error">We need your current password.</small>
+            </div>
 
-      <div>
-        <%= f.submit "Update", class: 'small button blue nice radius' %>
-        <%= link_to "Back", :back, class: 'small button dark-blue white nice radius' %>
-      </div>
-    <% end %>
+            <div>
+              <%= f.submit "Update", class: 'small button blue nice radius' %>
+              <%= link_to "Back", :back, class: 'small button dark-blue white nice radius' %>
+            </div>
+          <% end %>            
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class='large-5 columns'>
-    <h3>&nbsp;</h3>
-    <h4 class="subheader">Cancel my account</h4>
-    <hr />
-    <br />
-    <br />
-    <br />
-    <div class='centered'><p>Unhappy?</p> <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure? You will be missed :(" }, :method => :delete, class: 'tiny alert button radius' %></div>
+</div>
+
+<div class='large-4 large-offset-1 columns'>
+  <div class='row collapse'>
+    <div class='large-12 columns header-row'>
+      <h3>Cancel account</h3>
+    </div>  
+    <div class="small-12 large-12 columns">
+      <ul style='margin-left: 0' class="main-budget-categories">
+        <li style='border-top:none'>                    
+          <div class='centered'><p>Unhappy?</p> <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure? You will be missed :(" }, :method => :delete, class: 'tiny alert button radius' %></div>
+        </li>
+      </ul>
+    </div>
   </div>
+</div>
 </div>

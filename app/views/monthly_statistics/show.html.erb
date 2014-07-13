@@ -1,66 +1,45 @@
-<% content_for :styles do %>
-  #greeting {
-    margin-top: 70px;
-    color: #64ad68;
-    margin-top: 50px;
-    text-align: center;
-  }  
-  #greeting h2 {    
-    text-align: center;
-    color: #6699FF;
-  }
-<% end %>
-
-<h3 class='blue'><%= @date %></h3>
-<h4 class="subheader">Here's how you did</h4>
-<hr />
-
-<% if @budget %>
-  <div id="container"></div>
-  <% content_for :ready do %>
-    $(function () {
-        $('#container').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-            },
-            title: {
-                text: 'Percentage Spent, <%= @date %>'
-            },
-            tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Percentage Spent',
-                data: [                    
+<div class='row collapse'>
+  <div class='large-12 columns header-row'>
+    <h3><%= @date %> <%= link_to 'all', monthly_statistics_path, class: 'right' %></h3>    
+  </div>  
+  <div class="small-12 large-12 columns">
+    <ul style='margin-left: 0' class="main-budget-categories">
+      <li style='border-top:none'>        
+        <% if @budget %>          
+          <div id="container" style='height: 390px;width: 100%'></div>
+          <% content_for :ready do %>          
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+                ['Money', '%'],
                 <% @budget.budget_categories.each do |c| %>
-                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(2) * 100 %>]<%= ',' unless c == @budget.budget_categories.last %>
+                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(2) * 100 %>],
                 <% end %>
-                ]
-            }]
-        });
-    });
-    <% end %>
-<% else %>
- 
-  <div id="greeting" class="animated ">
-    <h2>Uh-oh!</h2>
-    <p>It looks like you don't have a budget for this month</p>
-  </div>
+                ]);
 
-<% end %>
+              var options = {      
+                pieHole: 0.4                
+              };    
+              
+              var chart = new google.visualization.PieChart(document.getElementById('container'));
+              chart.draw(data, options);                
+            }              
+          <% end %>
+
+
+        <% else %>
+         
+          <div id="greeting" class="text-center animated ">
+            <h2>Uh-oh!</h2>
+            <p>It looks like you don't have a budget for this month</p>
+          </div>
+
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+

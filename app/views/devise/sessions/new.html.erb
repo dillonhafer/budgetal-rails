@@ -17,6 +17,17 @@ input[name="commit"] {
 }
 </style>
 
+<% unless request.xhr? %>
+<div class='large-6 large-offset-3 columns'>
+<div class='row collapse'>
+  <div class='large-12 columns header-row'>
+    <h3>sign in / sign up</h3>
+  </div>  
+  <div class="small-12 large-12 columns">
+    <ul style='margin-left: 0' class="main-budget-categories">
+      <li style='border-top:none' data-equalizer-watch>
+<% end %>      
+
 <div class='row'>
   <div class='large-12 columns sign-in-section'>
     <h2>Sign in</h2>
@@ -39,19 +50,8 @@ input[name="commit"] {
     </div>
 
     <div>
-      <ul class="button-group radius">
-        <li><%= f.submit "Sign in".html_safe, class: 'small button nice radius', tabindex: 4 %></li>
-
-      <%- if devise_mapping.omniauthable? %>
-        <%- resource_class.omniauth_providers.each do |provider| %>
-        <li>
-          <%= link_to omniauth_authorize_path(resource_name, provider), class: 'tiny facebook button nice radius ' do  %>
-          <%= image_tag "fb.png", style: 'height: 24px; width: 24px' %> Sign in with Facebook<br />
-          <% end %>
-        </li>
-        <% end -%>
-      <% end -%>  
-      </ul>
+      
+      <%= f.submit "Sign in".html_safe, class: 'small button nice radius', tabindex: 4 %>      
       <%= render "devise/shared/links" %>
     </div>
     <% end %>
@@ -88,6 +88,15 @@ input[name="commit"] {
     <a onclick="$('.sign-in-section').removeClass('hide');$('.join-section').addClass('hide')">Sign In</a>
   </div>
 </div>
+
+<% unless request.xhr? %>
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+<% end %>      
+
 
 <script>
   $('form').foundation();

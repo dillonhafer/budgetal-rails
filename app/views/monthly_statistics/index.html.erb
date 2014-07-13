@@ -1,9 +1,18 @@
-<h3 class='blue'>Monthly Statistics</h3>
-<h4 class="subheader">see how you're doing</h4>
-<hr />
-
-<ul class="small-block-grid-1 large-block-grid-4">
-  <% current_user.budgets.ordered.each do |b| %>
-    <li><%= link_to Date.new(b.year.to_i, b.month.to_i).strftime("%B %Y"), monthly_statistic_path(year: b.year.to_i, month: b.month.to_i), class: 'button blue radius expand' %></li>
-  <% end %>
-</ul>
+<div class='row collapse'>
+  <div class='large-12 columns header-row'>
+    <h3>Monthly Statistics</h3>
+  </div>  
+  <div class="small-12 large-12 columns">
+    <ul style='margin-left: 0' class="main-budget-categories">
+      <li style='border-top:none' data-equalizer-watch>
+        <ul class="small-block-grid-1 large-block-grid-4">
+          <% current_user.budgets.ordered.each do |b| %>
+            <% date = Date.new(b.year.to_i, b.month.to_i).strftime("%B %Y") %>
+            <% date = date.split.join('<br />') %>
+            <li style='border: none; box-shadow: none'><%= link_to date.html_safe, monthly_statistic_path(year: b.year.to_i, month: b.month.to_i), class: 'button blue radius expand' %></li>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
