@@ -55,9 +55,12 @@
       </nav><!--#navmain.hide-for-small-->  
     
     <%= yield %>
-    <%= render template: 'shared/footer' %>
+
+    <% cache do %>
+      <%= render template: 'shared/footer' %>
+    <% end %>
     <%= javascript_include_tag "application" %>    
-    <script><%= yield(:ready) %></script>
+    <script><%= yield(:ready) %></script>    
     <%= sign_in_modal unless current_user %>    
   </body>
 </html>
