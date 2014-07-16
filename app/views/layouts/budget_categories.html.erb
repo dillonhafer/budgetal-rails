@@ -23,7 +23,7 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   <body>    
-    
+      <% cache([current_user]) do %>
       <nav class="top-bar" data-topbar>
         <ul class="title-area">
           <li class="name">
@@ -53,17 +53,21 @@
           </ul>
         </section>  
       </nav><!--#navmain.hide-for-small-->  
+      <% end %>
     
     <section>
       <%= yield %>
     </section>
 
-    <div class='row'>
-    </div>
+    <% cache do %>
+      <div class='row'>
+      </div>
 
-    <section>
-      <%= render template: 'shared/footer' %>
-    </section>
+      <section>
+          <%= render template: 'shared/footer' %>
+      </section>
+    <% end %>
+
     <%= javascript_include_tag "application" %>    
     <script><%= yield(:ready) %></script>
     <%= sign_in_modal unless current_user %>    

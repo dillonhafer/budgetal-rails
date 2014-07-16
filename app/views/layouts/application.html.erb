@@ -23,7 +23,8 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   <body>    
-    
+      
+      <% cache([current_user]) do %>
       <nav class="top-bar" data-topbar>
         <ul class="title-area">
           <li class="name">
@@ -53,7 +54,8 @@
           </ul>
         </section>  
       </nav><!--#navmain.hide-for-small-->  
-    
+      <% end %>
+      
     <%= yield %>
 
     <% cache do %>
