@@ -1,3 +1,4 @@
+<% cache([request]) do %>
 <style>
 .join-section a {
   margin-top: 10%;
@@ -99,5 +100,6 @@ input[name="commit"] {
 
 
 <script>
-  $('form').foundation();
+  $('form.new_user').foundation();
 </script>
+<% end %>
