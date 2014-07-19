@@ -5,6 +5,8 @@ class BudgetItem < ActiveRecord::Base
   accepts_nested_attributes_for :budget_item_expenses, allow_destroy: true
   validates_presence_of :budget_category_id, :amount_budgeted, :name
 
+  default_scope -> { order(:id)}
+  
   def past_expenses
     sql = <<-END_SQL
         SELECT budget_item_expenses.name
