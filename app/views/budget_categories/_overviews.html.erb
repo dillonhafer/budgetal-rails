@@ -7,7 +7,7 @@
       <li style='border-top:none' data-equalizer-watch>
         <div class="row">
           <div class="large-12 medium-12 columns">
-            <span class='spent' style='color: green'>Spent: <%= number_to_currency b.total_expenses %></span><span style='color: #69F' class='right remaining'>Remaining: <%= number_to_currency b.amount_budgeted %></span>
+            <span class='spent' style='color: green'>Spent: <%= number_to_currency b.total_expenses %></span><span style='color: #69F' class='right remaining'>Remaining: <%= number_to_currency b.amount_budgeted-b.total_expenses %></span>
             <div class="progress radius"><span id='bs-<%= b.id %>' class="meter" style="background: #69F; width: <%= b.percent_spent %>%;"></span></div>
             <% content_for :ready do %>                    
               <% if b.percent_spent < 0 %>
