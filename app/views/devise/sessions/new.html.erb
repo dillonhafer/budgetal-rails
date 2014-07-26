@@ -71,16 +71,17 @@ input[name="commit"] {
           <small class="error">An email address is required.</small>
         </div>
 
-        <div>
-          <%= f.label :first_name %><br />
-          <%= f.text_field :first_name, required:'', patter: 'alpha' %>
-          <small class="error">A first name is required.</small>
-        </div>
-
-        <div>
-          <%= f.label :last_name %><br />
-          <%= f.text_field :last_name, required:'', patter: 'alpha' %>
-          <small class="error">A last name is required.</small>
+        <div class='row'>
+          <div class='small-6 columns'>          
+            <%= f.label :first_name %><br />
+            <%= f.text_field :first_name, required:'', patter: 'alpha' %>
+            <small class="error">A first name is required.</small>
+          </div>
+          <div class='small-6 columns'>
+            <%= f.label :last_name %><br />
+            <%= f.text_field :last_name, required:'', patter: 'alpha' %>
+            <small class="error">A last name is required.</small>
+          </div>
         </div>
         
         <div class='clearfix'>    
