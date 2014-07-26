@@ -70,6 +70,18 @@ input[name="commit"] {
           <%= f.email_field :email, required:'', id: 'new_user_email', placeholder: 'email@example.org', tabindex: 5 %>
           <small class="error">An email address is required.</small>
         </div>
+
+        <div>
+          <%= f.label :first_name %><br />
+          <%= f.text_field :first_name, required:'', patter: 'alpha' %>
+          <small class="error">A first name is required.</small>
+        </div>
+
+        <div>
+          <%= f.label :last_name %><br />
+          <%= f.text_field :last_name, required:'', patter: 'alpha' %>
+          <small class="error">A last name is required.</small>
+        </div>
         
         <div class='clearfix'>    
           <%= f.label :password, for: 'new_user_password', class: 'left' %> <small class='right'><a id="hide_password" class='hidden_password' href="javascript:void(0)" /></a></small>
