@@ -64,11 +64,11 @@ class Budget < ActiveRecord::Base
 
   def percent_spent
     spent = (total_expenses / amount_budgeted * 100).round(3)
-    return (spent > 100) ? 100.00 : spent
+    return (spent > 100) ? 100 : spent
   end
 
   def percent_used
     used = (100 - (amount_remaining / monthly_income.to_f * 100))
-    return (used > 100) ? 100.00 : used
+    return (used > 100) ? 100 : used
   end
 end
