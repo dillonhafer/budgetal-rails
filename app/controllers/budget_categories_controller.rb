@@ -18,7 +18,7 @@ class BudgetCategoriesController < ApplicationController
     if @c.update_attributes(budget_category_params)
       flash[:notice] = 'Changes saved!'
     else
-      flash[:error] = 'Something went wrong'
+      flash[:notice] = 'Something went wrong'
     end
   end
 
