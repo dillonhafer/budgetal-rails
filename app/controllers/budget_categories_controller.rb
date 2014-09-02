@@ -1,7 +1,7 @@
 class BudgetCategoriesController < ApplicationController
   before_filter :require_user  
   before_filter :check_date
-  before_filter :check_user, only: [:cajax]
+  before_filter :check_user, only: [:show]
 
   def index    
     year  = params[:year]
@@ -9,7 +9,7 @@ class BudgetCategoriesController < ApplicationController
     @budget = current_user.budgets.find_by(month: month.to_s, year: year.to_s) || Budget.create_template(month, year, current_user.id)
   end
 
-  def cajax
+  def show
     @c = BudgetCategory.find(params[:id])    
   end
 
