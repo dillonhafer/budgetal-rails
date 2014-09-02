@@ -31,15 +31,12 @@ class BudgetCategoriesController < ApplicationController
 
   def check_user
     @c = BudgetCategory.find(params[:id])
-    #if !@c.blank? && @c.budget.user_id != current_user.id
-    #  if request.xhr?
-    #    render(js: '$(".category-ajax").html("<h1 class=\'error-404 text-center\'>404 not found</h1>")') and return
-    #  end
-    #else
-    #  if request.xhr?
-    #    render(js: '$(".category-ajax").html("<h1 class=\'error-404 text-center\'>404 not found</h1>")') and return
-    #  end
-    #end
+    if @c && @c.budget.user_id != current_user.id
+      if request.xhr?
+        error = render_to_string(partial: "error").remove("\n")        
+        render(js: "$('.category-ajax').html('#{error}')") and return
+      end
+    end
   end
 
   def budget_category_params
