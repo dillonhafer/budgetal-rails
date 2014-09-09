@@ -2,7 +2,7 @@
 //
 
 @import url(https://fonts.googleapis.com/css?family=Arvo:400,700,400italic);
-
+@import "main_variables";
 // Uncomment to use rem-calc() in your settings
 $rem-base: 16px;
 @import "foundation/_settings";
@@ -478,7 +478,7 @@ $glowing-effect-color: #36C;
 
 // $include-html-magellan-classes: $include-html-classes;
 
-// $magellan-bg: #fff;
+// $magellan-bg: rgba(2,2,2,0.8);
 // $magellan-padding: 10px;
 
 // Off-canvas
@@ -825,7 +825,7 @@ $sub-nav-list-margin: rem-calc(6 0 0);
 // We use these to control the active item styles
 
 // $sub-nav-active-font-weight: normal;
-$sub-nav-active-bg: #C6822B;
+$sub-nav-active-bg: $primary-color;
 $sub-nav-active-bg-hover: darken($sub-nav-active-bg, 5%);
 // $sub-nav-active-color: #fff;
 // $sub-nav-active-padding: rem-calc(3 16);
