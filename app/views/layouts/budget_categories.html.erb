@@ -58,16 +58,14 @@
     <section>
       <%= yield %>
     </section>
+  
+    <div class='row'>
+    </div>
 
-    <% cache do %>
-      <div class='row'>
-      </div>
-
-      <section>
-          <%= render template: 'shared/footer' %>
-      </section>
-    <% end %>
-
+    <section>
+      <%= render template: 'shared/footer' %>
+    </section>
+  
     <%= javascript_include_tag "application" %>    
     <script><%= yield(:ready) %></script>
     <%= sign_in_modal unless current_user %>    

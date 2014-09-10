@@ -63,10 +63,9 @@
     <% end %>
 
     <%= yield %>
-
-    <% cache do %>
-      <%= render template: 'shared/footer' %>
-    <% end %>
+  
+    <%= render template: 'shared/footer' %>
+    
     <%= javascript_include_tag "application" %>    
     <script><%= yield(:ready) %></script>    
     <%= sign_in_modal unless current_user %>    
