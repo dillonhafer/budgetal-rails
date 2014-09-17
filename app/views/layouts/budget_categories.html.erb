@@ -35,7 +35,7 @@
         <!-- Right Nav Section -->
           <ul class="right">        
             <% if current_user %>
-            <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'><%= current_user.email %></a>
+            <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'>Hello, <%= current_user.first_name %>!</a>
               <ul class="dropdown shadow">
                 <li><%= link_to "Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
                 <li><%= link_to "Allocated Spending Plans", my_allocation_plans_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
