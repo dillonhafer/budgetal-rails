@@ -37,7 +37,7 @@ input[name="commit"] {
     <div class='clearfix'>
       <%= f.label :email, class: 'left' %>
       <% if devise_mapping.rememberable? -%>
-        <label for='user_remember_me' class='right' style='color:#000;'><%= f.check_box :remember_me, tabindex: 3 %> remember me</label>
+        <label for='user_remember_me' class='right' style='color:#000;'><%= f.check_box :remember_me, tabindex: 3, checked: true %> remember me</label>
       <% end -%>    
 
       <%= f.email_field :email, autofocus: true, required:'', tabindex: 1 %>
