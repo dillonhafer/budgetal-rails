@@ -80,3 +80,42 @@ $(document).on('click', '.category-ajax', function(e) {
     $('span.tooltip').removeClass('active')
   }
 });
+function showOptions() {
+  hideSections();
+  $('.options-section').removeClass('hide');
+}
+
+function hideSections() {
+  $('.options-section').addClass('hide')
+  $('.sign-in-section').addClass('hide');
+  $('.join-section').addClass('hide');
+}
+
+function showSignIn() {
+  hideSections();
+  $('.sign-in-section').removeClass('hide');
+}
+
+function showSignUp() {
+  hideSections();
+  $('.join-section').removeClass('hide');
+}
+
+$(document).on('click', '.option-link', function(e) {
+  e.preventDefault();
+  var option = $(this).data('option');
+  console.log(option);
+  switch(option) {
+    case 'sign-in':
+      showSignIn();
+      break;
+    case 'sign-up':
+      showSignUp();
+      break;
+    case 'back':
+      showOptions();
+      break;
+    default:
+      return false;
+    }
+});

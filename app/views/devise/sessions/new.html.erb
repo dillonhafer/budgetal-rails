@@ -1,4 +1,4 @@
-<% cache([request]) do %>
+<% cache do %>
 <style>
 .join-section a {
   margin-top: 10%;
@@ -30,7 +30,15 @@ input[name="commit"] {
 <% end %>      
 
 <div class='row'>
-  <div class='large-12 columns sign-in-section'>
+  <div class='large-12 columns options-section'>
+    <% if request.xhr? %>
+    <h2 class='text-center'>Welcome!</h2>
+    <% end %>
+    <a href='#' data-option='sign-in' class='option-link button expand radius'>Sign in</a>    
+    <a href='#' data-option='sign-up' class='option-link button success radius expand'>Join Us</a>
+  </div>
+
+  <div class='large-12 columns sign-in-section hide'>
     <h2>Sign in</h2>
     <hr />
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {data: {abide:''}}) do |f| %>
@@ -40,7 +48,7 @@ input[name="commit"] {
         <label for='user_remember_me' class='right' style='color:#000;'><%= f.check_box :remember_me, tabindex: 3, checked: true %> remember me</label>
       <% end -%>    
 
-      <%= f.email_field :email, autofocus: true, required:'', tabindex: 1 %>
+      <%= f.email_field :email, required:'', tabindex: 1 %>
       <small class="error">An email address is required.</small>
     </div>
 
@@ -56,7 +64,7 @@ input[name="commit"] {
       <%= render "devise/shared/links" %>
     </div>
     <% end %>
-    <a id="join" onclick="$('.sign-in-section').addClass('hide');$('.join-section').removeClass('hide');">Join Us</a>
+    <a href='#' class='option-link' data-option='back'>Back</a>
   </div>
   <div class='large-12 columns hide join-section'>  
     <%- if devise_mapping.registerable? && controller_name != 'registrations' %>      
@@ -99,7 +107,7 @@ input[name="commit"] {
         <div><%= f.submit "Sign up", class: 'small button nice radius', tabindex: 9 %></div>
       <% end %>        
     <% end -%>
-    <a onclick="$('.sign-in-section').removeClass('hide');$('.join-section').addClass('hide')">Sign In</a>
+    <a href='#' class='option-link' data-option='back'>Back</a>
   </div>
 </div>
 
