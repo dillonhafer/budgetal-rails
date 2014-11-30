@@ -1,11 +1,10 @@
 
   <%- if controller_name != 'sessions' %>
     <%= link_to 'Sign In', new_user_session_path, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In", class: "tiny button radius dark-blue" %>
-
   <% end -%>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-    <%= link_to "Forgot your password?", new_password_path(resource_name), class: "tiny button radius  dark-blue" %>
+    <%= link_to "Forgot your password?", new_password_path(resource_name), class: "tiny button radius  dark-blue", data: {reveal_id: "forgotPassword", reveal_ajax: true} %>
   <% end -%>
 
   <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>

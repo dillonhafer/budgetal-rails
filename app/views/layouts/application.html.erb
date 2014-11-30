@@ -32,6 +32,6 @@
     
     <%= javascript_include_tag "application" %>    
     <script><%= yield(:ready) %></script>    
-    <%= sign_in_modal unless current_user %>    
+    <%= devise_reveal_modals unless current_user %>    
   </body>
 </html>

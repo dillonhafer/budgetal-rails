@@ -1,6 +1,11 @@
-module ApplicationHelper
-  def sign_in_modal
-    content_tag(:div, '', class: 'reveal-modal small', id: 'signInUp', data: {reveal:''})
+module ApplicationHelper 
+  def devise_reveal_modals
+    reveal_modal('signInUp') +
+    reveal_modal('forgotPassword')
+  end
+
+  def reveal_modal(id,size='small')
+    content_tag(:div, '', class: "reveal-modal #{size}", id: id.to_s, data: {reveal:''})
   end
 
   def color_for_number(number)
