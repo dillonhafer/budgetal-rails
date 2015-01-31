@@ -1,4 +1,3 @@
-<% cache([current_user]) do %>
 <nav class="top-bar" data-topbar>
   <ul class="title-area">
     <li class="name">
@@ -8,24 +7,23 @@
   </ul>
   <section class="top-bar-section">
   <!-- Right Nav Section -->
-    <ul class="right">        
+    <ul class="right">
       <% if current_user %>
       <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'>Hello, <%= current_user.first_name %>!</a>
-        <ul class="dropdown shadow">
-          <li><%= link_to "Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
-          <li><%= link_to "Allocated Spending Plans", my_allocation_plans_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
-          <li><%= link_to "Statistics (for geeks)", monthly_statistics_path, title: '(for geeks)' %></li>
-          <li><%= link_to "My Account", edit_user_registration_path, title: 'My Account' %></li>
+        <ul class="dropdown shadow nav-links">
+          <li><%= link_to_i 'dollar', "&nbsp;&nbsp;Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
+          <li><%= link_to_i 'clipboard-pencil', "Allocated Spending Plans", my_allocation_plans_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
+          <li><%= link_to_i 'graph-pie', "Statistics (for geeks)", monthly_statistics_path, title: '(for geeks)' %></li>
+          <li><%= link_to_i 'widget', "My Account", edit_user_registration_path, title: 'My Account' %></li>
           <% if current_user.admin? %>
-          <li><%= link_to "Admin Panel", admin_path, title: 'Admin' %></li>
-          <% end %>                                  
+          <li><%= link_to_i 'lock', "Admin Panel", admin_path, title: 'Admin' %></li>
+          <% end %>
         </ul>
-      </li>            
+      </li>
       <li><%= link_to('Sign out', destroy_user_session_path, method: :delete, title: 'Sign out') %></li>
       <% else %>
       <li><%= link_to 'Sign in / Sign up', new_user_session_url, data: {reveal_id: "signInUp", reveal_ajax: true}, title: "Sign In" %></li>
       <% end %>
     </ul>
-  </section>  
-</nav><!--#navmain.hide-for-small--> 
-<% end %> 
+  </section>
+</nav><!--#navmain.hide-for-small-->

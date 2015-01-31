@@ -12,14 +12,12 @@
     <aside class="left-off-canvas-menu">
       <ul class='off-canvas-list'>
         <% @budget.budget_categories.order(:id).each do |c| %>
-          <% cache(c) do %>
           <li>
           <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: 'item', remote: true do %>
             <%= image_tag "#{c.name}.png", class: 'mobile-icon' %>
             <%= c.name %>
           <% end %>
           </li>
-          <% end %>
         <% end %>
       </ul>
     </aside>

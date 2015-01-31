@@ -1,4 +1,3 @@
-<% cache do %>
 <style>
 .join-section a {
   margin-top: 10%;
@@ -14,7 +13,7 @@ input[name="commit"] {
 @media (max-width: 767px) {
   input[name="commit"] {
     margin-right: 0px;
-  } 
+  }
 }
 </style>
 
@@ -23,18 +22,18 @@ input[name="commit"] {
 <div class='row collapse'>
   <div class='large-12 columns header-row'>
     <h3>sign in / sign up</h3>
-  </div>  
+  </div>
   <div class="small-12 large-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
       <li style='border-top:none' data-equalizer-watch>
-<% end %>      
+<% end %>
 
 <div class='row'>
   <div class='large-12 columns options-section'>
     <% if request.xhr? %>
     <h2 class='text-center'>Welcome!</h2>
     <% end %>
-    <a href='#' data-option='sign-in' class='option-link button expand radius'>Sign in</a>    
+    <a href='#' data-option='sign-in' class='option-link button expand radius'>Sign in</a>
     <a href='#' data-option='sign-up' class='option-link button success radius expand'>Join Us</a>
   </div>
 
@@ -46,30 +45,30 @@ input[name="commit"] {
       <%= f.label :email, class: 'left' %>
       <% if devise_mapping.rememberable? -%>
         <label for='user_remember_me' class='right' style='color:#000;'><%= f.check_box :remember_me, tabindex: 3, checked: true %> remember me</label>
-      <% end -%>    
+      <% end -%>
 
       <%= f.email_field :email, required:'', tabindex: 1 %>
       <small class="error">An email address is required.</small>
     </div>
 
-    <div class='clearfix'>    
+    <div class='clearfix'>
       <%= f.label :password, class: 'left' %><small class='right'><a id="hide_password" class='hidden_password' href="javascript:void(0)" /></a></small>
       <%= f.password_field :password, required:'', tabindex: 2 %>
-      <small class="error">Password is required.</small>  
+      <small class="error">Password is required.</small>
     </div>
 
     <div>
-      
-      <%= f.submit "Sign in".html_safe, class: 'small button nice radius', tabindex: 4 %>      
+
+      <%= f.submit "Sign in".html_safe, class: 'small button nice radius', tabindex: 4 %>
       <%= render "devise/shared/links" %>
     </div>
     <% end %>
     <a href='#' class='option-link' data-option='back'>Back</a>
   </div>
-  <div class='large-12 columns hide join-section'>  
-    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>      
+  <div class='large-12 columns hide join-section'>
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
       <h2>Join</h2>
-      <hr />                
+      <hr />
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: {abide: ''}}) do |f| %>
         <%= devise_error_messages! %>
 
@@ -80,7 +79,7 @@ input[name="commit"] {
         </div>
 
         <div class='row'>
-          <div class='small-6 columns'>          
+          <div class='small-6 columns'>
             <%= f.label :first_name %><br />
             <%= f.text_field :first_name, required:'', patter: 'alpha' %>
             <small class="error">A first name is required.</small>
@@ -91,8 +90,8 @@ input[name="commit"] {
             <small class="error">A last name is required.</small>
           </div>
         </div>
-        
-        <div class='clearfix'>    
+
+        <div class='clearfix'>
           <%= f.label :password, for: 'new_user_password', class: 'left' %> <small class='right'><a id="hide_password" class='hidden_password' href="javascript:void(0)" /></a></small>
           <%= f.password_field :password, required:'', id: 'new_user_password', id: 'new_user_password', pattern: 'password', tabindex: 7 %>
           <small class="error">Passwords must be at least 8 characters with 1 capital letter, and 1 number.</small>
@@ -105,7 +104,7 @@ input[name="commit"] {
         </div>
 
         <div><%= f.submit "Sign up", class: 'small button nice radius', tabindex: 9 %></div>
-      <% end %>        
+      <% end %>
     <% end -%>
     <a href='#' class='option-link' data-option='back'>Back</a>
   </div>
@@ -117,10 +116,9 @@ input[name="commit"] {
   </div>
 </div>
 </div>
-<% end %>      
+<% end %>
 
 
 <script>
   $('form.new_user').foundation();
 </script>
-<% end %>
