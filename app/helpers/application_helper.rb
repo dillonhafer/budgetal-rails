@@ -1,4 +1,4 @@
-module ApplicationHelper 
+module ApplicationHelper
   def devise_reveal_modals
     reveal_modal('signInUp') +
     reveal_modal('forgotPassword')
@@ -20,5 +20,9 @@ module ApplicationHelper
 
   def link_to_i(icon, text, path, options={})
     link_to("<i class='fi-icon fi-#{icon}'></i> #{text}".html_safe, path, options)
+  end
+
+  def nice_float(float)
+    sprintf '%.2f', float
   end
 end
