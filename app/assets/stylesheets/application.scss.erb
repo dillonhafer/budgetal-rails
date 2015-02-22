@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require foundation_and_overrides
- *= require_tree . 
+ *= require_tree .
  */
 
 @import 'foundation-icons';
@@ -21,11 +21,11 @@ a#hide_password {
   height: 23px;
   width: 23px;
   display: block;
-  margin-top: -6px;  
+  margin-top: -6px;
   background-image: url('<%= asset_path "lock.png" %>');
   background-repeat:no-repeat;
-  background-position: 0px -23px;    
-  &.hidden_password { 
+  background-position: 0px -23px;
+  &.hidden_password {
     background-position: 0 0;
   }
 }
@@ -47,7 +47,7 @@ h2 { color: #6699FF !important;}
 #contentmain {background: white;border-top: none; min-height: 80%;height: auto !important;  }
 
 .panel h6 { color: whitesmoke; }
-.panel {  
+.panel {
   text-align:center;
   position: relative;
   left: -30px;
@@ -162,8 +162,8 @@ h6.p-recommended {
   margin-top: 20px; text-align: center;
   div {
     width:80px;
-    display:inline;      
-    
+    display:inline;
+
     a {
       background: #6699FF;
       color: white;
@@ -192,7 +192,7 @@ h6.p-recommended {
 .red {color: red;}
 .green {color: green;}
 
-ul.main-budget-categories {  
+ul.main-budget-categories {
   li {
     list-style-type: none;
     border-top: 3px solid #6699FF;
@@ -202,16 +202,16 @@ ul.main-budget-categories {
 }
 
 .button.blue {
-  background: #6699FF; 
-  color: white; 
+  background: #6699FF;
+  color: white;
 
   &:hover, &:focus {
     background: darken(#6699FF,10%);
   }
 }
 .button.yellow {
-  background: #FFD479; 
-  color: white; 
+  background: #FFD479;
+  color: white;
 
   &:hover, &:focus {
     background: darken(#FFD479,10%);
@@ -219,25 +219,39 @@ ul.main-budget-categories {
 }
 
 .button.dark-blue {
-  background: #6699CC; 
-  color: white; 
+  background: #6699CC;
+  color: white;
 
   &:hover, &:focus {
     background: darken(#6699CC,10%);
   }
 }
 
-.alert-box.success {  
+.flash-box {
+  display: none;
+  position: fixed;
+  top: 14px;
+  right: 20px;
+  z-index:99999;
+  background: rgba(#000, 0.6);
+  color: white;
+  padding: 30px 26px;
+  width: 300px;
+  border-radius: 3px;
+}
+
+.alert-box.success {
   z-index: 999999;
   text-align: center;
-  width: 300px;  
+  width: 300px;
+  background: rgba(0,0,0,0.6);
   a.close {color:white;}
   @include shadow;
 }
 
 .plan-fixer {
   position: fixed;
-  top: 20px;  
+  top: 20px;
   width: 24% !important;
 }
 
@@ -272,8 +286,8 @@ a.show-expenses {
   font-size: 23px;
 }
 
-#contentmain img {height: 27px; width: 27px;}  
-  
+#contentmain img {height: 27px; width: 27px;}
+
 #budget-list {
   height: 60px;
 }
@@ -283,7 +297,7 @@ a.show-expenses {
 }
 
 .f-dropdown.active-recent-expenses, .f-dropdown.active-recent-expenses * {
- 
+
 }
 
 .f-dropdown {
@@ -299,8 +313,8 @@ input[type="text"] {
   h1, h2, h3, h4 {
     background: #f6f6f9;
     padding: 15px 20px;
-    color: black !important;  
-    margin: 0;  
+    color: black !important;
+    margin: 0;
     text-transform: uppercase;
   }
   @include shadow;
@@ -315,7 +329,7 @@ a:active {
   color: #69F;
 }
 
-span.tooltip { 
+span.tooltip {
     z-index:10;
     display:none !important;
     padding:14px !important;
@@ -323,13 +337,13 @@ span.tooltip {
     margin-left:75px !important;
     width:200px !important;
     color: black;
-    line-height:30px; 
+    line-height:30px;
     text-align: left;
-    background: #DEDEDE;  
+    background: #DEDEDE;
     @include shadow-big;
     @include vendor(border-radius, 3px);
 
-    p {  
+    p {
       label {color: black;}
       padding: 8px;
       padding-bottom: 0;
@@ -360,9 +374,9 @@ span.tooltip:hover {
   background: #DEDEDE !important;
 }
 
-span.tooltip.active { 
+span.tooltip.active {
   display:inline !important;
-  position:absolute;    
+  position:absolute;
 }
 
 #budget_monthly_income {
@@ -375,8 +389,8 @@ span.tooltip.active {
     color: #64ad68;
     margin-top: 50px;
     text-align: center;
-  }  
-  #greeting h2, #greeting p {     
+  }
+  #greeting h2, #greeting p {
     color: $primary-color;
   }
 
@@ -390,7 +404,7 @@ span.tooltip.active {
   padding: 15px 0px;
 
   h4 {
-    color: white;  
+    color: white;
     margin: 10px auto;
   }
   a {

@@ -24,9 +24,26 @@ class BudgetCategory < ActiveRecord::Base
 
   def percent_of_budget
     if budget.monthly_income.to_f > 0.0
-      (total_budgeted / budget.monthly_income.to_f * 100).round 
+      (total_budgeted / budget.monthly_income.to_f * 100).round
     else
       0
     end
+  end
+
+  def copy_previous_items
+    previous_items.each do |item|
+      budget_items.create(name: item.name, amount_budgeted: item.amount_budgeted)
+    end
+  end
+
+  def import_count
+    previous_items.count
+  end
+
+  def previous_items
+    category_date = Date.new(budget.year.to_i, budget.month.to_i)
+    previous_date = category_date.advance(months: -1)
+    previous_budget = Budget.find_by(year: previous_date.year.to_s, month: previous_date.month.to_s, user_id: budget.user_id)
+    previous_budget.budget_categories.find_by(name: name).budget_items
   end
 end

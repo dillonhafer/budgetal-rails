@@ -32,29 +32,29 @@ $(document).foundation({
 $(document).ready(function() {
   if ($(".alert-box").length){
     $(".alert-box").fadeIn(400,function(){
-      $(this).delay(1000).fadeOut(250);      
+      $(this).delay(1000).fadeOut(250);
     });
   }
 
   /* Flash to headers */
   $(document).ajaxComplete(function(event, request){
-    var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));    
+    var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));
     if(!flash) return;
 
-    if(flash.notice) { 
-      $(".error").remove(); 
-      $(".category-ajax").before($('<div data-alert class="alert-box radius success" style="display: none;position: fixed; top: 14px;z-index:99999"><a class="close-reveal-modal">&#215;</a></div>').html(flash.notice));
-      $(".alert-box.radius.success").fadeIn(400).delay(1000).fadeOut(250, function() {$(this).remove()});
+    if(flash.notice) {
+      $(".error").remove();
+      $("body").append($('<div class="flash-box"></div>').html(flash.notice));
+      $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
     }
 
-    if(flash.errors) { $(".error").remove(); $(".category-ajax").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); } 
+    if(flash.errors) { $(".error").remove(); $(".category-ajax").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); }
     $(".error").click(function() { $(this).slideUp(); });
   });
 });
 
 $(function(){ $(document).foundation(); });
 
-$(document).on('click', 'a.item', function(e){    
+$(document).on('click', 'a.item', function(e){
   $('a.item.active').removeClass('active');
   $('span.tooltip.active').removeClass('active');
   $(this).addClass('active');
@@ -66,7 +66,7 @@ $(document).on('click', '#hide_password', function() {
   if(is_hidden) {
     $('input[name="user[password]"]').attr('type', 'text');
     $('input[name="user[password_confirmation]"]').attr('type', 'text');
-    $('input[name="user[current_password]"]').attr('type', 'text');    
+    $('input[name="user[current_password]"]').attr('type', 'text');
   } else {
     $('input[name="user[password]"]').attr('type', 'password');
     $('input[name="user[password_confirmation]"]').attr('type', 'password');
@@ -76,7 +76,7 @@ $(document).on('click', '#hide_password', function() {
 });
 
 $(document).on('click', '.category-ajax', function(e) {
-  if ($('span.tooltip').hasClass('active')) {    
+  if ($('span.tooltip').hasClass('active')) {
     $('span.tooltip').removeClass('active')
   }
 });

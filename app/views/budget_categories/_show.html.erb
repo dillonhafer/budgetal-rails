@@ -1,12 +1,17 @@
 <div class='row collapse'>
   <div class='large-12 medium-12 columns header-row'>
-    <h3><%= c.name %></h3>
-  </div>  
+    <h3><%= c.name %> <%= link_to_i 'download',
+                                    '',
+                                    category_copy_path(c),
+                                    class: 'right',
+                                    title: 'Import items from previous budget',
+                                    data: {remote: true, confirm: 'Are you sure?'} %></h3>
+  </div>
   <div class="small-12 large-12 medium-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
       <li style='border-top:none' id='category-<%= c.id %>'>
-        
-        <div class="row type-labels">                
+
+        <div class="row type-labels">
           <div class="large-2 medium-2 large-offset-5 medium-offset-5 columns">
             Spent
           </div>
@@ -15,11 +20,11 @@
           </div>
           <div class="large-3 medium-3 columns">
             Difference
-          </div>              
+          </div>
         </div>
-        <br />                
+        <br />
         <div class="row new-budget-item">
-          <%= render partial: 'budget_item', locals: {c: c} %>               
+          <%= render partial: 'budget_item', locals: {c: c} %>
         </div>
       </li>
     </ul>
@@ -30,20 +35,20 @@
   <div class='large-5 medium-5 columns'>
     <div class='header-row'>
       <h3>Category Overview</h3>
-    </div>    
+    </div>
     <ul style='margin-left: 0' class="main-budget-categories">
       <li style='border-top:none' data-equalizer-watch>
         <div id="<%= c.name.gsub('/', '-') %>" class="row">
           <div class="large-12 medium-12 columns">
             <span class='spent' style='color: green'>Spent: <%= number_to_currency c.total_spent %></span><span style='color: #69F' class='right remaining'>Remaining: <%= number_to_currency c.budget_remaining %></span>
             <div class="progress radius"><span id='<%= c.id %>' class="meter" style="background: #69F; width: <%= c.percent_used %>%;"></span></div>
-            <% content_for :ready do %>                    
+            <% content_for :ready do %>
               <% if c.budget_remaining < 0 %>
-                $('#<%= c.id %>').css('background', 'red')      
+                $('#<%= c.id %>').css('background', 'red')
                 $('#<%= c.id %>').parent().prev('.right').css('color', 'red')
               <% end %>
             <% end %>
-          </div>                  
+          </div>
         </div>
         <hr />
         <h6>

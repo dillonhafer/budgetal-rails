@@ -48,6 +48,9 @@ gem 'nested_form'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+group :development do
+  gem 'awesome_print'
+end
 
 group :test do
   gem 'factory_girl'
