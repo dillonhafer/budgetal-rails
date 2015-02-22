@@ -5,5 +5,7 @@ class CreateAnnualBudgets < ActiveRecord::Migration
       t.integer :year
       t.timestamps
     end
+
+    add_index :annual_budgets, [:user_id, :year], unique: true
   end
 end

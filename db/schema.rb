@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 20150222232818) do
     t.datetime "updated_at"
   end
 
+  add_index "annual_budgets", ["user_id", "year"], name: "index_annual_budgets_on_user_id_and_year", unique: true, using: :btree
+
   create_table "budget_categories", force: true do |t|
     t.integer  "budget_id"
     t.string   "name"
