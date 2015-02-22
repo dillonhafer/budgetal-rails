@@ -1,4 +1,6 @@
-class User < ActiveRecord::Base  
+class User < ActiveRecord::Base
+  has_many :annual_budgets
+  #has_many :annual_budget_items, through: :annual_budgets
   has_many :budgets
   has_many :budget_categories, through: :budgets
   has_many :budget_items, through: :budget_categories
@@ -11,12 +13,12 @@ class User < ActiveRecord::Base
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
   validates :email, :presence => true, :uniqueness => true, :case_sensitive => false
-  
+
   after_create :send_welcome_email
-  
+
   def self.current
     Thread.current[:user]
-  end  
+  end
 
   def full_name
     "#{first_name} #{last_name}"
@@ -25,12 +27,12 @@ class User < ActiveRecord::Base
   def admin?
     admin
   end
-  
+
   def make_admin
-    self.admin = true    
+    self.admin = true
     self.save
-  end  
-  
+  end
+
   def remove_admin
     self.admin = false
     self.save
