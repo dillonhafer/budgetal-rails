@@ -1,18 +1,5 @@
-<% @annual_budget.annual_budget_items.each do |item| %>
-  <%= form_for AnnualBudgetItem.new do |f| %>
-  <div class='row'>
-    <div class='large-3 columns'><%= f.text_field :name %></div>
-    <div class='large-3 columns'><%= f.number_field :amount %></div>
-    <div class='large-3 columns'><%= f.text_field :due_date, placeholder: Date.today.strftime("%m/%d/%Y"), class: 'get-date', required:'' %></div>
-    <div class='large-3 columns'><%= f.check_box :paid %></div>
-  </div>
-  <% end %>
-<% end %>
-<%= form_for AnnualBudgetItem.new do |f| %>
-<div class='row'>
-  <div class='large-3 columns'><%= f.text_field :name %></div>
-  <div class='large-3 columns'><%= f.number_field :amount %></div>
-  <div class='large-3 columns'><%= f.text_field :due_date, placeholder: Date.today.strftime("%m/%d/%Y"), class: 'get-date', required:'' %></div>
-  <div class='large-3 columns'><%= f.check_box :paid %></div>
-</div>
+<%= nested_form_for @annual_budget, html: {data: {remote: true}} do |f| %>
+  <%= f.fields_for :annual_budget_items %>
+  <%= f.link_to_add "Add Item", :annual_budget_items, class: 'tiny button radius add-nested-item' %>
+  <%= f.submit 'Save', class: 'tiny success button radius' %>
 <% end %>

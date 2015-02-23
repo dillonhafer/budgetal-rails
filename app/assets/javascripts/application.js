@@ -36,6 +36,8 @@ $(document).ready(function() {
     });
   }
 
+  $('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
+
   /* Flash to headers */
   $(document).ajaxComplete(function(event, request){
     var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));
@@ -82,7 +84,7 @@ $(document).on('click', '.category-ajax', function(e) {
 });
 
 $(document).on('click', '.main-annual-budget', function(e) {
-  e.preventDefault()
+  //e.preventDefault()
   if ($('span.tooltip').hasClass('active')) {
     $('.change-anual-budget').click()
   }
