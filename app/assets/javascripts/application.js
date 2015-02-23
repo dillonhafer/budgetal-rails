@@ -80,6 +80,25 @@ $(document).on('click', '.category-ajax', function(e) {
     $('span.tooltip').removeClass('active')
   }
 });
+
+$(document).on('click', '.main-annual-budget', function(e) {
+  e.preventDefault()
+  if ($('span.tooltip').hasClass('active')) {
+    $('.change-anual-budget').click()
+  }
+})
+
+$(document).on('change', '#year_change_annual_budget_1i', function() {
+  path = '/annual-budgets/' + $(this).val()
+  document.location.href = path
+})
+
+$(document).on('click', '.change-anual-budget', function(e) {
+  e.preventDefault()
+  $('.annual-budget-tooltip').fadeToggle()
+  $('.annual-budget-tooltip').toggleClass('active')
+})
+
 function showOptions() {
   hideSections();
   $('.options-section').removeClass('hide');

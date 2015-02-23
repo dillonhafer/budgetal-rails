@@ -3,4 +3,8 @@ class AllocationPlanBudgetItem < ActiveRecord::Base
   belongs_to :budget_item
 
   validates_presence_of :amount_budgeted
+
+  def paid?
+    paid
+  end
 end

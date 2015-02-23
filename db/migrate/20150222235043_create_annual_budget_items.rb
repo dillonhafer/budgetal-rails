@@ -4,6 +4,7 @@ class CreateAnnualBudgetItems < ActiveRecord::Migration
       t.references :annual_budget
       t.string     :name
       t.date       :due_date
+      t.decimal    :amount, precision: 10, scale: 2
       t.boolean    :paid, null: false, default: false
       t.timestamps
     end

@@ -25,4 +25,10 @@ module ApplicationHelper
   def nice_float(float)
     sprintf '%.2f', float
   end
+
+  def paid_status(paid)
+    text = paid ? 'Paid' : 'Not Paid'
+    css  = paid ? 'success' : 'alert'
+    content_tag(:span, text, class: "label radius #{css}")
+  end
 end

@@ -1,0 +1,16 @@
+<% cache @annual_budget do %>
+<p class='text-center'>You have <%= pluralize @annual_budget.annual_budget_items.count, 'annual expense' %> for <%= @annual_budget.year %></p>
+<ul class='large-block-grid-4'>
+  <% @annual_budget.annual_budget_items.each do |item| %>
+  <li class='no-container'>
+    <ul class="pricing-table">
+      <li class="title"><%= item.name %></li>
+      <li class="price"><%= number_to_currency(item.amount) %></li>
+      <li class="description"><b>Due:</b> <%= item.due_date.strftime("%B %d, %Y") %></li>
+      <li class="bullet-item"><%= number_to_currency(item.amount / 12) %> / month</li>
+      <li class="bullet-item"><%= paid_status(item.paid) %></li>
+    </ul>
+  </li>
+  <% end %>
+</ul>
+<% end %>

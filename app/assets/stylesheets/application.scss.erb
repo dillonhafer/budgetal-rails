@@ -347,6 +347,10 @@ span.tooltip {
     @include shadow-big;
     @include vendor(border-radius, 3px);
 
+    &.annual-budget-tooltip {
+      margin-left: 245px !important;
+    }
+
     p {
       label {color: black;}
       padding: 8px;
@@ -370,6 +374,21 @@ span.tooltip:after {
   pointer-events: none;
   border-color: rgba(136, 183, 213, 0);
   border-right-color: #DEDEDE;
+  border-width: 12px;
+  margin-top: -12px;
+}
+
+span.annual-budget-tooltip:after {
+  left: 100%;
+  top: 40px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-left-color: #DEDEDE;
   border-width: 12px;
   margin-top: -12px;
 }
@@ -475,4 +494,13 @@ span.tooltip.active {
 
 .nav-links li a {
   i { margin-right: 10px;}
+}
+
+ul.main-budget-categories li.no-container {
+  border-top: none;
+  box-shadow: none;
+}
+
+ul.main-budget-categories li.no-container li {
+  border-top: none;
 }

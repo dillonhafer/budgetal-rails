@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :annual_budgets
-  #has_many :annual_budget_items, through: :annual_budgets
+  has_many :annual_budget_items, through: :annual_budgets
   has_many :budgets
   has_many :budget_categories, through: :budgets
   has_many :budget_items, through: :budget_categories

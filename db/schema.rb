@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(version: 20150222235043) do
     t.integer  "annual_budget_id"
     t.string   "name"
     t.date     "due_date"
-    t.boolean  "paid",             default: false, null: false
+    t.decimal  "amount",           precision: 10, scale: 2
+    t.boolean  "paid",                                      default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,13 +1,38 @@
 <div class='row collapse'>
   <div class='large-12 columns header-row'>
     <h3>Annual Budget for <%= @annual_budget.year %> <%= link_to_i 'calendar', '', '#', class: 'change-anual-budget right black-color' %></h3>
+    <span class='tooltip annual-budget-tooltip'>
+      <p>
+        <label for="year_change_annual_budget_1i">Change Budget Year</label>
+        <%= date_select :year,
+                        :change_annual_budget,
+                        discard_day: true,
+                        discard_month: true,
+                        end_year: 2015,
+                        start_year: Date.today.year,
+                        default: Date.new(@annual_budget.year) %>
+      </p>
+    </span>
   </div>
   <div class="small-12 large-12 columns">
-    <ul style='margin-left: 0' class="main-budget-categories">
+    <ul style='margin-left: 0' class="main-budget-categories main-annual-budget">
       <li style='border-top:none'>
-        <div id="greeting" class="text-center animated ">
-          <h2>Uh-oh!</h2>
-          <p>It looks like you don't have a budget for this month</p>
+        <div class='annual-items-status'>
+          <%= render partial: 'items_status' %>
+        </div>
+
+        <h4>Manage Budget Items</h4>
+        <hr />
+
+        <div class='row'>
+          <div class='large-3 columns'>Name</div>
+          <div class='large-3 columns'>Amount</div>
+          <div class='large-3 columns'>Due Date</div>
+          <div class='large-3 columns'>Paid?</div>
+        </div>
+
+        <div class='annual-items-forms'>
+          <%= render partial: 'items_forms' %>
         </div>
       </li>
     </ul>

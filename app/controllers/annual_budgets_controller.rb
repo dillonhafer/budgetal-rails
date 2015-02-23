@@ -2,10 +2,33 @@ class AnnualBudgetsController < ApplicationController
   before_filter :require_user
 
   def index
-    @annual_budget = current_user.annual_budgets.find_or_create_by(year: year_param)
+    @annual_budget = current_user.annual_budgets
+                                 .includes(:annual_budget_items)
+                                 .find_or_create_by(year: year_param)
+  end
+
+  def update
+    @annual_budget = current_user.annual_budgets.includes(:annual_budget_items).find(params[:id])
+    flash[:notice] = if @annual_budget.update_attributes(annual_budget_params)
+                       "Saved budget items"
+                     else
+                       "Something went wrong"
+                     end
   end
 
   private
+
+  def annual_budget_params
+    params.require(:annual_budget).permit(
+      annual_budget_items_attributes: [
+        :id,
+        :name,
+        :amount,
+        :due_date,
+        :paid,
+        :_destroy
+      ])
+  end
 
   def year_param
     year       = params[:year].to_i
