@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'dotenv-rails'
-gem 'rails', '4.1.8'
+gem 'rails', '4.1.9'
 gem 'mina'
 
 # Use PostgreSQL as the database for Active Record
