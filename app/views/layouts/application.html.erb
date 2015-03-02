@@ -4,12 +4,12 @@
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
   <head>
-    <%= render template: 'shared/head' %>    
+    <%= render template: 'shared/head' %>
     <title><%= yield(:title) %>Budgetal</title>
     <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <%= stylesheet_link_tag "application" %>    
-    <%= javascript_include_tag "vendor/modernizr" %>    
-    
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+
     <%= csrf_meta_tags %>
     <% if Rails.env.production? %>
       <%= render template: 'shared/tracking.html' %>
@@ -17,21 +17,21 @@
     <style><%= yield(:styles) %></style>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
-  <body>    
-    <%= render template: 'shared/nav' %>      
-    
-    <% flash.each do |key, msg| %>      
-      <div data-alert class="alert-box radius success" style="display: none;position: fixed; top: 70px;z-index:99999;left: -5%; width: 110%;">
-        <%= msg %>
-      </div>
-    <% end %>
+  <body>
+    <%= render template: 'shared/nav' %>
+
+    <div class='flash-holder'>
+      <% flash.each do |key, msg| %>
+        <div class="flash-box"><%= msg %></div>
+      <% end %>
+    </div>
 
     <%= yield %>
-  
+
     <%= render template: 'shared/footer' %>
-    
-    <%= javascript_include_tag "application" %>    
-    <script><%= yield(:ready) %></script>    
-    <%= devise_reveal_modals unless current_user %>    
+
+    <%= javascript_include_tag "application" %>
+    <script><%= yield(:ready) %></script>
+    <%= devise_reveal_modals unless current_user %>
   </body>
 </html>

@@ -1,0 +1,3 @@
+$('.add-item-link').before("<div class='budget-item-form-new'></div>")
+$(".budget-item-form-new").html("<%= escape_javascript(render partial: 'budget_item', locals: {bi: @item}) %>")
+$(".budget-item-form-new").foundation()

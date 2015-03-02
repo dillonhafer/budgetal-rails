@@ -1,0 +1,25 @@
+var hidden = true
+var lists = $('.expense-list.expenses_<%= @item.id %>')
+jQuery.each(lists, function(i,v) {
+  if (!$(v).hasClass('hide')) {
+    hidden = false
+  }
+})
+console.log(hidden)
+
+var new_item = $(".budget-item-form-<%= @item.id %>").length == false
+if (new_item) {
+  $('.budget-item-form-new').addClass("budget-item-form-<%= @item.id %>")
+  $('.budget-item-form-new').removeClass('budget-item-form-new')
+}
+
+$(".budget-item-form-<%= @item.id %>").html("<%= escape_javascript(render partial: 'budget_item', locals: {bi: @item}) %>")
+
+if (hidden == false) {
+  $('.expense-list.expenses_<%= @item.id %>').removeClass('hide')
+  var i = $('.budget-item-form-<%= @item.id %> .show-expenses i')
+  i.addClass('fi-arrows-compress')
+  i.removeClass('fi-arrows-expand')
+  i.css('color', 'red')
+}
+$(".budget-item-form-<%= @item.id %>").foundation()

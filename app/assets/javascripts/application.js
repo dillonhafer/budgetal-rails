@@ -30,8 +30,8 @@ $(document).foundation({
 });
 
 $(document).ready(function() {
-  if ($(".alert-box").length){
-    $(".alert-box").fadeIn(400,function(){
+  if ($(".flash-box").length){
+    $(".flash-box").fadeIn(400,function(){
       $(this).delay(1000).fadeOut(250);
     });
   }
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
     if(flash.notice) {
       $(".error").remove();
-      $("body").append($('<div class="flash-box"></div>').html(flash.notice));
+      $(".flash-holder").append($('<div class="flash-box"></div>').html(flash.notice));
       $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
     }
 

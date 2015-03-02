@@ -233,15 +233,19 @@ ul.main-budget-categories {
 
 .flash-box {
   display: none;
-  position: fixed;
-  top: 14px;
-  right: 20px;
-  z-index:99999;
   background: rgba(#000, 0.6);
   color: white;
   padding: 30px 26px;
   width: 300px;
   border-radius: 3px;
+  margin-top: 20px;
+}
+
+.flash-holder {
+  z-index:99999;
+  position: fixed;
+  top: 0px;
+  right: 20px;
 }
 
 .alert-box.success {
@@ -513,4 +517,12 @@ ul.main-budget-categories li.no-container li {
 
 .annual-items-forms input {
   border: 1px solid #CCC;
+}
+
+.button.tiny.circle-button {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  font-size: 18px;
 }

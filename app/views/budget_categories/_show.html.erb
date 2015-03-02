@@ -24,7 +24,15 @@
         </div>
         <br />
         <div class="row new-budget-item">
-          <%= render partial: 'budget_item', locals: {c: c} %>
+          <% c.budget_items.each do |bi| %>
+          <div class='budget-item-form-<%= bi.id %>'>
+            <%= render partial: 'budget_item', locals: {bi: bi} %>
+          </div>
+          <% end %>
+          <%= link_to "Add a budget item",
+                      new_budget_item_path(budget_category_id: c.id),
+                      class: 'add-item-link tiny button radius success',
+                      data: {remote: true}  %>
         </div>
       </li>
     </ul>
