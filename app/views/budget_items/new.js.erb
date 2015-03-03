@@ -1,3 +1,6 @@
-$('.add-item-link').before("<div class='budget-item-form-new'></div>")
+var form_missing = Boolean($('.budget-item-form-new').length)
+if (!form_missing) {
+  $('.add-item-link').before("<div class='budget-item-form-new animated fadeIn'></div>")
+}
 $(".budget-item-form-new").html("<%= escape_javascript(render partial: 'budget_item', locals: {bi: @item}) %>")
 $(".budget-item-form-new").foundation()

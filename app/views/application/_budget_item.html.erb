@@ -24,7 +24,11 @@
   </div>
   <div class='large-2 medium-2 columns centered'>
     <%= f.submit '✓', title: 'Save', class: 'tiny success round button circle-button' %>
-    <% unless f.object.new_record? %>
+    <% if f.object.new_record? %>
+    <%= link_to '×', '#',
+                     title: 'Delete this item',
+                     class: 'tiny alert round button circle-button remove-new-item' %>
+    <% else %>
     <%= link_to '×', budget_item_path(bi),
                      method: :delete,
                      title: 'Delete this item',

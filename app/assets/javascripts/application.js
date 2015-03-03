@@ -140,3 +140,8 @@ $(document).on('click', '.option-link', function(e) {
       return false;
     }
 });
+
+$(document).on('click', '.remove-new-item', function(e) {
+  e.preventDefault()
+  $('.budget-item-form-new').fadeOut().delay(500).remove()
+})
