@@ -50,6 +50,7 @@ gem 'nested_form'
 # gem 'debugger', group: [:development, :test]
 group :development do
   gem 'awesome_print'
+  gem 'bullet'
 end
 
 group :test do

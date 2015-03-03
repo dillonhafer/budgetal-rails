@@ -1,9 +1,9 @@
 class BudgetsController < ApplicationController
   def new
     next_month = Date.today.advance(months: 1)
-    
+
     if params[:month]
-      next_month = Date.new params[:year], params[:month], 1      
+      next_month = Date.new params[:year], params[:month], 1
     end
 
     if current_user.budgets.where(month: next_month.month.to_s, year: next_month.year.to_s).any?
@@ -15,13 +15,11 @@ class BudgetsController < ApplicationController
   end
 
   def update
-    @budget = current_user.budgets.find params[:id]
+    @budget = current_user.budgets.find(params[:id])
     if @budget.update_attributes(budget_params)
       flash[:notice] = "Updated budget"
-      redirect_to my_budgets_path(year: @budget.year, month: @budget.month), notice: "Updated Budget"
     else
-      flash[:error] = "something went wrong!"
-      redirect_to my_budgets_path(year: @budget.year, month: @budget.month)
+      flash[:notice] = "something went wrong!"
     end
   end
 

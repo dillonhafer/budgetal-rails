@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def title(word)
+    content_for(:title, word)
+  end
+
   def assets_cache_key
     asset_dir = File.join(Rails.root, 'public', 'assets')
     sha_sum   = %x(find #{asset_dir} -type f -print0 | sort -z | xargs -0 sha1sum | sha1sum)

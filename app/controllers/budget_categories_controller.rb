@@ -3,24 +3,23 @@ class BudgetCategoriesController < ApplicationController
 
   before_filter :require_user
   before_filter :check_date, except: [:copy]
-  before_filter :check_user, only: [:show, :copy]
 
   def index
     year  = params[:year]
     month = params[:month]
-    @budget = current_user.budgets.find_by(month: month.to_s, year: year.to_s) || Budget.create_template(month, year, current_user.id)
+    @budget = current_user.budgets.includes(:budget_categories).find_by(month: month.to_s, year: year.to_s) || Budget.create_template(month, year, current_user.id)
   end
 
   def show
-    @c = BudgetCategory.find(params[:id])
+    @budget_category = current_user.budget_categories.includes(:budget_items).find(params[:id])
   end
 
   def copy
-    @c = BudgetCategory.find(params[:id])
-    @c.copy_previous_items
+    @budget_category = current_user.budget_categories.find(params[:id])
+    @budget_category.copy_previous_items
 
-    if @c.import_count > 0
-      flash[:notice] = "Finished importing #{pluralize @c.import_count, 'item'}"
+    if @budget_category.import_count > 0
+      flash[:notice] = "Finished importing #{pluralize @budget_category.import_count, 'item'}"
       render :show
     else
       flash[:notice] = "There wasn't anything to import."
@@ -28,32 +27,7 @@ class BudgetCategoriesController < ApplicationController
     end
   end
 
-  def update
-    @c = BudgetCategory.find(params[:id])
-    if @c.update_attributes(budget_category_params)
-      flash[:notice] = 'Updated category!'
-    else
-      flash[:notice] = 'Something went wrong'
-    end
-    render :show
-  end
-
-   def destroy
-    @budget_category = BudgetCategory.find(params[:id])
-    @budget_category.destroy
-  end
-
   private
-
-  def check_user
-    @c = BudgetCategory.includes(:budget).find(params[:id])
-    if @c && @c.budget.user_id != current_user.id
-      if request.xhr?
-        error = render_to_string(partial: "error").remove("\n")
-        render(js: "$('.category-ajax').html('#{error}')") and return
-      end
-    end
-  end
 
   def budget_category_params
     params.require(:budget_category).permit(:name,
