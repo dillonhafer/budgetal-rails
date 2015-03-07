@@ -9,8 +9,8 @@ class Budget < ActiveRecord::Base
     only_integer: true,
     less_than_or_equal_to: 12,
     greater_than_or_equal_to: 1
-    
-  validates_numericality_of :year, 
+
+  validates_numericality_of :year,
     only_integer: true,
     less_than_or_equal_to: 2020,
     greater_than_or_equal_to: 2013
@@ -56,6 +56,10 @@ class Budget < ActiveRecord::Base
 
   def amount_budgeted
     Budget.where(id: id).joins(:budget_items).sum(:amount_budgeted).to_f
+  end
+
+  def budget_remaining
+    amount_budgeted - total_expenses
   end
 
   def amount_remaining

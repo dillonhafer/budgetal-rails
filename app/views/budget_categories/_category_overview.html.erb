@@ -1,0 +1,24 @@
+    <ul style='margin-left: 0' class="main-budget-categories">
+      <li style='border-top:none' data-equalizer-watch>
+        <div id="<%= c.name.gsub('/', '-') %>" class="row">
+          <div class="large-12 medium-12 columns">
+            <span class='spent success-color'>
+              Spent: <%= number_to_currency c.total_spent %>
+            </span>
+            <span class='right remaining <%= remaining_class(c.budget_remaining) %>'>
+              Remaining: <%= number_to_currency c.budget_remaining %>
+            </span>
+            <div class="progress radius">
+              <span id='<%= c.id %>'
+                    class="meter <%= meter_class(c.budget_remaining) %>"
+                    style="width: <%= c.percent_used %>%;"></span>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <h6>
+          You have budgeted <%= number_to_currency c.total_budgeted %> (<%= c.percent_of_budget %>%) towards this category, we recommend you only budget <%= c.percentage %>.
+        </h6>
+        <%= render template: 'monthly_statistics/chart', locals: {percent_used: c.percent_used, selector: 'category-donut'} %>
+      </li>
+    </ul>

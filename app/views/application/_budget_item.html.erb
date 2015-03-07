@@ -15,9 +15,9 @@
   </div>
   <div class="large-1 medium-1 columns">
     <% if (bi.amount_budgeted || 0)-bi.budget_item_expenses.sum(:amount) > 0 %>
-      <span class="green"><%= number_to_currency bi.amount_budgeted-bi.budget_item_expenses.sum(:amount) %></span>
+      <span class="success-color"><%= number_to_currency bi.amount_budgeted-bi.budget_item_expenses.sum(:amount) %></span>
     <% elsif (bi.amount_budgeted || 0)-bi.budget_item_expenses.sum(:amount) < 0 %>
-      <span class="red">$<%= bi.amount_budgeted-bi.budget_item_expenses.sum(:amount) %></span>
+      <span class="alert-color">$<%= bi.amount_budgeted-bi.budget_item_expenses.sum(:amount) %></span>
     <% else %>
       <span class="blue"><%= number_to_currency (bi.amount_budgeted || 0)-bi.budget_item_expenses.sum(:amount) %></span>
     <% end %>

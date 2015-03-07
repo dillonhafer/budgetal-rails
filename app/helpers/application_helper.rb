@@ -3,6 +3,14 @@ module ApplicationHelper
     content_for(:title, word)
   end
 
+  def meter_class(number)
+    number < 0 ? 'red-meter' : 'blue-meter'
+  end
+
+  def remaining_class(number)
+    number < 0 ? 'alert-color' : 'blue-color'
+  end
+
   def assets_cache_key
     asset_dir = File.join(Rails.root, 'public', 'assets')
     sha_sum   = %x(find #{asset_dir} -type f -print0 | sort -z | xargs -0 sha1sum | sha1sum)
