@@ -126,7 +126,6 @@ function showSignUp() {
 $(document).on('click', '.option-link', function(e) {
   e.preventDefault();
   var option = $(this).data('option');
-  console.log(option);
   switch(option) {
     case 'sign-in':
       showSignIn();
@@ -147,6 +146,16 @@ $(document).on('click', '.remove-new-item', function(e) {
   $('.budget-item-form-new').fadeOut().delay(500).remove()
 })
 
-$(document).on('click', 'a.copy-category', function() {
-  $('#copy-modal').foundation('reveal','open');
-});
+$(document).on('click', 'a.copy-category', function(e) {
+  e.preventDefault()
+  $('#copy-modal').foundation('reveal','open')
+})
+
+$(document).on('click', 'a.delete-budget-item', function(e) {
+  e.preventDefault()
+  var delete_href = $(this).data('link')
+  var item_name   = $(this).data('name')
+  $('#delete-modal').foundation('reveal','open')
+  $('#delete-modal .delete-confirm').attr('href', delete_href)
+  $('#delete-modal .name').html(item_name)
+})

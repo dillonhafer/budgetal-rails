@@ -34,5 +34,21 @@
     <%= javascript_include_tag "application" %>
     <script><%= yield(:ready) %></script>
     <%= devise_reveal_modals unless current_user %>
+    <div class='reveal-modal tiny' id='delete-modal' data-reveal>
+      <h3 class='text-center alert-color'>Delete</h3>
+      <hr />
+      <p>Do you really want to delete <span class='name'></span>?</p>
+      <p>This cannot be undone.</p>
+      <div>
+        <%= link_to_i 'trash', 'Delete',
+                    '#',
+                    method: :delete,
+                    title: 'Delete this item',
+                    class: 'button alert radius small delete-confirm expand',
+                    data: {remote: true, disable_with: 'Deleting...'} %>
+      </div>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+
   </body>
 </html>

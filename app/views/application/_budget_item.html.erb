@@ -29,11 +29,12 @@
                        title: 'Delete this item',
                        class: 'tiny alert round button circle-button remove-new-item' %>
       <% else %>
-      <%= link_to '×', budget_item_path(bi),
-                       method: :delete,
-                       title: 'Delete this item',
-                       data: {remote: true, confirm: "Do you want to delete #{bi.name}?"},
-                       class: 'tiny alert round button circle-button' %>
+      <%= link_to '×', '#',
+                       data: {
+                        link: budget_item_path(bi),
+                        name: bi.name
+                       },
+                       class: 'delete-budget-item tiny alert round button circle-button' %>
        <% end %>
     </div>
   </div>
