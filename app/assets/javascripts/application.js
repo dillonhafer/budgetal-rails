@@ -91,7 +91,6 @@ $(document).on('click', '.category-ajax', function(e) {
 });
 
 $(document).on('click', '.main-annual-budget', function(e) {
-  //e.preventDefault()
   if ($('span.tooltip').hasClass('active')) {
     $('.change-anual-budget').click()
   }
