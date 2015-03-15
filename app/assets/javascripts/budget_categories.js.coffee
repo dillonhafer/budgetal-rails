@@ -1,6 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $(document).ready ->
   BudgetCategory.initDragAndDrop()
 
@@ -48,10 +45,10 @@ $(document).on 'click', '.show-expenses', (e) ->
   $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeIn')
   i = $(this).find('i')
 
-  if i.hasClass('fi-arrows-expand')
-    i.removeClass('fi-arrows-expand blue-color').addClass('fi-arrows-compress alert-color');
+  if i.hasClass('blue-color')
+    i.removeClass('blue-color').addClass('alert-color');
   else
-    i.removeClass('fi-arrows-compress alert-color').addClass('fi-arrows-expand blue-color');
+    i.removeClass('alert-color').addClass('blue-color');
 
 jQuery ->
   window.onpopstate = (e) ->

@@ -17,6 +17,7 @@ BudgetCategory = (function() {
   BudgetCategory.initDragAndDrop = function() {
     $('.draggable-budget-item').draggable({
       addClasses: true,
+      handle: 'a.show-expenses',
       revert: 'invalid',
       tolerance: 'pointer',
       helper: BudgetCategory.budget_draggable_helper
