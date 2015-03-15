@@ -19,6 +19,7 @@
 //= require foundation/foundation.abide
 //= require foundation/foundation.reveal
 //= require jquery_nested_form
+//= require jquery-ui.min
 //= require_tree .
 
 $(document).foundation({
