@@ -51,7 +51,7 @@
     </span>
     <% @budget.budget_categories.order(:id).each do |c| %>
       <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: "item droppable-category #{'active' if c == @budget.budget_categories.first}", remote: true do %>
-        <%= image_tag "#{c.name}.png" %>
+        <%= image_tag "#{c.name}-30.png" %>
         <label><%= c.name %></label>
       <% end %>
     <% end %>
