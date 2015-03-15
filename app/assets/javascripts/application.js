@@ -146,3 +146,7 @@ $(document).on('click', '.remove-new-item', function(e) {
   e.preventDefault()
   $('.budget-item-form-new').fadeOut().delay(500).remove()
 })
+
+$(document).on('click', 'a.copy-category', function() {
+  $('#copy-modal').foundation('reveal','open');
+});
