@@ -50,7 +50,7 @@
       </p>
     </span>
     <% @budget.budget_categories.order(:id).each do |c| %>
-      <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: "item #{'active' if c == @budget.budget_categories.first}", remote: true do %>
+      <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: "item droppable-category #{'active' if c == @budget.budget_categories.first}", remote: true do %>
         <%= image_tag "#{c.name}.png" %>
         <label><%= c.name %></label>
       <% end %>
@@ -63,3 +63,8 @@
   </div>
 </div>
 </section>
+
+<%= form_tag move_item_path, id: 'move-item-form', 'data-remote' => true do %>
+  <%= hidden_field_tag :move_category_id %>
+  <%= hidden_field_tag :move_item_id %>
+<% end %>

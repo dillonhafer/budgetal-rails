@@ -1,0 +1,10 @@
+$(".budget-item-form-<%= @item.id %>").remove()
+
+// Update Category Overview
+$('.category-overview').html("<%= j(render partial: 'budget_categories/category_overview', locals: {c: @category}) %>")
+
+// Update Overview
+$('.overview-partial').html("<%= j(render partial: 'budget_categories/overviews', locals: {b: @category.budget}) %>")
+
+$('document').foundation()
+$(window).trigger('resize')

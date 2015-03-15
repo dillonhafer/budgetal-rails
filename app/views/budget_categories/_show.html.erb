@@ -25,7 +25,7 @@
         <br />
         <div class="row new-budget-item">
           <% c.budget_items.includes(:budget_item_expenses).each do |bi| %>
-          <div class='budget-item-form-<%= bi.id %>'>
+          <div class='budget-item-form-<%= bi.id %> draggable-budget-item'>
             <%= render partial: 'budget_item', locals: {bi: bi} %>
           </div>
           <% end %>

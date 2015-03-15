@@ -20,6 +20,7 @@ Budgets::Application.routes.draw do
 
   match '/budget-category/:year/:month/:id' => 'budget_categories#show', as: 'category_ajax', via: [:get, :post]
   get '/budget-category/:id/copy' => 'budget_categories#copy', as: 'category_copy'
+  post '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
 
   get 'past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics'

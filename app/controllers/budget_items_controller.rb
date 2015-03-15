@@ -33,6 +33,14 @@ class BudgetItemsController < ApplicationController
     @item.destroy
   end
 
+  def move_item
+    @category  = current_user.budget_categories.find(params[:move_category_id])
+    @item      = current_user.budget_items.find(params[:move_item_id])
+    @item.budget_category_id = @category.id
+    @item.save
+    flash[:notice] = "Moved #{@item.name} to #{@category.name}"
+  end
+
   private
 
   def budget_item_params

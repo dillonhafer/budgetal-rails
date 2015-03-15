@@ -8,7 +8,7 @@ jQuery.each(lists, function(i,v) {
 
 var new_item = $(".budget-item-form-<%= @item.id %>").length == false
 if (new_item) {
-  $('.budget-item-form-new').addClass("budget-item-form-<%= @item.id %>")
+  $('.budget-item-form-new').addClass("budget-item-form-<%= @item.id %> draggable-budget-item")
   $('.budget-item-form-new').removeClass('budget-item-form-new')
 }
 
@@ -28,3 +28,4 @@ if (hidden == false) {
 }
 $('document').foundation()
 $(window).trigger('resize')
+BudgetCategory.initDragAndDrop()
