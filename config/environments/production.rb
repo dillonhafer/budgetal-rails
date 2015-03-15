@@ -9,7 +9,7 @@ Budgets::Application.configure do
   config.action_controller.perform_caching = true
   config.eager_load = true
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -47,7 +47,7 @@ Budgets::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-
+  config.log_level = :info
   # Enable threaded mode
   # config.threadsafe!
   config.action_mailer.default_url_options = { host: "www.budgetal.com" }
