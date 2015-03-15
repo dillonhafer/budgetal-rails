@@ -52,6 +52,12 @@ $(document).ready(function() {
 
     if(flash.errors) { $(".error").remove(); $(".category-ajax").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); }
     $(".error").click(function() { $(this).slideUp(); });
+
+    $('.get-date').each(function() {
+      if( !$(this).hasClass('hasDatePicker') ) {
+        $(this).datepicker({dateFormat: 'yy-mm-dd'})
+      }
+    });
   });
 });
 
