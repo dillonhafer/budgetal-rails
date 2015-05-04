@@ -45,6 +45,6 @@ class User < ActiveRecord::Base
   private
 
   def send_welcome_email
-    Notifier.new_user(self).deliver
+    Notifier.new_user(self).deliver_now
   end
 end
