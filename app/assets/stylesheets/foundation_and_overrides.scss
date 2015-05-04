@@ -955,7 +955,7 @@ $topbar-bg-color: #6699FF;
 //$topbar-bg: url(/images/web_sprites_bg.png);
 
 // Height and margin
-$topbar-height: 70px;
+$topbar-height: rem-calc(70);
 //$topbar-margin-bottom: 0;
 
 // Control Input height for top bar
