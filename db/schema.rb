@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20150222235043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "allocation_plan_budget_items", force: true do |t|
+  create_table "allocation_plan_budget_items", force: :cascade do |t|
     t.integer  "allocation_plan_id"
     t.integer  "budget_item_id"
     t.decimal  "amount_budgeted",    precision: 10, scale: 2
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150222235043) do
     t.datetime "updated_at"
   end
 
-  create_table "allocation_plans", force: true do |t|
+  create_table "allocation_plans", force: :cascade do |t|
     t.integer  "budget_id"
     t.date     "start_date"
     t.date     "end_date"
@@ -33,17 +33,17 @@ ActiveRecord::Schema.define(version: 20150222235043) do
     t.datetime "updated_at"
   end
 
-  create_table "annual_budget_items", force: true do |t|
+  create_table "annual_budget_items", force: :cascade do |t|
     t.integer  "annual_budget_id"
-    t.string   "name"
+    t.string   "name",             limit: 255
     t.date     "due_date"
-    t.decimal  "amount",           precision: 10, scale: 2
-    t.boolean  "paid",                                      default: false, null: false
+    t.decimal  "amount",                       precision: 10, scale: 2
+    t.boolean  "paid",                                                  default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "annual_budgets", force: true do |t|
+  create_table "annual_budgets", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "year"
     t.datetime "created_at"
@@ -52,61 +52,61 @@ ActiveRecord::Schema.define(version: 20150222235043) do
 
   add_index "annual_budgets", ["user_id", "year"], name: "index_annual_budgets_on_user_id_and_year", unique: true, using: :btree
 
-  create_table "budget_categories", force: true do |t|
+  create_table "budget_categories", force: :cascade do |t|
     t.integer  "budget_id"
-    t.string   "name"
-    t.string   "percentage"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 255
+    t.string   "percentage", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
-  create_table "budget_item_expenses", force: true do |t|
+  create_table "budget_item_expenses", force: :cascade do |t|
     t.integer  "budget_item_id"
-    t.string   "name"
-    t.decimal  "amount",         precision: 10, scale: 2
+    t.string   "name",           limit: 255
+    t.decimal  "amount",                     precision: 10, scale: 2
     t.date     "date"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
-  create_table "budget_items", force: true do |t|
+  create_table "budget_items", force: :cascade do |t|
     t.integer  "budget_category_id"
-    t.string   "name"
-    t.decimal  "amount_budgeted",    precision: 10, scale: 2
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.string   "name",               limit: 255
+    t.decimal  "amount_budgeted",                precision: 10, scale: 2
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
     t.boolean  "envelope"
   end
 
-  create_table "budgets", force: true do |t|
-    t.string   "month"
-    t.decimal  "monthly_income", precision: 10, scale: 2
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+  create_table "budgets", force: :cascade do |t|
+    t.string   "month",          limit: 255
+    t.decimal  "monthly_income",             precision: 10, scale: 2
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.integer  "user_id"
-    t.string   "year"
+    t.string   "year",           limit: 255
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.boolean  "admin"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "password_reset_token"
+    t.string   "password_reset_token",   limit: 255
     t.datetime "password_reset_sent_at"
-    t.string   "email",                              default: "", null: false
-    t.string   "encrypted_password",                 default: "", null: false
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "password_salt",          limit: nil
-    t.string   "password_hash",          limit: nil
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "password_salt"
+    t.string   "password_hash"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

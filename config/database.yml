@@ -12,6 +12,7 @@ development:
 
 test:
   <<: *defaults
+  database: budgetal_test
 
 staging:
   <<: *defaults
