@@ -18,6 +18,8 @@ gem 'dynamic_form'
 gem 'bcrypt', '~> 3.1.2'
 gem 'passenger'
 gem 'nested_form'
+gem 'react-rails', '~> 1.0'
+gem 'puma'
 
 group :development, :test do
   gem 'faker'
@@ -27,4 +29,5 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'byebug'
 end

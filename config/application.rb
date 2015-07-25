@@ -44,5 +44,6 @@ module Budgets
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.react.addons = true
   end
 end
