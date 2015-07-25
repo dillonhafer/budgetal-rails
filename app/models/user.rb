@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :budget_items, through: :budget_categories
   has_many :budget_item_expenses, through: :budget_items
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :timeoutable,
          :recoverable, :rememberable, :trackable, :validatable
 
   validates_presence_of :first_name, :last_name
