@@ -12,7 +12,6 @@ $(document).on 'submit', '.edit_budget', (e) ->
 $(document).on 'nested:fieldAdded', (event) ->
   field = event.field
   field.addClass('animated fadeInDown')
-  field.find('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
   field.find('.show-expenses').removeClass('show-expenses').css('color', 'white')
   field.addClass('is-new')
 

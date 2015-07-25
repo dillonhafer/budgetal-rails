@@ -877,7 +877,7 @@ $tabs-navigation-font-color: white;
 .tabs dd.active a { background: lighten(#6699FF, 15%) !important;}
 .tabs dd.new a {background: darken(#69f, 15%) !important;}
 .tabs.admin {
-  $admin-blue: lighten(#69F,7%);  
+  $admin-blue: lighten(#69F,7%);
   $light-admin-blue: lighten($admin-blue, 10%);
 
   dd {
@@ -1034,7 +1034,7 @@ div.icon-bar > .item.active {
 }
 
 div.icon-bar > .item.header {
-  padding: 10px 0px 10px !important;  
+  padding: 10px 0px 10px !important;
   border-bottom: 1px solid #444;
 }
 $main: #6699FF;
@@ -1056,7 +1056,7 @@ $break: 767px;
 
 .top-bar-section {
   $dark-color: darken(#6699FF,7%);
-  ul.dropdown {    
+  ul.dropdown {
     li:not(.has-form) {
       border-top: 1px solid $dark-color;
       a:not(.button) {

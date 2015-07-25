@@ -10,9 +10,8 @@
  *
  *= require_self
  *= require foundation_and_overrides
- *= require jquery-ui.min
- *= require jquery-ui.structure.min
- *= require jquery-ui.theme.min
+ *= require picker
+ *= require picker.date
  *= require_tree .
  */
 
@@ -195,13 +194,11 @@ h6.p-recommended {
 .red {color: red;}
 .green {color: green;}
 
-ul.main-budget-categories {
-  li {
-    list-style-type: none;
-    border-top: 3px solid #6699FF;
-    padding: 20px;
-    @include shadow;
-  }
+ul.main-budget-categories > li {
+  list-style-type: none;
+  border-top: 3px solid #6699FF;
+  padding: 20px;
+  @include shadow;
 }
 
 .button.blue {
@@ -333,8 +330,8 @@ input[type="text"] {
     color: black !important;
     margin: 0;
     text-transform: uppercase;
+    @include shadow;
   }
-  @include shadow;
 }
 
 a:active {
@@ -348,7 +345,6 @@ a:active {
 
 span.tooltip {
     z-index:10;
-    display:none !important;
     padding:14px !important;
     margin-top:-75px !important;
     margin-left:75px !important;
@@ -362,6 +358,7 @@ span.tooltip {
 
     &.annual-budget-tooltip {
       margin-left: 245px !important;
+      display: block;
     }
 
     p {
@@ -574,4 +571,15 @@ ul.main-budget-categories li.no-container li {
 
 .move-cursor {
   cursor: move;
+}
+
+.main-budget-categories.main-annual-budget {
+  margin-left: 0;
+  li {
+    border-top: none;
+  }
+}
+
+.get-date {
+  cursor: pointer !important;
 }
