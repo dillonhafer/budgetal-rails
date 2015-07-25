@@ -10,7 +10,7 @@
         <%= f.label :end_date %>
         <%= f.text_field :end_date, placeholder: 'End Date', class: 'get-date', required:'' %>
         <small class='error'>Required</small>
-      </div>      
+      </div>
     </div>
     <div class='row'>
       <div class='large-12 columns'>
@@ -24,14 +24,6 @@
         <%= f.submit 'Update Pay Period', class: 'small success button radius expand' %>
         <a onclick="$('a.close-reveal-modal').trigger('click');" class='alert small button radius expand'>Cancel</a>
       </div>
-    </div>    
+    </div>
   <% end %>
   <a class="close-reveal-modal">&#215;</a>
-
-<script>
-  $('.get-date').each(function() {
-    if( !$(this).hasClass('hasDatePicker') ) {
-      $(this).datepicker({dateFormat: 'yy-mm-dd'})
-    }
-  });
-</script>

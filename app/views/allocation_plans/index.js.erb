@@ -8,9 +8,3 @@ $(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>
 
 var current_month = $('div.ajax-container.overview h4 .month-name').first().text().trim();
 $('title').text(current_month+' - Budgetal.com');
-
-$('.get-date').each(function() {
-  if( !$(this).hasClass('hasDatePicker') ) {
-    $(this).datepicker({dateFormat: 'yy-mm-dd'})
-  }
-});
