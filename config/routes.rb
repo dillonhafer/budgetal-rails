@@ -13,6 +13,7 @@ Budgets::Application.routes.draw do
 
   get '/annual-budgets/:year' => 'annual_budgets#index', as: 'annual_budgets'
   resources :annual_budgets, path: '/annual-budgets'
+  resources :annual_budget_items, path: '/annual-budget-items'
 
   match '/allocation-plans/:id/edit' => 'allocation_plans#edit', as: 'edit_allocation_plan', via: [:get, :post]
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
