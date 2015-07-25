@@ -1,10 +1,16 @@
 class AnnualBudgetsController < ApplicationController
   before_filter :require_user
 
+  respond_to :html, :json
+
   def index
     @annual_budget = current_user.annual_budgets
                                  .includes(:annual_budget_items)
                                  .find_or_create_by(year: year_param)
+    respond_to do |f|
+      f.html
+      f.json {respond_with @annual_budget, include: :annual_budget_items}
+    end
   end
 
   def update
