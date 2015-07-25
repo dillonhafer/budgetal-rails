@@ -18,9 +18,22 @@
 //= require foundation/foundation.tab
 //= require foundation/foundation.abide
 //= require foundation/foundation.reveal
-//= require jquery_nested_form
 //= require jquery-ui.min
+//= require jquery_nested_form
+//= require react
+//= require react_ujs
+//= require components
+//= require class-set
+//= require picker
+//= require picker.date
 //= require_tree .
+
+function numberToCurrency(number) {
+  if (isNaN(parseFloat(number))) {
+    number = 0
+  }
+  return '$' + parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
 
 $(document).foundation({
   abide : {
@@ -30,14 +43,61 @@ $(document).foundation({
   }
 });
 
+var AnnualBudgetItemController = {
+  all(data) {
+    return $.ajax({
+              url: '/annual-budgets',
+              dataType: 'json',
+              data: data
+            })
+  },
+  create(budget_item) {
+    return $.ajax({
+              url: '/annual-budget-items',
+              dataType: 'json',
+              method: 'POST',
+              data: budget_item
+            })
+  },
+  update(data) {
+    return $.ajax({
+              url: '/annual-budget-items/' + data.annual_budget_item.id,
+              dataType: 'json',
+              method: 'PUT',
+              data: data
+            })
+  },
+  destroy(budget_item) {
+    return $.ajax({
+              url: '/annual-budget-items/'+budget_item.id,
+              dataType: 'json',
+              method: 'DELETE'
+            })
+  }
+}
+
+function showMessage(message) {
+  $(".error").remove();
+  $(".flash-holder").append($('<div class="flash-box"></div>').html(message));
+  $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
+}
+
+$(document).on('focus', '.get-date', function(e) {
+  $(this).pickadate({
+    format: 'yyyy-mm-dd',
+    onSet: function() {
+      var event = new Event('input', { bubbles: true })
+      this.$node[0].dispatchEvent(event)
+    }
+  })
+})
+
 $(document).ready(function() {
   if ($(".flash-box").length){
     $(".flash-box").fadeIn(400,function(){
       $(this).delay(1000).fadeOut(250);
     });
   }
-
-  $('.get-date').datepicker({dateFormat: 'yy-mm-dd'})
 
   /* Flash to headers */
   $(document).ajaxComplete(function(event, request){
@@ -52,12 +112,6 @@ $(document).ready(function() {
 
     if(flash.errors) { $(".error").remove(); $(".category-ajax").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); }
     $(".error").click(function() { $(this).slideUp(); });
-
-    $('.get-date').each(function() {
-      if( !$(this).hasClass('hasDatePicker') ) {
-        $(this).datepicker({dateFormat: 'yy-mm-dd'})
-      }
-    });
   });
 });
 
