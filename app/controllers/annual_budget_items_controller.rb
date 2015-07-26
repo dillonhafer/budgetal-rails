@@ -1,11 +1,4 @@
-class AnnualBudgetItemsController < ApplicationController
-  before_filter :require_user
-  respond_to :html, :json
-
-  def show
-    render json: current_user.annual_budget_items.find(params[:id])
-  end
-
+class AnnualBudgetItemsController < AuthenticatedController
   def create
     budget_item = current_user.annual_budgets
                               .find(params[:annual_budget_item][:annual_budget_id])

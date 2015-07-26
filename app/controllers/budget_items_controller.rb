@@ -1,5 +1,4 @@
-class BudgetItemsController < ApplicationController
-  before_filter :require_user
+class BudgetItemsController < AuthenticatedController
   respond_to :html, :js
 
   def new

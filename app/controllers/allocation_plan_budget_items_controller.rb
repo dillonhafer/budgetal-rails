@@ -1,5 +1,4 @@
-class AllocationPlanBudgetItemsController < ApplicationController
-  before_filter :require_user  
+class AllocationPlanBudgetItemsController < AuthenticatedController
   before_filter :find_allocation_plan, except: %w{create}
   before_filter :authorize_params, only: %w{create}
 

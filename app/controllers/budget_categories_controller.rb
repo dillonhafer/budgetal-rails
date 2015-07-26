@@ -1,7 +1,6 @@
-class BudgetCategoriesController < ApplicationController
+class BudgetCategoriesController < AuthenticatedController
   include ActionView::Helpers::TextHelper
 
-  before_filter :require_user
   before_filter :check_date, except: [:copy]
 
   def index

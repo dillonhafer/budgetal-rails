@@ -27,7 +27,7 @@ Budgets::Application.routes.draw do
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics'
   get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
 
-  get '/admin' => 'users#index', as: 'admin'
+  get '/admin' => 'admin#index', as: 'admin'
   get 'my-account' => 'users#my_account', as: 'my_account'
   match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
   match '/allocation-plans/:year/:month' => 'allocation_plans#index', as: 'my_allocation_plans', via: [:get, :post]

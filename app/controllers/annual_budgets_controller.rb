@@ -1,8 +1,4 @@
-class AnnualBudgetsController < ApplicationController
-  before_filter :require_user
-
-  respond_to :html, :json
-
+class AnnualBudgetsController < AuthenticatedController
   def index
     @annual_budget = current_user.annual_budgets
                                  .includes(:annual_budget_items)

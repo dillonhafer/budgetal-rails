@@ -1,5 +1,4 @@
-class AllocationPlansController < ApplicationController
-  before_filter :require_user  
+class AllocationPlansController < AuthenticatedController
   before_filter :check_date, except: [:edit]
   before_filter :find_budget, only: %w{index create update}
 
