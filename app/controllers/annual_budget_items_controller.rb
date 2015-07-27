@@ -7,14 +7,17 @@ class AnnualBudgetItemsController < AuthenticatedController
     if budget_item.save
       render json: budget_item
     else
-      render json: { errors: budget_item.errors.full_messages }, status: 422
+      render json: { errors: budget_item.errors }, status: 422
     end
   end
 
   def update
     budget_item = current_user.annual_budget_items.find(params[:annual_budget_item][:id])
-    budget_item.update_attributes(budget_item_params)
-    render json: budget_item
+    if budget_item.update_attributes(budget_item_params)
+      render json: budget_item
+    else
+      render json: { errors: budget_item.errors }, status: 422
+    end
   end
 
   def destroy

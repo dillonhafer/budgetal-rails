@@ -31,18 +31,27 @@ var AnnualBudgetItemForm = React.createClass({
     css += this.props.budgetItem.paid ? 'success' : 'alert'
     return (<span className={css}>{text}</span>)
   },
+  errorsFor(field_name) {
+    var message = ''
+    var errors = this.props.budgetItem.errors
+    if (errors !== undefined && errors[field_name] != undefined) {
+      var err = errors[field_name].toString().replace('_', ' ')
+      message = `${field_name.capitalize()} ${err}`
+    }
+    return message
+  },
   render: function() {
     return (
-      <form>
+      <form data-abide>
         <div className='row'>
           <div className='large-4 columns'>
-            <input type='text' name='name' onChange={this.updateForm} value={this.props.budgetItem.name} placeholder='Name' required />
+            <InputField type='text' name='name' onChange={this.updateForm} value={this.props.budgetItem.name} placeholder='Name' error={this.errorsFor('name')} />
           </div>
           <div className='large-2 columns'>
-            <input type="number" name='amount' onChange={this.updateForm} value={this.props.budgetItem.amount} step='any' min='0.00' placeholder='0.00' required />
+            <InputField type="number" name='amount' onChange={this.updateForm} value={numberToCurrency(this.props.budgetItem.amount, '')} step='any' min='0.00' placeholder='0.00' error={this.errorsFor('amount')} />
           </div>
           <div className='large-2 columns'>
-            <input type='text' name='due_date' onChange={this.updateForm} placeholder='2015-07-01' value={this.props.budgetItem.due_date} className='get-date' required />
+            <InputField type='text' name='due_date' onChange={this.updateForm} placeholder='2015-07-01' value={this.props.budgetItem.due_date} className='get-date' error={this.errorsFor('due_date')} />
           </div>
           <div className='large-1 columns text-center'>
             <input type='checkbox' name='paid' onChange={this.updateForm} defaultChecked={this.props.budgetItem.paid} />

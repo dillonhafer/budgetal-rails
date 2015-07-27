@@ -28,7 +28,7 @@ var AnnualBudget = React.createClass({
     } else {
       AnnualBudgetItemController.update(data)
         .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._fetchDataFail)
+        .fail(this._saveItemFail.bind(null, data.annual_budget_item))
     }
   },
   _budgetItemSaved(index, budget_item, err) {
@@ -39,10 +39,14 @@ var AnnualBudget = React.createClass({
   },
   _saveItemFail(index, xhr, status, err) {
     var errors = JSON.parse(xhr.responseText).errors
-    for (idx in errors) {
-      var msg = errors[idx]
-      showMessage(msg)
+    let budget = this.state.budget
+    for(idx in budget.annual_budget_items) {
+      budget_item = budget.annual_budget_items[idx]
+      if (budget_item.id == index.id) {
+        budget.annual_budget_items[idx].errors = errors
+      }
     }
+    this.setState({budget: budget})
   },
   _deleteBudgetItem(data) {
     if (data.annual_budget_item.id === undefined) {
