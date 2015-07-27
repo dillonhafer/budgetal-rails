@@ -20,6 +20,7 @@
 //= require jquery_nested_form
 //= require react
 //= require react_ujs
+//= require lodash
 //= require components
 //= require class-set
 //= require picker

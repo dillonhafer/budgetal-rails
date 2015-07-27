@@ -19,6 +19,7 @@ gem 'bcrypt', '~> 3.1.2'
 gem 'passenger'
 gem 'nested_form'
 gem 'react-rails', '~> 1.0'
+gem 'lodash-rails'
 gem 'puma'
 
 group :development, :test do
