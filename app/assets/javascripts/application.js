@@ -15,8 +15,6 @@
 //= require foundation
 //= require foundation/foundation.offcanvas
 //= require foundation/foundation.topbar
-//= require foundation/foundation.tab
-//= require foundation/foundation.abide
 //= require foundation/foundation.reveal
 //= require jquery-ui.min
 //= require jquery_nested_form
@@ -38,13 +36,11 @@ function numberToCurrency(number, dollarSign) {
   return dollarSign + parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 }
 
-$(document).foundation({
-  abide : {
-    patterns : {
-      password: /(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
-    }
-  }
-});
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+$(document).foundation()
 
 var AnnualBudgetItemController = {
   all(data) {
@@ -80,7 +76,6 @@ var AnnualBudgetItemController = {
 }
 
 function showMessage(message) {
-  $(".error").remove();
   $(".flash-holder").append($('<div class="flash-box"></div>').html(message));
   $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
 }
@@ -108,13 +103,9 @@ $(document).ready(function() {
     if(!flash) return;
 
     if(flash.notice) {
-      $(".error").remove();
       $(".flash-holder").append($('<div class="flash-box"></div>').html(flash.notice));
       $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
     }
-
-    if(flash.errors) { $(".error").remove(); $(".category-ajax").before($('<div class="alert-box error" style="display: none;"><a class="close-reveal-modal">&#215;</a></div>').html(flash.errors)); $(".error").slideDown(400); }
-    $(".error").click(function() { $(this).slideUp(); });
   });
 });
 
