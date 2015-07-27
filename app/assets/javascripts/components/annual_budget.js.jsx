@@ -53,7 +53,7 @@ var AnnualBudget = React.createClass({
       this._budgetItemDeleted(data.index, data.annual_budget_item, null)
     } else {
       AnnualBudgetItemController.destroy(data.annual_budget_item)
-        .done(this._budgetItemDeleted(null, data.index))
+        .done(this._budgetItemDeleted(data.index, data.annual_budget_item, null))
         .fail(this._fetchDataFail.bind(null, data.annual_budget_item))
     }
   },
