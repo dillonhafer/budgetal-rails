@@ -104,6 +104,11 @@ var AnnualBudget = React.createClass({
     this.state.budget.annual_budget_items[index] = updatedBudgetItem
     this.setState({budget: this.state.budget})
   },
+  annualBudgetItems() {
+    if (this.state.budget.annual_budget_items.length === 0) {
+      return (<p className='text-center'>You haven't added any budget items yet.</p>)
+    }
+  },
   render: function() {
     let formClasses = classNames({
       'tooltip annual-budget-tooltip animate': true,
@@ -132,6 +137,7 @@ var AnnualBudget = React.createClass({
             <li>
               <div className='annual-items-status'>
                 <ul className='large-block-grid-4'>
+                  {this.annualBudgetItems()}
                   {
                     this.state.budget.annual_budget_items.map((budget_item, index) => {
                       return (
