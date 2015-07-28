@@ -84,6 +84,7 @@ function showMessage(message) {
 $(document).on('focus', '.get-date', function(e) {
   $(this).pickadate({
     format: 'yyyy-mm-dd',
+    container: '.footer',
     onSet: function() {
       var event = new Event('input', { bubbles: true })
       this.$node[0].dispatchEvent(event)
