@@ -23,6 +23,7 @@ gem 'lodash-rails'
 gem 'puma'
 
 group :development, :test do
+  gem 'database_cleaner'
   gem 'faker'
   gem 'awesome_print'
   gem 'bullet'
@@ -30,5 +31,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers'
   gem 'capybara'
-  gem 'byebug'
+  gem 'selenium-webdriver'
+  gem 'pry'
 end
