@@ -58,8 +58,8 @@ var AnnualBudgetItemForm = React.createClass({
           </div>
           <div className='large-3 columns'>
             <ul className="button-group radius even-2">
-              <li><a onClick={this.saveItem} title='Save this item' className='tiny success radius button'>save</a></li>
-              <li><a onClick={this.deleteItem} title='Remove this item' className='tiny alert radius button'>delete</a></li>
+              <li><a href='#' onClick={this.saveItem} title='Save this item' className='tiny success radius button'>save</a></li>
+              <li><a href='#' onClick={this.deleteItem} title='Remove this item' className='tiny alert radius button'>delete</a></li>
             </ul>
           </div>
         </div>
