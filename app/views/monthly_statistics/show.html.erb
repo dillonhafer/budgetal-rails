@@ -1,40 +1,120 @@
 <div class='row collapse'>
   <div class='large-12 columns header-row'>
-    <h3><%= @date %> <%= link_to 'all', monthly_statistics_path, class: 'right' %></h3>    
-  </div>  
+    <h3><%= @date %> <%= link_to 'all', monthly_statistics_path, class: 'right' %></h3>
+  </div>
   <div class="small-12 large-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
-      <li style='border-top:none'>        
-        <% if @budget %>          
+      <li style='border-top:none'>
+        <% if @budget %>
           <div id="container" style='height: 390px;width: 100%'></div>
-          <% content_for :ready do %>          
-            google.load("visualization", "1", {packages:["corechart"]});
-            google.setOnLoadCallback(drawChart);
+          <% content_for :ready do %>
             function drawChart() {
-              var data = google.visualization.arrayToDataTable([
-                ['Money', '%'],
-                <% @budget.budget_categories.each do |c| %>
-                  ["<%= c.name %>", <%= (c.total_spent/@budget.monthly_income).round(2) * 100 %>],
-                <% end %>
-                ]);
+              Highcharts.theme = {
+                colors: ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+                chart: {
+                  backgroundColor: null,
+                },
+                title: {
+                  style: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase'
+                  }
+                },
+                tooltip: {
+                  borderWidth: 0,
+                  backgroundColor: 'rgba(219,219,216,0.8)',
+                  shadow: false
+                },
+                legend: {
+                  itemStyle: {
+                    fontWeight: 'bold',
+                    fontSize: '13px'
+                  }
+                },
+                xAxis: {
+                  gridLineWidth: 1,
+                  labels: {
+                    style: {
+                      fontSize: '12px'
+                    }
+                  }
+                },
+                yAxis: {
+                  minorTickInterval: 'auto',
+                  title: {
+                    style: {
+                      textTransform: 'uppercase'
+                    }
+                  },
+                  labels: {
+                    style: {
+                      fontSize: '12px'
+                    }
+                  }
+                },
+                plotOptions: {
+                  candlestick: {
+                    lineColor: '#404048'
+                  }
+                },
+                background2: '#F0F0EA'
+              };
+              Highcharts.setOptions(Highcharts.theme);
 
-              var options = {      
-                pieHole: 0.4                
-              };    
-              
-              var chart = new google.visualization.PieChart(document.getElementById('container'));
-              chart.draw(data, options);                
-            }              
+              $('#container').highcharts({
+                chart: {
+                  plotBackgroundColor: null,
+                  plotBorderWidth: null,
+                  plotShadow: false,
+                  type: 'pie'
+                },
+                credits: {
+                  enabled: false
+                },
+                title: {
+                  text: ''
+                },
+                legend: {
+                  align: 'right',
+                  verticalAlign: 'top',
+                  y: 100,
+                  layout: 'vertical'
+                },
+                tooltip: {
+                  pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                  pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                      enabled: false
+                    },
+                    showInLegend: true
+                  }
+                },
+                series: [{
+                  name: "Money",
+                  colorByPoint: true,
+                  data: [
+                  <% @budget.budget_categories.each do |c| %>
+                  {
+                    name: "<%= c.name %>",
+                    y: <%= (c.total_spent/@budget.monthly_income).round(2) * 100 %>
+                  },
+                  <% end %>
+                  ]
+                }]
+              });
+            }
+            document.addEventListener("DOMContentLoaded", drawChart)
           <% end %>
-
-
         <% else %>
-         
           <div id="greeting" class="text-center animated ">
             <h2>Uh-oh!</h2>
             <p>It looks like you don't have a budget for this month</p>
           </div>
-
         <% end %>
       </li>
     </ul>
