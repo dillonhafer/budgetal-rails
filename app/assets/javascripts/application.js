@@ -18,6 +18,7 @@
 //= require foundation/foundation.reveal
 //= require jquery-ui.min
 //= require jquery_nested_form
+//= require highcharts
 //= require react
 //= require react_ujs
 //= require lodash

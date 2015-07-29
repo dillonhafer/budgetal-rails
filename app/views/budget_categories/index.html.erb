@@ -1,41 +1,5 @@
 <% title("#{Date::MONTHNAMES[@budget.month.to_i]} #{@budget.year}") %>
 
-<div class="off-canvas-wrap hide-for-medium-up" data-offcanvas>
-  <div class="inner-wrap">
-    <nav class="tab-bar">
-      <section class="left-small">
-        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-      </section>
-      <section class="right tab-bar-section">
-        <h1 class="title"><%= "#{Date::MONTHNAMES[@budget.month.to_i].upcase} #{@budget.year}" %></h1>
-      </section>
-    </nav>
-
-    <aside class="left-off-canvas-menu">
-      <ul class='off-canvas-list'>
-        <% @budget.budget_categories.order(:id).each do |c| %>
-          <li>
-          <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: 'item', remote: true do %>
-            <%= image_tag "#{c.name}.png", class: 'mobile-icon' %>
-            <%= c.name %>
-          <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </aside>
-    <section class='main-section'>
-      <div class='row'>
-        <div class='small-12 columns'>
-          <div class='category-ajax'>
-            <%= render partial: 'show', locals: {c: @budget.budget_categories.includes(:budget_items).first} %>
-          </div>
-        </div>
-      </div>
-    </section>
-    <a class="exit-off-canvas"></a>
-  </div>
-</div>
-
 <section>
 <div style='padding-left: 0' class='large-2 medium-2 hide-for-small-down columns'>
   <div style='width: 100%' class="icon-bar vertical six-up label-right">
