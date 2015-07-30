@@ -47,11 +47,11 @@ class Budget < ActiveRecord::Base
     budget.budget_categories.create(name: 'Personal', percentage: '5-10%')
     budget.budget_categories.create(name: 'Recreation', percentage: '5-10%')
     budget.budget_categories.create(name: 'Debts', percentage: '0%')
-    return budget
+    budget
   end
 
   def pretty_date
-    Date.new( 1, month.to_i).strftime("%B")
+    Date.new(1, month.to_i).strftime("%B")
   end
 
   def amount_budgeted
@@ -68,11 +68,11 @@ class Budget < ActiveRecord::Base
 
   def percent_spent
     spent = (total_expenses / amount_budgeted * 100).round(3)
-    return (spent > 100) ? 100 : spent
+    spent > 100 ? 100 : spent
   end
 
   def percent_used
     used = (100 - (amount_remaining / monthly_income.to_f * 100))
-    return (used > 100) ? 100 : used
+    used > 100 ? 100 : used
   end
 end
