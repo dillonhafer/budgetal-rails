@@ -11,7 +11,7 @@ class AllocationPlan < ActiveRecord::Base
     allocation_plan_budget_items.sum(:amount_budgeted)
   end
 
-  def amount_not_allocated    
+  def amount_not_allocated
     income - amount_allocated
-  end  
+  end
 end
