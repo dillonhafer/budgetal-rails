@@ -29,7 +29,6 @@ class Api::SessionsController < Devise::RegistrationsController
 
   def set_csrf_header
     response.headers['X-CSRF-Token'] = form_authenticity_token
-    puts "setting csrf"
   end
 
   def invalid_login_attempt
