@@ -5,6 +5,11 @@ Budgets::Application.routes.draw do
   get '/privacy' => 'welcome#privacy', as: 'privacy'
 
   devise_for :users, path: "sessions", path_names: { sign_in: 'sign-in', sign_out: 'sign-out', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'sign-up', sign_up: 'join' }
+
+  namespace :api, defaults: {format: 'json'} do
+    devise_for :users, path: "sessions", path_names: { sign_in: 'sign-in', sign_out: 'sign-out' }
+  end
+
   resources :users
   resources :budgets
   resources :budget_categories
