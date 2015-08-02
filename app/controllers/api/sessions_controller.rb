@@ -1,6 +1,6 @@
-class Api::SessionsController < Devise::RegistrationsController
-  prepend_before_filter :require_no_authentication, only: [:create, :new]
-  after_filter :set_csrf_header, only: [:create, :new]
+class Api::SessionsController < Api::ApiController
+  prepend_before_filter :require_no_authentication, only: [:create]
+  after_action :set_csrf_header, only: [:create, :new]
   after_action :remove_sign_in_cookie, only: [:destroy]
   respond_to :json
 
@@ -9,7 +9,6 @@ class Api::SessionsController < Devise::RegistrationsController
   end
 
   def create
-    build_resource
     resource = User.find_for_database_authentication(
       email: params[:user][:email]
     )
@@ -25,6 +24,11 @@ class Api::SessionsController < Devise::RegistrationsController
       return
     end
     invalid_login_attempt
+  end
+
+  def destroy
+    sign_out(current_user)
+    head :no_content
   end
 
   protected
