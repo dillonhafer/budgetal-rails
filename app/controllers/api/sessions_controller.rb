@@ -1,7 +1,6 @@
 class Api::SessionsController < Api::ApiController
   prepend_before_filter :require_no_authentication, only: [:create]
   after_action :set_csrf_header, only: [:create, :new]
-  after_action :remove_sign_in_cookie, only: [:destroy]
   respond_to :json
 
   def new
@@ -28,6 +27,7 @@ class Api::SessionsController < Api::ApiController
 
   def destroy
     sign_out(current_user)
+    remove_sign_in_cookie
     head :no_content
   end
 
