@@ -1,5 +1,6 @@
 class Api::SessionsController < Api::ApiController
   prepend_before_filter :require_no_authentication, only: [:create]
+  skip_before_filter :verify_signed_out_user, only: [:delete]
   after_action :set_csrf_header, only: [:create, :new]
   respond_to :json
 
