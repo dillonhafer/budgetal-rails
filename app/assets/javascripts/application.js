@@ -45,14 +45,14 @@ String.prototype.capitalize = function() {
 $(document).foundation()
 
 var AnnualBudgetItemController = {
-  all(data) {
+  all: function(data) {
     return $.ajax({
               url: '/annual-budgets',
               dataType: 'json',
               data: data
             })
   },
-  create(budget_item) {
+  create: function(budget_item) {
     return $.ajax({
               url: '/annual-budget-items',
               dataType: 'json',
@@ -60,7 +60,7 @@ var AnnualBudgetItemController = {
               data: budget_item
             })
   },
-  update(data) {
+  update: function(data) {
     return $.ajax({
               url: '/annual-budget-items/' + data.annual_budget_item.id,
               dataType: 'json',
@@ -68,7 +68,7 @@ var AnnualBudgetItemController = {
               data: data
             })
   },
-  destroy(budget_item) {
+  destroy: function(budget_item) {
     return $.ajax({
               url: '/annual-budget-items/'+budget_item.id,
               dataType: 'json',
