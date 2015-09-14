@@ -45,6 +45,7 @@ feature 'Annual Budgets', js: true do
       it 'can delete the item' do
         expect(page).to have_content(@item.name)
         click_link 'delete'
+        sleep 0.1
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content("You haven't added any budget items yet.")
       end
