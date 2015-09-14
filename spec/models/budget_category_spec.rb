@@ -48,16 +48,23 @@ describe BudgetCategory do
     end
   end
 
-  describe '#copy_previous_items' do
-    xit 'creates budget items from last months budget category' do
-      budget_category.copy_previous_items
-      expect(budget_category.budget_items).to include(previous_month.budget_items)
-    end
-  end
+  describe 'previous items' do
+    let(:previous_month)    { Date.new(budget.year.to_i, budget.month.to_i).advance(months: -1).month }
+    let!(:previous_budget)   { FactoryGirl.create(:budget, :with_budget_items, month: previous_month) }
+    let(:previous_category) { previous_budget.budget_categories.first }
 
-  describe '#previous_items' do
-    xit 'returns budget items in the category from the previous month' do
-      expect(budget_category.previous_items).to eq(previous_month.budget_items)
+    describe '#copy_previous_items' do
+      it 'creates budget items from last months budget category' do
+        expect {
+          budget_category.copy_previous_items
+        }.to change {budget_category.budget_items.count}.by (previous_category.budget_items.count)
+      end
+    end
+
+    describe '#previous_items' do
+      it 'returns budget items in the category from the previous month' do
+        expect(budget_category.previous_items).to eq(previous_category.budget_items)
+      end
     end
   end
 end
