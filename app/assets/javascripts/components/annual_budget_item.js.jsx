@@ -6,14 +6,25 @@ var AnnualBudgetItem = React.createClass({
     return (<span className={css}>{text}</span>)
   },
   dueDate: function(date) {
-    date = (date === undefined) ? new Date : new Date(date + ' EDT')
-    var dtf = new Intl.DateTimeFormat(["en-US"], {
-      year: "numeric",
-      day: "numeric",
-      month: "long",
-      timeZone: 'America/New_York'
-    })
-    return dtf.format(date)
+    var months = {
+      '01': 'Janurary',
+      '02': 'Feburary',
+      '03': 'March',
+      '04': 'April',
+      '05': 'May',
+      '06': 'June',
+      '07': 'July',
+      '08': 'August',
+      '09': 'September',
+      '10': 'October',
+      '11': 'November',
+      '12': 'December',
+    }
+    var dateParts = date.split('-')
+    var year = dateParts[0]
+    var month = months[dateParts[1]]
+    var day = parseInt(dateParts[2])
+    return `${month} ${day}, ${year}`
   },
   hideTable: function() {
     return this.props.budgetItem.id === undefined

@@ -51,7 +51,7 @@ var AnnualBudgetItemForm = React.createClass({
             <InputField type="number" name='amount' onChange={this.updateForm} value={numberToCurrency(this.props.budgetItem.amount, '')} step='any' min='0.00' placeholder='0.00' error={this.errorsFor('amount')} />
           </div>
           <div className='large-2 columns'>
-            <InputField type='text' name='due_date' onChange={this.updateForm} placeholder='2015-07-01' value={this.props.budgetItem.due_date} className='get-date' error={this.errorsFor('due_date')} />
+            <InputField type='text' name='due_date' readOnly onChange={this.updateForm} placeholder='2015-07-01' value={this.props.budgetItem.due_date} className='get-date' error={this.errorsFor('due_date')} />
           </div>
           <div className='large-1 columns text-center'>
             <input type='checkbox' name='paid' onChange={this.updateForm} defaultChecked={this.props.budgetItem.paid} />
