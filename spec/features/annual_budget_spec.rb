@@ -16,8 +16,9 @@ feature 'Annual Budgets', js: true do
         click_on 'Add Item'
         fill_in 'name', with: 'Insurrance'
         fill_in 'amount', with: '300'
-        fill_in 'due_date', with: '2015-12-12'
-        find('.picker__box').click
+        find('.get-date').click
+        sleep 0.5
+        find('.picker__day--today').click
         click_link 'save'
         visit annual_budgets_path(year: Date.today.year)
         expect(page).to have_content("Insurrance")
@@ -34,8 +35,9 @@ feature 'Annual Budgets', js: true do
       it 'can update the item' do
         fill_in 'name', with: 'Gas'
         fill_in 'amount', with: '600'
-        fill_in 'due_date', with: '2015-12-20'
-        find('.picker__box').click
+        find('.get-date').click
+        sleep 0.5
+        find('.picker__day--today').click
         click_link 'save'
         visit annual_budgets_path(year: Date.today.year)
         expect(page).to have_content("Gas")

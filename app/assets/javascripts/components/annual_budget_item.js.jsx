@@ -20,6 +20,10 @@ var AnnualBudgetItem = React.createClass({
       '11': 'November',
       '12': 'December',
     }
+    if (!date) {
+      date = new Date
+      date = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    }
     var dateParts = date.split('-')
     var year = dateParts[0]
     var month = months[dateParts[1]]
