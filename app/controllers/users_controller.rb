@@ -6,4 +6,8 @@ class UsersController < ApplicationController
       format.json { render json: users_past_expenses }
     end
   end
+
+  def my_account
+	  render json: current_user
+  end
 end
