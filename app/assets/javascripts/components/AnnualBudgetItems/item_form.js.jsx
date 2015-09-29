@@ -11,7 +11,7 @@ var AnnualBudgetItemForm = React.createClass({
   },
   deleteItem(e) {
     e.preventDefault()
-    if (this.props.budgetItem.id === undefined || confirm(this.message())) {
+    if (!this.props.budgetItem.id || confirm(this.message())) {
       this.props.deleteForm({
         annual_budget_item: this.props.budgetItem,
         index: this.props.index
@@ -40,6 +40,10 @@ var AnnualBudgetItemForm = React.createClass({
     }
     return message
   },
+  _delete: function(e) {
+    e.preventDefault()
+    this.props.delete(this.props.budgetItem, this.props.index)
+  },
   render: function() {
     return (
       <form data-abide>
@@ -59,7 +63,7 @@ var AnnualBudgetItemForm = React.createClass({
           <div className='large-3 columns'>
             <ul className="button-group radius even-2">
               <li><a href='#' onClick={this.saveItem} title='Save this item' className='tiny success radius button'>save</a></li>
-              <li><a href='#' onClick={this.deleteItem} title='Remove this item' className='tiny alert radius button'>delete</a></li>
+              <li><a href='#' onClick={this._delete} title='Remove this item' className='tiny alert radius button'>delete</a></li>
             </ul>
           </div>
         </div>

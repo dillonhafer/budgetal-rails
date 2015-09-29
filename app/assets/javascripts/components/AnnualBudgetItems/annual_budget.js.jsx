@@ -6,8 +6,26 @@ var AnnualBudget = React.createClass({
       budget: {
         year: '',
         annual_budget_items: []
+      },
+      modal: {
+        hidden: true,
+        budget_item: {name: ''},
+        index: -1
       }
     }
+  },
+  confirmDelete: function(budget_item, index) {
+    if (!!budget_item.id) {
+      this.setState({modal: {hidden: false, budget_item: budget_item, index: index}});
+    } else {
+      this._budgetItemDeleted(index)
+    }
+  },
+  cancelDelete: function(e) {
+    if (e) {
+      e.preventDefault()
+    }
+    this.setState({modal: {hidden: true, index: -1, budget_item: {name: ''}}});
   },
   componentDidMount() {
     this._fetchBudget({year: this.yearParam()})
@@ -48,22 +66,22 @@ var AnnualBudget = React.createClass({
     }
     this.setState({budget: budget})
   },
-  _deleteBudgetItem(data) {
-    if (data.annual_budget_item.id === undefined) {
-      this._budgetItemDeleted(data.index, data.annual_budget_item, null)
-    } else {
-      AnnualBudgetItemController.destroy(data.annual_budget_item)
-        .done(this._budgetItemDeleted(data.index, data.annual_budget_item, null))
-        .fail(this._fetchDataFail.bind(null, data.annual_budget_item))
+  _deleteBudgetItem(e) {
+    e.preventDefault();
+    if (this.state.modal.budget_item.id !== undefined) {
+      AnnualBudgetItemController.destroy(this.state.modal.budget_item.id)
+        .done(this._budgetItemDeleted(this.state.modal.index))
+        .fail(this._fetchDataFail.bind(null, this.state.modal.budget_item))
     }
   },
-  _budgetItemDeleted(index, budgetItem, err) {
+  _budgetItemDeleted(index) {
     let budget = this.state.budget
     budget.annual_budget_items.splice(index, 1)
-    if (budgetItem.id !== undefined) {
-      showMessage("Deleted "+budgetItem.name)
+    if (this.state.modal.budget_item.id !== undefined) {
+      showMessage("Deleted "+this.state.modal.budget_item.name)
     }
     this.setState({budget: budget})
+    this.cancelDelete()
   },
   _fetchDataDone(data, textStatus, jqXHR) {
     this.setState({
@@ -104,11 +122,6 @@ var AnnualBudget = React.createClass({
     this.state.budget.annual_budget_items[index] = updatedBudgetItem
     this.setState({budget: this.state.budget})
   },
-  annualBudgetItems() {
-    if (this.state.budget.annual_budget_items.length === 0) {
-      return (<p className='text-center'>You haven't added any budget items yet.</p>)
-    }
-  },
   render: function() {
     let formClasses = classNames({
       'tooltip annual-budget-tooltip animate': true,
@@ -135,42 +148,20 @@ var AnnualBudget = React.createClass({
         <div className="small-12 large-12 columns">
           <ul className="main-budget-categories main-annual-budget">
             <li>
-              <div className='annual-items-status'>
-                <ul className='large-block-grid-4'>
-                  {this.annualBudgetItems()}
-                  {
-                    this.state.budget.annual_budget_items.map((budget_item, index) => {
-                      return (
-                        <AnnualBudgetItem budgetItem={budget_item} key={index} />
-                      )
-                    })
-                  }
-                </ul>
-              </div>
-
-              <h4>Manage Budget Items</h4>
-              <hr />
-              <div className='row'>
-                <div className='large-4 columns'>Name</div>
-                <div className='large-2 columns'>Amount</div>
-                <div className='large-2 columns'>Due Date</div>
-                <div className='large-1 columns text-center'>Paid?</div>
-                <div className='large-3 columns'></div>
-              </div>
-
-              <div className='annual-items-forms'>
-                {
-                  this.state.budget.annual_budget_items.map((budget_item, index) => {
-                    return (
-                      <AnnualBudgetItemForm index={index} budgetItem={budget_item} key={index} updateForm={this.updateForm} saveForm={this._saveBudgetItem} deleteForm={this._deleteBudgetItem} />
-                    )
-                  })
-                }
-                <a href='#' onClick={this.addItem} className='tiny button radius add-nested-item'>Add Item</a>
-              </div>
+              <AnnualBudgetItemList annual_budget_items={this.state.budget.annual_budget_items} />
+              <AnnualBudgetFormList annual_budget_items={this.state.budget.annual_budget_items}
+                                    openModal={this.openModal}
+                                    addItem={this.addItem}
+                                    updateForm={this.updateForm}
+                                    saveForm={this._saveBudgetItem}
+                                    delete={this.confirmDelete} />
             </li>
           </ul>
         </div>
+        <Confirm name={this.state.modal.budget_item.name}
+                 hidden={this.state.modal.hidden}
+                 cancel={this.cancelDelete}
+                 delete={this._deleteBudgetItem} />
       </div>
     );
   }

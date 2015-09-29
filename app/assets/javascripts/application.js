@@ -68,9 +68,9 @@ var AnnualBudgetItemController = {
               data: data
             })
   },
-  destroy: function(budget_item) {
+  destroy: function(id) {
     return $.ajax({
-              url: '/annual-budget-items/'+budget_item.id,
+              url: '/annual-budget-items/'+id,
               dataType: 'json',
               method: 'DELETE'
             })
