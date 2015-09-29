@@ -1,24 +1,33 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
+require 'mina/rvm'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 set :repository, 'ssh://git@bitbucket.org/dhafer/budgets.git'
 
 case ENV['to']
   when 'beta'
-    set :domain, 'beta.budgetal.com'  
+    set :domain, 'beta.budgetal.com'
     set :deploy_to, '/var/www/budgetal-beta'
     set :branch, 'beta'
     set :rails_env, 'beta'
-  else 
+  else
     ENV['to'] = 'production'
-    set :domain, 'www.budgetal.com'      
+    set :domain, 'www.budgetal.com'
     set :deploy_to, '/var/www/budgetal-production'
     set :branch, 'master'
-    set :rails_env, 'production'  
+    set :rails_env, 'production'
 end
 
+task :environment do
+  # If you're using rbenv, use this to load the rbenv environment.
+  # Be sure to commit your .rbenv-version to your repository.
+  # invoke :'rbenv:load'
+
+  # For those using RVM, use this to load an RVM version@gemset.
+  invoke :'rvm:use[ruby-2.2.1@budgetal]'
+end
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['.env', 'log', 'config/database.yml', 'tmp/pids', 'tmp/cache', 'public/system']
@@ -29,7 +38,7 @@ set :keep_releases, 4
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
-task :environment do  
+task :environment do
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -54,12 +63,12 @@ task setup: :environment do
 end
 
 desc 'Make sure local git is in sync with remote.'
-task :check_revision do  
+task :check_revision do
   unless `git rev-parse HEAD` == `git rev-parse origin/#{branch}`
     puts "WARNING: HEAD is not the same as origin/#{branch}"
     puts "Run `git push` to sync changes."
     exit
-  end  
+  end
 end
 
 # Define unicorn commands
@@ -67,7 +76,7 @@ namespace :deploy do
   desc "build missing paperclip styles"
   task :build_missing_paperclip_styles do
     queue "cd #{deploy_to}/current/; RAILS_ENV=#{ENV['to']} bundle exec rake paperclip:refresh:missing_styles"
-  end  
+  end
 end
 
 desc "Deploys the App."
@@ -85,7 +94,7 @@ task deploy: :environment do
     to :launch do
       invoke :'passenger:restart'
     end
-    
+
     invoke :'deploy:cleanup'
   end
 end
@@ -106,7 +115,7 @@ end
 
 namespace :run do
   desc "Runs a rails console session."
-  task :console do    
+  task :console do
     queue "cd #{deploy_to}/current ; bundle exec rails console #{ENV['to']}"
   end
 end
@@ -134,14 +143,14 @@ end
 namespace :maintenance do
   task :on do
     queue %{
-      echo "-----> Enabling maintenance mode"      
+      echo "-----> Enabling maintenance mode"
       #{echo_cmd %[touch #{deploy_to}/current/public/maintenance]}
     }
   end
 
   task :off do
     queue %{
-      echo "-----> Disabling maintenance mode"      
+      echo "-----> Disabling maintenance mode"
       #{echo_cmd %[rm #{deploy_to}/current/public/maintenance]}
     }
   end
