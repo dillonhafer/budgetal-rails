@@ -105,6 +105,7 @@ var AnnualBudget = React.createClass({
     var s = document.querySelector('#annual_budget_year')
     var year = s.options[s.selectedIndex].value;
     history.pushState({}, 'Budgetal', year)
+    document.title = `${year} | Budgetal`
     this._fetchBudget({year: year})
     this.setState({showForm: false})
   },
