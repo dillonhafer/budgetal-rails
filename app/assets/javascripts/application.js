@@ -24,8 +24,6 @@
 //= require lodash
 //= require components
 //= require class-set
-//= require picker
-//= require picker.date
 //= require jquery.minical
 //= require_tree .
 
