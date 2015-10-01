@@ -25,6 +25,14 @@ class BudgetItem < ActiveRecord::Base
     expenses_array.unshift('Add a new item')
   end
 
+  def amount_spent
+    budget_item_expenses.sum(:amount)
+  end
+
+  def amount_remaining
+    amount_budgeted - amount_spent
+  end
+
   def amount_allocated
     allocation_plan_budget_items.sum(:amount_budgeted)
   end
