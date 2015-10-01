@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby '2.2.1'
 gem 'dotenv-rails'
 
 gem 'bcrypt', '~> 3.1.2'
