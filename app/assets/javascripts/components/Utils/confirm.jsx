@@ -1,7 +1,6 @@
 var Confirm = React.createClass({
   render() {
-    let cx = React.addons.classSet;
-    let classes = cx({
+    let classes = classNames({
       overlay: true,
       fadeIn: !this.props.hidden,
       hide: this.props.hidden
