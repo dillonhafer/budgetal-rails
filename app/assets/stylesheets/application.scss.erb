@@ -200,11 +200,13 @@ h6.p-recommended {
 .red {color: red;}
 .green {color: green;}
 
-ul.main-budget-categories > li {
-  list-style-type: none;
-  border-top: 3px solid #6699FF;
-  padding: 20px;
-  @include shadow;
+ul.main-budget-categories {
+  margin-left: 0;
+  & > li {
+    list-style-type: none;
+    padding: 20px;
+    @include shadow;
+  }
 }
 
 .button.blue {
@@ -271,7 +273,7 @@ ul.main-budget-categories > li {
 
 .type-labels div {text-decoration: underline;}
 
-.expense-list .fields {
+.expense-list .fields div.row {
   border-bottom: 1px dashed #CCC;
   background: #f6f6f6;
 
@@ -671,3 +673,127 @@ ul.main-budget-categories li.no-container li {
   to   { opacity: 1; }
 }
 
+.icon-bar.vertical.six-up {
+  width: 100%;
+}
+
+.columns.category-list {
+  padding-left: 0;
+}
+
+.overviews ul {
+  margin-left: 0;
+  li {
+    list-style-type: none;
+    padding: 20px;
+  }
+}
+.overviews {
+  display: flex;
+  & > div {
+    background: white;
+    @include shadow;
+    flex: 1;
+    margin-bottom: 2em;
+  }
+
+  .header-row {
+    margin-top: 0;
+    box-shadow: none;
+     h3 { box-shadow: none; }
+  }
+}
+
+.percentage-chart {
+  width: 100%;
+  max-width: 100%;
+  height: 310px;
+}
+
+.icon-bar .item:not(.header) label {
+  padding-left: 40px;
+}
+.sidebar-charity label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-saving label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -30px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-housing label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -60px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-utilities label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -90px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-food label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -120px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-clothing label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -150px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-transportation label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -180px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-medical-health label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -210px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-insurance label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -240px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-personal label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -270px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-recreation label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -300px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.sidebar-debts label {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-position: 0px -330px;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
