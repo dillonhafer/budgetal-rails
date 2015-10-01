@@ -2,6 +2,8 @@ class BudgetCategoriesController < AuthenticatedController
   include ActionView::Helpers::TextHelper
 
   before_filter :check_date, except: [:copy]
+  helper_method :budget_category
+  respond_to :json, :html, :js
 
   def index
     year  = params[:year]
@@ -10,7 +12,8 @@ class BudgetCategoriesController < AuthenticatedController
   end
 
   def show
-    @budget_category = current_user.budget_categories.includes(:budget_items).find(params[:id])
+    @budget_category = current_user.budget_categories.includes(:budget, :budget_items, :budget_item_expenses).find(params[:id])
+    respond_with @budget_category
   end
 
   def copy
@@ -27,6 +30,10 @@ class BudgetCategoriesController < AuthenticatedController
   end
 
   private
+
+  def budget_category
+    @budget_category ||= current_user.budget_categories.includes(:budget, :budget_items, :budget_item_expenses).find(params[:id])
+  end
 
   def budget_category_params
     params.require(:budget_category).permit(:name,
