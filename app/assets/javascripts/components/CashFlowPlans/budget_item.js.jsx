@@ -1,4 +1,13 @@
 var BudgetItem = React.createClass({
+	getInitialState: function() {
+		return {
+			hideExpenses: true
+		}
+	},
+	toggleExpenses: function(e) {
+		e.preventDefault();
+		this.setState({hideExpenses: !this.state.hideExpenses});
+	},
 	remainingClass: function() {
 		var item = this.props.budgetItem;
 		return classNames({
@@ -18,12 +27,14 @@ var BudgetItem = React.createClass({
   },
 	render: function() {
 		var item = this.props.budgetItem;
+		var expensesClasses = classNames('expense-list', {hide: this.state.hideExpenses, fadeIn: !this.state.hideExpenses})
+		var toggleClasses = classNames('fi-list-bullet move-cursor', {'blue-color': this.state.hideExpenses, 'alert-color': !this.state.hideExpenses})
 		return (
 			<div className='budget-item-form- bi.id %> draggable-budget-item'>
 			  <div className='row'>
 				  <form data-abide>
 				    <div className="large-1 medium-1 columns centered">
-				      <a href='javascript:void(0)' className='show-expenses'><i className='fi-list-bullet blue-color move-cursor'></i></a>
+				      <a href='#' onClick={this.toggleExpenses} className='show-expenses'><i className={toggleClasses}></i></a>
 				    </div>
 				    <div className="large-4 medium-4 columns">
 				    	<InputField type='text' name='name' placeholder='Name' value={item.name} error={this.errorsFor('name')} />
@@ -43,7 +54,7 @@ var BudgetItem = React.createClass({
 				    </div>
 			    </form>
 			  </div>
-			  <div className="expense-list hide">
+			  <div className={expensesClasses}>
 			    <ExpenseList expenses={item.budget_item_expenses} />
 			    <a href='#' className='tiny button radius yellow add-nested-item'>Add an expense</a>
 			    <hr />
