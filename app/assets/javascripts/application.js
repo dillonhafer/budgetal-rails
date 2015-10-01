@@ -26,6 +26,7 @@
 //= require class-set
 //= require picker
 //= require picker.date
+//= require jquery.minical
 //= require_tree .
 
 function numberToCurrency(number, dollarSign) {
@@ -107,17 +108,7 @@ function showMessage(message) {
   $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
 }
 
-$(document).on('focus', '.get-date', function(e) {
-  $(this).pickadate({
-    format: 'yyyy-mm-dd',
-    container: '.footer',
-    onSet: function() {
-      var event = new Event('input', { bubbles: true })
-      this.$node[0].dispatchEvent(event)
-    }
-  })
-})
-
+$(document).on('focus', '.get-date', function(e) { $(this).minical() });
 $(document).ready(function() {
   if ($(".flash-box").length){
     $(".flash-box").fadeIn(400,function(){
