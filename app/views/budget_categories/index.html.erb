@@ -1,34 +1,40 @@
 <% title("#{Date::MONTHNAMES[@budget.month.to_i]} #{@budget.year}") %>
 
 <section>
-<div style='padding-left: 0' class='large-2 medium-2 hide-for-small-down columns'>
-  <div style='width: 100%' class="icon-bar vertical six-up label-right">
-    <a class='item header text-center' href='#'>
-      <label><i class='fi-calendar'></i> <%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
-    </a>
-    <span class='tooltip'>
-      <p>
-        <label for="month_change_budget_2i">Change Budget</label>
-        <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, end_year: Time.now.advance(years: 1).year, default: Date.new(@budget.year.to_i, @budget.month.to_i), order: [:month, :year] %>
-        <%= submit_tag 'change', id: 'change-budget', class: 'expand button radius tiny yellow expand' %>
-      </p>
-    </span>
-    <% @budget.budget_categories.order(:id).each do |c| %>
-      <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: "item droppable-category #{'active' if c == @budget.budget_categories.first}", remote: true do %>
-        <%= image_tag "#{c.name}-30.png" %>
-        <label><%= c.name %></label>
+  <div style='padding-left: 0' class='large-2 medium-2 hide-for-small-down columns'>
+    <div style='width: 100%' class="icon-bar vertical six-up label-right">
+      <a class='item header text-center' href='#'>
+        <label><i class='fi-calendar'></i> <%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
+      </a>
+      <span class='tooltip'>
+        <p>
+          <label for="month_change_budget_2i">Change Budget</label>
+          <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, end_year: Time.now.advance(years: 1).year, default: Date.new(@budget.year.to_i, @budget.month.to_i), order: [:month, :year] %>
+          <%= submit_tag 'change', id: 'change-budget', class: 'expand button radius tiny yellow expand' %>
+        </p>
+      </span>
+      <% @budget.budget_categories.order(:id).each do |c| %>
+        <%= link_to category_ajax_path(year: @budget.year, month: @budget.month, id: c.id), class: "item droppable-category #{'active' if c == @budget.budget_categories.first}", remote: true do %>
+          <%= image_tag "#{c.name}-30.png" %>
+          <label><%= c.name %></label>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
-<div class='large-10 medium-10 columns hide-for-small-down'>
-  <div class='category-ajax'>
-    <%= render partial: 'show', locals: {c: @budget.budget_categories.includes(:budget_items).first} %>
+  <div class='large-10 medium-10 columns hide-for-small-down'>
+    <div class='category-ajax'>
+      <%= render partial: 'show', locals: {c: @budget.budget_categories.includes(:budget_items).first} %>
+    </div>
   </div>
-</div>
 </section>
 
 <%= form_tag move_item_path, id: 'move-item-form', 'data-remote' => true do %>
   <%= hidden_field_tag :move_category_id %>
   <%= hidden_field_tag :move_item_id %>
 <% end %>
+
+<hr />
+<div class='text-center'>React Below</div>
+<hr />
+
+<%= react_component('CashFlowPlan', {id: @budget.budget_categories.first.id}) %>
