@@ -34,7 +34,15 @@ function showMessage(message) {
   $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
 }
 
-$(document).on('focus', '.get-date', function(e) { $(this).minical() });
+$(document).on('focus', '.get-date', function(e) {
+  $(this).minical({
+    date_changed: function() {
+      var event = new Event('input', { bubbles: true })
+      e.target.dispatchEvent(event)
+    }
+  })
+});
+
 $(document).ready(function() {
   if ($(".flash-box").length){
     $(".flash-box").fadeIn(400,function(){

@@ -17,8 +17,10 @@ feature 'Annual Budgets', js: true do
         fill_in 'name', with: 'Insurrance'
         fill_in 'amount', with: '300'
         find('.get-date').click
-        sleep 0.5
-        find('.picker__day--today').click
+        within('#minical_calendar_0') do
+          expect(page).to have_selector 'a', text: '25'
+          click_link '25'
+        end
         click_link 'save'
         visit annual_budgets_path(year: Date.today.year)
         expect(page).to have_content("Insurrance")
@@ -36,8 +38,8 @@ feature 'Annual Budgets', js: true do
         fill_in 'name', with: 'Gas'
         fill_in 'amount', with: '600'
         find('.get-date').click
-        sleep 0.5
-        find('.picker__day--today').click
+        expect(page).to have_selector '.minical_future_month'
+        first('.minical_future_month').click
         click_link 'save'
         visit annual_budgets_path(year: Date.today.year)
         expect(page).to have_content("Gas")
