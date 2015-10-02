@@ -15,3 +15,8 @@ function monthName(number) {
   }
   return months[number]
 }
+
+function selectedValue(selector) {
+  var element = document.querySelector(selector);
+  return element.options[element.selectedIndex].value;
+}

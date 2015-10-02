@@ -119,12 +119,13 @@ var CashFlowPlan = React.createClass({
     var yearIndex = pathNames.length - 1
     return pathNames[yearIndex]
   },
-  changeYear() {
-    var s = document.querySelector('#annual_budget_year')
-    var year = s.options[s.selectedIndex].value;
-    history.pushState({}, 'Budgetal', year)
-    this._fetchBudget({year: year})
-    this.setState({showForm: false})
+  changeBudget: function() {
+    var year  = selectedValue('#budget_year')
+    var month = selectedValue('#budget_month')
+
+    document.title = `${monthName(month)} ${year} | Budgetal`;
+    history.pushState({}, 'Budgetal', `/cash-flow-plans/${year}/${month}`)
+    this._fetchBudget({year: year, month: month})
   },
   showForm(e) {
     e.preventDefault()
@@ -141,14 +142,9 @@ var CashFlowPlan = React.createClass({
     this.setState({budget: this.state.budget})
   },
   render: function() {
-    let formClasses = classNames({
-      'tooltip annual-budget-tooltip animate': true,
-      fadeInUpBig2: this.state.showForm,
-      hide: !this.state.showForm
-    });
     return (
       <section>
-        <CategoryList budget={this.state.budget} currentCategoryId={this.state.category.id} changeCategory={this.changeCategory} />
+        <CategoryList budget={this.state.budget} changeBudget={this.changeBudget} currentCategoryId={this.state.category.id} changeCategory={this.changeCategory} />
 
         <div className='large-10 medium-10 columns hide-for-small-down'>
           <div className='category-ajax'>
