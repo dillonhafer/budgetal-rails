@@ -22,6 +22,14 @@ feature 'Budgets', js: true do
         expect(page).to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
       end
 
+      it 'I can select a new budget category' do
+        within '.icon-bar' do
+          click_on 'Housing'
+        end
+        expect(page).to have_selector 'h3', text: 'HOUSING'
+        expect(page).to have_selector 'h3', text: 'HOUSING OVERVIEW'
+      end
+
       context 'I can view a different months budget' do
         it 'can view a different months budget' do
           click_on "#{Date.today.strftime("%B")} #{Date.today.year}"
@@ -36,18 +44,17 @@ feature 'Budgets', js: true do
         end
       end
 
-      xit 'I can add a budget item' do
-        click_on 'Add Item'
-        fill_in 'name', with: 'Insurrance'
-        fill_in 'amount', with: '300'
-        find('.get-date').click
-        within('#minical_calendar_0') do
-          expect(page).to have_selector 'a', text: '25'
-          click_link '25'
-        end
+      it 'I can add a budget item' do
+        expect(page).to have_content "You haven't added any budget items yet."
+        expect(page).to have_selector 'h5', text: 'You have $4,000.00 Remaining to budget'
+        click_on 'Add a budget item'
+        fill_in 'name', with: 'Gifts'
+        fill_in 'amount_budgeted', with: '300.00'
         click_link 'save'
-        visit annual_budgets_path(year: Date.today.year)
-        expect(page).to have_content("Insurrance")
+        expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
+        visit my_budgets_path(year: Date.today.year, month: Date.today.month)
+        expect(page).to have_selector '.budget-item-name', text: 'Gifts'
+        expect(page).to have_selector '.budget-item-amount-budgeted', text: '300'
       end
     end
   end
