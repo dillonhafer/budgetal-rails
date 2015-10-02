@@ -37,8 +37,8 @@ var BudgetForm = React.createClass({
         <div className="row">
           <div className="large-5 medium-5 columns">
             <div>
-              <label htmlFor='monthly-income'>Monthly Income</label>
-              <input type='number' name='monthly_income' placeholder='0.00' onChange={this.updateBudget} value={this.state.monthly_income} step='any' min='0.00' className='green' required />
+              <label htmlFor='monthly_income'>Monthly Income</label>
+              <input type='number' id='monthly_income' name='monthly_income' placeholder='0.00' onChange={this.updateBudget} value={this.state.monthly_income} step='any' min='0.00' className='green' required />
             </div>
             <div>
               <input type="submit" className='tiny button radius success expand' value="Update Monthly Income" />
