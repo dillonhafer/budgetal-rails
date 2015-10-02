@@ -4,12 +4,11 @@ var CategoryList = React.createClass({
       showForm: false
     }
   },
-  changeCategory: function(e) {
-    e.preventDefault()
-    var id = e.target.dataset.id
-    this.props.changeCategory(id);
+  changeCategory: function(category, e) {
+    e.preventDefault();
+    this.props.changeCategory(category.id);
   },
-  toggleChangeBudget: function(e) {
+  toggleChangeBudget: function(category) {
     e.preventDefault()
     this.setState({showForm: !this.state.showForm})
   },
@@ -61,7 +60,7 @@ var CategoryList = React.createClass({
                 'active': category.id === self.props.currentCategoryId
               }, categoryClass);
               return (
-                <a key={index} data-id={category.id} onClick={self.changeCategory} href="#" className={classes}>
+                <a key={index} data-id={category.id} onClick={self.changeCategory.bind(this, category)} href="#" className={classes}>
                   <label>{category.name}</label>
                 </a>
               );

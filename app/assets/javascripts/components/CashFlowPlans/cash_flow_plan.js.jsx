@@ -35,7 +35,7 @@ var CashFlowPlan = React.createClass({
   componentDidMount() {
     this._fetchBudget({year: this.yearParam(), month: this.monthParam(), id: this.props.id})
   },
-  changeCategory(id) {
+  changeCategory: function(id) {
     this._fetchBudget({
       year: this.state.budget.year,
       month: this.state.budget.month,

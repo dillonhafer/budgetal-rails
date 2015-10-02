@@ -22,7 +22,13 @@ var CategoryOverview = React.createClass({
 	},
 	percentSpent: function() {
 		var p = this.props.category.amount_spent / this.props.category.amount_budgeted * 100;
-		return p > 99 ? 100 : p;
+		if (isNaN(p)) {
+			return 0
+		} else if (p > 99) {
+			return 100
+		} else {
+			return p
+		}
 	},
 	meterWidth: function() {
 		var width = `${this.percentSpent()}%`
