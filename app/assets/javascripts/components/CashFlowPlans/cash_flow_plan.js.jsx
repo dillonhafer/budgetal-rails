@@ -141,6 +141,20 @@ var CashFlowPlan = React.createClass({
     this.state.budget.annual_budget_items[index] = updatedBudgetItem
     this.setState({budget: this.state.budget})
   },
+  updateBudget: function(budget) {
+    var current = this.state.budget
+    current.monthly_income = budget.monthly_income
+    this.setState({budget: current})
+  },
+  saveBudget: function(budget) {
+    BudgetController.update(budget)
+      .done(this._budgetUpdated.bind(this, budget))
+  },
+  _budgetUpdated: function(index, xhr, status, err) {
+    var budget = xhr.budget
+    budget.budget_categories = this.state.budget.budget_categories
+    this.setState({budget: budget})
+  },
   render: function() {
     return (
       <section>
@@ -152,7 +166,7 @@ var CashFlowPlan = React.createClass({
 
             <div className='row collapse overviews'>
               <CategoryOverview category={this.state.category} />
-              <Overview budget={this.state.budget} />
+              <Overview budget={this.state.budget} updateBudget={this.updateBudget} saveBudget={this.saveBudget} />
             </div>
 
             <div className='reveal-modal tiny' id='copy-modal' data-reveal>

@@ -27,7 +27,7 @@ var CategoryOverview = React.createClass({
 		} else if (p > 99) {
 			return 100
 		} else {
-			return p
+			return parseInt(p)
 		}
 	},
 	meterWidth: function() {
@@ -64,7 +64,7 @@ var CategoryOverview = React.createClass({
 	            <span className={this.remainingClasses()}>
 	              Remaining: {numberToCurrency(this.props.category.amount_remaining)}
 	            </span>
-	            <div className="progress radius">
+	            <div className="progress radius" title={this.percentSpent()+'%'}>
 	              <span className={this.meterClasses()} style={this.meterWidth()}></span>
 	            </div>
 			        <hr />

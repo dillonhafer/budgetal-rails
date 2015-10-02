@@ -1,6 +1,6 @@
 class BudgetsController < ApplicationController
-  helper_method :budget
-  respond_to :json, only: %w{show}
+  helper_method :budget, :updated_budget
+  respond_to :json, only: %w{show update}
 
   def show
     respond_with budget
@@ -22,15 +22,19 @@ class BudgetsController < ApplicationController
   end
 
   def update
-    @budget = current_user.budgets.find(params[:id])
-    if @budget.update_attributes(budget_params)
-      flash[:notice] = "Updated budget"
+    flash[:notice] = if updated_budget.update_attributes(budget_params)
+      "Updated budget"
     else
-      flash[:notice] = "something went wrong!"
+      "something went wrong!"
     end
+    respond_with updated_budget
   end
 
   private
+
+  def updated_budget
+    @budget ||= current_user.budgets.find(params[:id])
+  end
 
   def budget
     @budget ||= current_user.budgets

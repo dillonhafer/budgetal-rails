@@ -8,7 +8,7 @@ var CategoryList = React.createClass({
     e.preventDefault();
     this.props.changeCategory(category.id);
   },
-  toggleChangeBudget: function(category) {
+  toggleChangeBudget: function(e) {
     e.preventDefault()
     this.setState({showForm: !this.state.showForm})
   },
