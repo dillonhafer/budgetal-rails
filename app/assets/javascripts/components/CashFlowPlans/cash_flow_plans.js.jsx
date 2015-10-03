@@ -68,22 +68,22 @@ var CashFlowPlan = React.createClass({
   _budgetItemSaved(index, budget_item, err) {
     let category = this.state.category
     category.budget_items[index] = budget_item
-    // this.setState({budget: budget})
+    console.log(budget_item)
+    this.setState({category: category})
     showMessage("Saved "+budget_item.name)
   },
   _saveItemFail(index, xhr, status, err) {
-    var errors = JSON.parse(xhr.responseText).errors
-    let budget = this.state.budget
-    for(idx in budget.budget_items) {
-      budget_item = budget.budget_items[idx]
+    let errors = JSON.parse(xhr.responseText).errors
+    let category = this.state.category
+    for(idx in category.budget_items) {
+      budget_item = category.budget_items[idx]
       if (budget_item.id == index.id) {
-        budget.budget_items[idx].errors = errors
+        category.budget_items[idx].errors = errors
       }
     }
-    this.setState({budget: budget})
+    this.setState({category: category})
   },
   updateBudgetItem: function() {
-
   },
   deleteBudgetItem: function(e) {
     e.preventDefault();
@@ -94,12 +94,12 @@ var CashFlowPlan = React.createClass({
     }
   },
   _budgetItemDeleted(index) {
-    let budget = this.state.budget
-    budget.budget_items.splice(index, 1)
+    let category = this.state.category
+    category.budget_items.splice(index, 1)
     if (this.state.modal.budget_item.id !== undefined) {
       showMessage("Deleted "+this.state.modal.budget_item.name)
     }
-    this.setState({budget: budget})
+    this.setState({category: category})
     this.cancelDelete()
   },
   _fetchDataDone(data, textStatus, jqXHR) {

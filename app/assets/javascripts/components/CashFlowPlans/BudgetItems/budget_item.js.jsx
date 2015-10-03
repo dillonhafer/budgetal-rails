@@ -20,6 +20,10 @@ var BudgetItem = React.createClass({
 		item.index = this.props.index
 		this.props.save(this.props.budgetItem)
 	},
+	delete: function(e) {
+    e.preventDefault()
+    this.props.delete(this.props.budgetItem, this.props.index)
+  },
 	toggleExpenses: function(e) {
 		e.preventDefault();
 		if (this.props.budgetItem.budget_item_expenses) {
@@ -38,8 +42,8 @@ var BudgetItem = React.createClass({
     var message = ''
     var errors = this.props.budgetItem.errors
     if (errors !== undefined && errors[field_name] != undefined) {
-      var err = errors[field_name].toString().replace('_', ' ')
-      message = `${field_name.capitalize()} ${err}`
+      var err = errors[field_name].toString()
+      message = `${field_name.capitalize().replace('_', ' ')} ${err}`
     }
     return message
   },
@@ -69,7 +73,7 @@ var BudgetItem = React.createClass({
 				    <div className='large-2 medium-2 columns'>
 					    <ul className="button-group radius even-2">
 	              <li><input type='submit' title='Save' className='tiny success radius button' value='save' /></li>
-	              <li><a href='#' onClick={this._delete} title='Remove this item' className='tiny alert radius button'>delete</a></li>
+	              <li><a href='#' onClick={this.delete} title='Remove this item' className='tiny alert radius button'>delete</a></li>
 	            </ul>
 				    </div>
 			    </form>
