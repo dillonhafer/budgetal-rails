@@ -17,7 +17,7 @@ var BudgetItemController = {
   },
   destroy: function(id) {
     return $.ajax({
-              url: `/budget-items/${item.id}`,
+              url: `/budget-items/${id}`,
               dataType: 'json',
               method: 'DELETE'
             })
