@@ -1,7 +1,18 @@
 var Chart = React.createClass({
+  propTypes: {
+    spent: React.PropTypes.number.isRequired,
+    remaining: React.PropTypes.number.isRequired,
+    selector: React.PropTypes.string.isRequired
+  },
+  shouldComponentUpdate: function(newProps, state) {
+    console.log(newProps.spent, newProps.remaining, state)
+    return true
+  },
+  redraw: function(newProps, state) {
+  },
   drawChart: function(spent, remaining) {
     var selector = `#${this.props.selector}`
-    $(selector).highcharts({
+    return $(selector).highcharts({
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -40,7 +51,7 @@ var Chart = React.createClass({
       }]
     });
   },
-  render() {
+  componentDidMount: function() {
     Highcharts.theme = {
       colors: ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
       chart: {
@@ -93,10 +104,13 @@ var Chart = React.createClass({
       background2: '#F0F0EA'
     };
     Highcharts.setOptions(Highcharts.theme);
+    var chart = this.drawChart(this.props.spent, this.props.remaining);
+    this.setState({chart: chart})
+  },
+  render: function() {
     return (
       <div>
         <div id={this.props.selector} className='percentage-chart'></div>
-        {this.drawChart(this.props.spent, this.props.remaining)}
       </div>
     );
   }

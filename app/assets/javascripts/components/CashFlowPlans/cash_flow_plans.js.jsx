@@ -1,5 +1,5 @@
 var CashFlowPlan = React.createClass({
-  getInitialState() {
+  getInitialState: function() {
     return {
       didFetchData: false,
       showForm: false,
@@ -32,7 +32,7 @@ var CashFlowPlan = React.createClass({
     }
     this.setState({modal: {hidden: true, index: -1, budget_item: {name: ''}}});
   },
-  componentDidMount() {
+  componentDidMount: function() {
     this._fetchBudget({year: this.yearParam(), month: this.monthParam(), id: this.props.id})
   },
   changeCategory: function(id) {
@@ -42,53 +42,60 @@ var CashFlowPlan = React.createClass({
       id: id
     })
   },
-  successMessage(item_name) {
-    showMessage("Updated "+item_name)
+  successMessage: function(item_name) {
+    showMessage(`Updated ${item_name}`)
   },
   _fetchBudget(data) {
     BudgetCategoryController.find(data)
       .done(this._fetchDataDone)
       .fail(this._fetchDataFail)
   },
-  _saveBudgetItem(data) {
-    if (data.annual_budget_item.id === undefined) {
-      AnnualBudgetItemController.create(data)
-        .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._saveItemFail.bind(null, data.annual_budget_item))
+  saveBudgetItem: function(item) {
+    var data = {
+      budget_category_id: this.state.category.id,
+      budget_item: item
+    }
+    if (item.id === undefined) {
+      BudgetItemController.create(data)
+        .done(this._budgetItemSaved.bind(null, item.index))
+        .fail(this._saveItemFail.bind(null, item))
     } else {
-      AnnualBudgetItemController.update(data)
-        .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._saveItemFail.bind(null, data.annual_budget_item))
+      BudgetItemController.update(item)
+        .done(this._budgetItemSaved.bind(null, item.index))
+        .fail(this._saveItemFail.bind(null, item))
     }
   },
   _budgetItemSaved(index, budget_item, err) {
-    let budget = this.state.budget
-    budget.annual_budget_items[index] = budget_item
-    this.setState({budget: budget})
+    let category = this.state.category
+    category.budget_items[index] = budget_item
+    // this.setState({budget: budget})
     showMessage("Saved "+budget_item.name)
   },
   _saveItemFail(index, xhr, status, err) {
     var errors = JSON.parse(xhr.responseText).errors
     let budget = this.state.budget
-    for(idx in budget.annual_budget_items) {
-      budget_item = budget.annual_budget_items[idx]
+    for(idx in budget.budget_items) {
+      budget_item = budget.budget_items[idx]
       if (budget_item.id == index.id) {
-        budget.annual_budget_items[idx].errors = errors
+        budget.budget_items[idx].errors = errors
       }
     }
     this.setState({budget: budget})
   },
-  _deleteBudgetItem(e) {
+  updateBudgetItem: function() {
+
+  },
+  deleteBudgetItem: function(e) {
     e.preventDefault();
     if (this.state.modal.budget_item.id !== undefined) {
-      AnnualBudgetItemController.destroy(this.state.modal.budget_item.id)
+      BudgetItemController.destroy(this.state.modal.budget_item.id)
         .done(this._budgetItemDeleted(this.state.modal.index))
         .fail(this._fetchDataFail.bind(null, this.state.modal.budget_item))
     }
   },
   _budgetItemDeleted(index) {
     let budget = this.state.budget
-    budget.annual_budget_items.splice(index, 1)
+    budget.budget_items.splice(index, 1)
     if (this.state.modal.budget_item.id !== undefined) {
       showMessage("Deleted "+this.state.modal.budget_item.name)
     }
@@ -131,15 +138,16 @@ var CashFlowPlan = React.createClass({
     e.preventDefault()
     this.setState({showForm: true})
   },
-  addItem(e) {
+  addBudgetItem(e) {
     e.preventDefault()
-    var budget = this.state.budget
-    budget.annual_budget_items.push({annual_budget_id: budget.id})
-    this.setState({budget: budget})
+    var category = this.state.category
+    category.budget_items.push({category_id: category.id})
+    this.setState({category: category})
   },
-  updateForm(index, updatedBudgetItem) {
-    this.state.budget.annual_budget_items[index] = updatedBudgetItem
-    this.setState({budget: this.state.budget})
+  updateBudgetItem: function(index, updatedBudgetItem) {
+    var category = this.state.category
+    category.budget_items[index] = updatedBudgetItem
+    this.setState({category: category})
   },
   updateBudget: function(budget) {
     var current = this.state.budget
@@ -155,31 +163,27 @@ var CashFlowPlan = React.createClass({
     budget.budget_categories = this.state.budget.budget_categories
     this.setState({budget: budget})
   },
+  openModal: function() {
+  },
   render: function() {
     return (
       <section>
         <CategoryList budget={this.state.budget} changeBudget={this.changeBudget} currentCategoryId={this.state.category.id} changeCategory={this.changeCategory} />
 
         <div className='large-10 medium-10 columns hide-for-small-down'>
-          <div className='category-ajax'>
-            <Category category={this.state.category} />
+          <div>
+            <Category addBudgetItem={this.addBudgetItem}
+                      saveBudgetItem={this.saveBudgetItem}
+                      openModal={this.openModal}
+                      updateBudgetItem={this.updateBudgetItem}
+                      deleteBudgetItem={this.deleteBudgetItem}
+                      category={this.state.category} />
 
             <div className='row collapse overviews'>
               <CategoryOverview category={this.state.category} />
               <Overview budget={this.state.budget} updateBudget={this.updateBudget} saveBudget={this.saveBudget} />
             </div>
-
-            <div className='reveal-modal tiny' id='copy-modal' data-reveal>
-              <h2 className='text-center'>Import</h2>
-              <hr />
-              <p>Do you want to import budget items from your previous month's  c.name  category?</p>
-              <div>
-                link_to 'Import',
-                            category_copy_path(c),
-                            class: 'button radius small expand'
-              </div>
-              <a className="close-reveal-modal" aria-label="Close">&#215;</a>
-            </div>
+            <ImportModal category={this.state.category} />
           </div>
         </div>
         <Confirm name={this.state.modal.budget_item.name}

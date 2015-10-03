@@ -1,12 +1,31 @@
 var BudgetItem = React.createClass({
+	propTypes: {
+    budgetItem: React.PropTypes.object.isRequired,
+    openModal: React.PropTypes.func.isRequired,
+    save: React.PropTypes.func.isRequired,
+    update: React.PropTypes.func.isRequired,
+    delete: React.PropTypes.func.isRequired
+  },
 	getInitialState: function() {
 		return {
 			hideExpenses: true
 		}
 	},
+	update: function(item,e) {
+		item[e.target.name] = e.target.value
+		this.props.update(this.props.index, item)
+	},
+	save: function(e) {
+		e.preventDefault()
+		var item = this.props.budgetItem
+		item.index = this.props.index
+		this.props.save(this.props.budgetItem)
+	},
 	toggleExpenses: function(e) {
 		e.preventDefault();
-		this.setState({hideExpenses: !this.state.hideExpenses});
+		if (this.props.budgetItem.budget_item_expenses) {
+			this.setState({hideExpenses: !this.state.hideExpenses});
+		}
 	},
 	remainingClass: function() {
 		var item = this.props.budgetItem;
@@ -32,25 +51,27 @@ var BudgetItem = React.createClass({
 		return (
 			<div className='budget-item-form- bi.id %> draggable-budget-item'>
 			  <div className='row'>
-				  <form data-abide>
+				  <form onSubmit={this.save} data-abide>
 				    <div className="large-1 medium-1 columns centered">
 				      <a href='#' onClick={this.toggleExpenses} className='show-expenses'><i className={toggleClasses}></i></a>
 				    </div>
-				    <div className="large-4 medium-4 columns">
-				    	<InputField type='text' name='name' placeholder='Name' value={item.name} error={this.errorsFor('name')} />
+				    <div className="large-4 medium-4 columns budget-item-name">
+				    	<InputField onChange={this.update.bind(this, item)} type='text' name='name' placeholder='Name' value={item.name} error={this.errorsFor('name')} />
 				    </div>
-				    <div className="large-2 medium-2 columns text-right">
+				    <div className="large-2 medium-2 columns text-right budget-item-amount-spent">
 				      {numberToCurrency(item.amount_spent)}
 				    </div>
-				    <div className="large-2 medium-2 columns text-right">
-					    <InputField type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' value={numberToCurrency(item.amount,'')} error={this.errorsFor('amount_budgeted')} />
+				    <div className="large-2 medium-2 columns text-right budget-item-amount-budgeted">
+					    <InputField onChange={this.update.bind(this, item)} type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' value={numberToCurrency(item.amount_budgeted,'')} error={this.errorsFor('amount_budgeted')} />
 				    </div>
 				    <div className="large-1 medium-1 columns text-right">
 			        <span className={this.remainingClass()}>{numberToCurrency(item.amount_remaining)}</span>
 				    </div>
-				    <div className='large-2 medium-2 columns centered'>
-				    	<input type='submit' title='Save' className='tiny success round button circle-button' value='✓' />
-				      <a href='#' className='tiny alert round button circle-button' title='Delete'>×</a>
+				    <div className='large-2 medium-2 columns'>
+					    <ul className="button-group radius even-2">
+	              <li><input type='submit' title='Save' className='tiny success radius button' value='save' /></li>
+	              <li><a href='#' onClick={this._delete} title='Remove this item' className='tiny alert radius button'>delete</a></li>
+	            </ul>
 				    </div>
 			    </form>
 			  </div>

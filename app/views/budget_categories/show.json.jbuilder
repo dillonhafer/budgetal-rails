@@ -22,12 +22,14 @@ json.budget_category do
 	json.amount_remaining budget_category.budget_remaining
 
 	json.budget_items budget_category.budget_items do |item|
+		json.id								item.id
 		json.name             item.name
-		json.amount           item.amount_budgeted
+		json.amount_budgeted  item.amount_budgeted
 		json.amount_remaining item.amount_remaining
 		json.amount_spent     item.amount_spent
 
 		json.budget_item_expenses item.budget_item_expenses do |expense|
+			json.id			expense.id
 			json.date   expense.date
 			json.name	  expense.name
 			json.amount expense.amount

@@ -4,17 +4,29 @@ Budgets::Application.routes.draw do
   get '/chart' => 'monthly_statistics#chart', as: 'chart'
   get '/privacy' => 'welcome#privacy', as: 'privacy'
 
-  devise_for :users, path: "sessions", path_names: { sign_in: 'sign-in', sign_out: 'sign-out', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'sign-up', sign_up: 'join' }
+  devise_for :users,
+             path: 'sessions',
+             path_names: {
+               sign_in: 'sign-in',
+               sign_out: 'sign-out',
+               password: 'secret',
+               confirmation: 'verification',
+               unlock: 'unblock',
+               registration: 'sign-up',
+               sign_up: 'join'
+             }
 
   namespace :api, defaults: {format: 'json'} do
-    devise_for :users, path: "sessions", path_names: { sign_in: 'sign-in', sign_out: 'sign-out' }
+    devise_for :users,
+               path: 'sessions',
+               path_names: { sign_in: 'sign-in', sign_out: 'sign-out' }
   end
 
   resources :users
   resources :budgets
   resources :budget_categories
-  resources :budget_items
-  resources :budget_item_expenses
+  resources :budget_items, path: 'budget-items'
+  resources :budget_item_expenses, path: 'budget-item-expenses'
 
   get '/annual-budgets/:year' => 'annual_budgets#index', as: 'annual_budgets'
   resources :annual_budgets, path: '/annual-budgets'

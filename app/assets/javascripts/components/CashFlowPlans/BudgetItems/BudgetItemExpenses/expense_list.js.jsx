@@ -1,4 +1,9 @@
 var ExpenseList = React.createClass({
+	getDefaultProps: function() {
+		return {
+			expenses: []
+		}
+	},
 	expenses: function() {
 		return (this.props.expenses.map((expense, index) => {
       return (

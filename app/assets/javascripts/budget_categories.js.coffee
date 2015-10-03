@@ -1,54 +1,6 @@
 $(document).ready ->
   BudgetCategory.initDragAndDrop()
 
-$(document).on 'click', '#change-budget', (e) ->
-  year  = $(this).prev('select').val()
-  month = $(this).prev().prev('select').val()
-  window.location = "/cash-flow-plans/#{year}/#{month}"
-
-$(document).on 'submit', '.edit_budget', (e) ->
-  e.preventDefault()
-
-$(document).on 'nested:fieldAdded', (event) ->
-  field = event.field
-  field.addClass('animated fadeInDown')
-  field.find('.show-expenses').removeClass('show-expenses').css('color', 'white')
-  field.addClass('is-new')
-
-$(document).on 'nested:fieldRemoved', (event) ->
-  field = event.field
-  remove_link = field.find('.remove_nested_fields')
-  field.show()
-
-  if field.data('removed') == true
-    field.data('removed', false)
-    field.removeClass('strike-through')
-    remove_link.prev('input').val(false)
-    remove_link.removeClass('success')
-    remove_link.addClass('alert')
-    remove_link.attr('title', 'Remove this category')
-    remove_link.text('×')
-  else
-    field.data('removed', true)
-    field.addClass('strike-through')
-    remove_link.removeClass('alert')
-    remove_link.addClass('success')
-    remove_link.attr('title', 'Undo')
-    remove_link.text('⤺')
-
-  if field.hasClass('is-new')
-    field.remove()
-
-
-$(document).on 'click', '.show-expenses', (e) ->
-  $(this).parent().parent().next('.expense-list').toggleClass('hide animated fadeIn')
-  i = $(this).find('i')
-
-  if i.hasClass('blue-color')
-    i.removeClass('blue-color').addClass('alert-color');
-  else
-    i.removeClass('alert-color').addClass('blue-color');
-
 jQuery ->
   window.onpopstate = (e) ->
      if e.state

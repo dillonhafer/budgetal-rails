@@ -1,4 +1,12 @@
 var Category = React.createClass({
+  propTypes: {
+    category: React.PropTypes.object.isRequired,
+    openModal: React.PropTypes.func.isRequired,
+    addBudgetItem: React.PropTypes.func.isRequired,
+    saveBudgetItem: React.PropTypes.func.isRequired,
+    updateBudgetItem: React.PropTypes.func.isRequired,
+    deleteBudgetItem: React.PropTypes.func.isRequired
+  },
 	render: function() {
     var headerClasses = classNames('row', 'type-labels', {
       hide: this.props.category.budget_items.length === 0
@@ -32,7 +40,12 @@ var Category = React.createClass({
               </div>
               <br />
               <p className={messageClasses}>You haven't added any budget items yet.</p>
-            	<BudgetItemList budgetItems={this.props.category.budget_items} />
+            	<BudgetItemList addBudgetItem={this.props.addBudgetItem}
+                              openModal={this.props.openModal}
+                              saveBudgetItem={this.props.saveBudgetItem}
+                              updateBudgetItem={this.props.updateBudgetItem}
+                              deleteBudgetItem={this.props.deleteBudgetItem}
+                              budgetItems={this.props.category.budget_items} />
             </li>
           </ul>
         </div>

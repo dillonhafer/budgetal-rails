@@ -44,17 +44,28 @@ feature 'Budgets', js: true do
         end
       end
 
-      it 'I can add a budget item' do
+      it 'I can add/edit/delete a budget item' do
         expect(page).to have_content "You haven't added any budget items yet."
         expect(page).to have_selector 'h5', text: 'You have $4,000.00 Remaining to budget'
         click_on 'Add a budget item'
         fill_in 'name', with: 'Gifts'
-        fill_in 'amount_budgeted', with: '300.00'
-        click_link 'save'
+        fill_in 'amount_budgeted', with: '3'
+        click_on 'save'
         expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
+
         visit my_budgets_path(year: Date.today.year, month: Date.today.month)
-        expect(page).to have_selector '.budget-item-name', text: 'Gifts'
-        expect(page).to have_selector '.budget-item-amount-budgeted', text: '300'
+        expect(page).to have_field('name', with: 'Gifts')
+        expect(page).to have_field('amount_budgeted', with: '3.00')
+        fill_in 'name', with: 'Saver'
+        fill_in 'amount_budgeted', with: '6'
+        click_on 'save'
+        visit my_budgets_path(year: Date.today.year, month: Date.today.month)
+        expect(page).to have_field('name', with: 'Saver')
+        expect(page).to have_field('amount_budgeted', with: '6.00')
+
+        click_on 'delete'
+        click_link 'Delete Saver'
+        expect(page).to have_content("You haven't added any budget items yet.")
       end
     end
   end
