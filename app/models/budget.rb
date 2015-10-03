@@ -20,15 +20,15 @@ class Budget < ActiveRecord::Base
   scope :ordered, -> { order('year::integer desc, month::integer desc') }
 
   def total_expenses
-    total_expense = ActiveRecord::Base.connection.select_all <<-END_SQL
-      SELECT SUM(bie.amount)
-      FROM budgets b
-      JOIN budget_categories bc ON bc.budget_id=b.id
-      JOIN budget_items bi ON bi.budget_category_id=bc.id
-      JOIN budget_item_expenses bie ON bie.budget_item_id=bi.id
-      WHERE b.id = #{id}
-    END_SQL
-    total_expense.first["sum"].to_f
+    total_expense = ActiveRecord::Base.connection.select_all(<<-SQL)
+      select sum(bie.amount)
+      from budgets b
+      join budget_categories bc on bc.budget_id=b.id
+      join budget_items bi on bi.budget_category_id=bc.id
+      join budget_item_expenses bie on bie.budget_item_id=bi.id
+      where b.id = #{id}
+    SQL
+    total_expense.first['sum'].to_f
   end
 
   def difference
