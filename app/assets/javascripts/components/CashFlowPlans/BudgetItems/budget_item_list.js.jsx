@@ -2,7 +2,6 @@ var BudgetItemList = React.createClass({
   propTypes: {
     budgetItems: React.PropTypes.array.isRequired,
     addBudgetItem: React.PropTypes.func.isRequired,
-    openModal: React.PropTypes.func.isRequired,
     saveBudgetItem: React.PropTypes.func.isRequired,
     updateBudgetItem: React.PropTypes.func.isRequired,
     deleteBudgetItem: React.PropTypes.func.isRequired
@@ -12,7 +11,6 @@ var BudgetItemList = React.createClass({
       return (
         <BudgetItem index={index}
         						key={index}
-        						openModal={this.props.openModal}
 						        budgetItem={budget_item}
         						save={this.props.saveBudgetItem}
         						update={this.props.updateBudgetItem}

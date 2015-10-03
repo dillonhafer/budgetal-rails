@@ -163,8 +163,6 @@ var CashFlowPlan = React.createClass({
     budget.budget_categories = this.state.budget.budget_categories
     this.setState({budget: budget})
   },
-  openModal: function() {
-  },
   render: function() {
     return (
       <section>
@@ -174,9 +172,8 @@ var CashFlowPlan = React.createClass({
           <div>
             <Category addBudgetItem={this.addBudgetItem}
                       saveBudgetItem={this.saveBudgetItem}
-                      openModal={this.openModal}
                       updateBudgetItem={this.updateBudgetItem}
-                      deleteBudgetItem={this.deleteBudgetItem}
+                      deleteBudgetItem={this.confirmDelete}
                       category={this.state.category} />
 
             <div className='row collapse overviews'>
@@ -189,7 +186,7 @@ var CashFlowPlan = React.createClass({
         <Confirm name={this.state.modal.budget_item.name}
                  hidden={this.state.modal.hidden}
                  cancel={this.cancelDelete}
-                 delete={this._deleteBudgetItem} />
+                 delete={this.deleteBudgetItem} />
       </section>
     );
   }

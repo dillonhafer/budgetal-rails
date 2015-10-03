@@ -1,7 +1,6 @@
 var BudgetItem = React.createClass({
 	propTypes: {
     budgetItem: React.PropTypes.object.isRequired,
-    openModal: React.PropTypes.func.isRequired,
     save: React.PropTypes.func.isRequired,
     update: React.PropTypes.func.isRequired,
     delete: React.PropTypes.func.isRequired
