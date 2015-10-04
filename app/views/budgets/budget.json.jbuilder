@@ -7,4 +7,8 @@ json.budget do
   json.budgeted       updated_budget.amount_budgeted
   json.monthly_income updated_budget.monthly_income
   json.not_budgeted   updated_budget.amount_remaining
+  json.budget_categories updated_budget.budget_categories do |category|
+    json.id   category.id
+    json.name category.name
+  end
 end

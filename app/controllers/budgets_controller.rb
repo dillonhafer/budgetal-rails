@@ -22,12 +22,12 @@ class BudgetsController < ApplicationController
   end
 
   def update
-    flash[:notice] = if updated_budget.update_attributes(budget_params)
-      "Updated budget"
+    if updated_budget.update_attributes(budget_params)
+      flash[:notice] = "Updated budget"
+      render :budget
     else
-      "something went wrong!"
+      render json: { errors: updated_budget.errors}, status: 422
     end
-    respond_with updated_budget
   end
 
   private

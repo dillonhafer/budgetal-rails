@@ -11,15 +11,6 @@ var BudgetForm = React.createClass({
       not_budgeted: parseFloat(newProps.budget.not_budgeted)
     })
   },
-  errorsFor: function(field_name) {
-    var message = ''
-    var errors = this.props.budget.errors
-    if (errors !== undefined && errors[field_name] != undefined) {
-      var err = errors[field_name].toString().replace('_', ' ')
-      message = `${field_name.capitalize()} ${err}`
-    }
-    return message
-  },
   updateBudget: function(monthly_income, a) {
     var income = monthly_income.target.value
     var not_budgeted = income - this.props.budget.budgeted
@@ -30,22 +21,35 @@ var BudgetForm = React.createClass({
     budget.monthly_income = this.state.monthly_income
     this.props.saveBudget(budget)
   },
+  budgetedMessage: function(not_budgeted) {
+    if (not_budgeted > 0) {
+     return `You have ${numberToCurrency(not_budgeted)} Remaining to budget`
+    } else if (not_budgeted < 0) {
+     return `Oh no! You have over-budgeted by ${numberToCurrency(Math.abs(not_budgeted))}!`
+    } else {
+     return `Congratulations! You have budgeted all your income!`
+    }
+  },
   render: function() {
+    var messageClass = classNames({
+      'alert-color': this.state.not_budgeted < 0,
+      'blue-color': this.state.not_budgeted == 0
+    })
     var budget = this.props.budget
-    return (
+      return (
       <form data-abide onSubmit={this.saveBudget.bind(this, budget)}>
         <div className="row">
           <div className="large-5 medium-5 columns">
             <div>
               <label htmlFor='monthly_income'>Monthly Income</label>
-              <input type='number' id='monthly_income' name='monthly_income' placeholder='0.00' onChange={this.updateBudget} value={this.state.monthly_income} step='any' min='0.00' className='green' required />
+              <InputField id='monthly_income' required onChange={this.updateBudget} type='number' name='monthly_income' step='any' min='0.00' required placeholder='0.00' value={this.state.monthly_income} errors={budget.errors} />
             </div>
             <div>
               <input type="submit" className='tiny button radius success expand' value="Update Monthly Income" />
             </div>
           </div>
           <div className="large-7 medium-7 columns text-center">
-            <br /><h5>You have {numberToCurrency(this.state.not_budgeted)} Remaining to budget</h5>
+            <br /><h5 className={messageClass}>{this.budgetedMessage(this.state.not_budgeted)}</h5>
           </div>
         </div>
       </form>

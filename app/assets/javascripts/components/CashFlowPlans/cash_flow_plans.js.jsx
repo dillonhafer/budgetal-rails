@@ -67,23 +67,18 @@ var CashFlowPlan = React.createClass({
   },
   _budgetItemSaved(index, budget_item, err) {
     let category = this.state.category
+    budget_item.budget_item_expenses = category.budget_items[index].budget_item_expenses
+
     category.budget_items[index] = budget_item
-    console.log(budget_item)
     this.setState({category: category})
-    showMessage("Saved "+budget_item.name)
+    showMessage(`Saved ${budget_item.name}`)
   },
   _saveItemFail(index, xhr, status, err) {
     let errors = JSON.parse(xhr.responseText).errors
     let category = this.state.category
-    for(idx in category.budget_items) {
-      budget_item = category.budget_items[idx]
-      if (budget_item.id == index.id) {
-        category.budget_items[idx].errors = errors
-      }
-    }
+    _.where(category.budget_items, {'id': index.id})[0].errors = errors
+
     this.setState({category: category})
-  },
-  updateBudgetItem: function() {
   },
   deleteBudgetItem: function(e) {
     e.preventDefault();
@@ -150,18 +145,23 @@ var CashFlowPlan = React.createClass({
     this.setState({category: category})
   },
   updateBudget: function(budget) {
-    var current = this.state.budget
+    let current = this.state.budget
     current.monthly_income = budget.monthly_income
-    this.setState({budget: current})
+    this.setState({budget: budget})
   },
   saveBudget: function(budget) {
     BudgetController.update(budget)
-      .done(this._budgetUpdated.bind(this, budget))
+      .done(this._budgetUpdated)
+      .fail(this._saveBudgetFail.bind(null, budget))
   },
-  _budgetUpdated: function(index, xhr, status, err) {
-    var budget = xhr.budget
-    budget.budget_categories = this.state.budget.budget_categories
+  _saveBudgetFail: function(index, xhr, status, err) {
+    let errors = JSON.parse(xhr.responseText).errors
+    let budget = this.state.budget
+    budget.errors = errors
     this.setState({budget: budget})
+  },
+  _budgetUpdated: function(xhr, status, err) {
+    this.setState({budget: xhr.budget})
   },
   render: function() {
     return (

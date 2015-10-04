@@ -10,6 +10,10 @@ var BudgetItem = React.createClass({
 			hideExpenses: true
 		}
 	},
+	remaining: function() {
+		let item = this.props.budgetItem
+		return item.amount_budgeted - item.amount_spent
+	},
 	update: function(item,e) {
 		item[e.target.name] = e.target.value
 		this.props.update(this.props.index, item)
@@ -33,22 +37,13 @@ var BudgetItem = React.createClass({
 	remainingClass: function() {
 		var item = this.props.budgetItem;
 		return classNames({
-      'success-color': item.amount_remaining > 0,
-      'alert-color': item.amount_remaining < 0,
-      'blue': item.amount_remaining == 0
+      'success-color': this.remaining() > 0,
+      'alert-color': this.remaining() < 0,
+      'blue': this.remaining() == 0
     });
 	},
-	errorsFor: function(field_name) {
-    var message = ''
-    var errors = this.props.budgetItem.errors
-    if (errors !== undefined && errors[field_name] != undefined) {
-      var err = errors[field_name].toString()
-      message = `${field_name.capitalize().replace('_', ' ')} ${err}`
-    }
-    return message
-  },
 	render: function() {
-		var item = this.props.budgetItem;
+		let item = this.props.budgetItem;
 		var expensesClasses = classNames('expense-list', {hide: this.state.hideExpenses, fadeIn: !this.state.hideExpenses})
 		var toggleClasses = classNames('fi-list-bullet move-cursor', {'blue-color': this.state.hideExpenses, 'alert-color': !this.state.hideExpenses})
 		return (
@@ -59,16 +54,16 @@ var BudgetItem = React.createClass({
 				      <a href='#' onClick={this.toggleExpenses} className='show-expenses'><i className={toggleClasses}></i></a>
 				    </div>
 				    <div className="large-4 medium-4 columns budget-item-name">
-				    	<InputField onChange={this.update.bind(this, item)} type='text' name='name' placeholder='Name' value={item.name} error={this.errorsFor('name')} />
+				    	<InputField onChange={this.update.bind(this, item)} type='text' name='name' placeholder='Name' value={item.name} errors={item.errors} />
 				    </div>
 				    <div className="large-2 medium-2 columns text-right budget-item-amount-spent">
 				      {numberToCurrency(item.amount_spent)}
 				    </div>
 				    <div className="large-2 medium-2 columns text-right budget-item-amount-budgeted">
-					    <InputField onChange={this.update.bind(this, item)} type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' value={numberToCurrency(item.amount_budgeted,'')} error={this.errorsFor('amount_budgeted')} />
+					    <InputField onChange={this.update.bind(this, item)} type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' value={numberToCurrency(item.amount_budgeted,'')} errors={item.errors} />
 				    </div>
 				    <div className="large-1 medium-1 columns text-right">
-			        <span className={this.remainingClass()}>{numberToCurrency(item.amount_remaining)}</span>
+			        <span className={this.remainingClass()}>{numberToCurrency(this.remaining())}</span>
 				    </div>
 				    <div className='large-2 medium-2 columns'>
 					    <ul className="button-group radius even-2">
