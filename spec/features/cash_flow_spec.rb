@@ -15,7 +15,7 @@ feature 'Budgets', js: true do
 
     context 'with a budget' do
       it 'I can change my monthly income' do
-        fill_in 'Monthly Income', with: '1234.56'
+        fill_in 'monthly_income', with: '1234.56'
         click_on 'Update Monthly Income'
         expect(page).to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
         visit my_budgets_path(year: Date.today.year, month: Date.today.month)
