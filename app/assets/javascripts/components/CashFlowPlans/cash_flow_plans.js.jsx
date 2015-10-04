@@ -76,7 +76,7 @@ var CashFlowPlan = React.createClass({
   _saveItemFail(index, xhr, status, err) {
     let errors = JSON.parse(xhr.responseText).errors
     let category = this.state.category
-    _.where(category.budget_items, {'id': index.id})[0].errors = errors
+    _.where(category.budget_items, {'index': index.index})[0].errors = errors
 
     this.setState({category: category})
   },
