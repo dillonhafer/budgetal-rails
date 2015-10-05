@@ -1,10 +1,8 @@
 var BudgetItemList = React.createClass({
   propTypes: {
     budgetItems: React.PropTypes.array.isRequired,
-    addBudgetItem: React.PropTypes.func.isRequired,
-    saveBudgetItem: React.PropTypes.func.isRequired,
-    updateBudgetItem: React.PropTypes.func.isRequired,
-    deleteBudgetItem: React.PropTypes.func.isRequired
+    functions: React.PropTypes.object.isRequired,
+    expenseFunctions: React.PropTypes.object.isRequired
   },
 	budgetItems: function() {
 		return (this.props.budgetItems.map((budget_item, index) => {
@@ -12,9 +10,10 @@ var BudgetItemList = React.createClass({
         <BudgetItem index={index}
         						key={index}
 						        budgetItem={budget_item}
-        						save={this.props.saveBudgetItem}
-        						update={this.props.updateBudgetItem}
-						        delete={this.props.deleteBudgetItem} />
+        						save={this.props.functions.save}
+        						update={this.props.functions.update}
+						        delete={this.props.functions.delete}
+                    expenseFunctions={this.props.expenseFunctions} />
       )
     }))
 	},
@@ -22,7 +21,7 @@ var BudgetItemList = React.createClass({
 		return (
 			<div className="row new-budget-item">
 			 {this.budgetItems()}
-				<a href='#' onClick={this.props.addBudgetItem} className='add-item-link tiny button radius success'>Add a budget item</a>
+				<a href='#' onClick={this.props.functions.add} className='add-item-link tiny button radius success'>Add a budget item</a>
 			</div>
 		)
 	}

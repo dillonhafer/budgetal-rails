@@ -1,6 +1,7 @@
 var BudgetItem = React.createClass({
 	propTypes: {
     budgetItem: React.PropTypes.object.isRequired,
+    expenseFunctions: React.PropTypes.object.isRequired,
     save: React.PropTypes.func.isRequired,
     update: React.PropTypes.func.isRequired,
     delete: React.PropTypes.func.isRequired
@@ -45,9 +46,9 @@ var BudgetItem = React.createClass({
 	render: function() {
 		let item = this.props.budgetItem;
 		var expensesClasses = classNames('expense-list', {hide: this.state.hideExpenses, fadeIn: !this.state.hideExpenses})
-		var toggleClasses = classNames('fi-list-bullet move-cursor', {'blue-color': this.state.hideExpenses, 'alert-color': !this.state.hideExpenses})
+		var toggleClasses = classNames('fi-play move-cursor', {'expanded-list': !this.state.hideExpenses})
 		return (
-			<div className='budget-item-form- bi.id %> draggable-budget-item'>
+			<div className='draggable-budget-item'>
 			  <div className='row'>
 				  <form onSubmit={this.save} data-abide>
 				    <div className="large-1 medium-1 columns centered">
@@ -73,11 +74,7 @@ var BudgetItem = React.createClass({
 				    </div>
 			    </form>
 			  </div>
-			  <div className={expensesClasses}>
-			    <ExpenseList expenses={item.budget_item_expenses} />
-			    <a href='#' className='tiny button radius yellow add-nested-item'>Add an expense</a>
-			    <hr />
-			  </div>
+		    <ExpenseList className={expensesClasses} expenses={item.budget_item_expenses} budgetItemId={this.props.budgetItem.id} functions={this.props.expenseFunctions} />
 			  <ul data-dropdown-content className="f-dropdown"></ul>
       </div>
 		)

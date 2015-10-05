@@ -14,23 +14,29 @@ var CashFlowPlan = React.createClass({
       },
       modal: {
         hidden: true,
-        budget_item: {name: ''},
-        index: -1
+        item: {name: ''},
+        index: -1,
+        delete: function(){}
       }
     }
   },
-  confirmDelete: function(budget_item, index) {
+  confirmItemDelete: function(budget_item, index) {
     if (!!budget_item.id) {
-      this.setState({modal: {hidden: false, budget_item: budget_item, index: index}});
+      this.setState({modal: {hidden: false, item: budget_item, index: index, delete: this.deleteBudgetItem}});
     } else {
       this._budgetItemDeleted(index)
     }
   },
-  cancelDelete: function(e) {
-    if (e) {
-      e.preventDefault()
+  confirmExpenseDelete: function(expense, index) {
+    if (!!expense.id) {
+      this.setState({modal: {hidden: false, item: expense, index: index, delete: this.deleteExpense}});
+    } else {
+      this._expenseDeleted(expense.budget_item_id, index)
     }
-    this.setState({modal: {hidden: true, index: -1, budget_item: {name: ''}}});
+  },
+  cancelDelete: function(e) {
+    if (e) { e.preventDefault() }
+    this.setState({modal: {hidden: true, index: -1, item: {name: ''}, delete: function(){}}});
   },
   componentDidMount: function() {
     this._fetchBudget({year: this.yearParam(), month: this.monthParam(), id: this.props.id})
@@ -76,23 +82,23 @@ var CashFlowPlan = React.createClass({
   _saveItemFail(index, xhr, status, err) {
     let errors = JSON.parse(xhr.responseText).errors
     let category = this.state.category
-    _.where(category.budget_items, {'index': index.index})[0].errors = errors
-
+    let budget_item = _.where(category.budget_items, {'id': index.budget_item_id})[0]
+    _.where(budget_item.budget_item_expenses, {'index': index.index})[0].errors = errors
     this.setState({category: category})
   },
   deleteBudgetItem: function(e) {
     e.preventDefault();
-    if (this.state.modal.budget_item.id !== undefined) {
-      BudgetItemController.destroy(this.state.modal.budget_item.id)
+    if (this.state.modal.item.id !== undefined) {
+      BudgetItemController.destroy(this.state.modal.item.id)
         .done(this._budgetItemDeleted(this.state.modal.index))
-        .fail(this._fetchDataFail.bind(null, this.state.modal.budget_item))
+        .fail(this._fetchDataFail.bind(null, this.state.modal.item))
     }
   },
   _budgetItemDeleted(index) {
     let category = this.state.category
     category.budget_items.splice(index, 1)
-    if (this.state.modal.budget_item.id !== undefined) {
-      showMessage("Deleted "+this.state.modal.budget_item.name)
+    if (this.state.modal.item.id !== undefined) {
+      showMessage("Deleted "+this.state.modal.item.name)
     }
     this.setState({category: category})
     this.cancelDelete()
@@ -129,11 +135,11 @@ var CashFlowPlan = React.createClass({
     history.pushState({}, 'Budgetal', `/cash-flow-plans/${year}/${month}`)
     this._fetchBudget({year: year, month: month})
   },
-  showForm(e) {
+  showForm: function(e) {
     e.preventDefault()
     this.setState({showForm: true})
   },
-  addBudgetItem(e) {
+  addBudgetItem: function(e) {
     e.preventDefault()
     var category = this.state.category
     category.budget_items.push({category_id: category.id})
@@ -163,6 +169,70 @@ var CashFlowPlan = React.createClass({
   _budgetUpdated: function(xhr, status, err) {
     this.setState({budget: xhr.budget})
   },
+  addExpense: function(id) {
+    var category = this.state.category
+    var budget_item = _.where(category.budget_items, {'id': id})[0]
+    budget_item.budget_item_expenses.push({budget_item_id: id})
+    this.setState({category: category})
+  },
+  saveExpense: function(expense) {
+    if (expense.id === undefined) {
+      ExpenseController.create(expense)
+        .done(this._expenseSaved.bind(null, expense.index))
+        .fail(this._saveItemFail.bind(null, expense))
+    } else {
+      ExpenseController.update(expense)
+        .done(this._expenseSaved.bind(null, expense.index))
+        .fail(this._saveItemFail.bind(null, expense))
+    }
+  },
+  _expenseSaved(index, expense, err) {
+    let category = this.state.category
+    var budget_item = _.where(category.budget_items, {'id': expense.budget_item_id})[0]
+    budget_item.budget_item_expenses[index] = expense
+    this.setState({category: category})
+    showMessage(`Saved ${budget_item.name}`)
+  },
+  updateExpense: function(index, updatedExpense) {
+    var category    = this.state.category
+    var budget_item = _.where(category.budget_items, {'id': updatedExpense.budget_item_id})[0]
+    budget_item.budget_item_expenses[index] = updatedExpense
+    this.setState({category: category})
+  },
+  deleteExpense: function(e) {
+    e.preventDefault();
+    if (this.state.modal.item.id !== undefined) {
+      ExpenseController.destroy(this.state.modal.item.id)
+        .done(this._expenseDeleted(this.state.modal.item.budget_item_id, this.state.modal.index))
+        .fail(this._fetchDataFail.bind(null, this.state.modal.item))
+    }
+  },
+  _expenseDeleted(budget_item_id, index) {
+    let category = this.state.category
+    var budget_item = _.where(category.budget_items, {'id': budget_item_id})[0]
+    budget_item.budget_item_expenses.splice(index, 1)
+    if (this.state.modal.item.id !== undefined) {
+      showMessage("Deleted "+this.state.modal.item.name)
+    }
+    this.setState({category: category})
+    this.cancelDelete()
+  },
+  itemFunctions: function() {
+    return {
+      add: this.addBudgetItem,
+      save: this.saveBudgetItem,
+      update: this.updateBudgetItem,
+      delete: this.confirmItemDelete
+    }
+  },
+  expenseFunctions: function() {
+    return {
+      add: this.addExpense,
+      save: this.saveExpense,
+      update: this.updateExpense,
+      delete: this.confirmExpenseDelete
+    }
+  },
   render: function() {
     return (
       <section>
@@ -170,10 +240,8 @@ var CashFlowPlan = React.createClass({
 
         <div className='large-10 medium-10 columns hide-for-small-down'>
           <div>
-            <Category addBudgetItem={this.addBudgetItem}
-                      saveBudgetItem={this.saveBudgetItem}
-                      updateBudgetItem={this.updateBudgetItem}
-                      deleteBudgetItem={this.confirmDelete}
+            <Category expenseFunctions={this.expenseFunctions()}
+                      itemFunctions={this.itemFunctions()}
                       category={this.state.category} />
 
             <div className='row collapse overviews'>
@@ -183,10 +251,10 @@ var CashFlowPlan = React.createClass({
             <ImportModal category={this.state.category} />
           </div>
         </div>
-        <Confirm name={this.state.modal.budget_item.name}
+        <Confirm name={this.state.modal.item.name}
                  hidden={this.state.modal.hidden}
                  cancel={this.cancelDelete}
-                 delete={this.deleteBudgetItem} />
+                 delete={this.state.modal.delete} />
       </section>
     );
   }

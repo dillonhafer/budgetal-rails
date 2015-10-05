@@ -1,4 +1,10 @@
 var Confirm = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    hidden: React.PropTypes.bool.isRequired,
+    cancel: React.PropTypes.func.isRequired,
+    delete: React.PropTypes.func.isRequired
+  },
   render() {
     let classes = classNames({
       overlay: true,

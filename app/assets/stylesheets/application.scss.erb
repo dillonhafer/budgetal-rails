@@ -272,12 +272,14 @@ ul.main-budget-categories {
 
 .type-labels div {text-decoration: underline;}
 
-.expense-list .fields div.row {
+.expense-list div.row {
   border-bottom: 1px dashed #CCC;
   background: #f6f6f6;
+  padding-top: 15px;
 
   input[type="text"], input[type="number"], input[type="date"] {
     border: none;
+    border: 1px solid #CCC;
     box-shadow: none;
     background: #f6f6f6;
   }
@@ -291,7 +293,7 @@ ul.main-budget-categories {
 .main-budget-categories {
   background: white;
   input[type="text"],input[type="number"] {
-    border: none;
+    border: 1px solid #CCC;
     box-shadow: none;
   }
   .annual-items-forms {
@@ -792,4 +794,14 @@ ul.main-budget-categories li.no-container li {
   background-position: 0px -330px;
   background-repeat: no-repeat;
   background-size: 30px;
+}
+
+.button.add-expense-link { margin-top: 15px; }
+
+.expanded-list::before {
+  -webkit-transform: rotate(90deg); /* Safari and Chrome */
+  -moz-transform: rotate(90deg);   /* Firefox */
+  -ms-transform: rotate(90deg);   /* IE 9 */
+  -o-transform: rotate(90deg);   /* Opera */
+  transform: rotate(90deg);
 }

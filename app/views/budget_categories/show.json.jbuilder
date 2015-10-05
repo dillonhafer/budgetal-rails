@@ -29,10 +29,11 @@ json.budget_category do
 		json.amount_spent     item.amount_spent
 
 		json.budget_item_expenses item.budget_item_expenses do |expense|
-			json.id			expense.id
-			json.date   expense.date
-			json.name	  expense.name
-			json.amount expense.amount
+			json.id							expense.id
+			json.budget_item_id expense.budget_item_id
+			json.date   				expense.date
+			json.name	  				expense.name
+			json.amount 				expense.amount
 		end
 	end
 end

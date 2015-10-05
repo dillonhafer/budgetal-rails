@@ -1,10 +1,8 @@
 var Category = React.createClass({
   propTypes: {
     category: React.PropTypes.object.isRequired,
-    addBudgetItem: React.PropTypes.func.isRequired,
-    saveBudgetItem: React.PropTypes.func.isRequired,
-    updateBudgetItem: React.PropTypes.func.isRequired,
-    deleteBudgetItem: React.PropTypes.func.isRequired
+    expenseFunctions: React.PropTypes.object.isRequired,
+    itemFunctions: React.PropTypes.object.isRequired
   },
 	render: function() {
     var headerClasses = classNames('row', 'type-labels', {
@@ -39,10 +37,8 @@ var Category = React.createClass({
               </div>
               <br />
               <p className={messageClasses}>You haven't added any budget items yet.</p>
-            	<BudgetItemList addBudgetItem={this.props.addBudgetItem}
-                              saveBudgetItem={this.props.saveBudgetItem}
-                              updateBudgetItem={this.props.updateBudgetItem}
-                              deleteBudgetItem={this.props.deleteBudgetItem}
+            	<BudgetItemList functions={this.props.itemFunctions}
+                              expenseFunctions={this.props.expenseFunctions}
                               budgetItems={this.props.category.budget_items} />
             </li>
           </ul>
