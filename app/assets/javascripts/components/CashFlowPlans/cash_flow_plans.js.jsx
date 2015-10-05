@@ -116,8 +116,7 @@ var CashFlowPlan = React.createClass({
   _saveItemFail(index, xhr, status, err) {
     let errors = JSON.parse(xhr.responseText).errors
     let category = this.state.category
-    let budget_item = _.where(category.budget_items, {'id': index.budget_item_id})[0]
-    _.where(budget_item.budget_item_expenses, {'index': index.index})[0].errors = errors
+    _.where(category.budget_items, {'index': index.index})[0].errors = errors
     this.setState({category: category})
   },
   deleteBudgetItem: function(e) {
@@ -178,12 +177,19 @@ var CashFlowPlan = React.createClass({
     if (expense.id === undefined) {
       ExpenseController.create(expense)
         .done(this._expenseSaved.bind(null, expense.index))
-        .fail(this._saveItemFail.bind(null, expense))
+        .fail(this._saveExpenseFail.bind(null, expense))
     } else {
       ExpenseController.update(expense)
         .done(this._expenseSaved.bind(null, expense.index))
-        .fail(this._saveItemFail.bind(null, expense))
+        .fail(this._saveExpenseFail.bind(null, expense))
     }
+  },
+  _saveExpenseFail(index, xhr, status, err) {
+    let errors = JSON.parse(xhr.responseText).errors
+    let category = this.state.category
+    let budget_item = _.where(category.budget_items, {'id': index.budget_item_id})[0]
+    _.where(budget_item.budget_item_expenses, {'index': index.index})[0].errors = errors
+    this.setState({category: category})
   },
   _expenseSaved(index, expense, err) {
     let category = this.state.category

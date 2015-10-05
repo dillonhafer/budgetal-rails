@@ -1,6 +1,5 @@
 var ExpenseList = React.createClass({
   propTypes: {
-  	budgetItemId: React.PropTypes.number.isRequired,
     expenses: React.PropTypes.array.isRequired,
     functions: React.PropTypes.object.isRequired
   },
