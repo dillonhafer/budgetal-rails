@@ -38,8 +38,44 @@ var CashFlowPlan = React.createClass({
     if (e) { e.preventDefault() }
     this.setState({modal: {hidden: true, index: -1, item: {name: ''}, delete: function(){}}});
   },
+  yearParam() {
+    var pathNames = window.location.pathname.split('/')
+    var yearIndex = pathNames.length - 2
+    return pathNames[yearIndex]
+  },
+  monthParam() {
+    var pathNames = window.location.pathname.split('/')
+    var yearIndex = pathNames.length - 1
+    return pathNames[yearIndex]
+  },
+  changeBudget: function() {
+    var year  = selectedValue('#budget_year')
+    var month = selectedValue('#budget_month')
+
+    document.title = `${monthName(month)} ${year} | Budgetal`;
+    history.pushState({}, 'Budgetal', `/cash-flow-plans/${year}/${month}`)
+    this._fetchBudget({year: year, month: month})
+  },
+  showForm: function(e) {
+    e.preventDefault()
+    this.setState({showForm: true})
+  },
   componentDidMount: function() {
     this._fetchBudget({year: this.yearParam(), month: this.monthParam(), id: this.props.id})
+  },
+  _fetchDataDone(data, textStatus, jqXHR) {
+    this.setState({
+      didFetchData: true,
+      budget: data.budget,
+      category: data.budget_category
+    })
+  },
+  _fetchDataFail(xhr, status, err) {
+    var errors = JSON.parse(xhr.responseText).errors
+    for (idx in errors) {
+      var msg = errors[idx]
+      showMessage(msg)
+    }
   },
   changeCategory: function(id) {
     this._fetchBudget({
@@ -48,14 +84,12 @@ var CashFlowPlan = React.createClass({
       id: id
     })
   },
-  successMessage: function(item_name) {
-    showMessage(`Updated ${item_name}`)
-  },
   _fetchBudget(data) {
     BudgetCategoryController.find(data)
       .done(this._fetchDataDone)
       .fail(this._fetchDataFail)
   },
+  // Budget Item functions
   saveBudgetItem: function(item) {
     var data = {
       budget_category_id: this.state.category.id,
@@ -103,46 +137,10 @@ var CashFlowPlan = React.createClass({
     this.setState({category: category})
     this.cancelDelete()
   },
-  _fetchDataDone(data, textStatus, jqXHR) {
-    this.setState({
-      didFetchData: true,
-      budget: data.budget,
-      category: data.budget_category
-    })
-  },
-  _fetchDataFail(xhr, status, err) {
-    var errors = JSON.parse(xhr.responseText).errors
-    for (idx in errors) {
-      var msg = errors[idx]
-      showMessage(msg)
-    }
-  },
-  yearParam() {
-    var pathNames = window.location.pathname.split('/')
-    var yearIndex = pathNames.length - 2
-    return pathNames[yearIndex]
-  },
-  monthParam() {
-    var pathNames = window.location.pathname.split('/')
-    var yearIndex = pathNames.length - 1
-    return pathNames[yearIndex]
-  },
-  changeBudget: function() {
-    var year  = selectedValue('#budget_year')
-    var month = selectedValue('#budget_month')
-
-    document.title = `${monthName(month)} ${year} | Budgetal`;
-    history.pushState({}, 'Budgetal', `/cash-flow-plans/${year}/${month}`)
-    this._fetchBudget({year: year, month: month})
-  },
-  showForm: function(e) {
-    e.preventDefault()
-    this.setState({showForm: true})
-  },
   addBudgetItem: function(e) {
     e.preventDefault()
     var category = this.state.category
-    category.budget_items.push({category_id: category.id})
+    category.budget_items.push({category_id: category.id, amount_budgeted: 0.00})
     this.setState({category: category})
   },
   updateBudgetItem: function(index, updatedBudgetItem) {
@@ -169,10 +167,11 @@ var CashFlowPlan = React.createClass({
   _budgetUpdated: function(xhr, status, err) {
     this.setState({budget: xhr.budget})
   },
+  // Budget Item Expense functions
   addExpense: function(id) {
     var category = this.state.category
     var budget_item = _.where(category.budget_items, {'id': id})[0]
-    budget_item.budget_item_expenses.push({budget_item_id: id})
+    budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.00})
     this.setState({category: category})
   },
   saveExpense: function(expense) {
@@ -191,7 +190,7 @@ var CashFlowPlan = React.createClass({
     var budget_item = _.where(category.budget_items, {'id': expense.budget_item_id})[0]
     budget_item.budget_item_expenses[index] = expense
     this.setState({category: category})
-    showMessage(`Saved ${budget_item.name}`)
+    showMessage(`Saved ${expense.name}`)
   },
   updateExpense: function(index, updatedExpense) {
     var category    = this.state.category

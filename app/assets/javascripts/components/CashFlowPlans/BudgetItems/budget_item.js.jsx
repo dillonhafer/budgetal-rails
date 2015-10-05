@@ -11,9 +11,15 @@ var BudgetItem = React.createClass({
 			hideExpenses: true
 		}
 	},
+	spent: function() {
+		let expenses = this.props.budgetItem.budget_item_expenses
+		return _.reduce(expenses, function(total, expense, index) {
+		  return parseFloat(total) + parseFloat(expense.amount);
+		}, 0.00);
+	},
 	remaining: function() {
-		let item = this.props.budgetItem
-		return item.amount_budgeted - item.amount_spent
+		let amount_budgeted = this.props.budgetItem.amount_budgeted
+		return amount_budgeted - this.spent()
 	},
 	update: function(item,e) {
 		item[e.target.name] = e.target.value
@@ -58,10 +64,10 @@ var BudgetItem = React.createClass({
 				    	<InputField onChange={this.update.bind(this, item)} type='text' name='name' placeholder='Name' value={item.name} errors={item.errors} />
 				    </div>
 				    <div className="large-2 medium-2 columns text-right budget-item-amount-spent">
-				      {numberToCurrency(item.amount_spent)}
+				      {numberToCurrency(this.spent())}
 				    </div>
 				    <div className="large-2 medium-2 columns text-right budget-item-amount-budgeted">
-					    <InputField onChange={this.update.bind(this, item)} type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' value={numberToCurrency(item.amount_budgeted,'')} errors={item.errors} />
+					    <InputField onChange={this.update.bind(this, item)} type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' defaultValue={numberToCurrency(this.amount_budgeted, '')} value={item.amount_budgeted} errors={item.errors} />
 				    </div>
 				    <div className="large-1 medium-1 columns text-right">
 			        <span className={this.remainingClass()}>{numberToCurrency(this.remaining())}</span>
