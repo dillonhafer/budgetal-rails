@@ -1,5 +1,5 @@
 Budgets::Application.routes.draw do
-  root :to => 'welcome#index'
+  root to: 'welcome#index'
 
   get '/chart' => 'monthly_statistics#chart', as: 'chart'
   get '/privacy' => 'welcome#privacy', as: 'privacy'
@@ -24,7 +24,11 @@ Budgets::Application.routes.draw do
 
   resources :users
   resources :budgets
-  resources :budget_categories
+
+  get '/budget-categories/:id/import' => 'budget_categories#import'
+  get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
+  match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
+
   resources :budget_items, path: 'budget-items'
   resources :budget_item_expenses, path: 'budget-item-expenses'
 
@@ -36,17 +40,14 @@ Budgets::Application.routes.draw do
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
   resources :allocation_plan_budget_items, path: '/budgets/:budget_id/allocation-plans/:id/budget-items/:budget_item_id'
 
-  match '/budget-category/:year/:month/:id' => 'budget_categories#show', as: 'category_ajax', via: [:get, :post]
-  get '/budget-category/:id/copy' => 'budget_categories#copy', as: 'category_copy'
   post '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
 
-  get 'past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
+  get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics'
   get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
 
   get '/admin' => 'admin#index', as: 'admin'
-  get 'my-account' => 'users#my_account', as: 'my_account'
-  match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
+  get '/my-account' => 'users#my_account', as: 'my_account'
   match '/allocation-plans/:year/:month' => 'allocation_plans#index', as: 'my_allocation_plans', via: [:get, :post]
   match '/allocation-plan-budget-items/create' => 'allocation_plan_budget_items#create', as: 'create_allocation_plan_budget_item', via: [:get, :post, :patch]
 end
