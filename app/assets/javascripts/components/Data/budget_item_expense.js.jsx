@@ -21,5 +21,12 @@ var ExpenseController = {
               dataType: 'json',
               method: 'DELETE'
             })
+  },
+  predictions: function(name) {
+    return $.ajax({
+              url: `/past-expenses/${name}`,
+              dataType: 'json',
+              method: 'GET'
+            })
   }
 }

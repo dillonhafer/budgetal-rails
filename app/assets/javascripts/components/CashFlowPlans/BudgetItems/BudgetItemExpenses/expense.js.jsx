@@ -5,6 +5,23 @@ var Expense = React.createClass({
     update: React.PropTypes.func.isRequired,
     delete: React.PropTypes.func.isRequired
   },
+  getInitialState: function() {
+  	return {predictions: []}
+  },
+  predict: function(word) {
+  	var self = this
+  	if (word.length > 2) {
+  		ExpenseController.predictions(word)
+  			.done(function(list) {
+			  	self.setState({predictions: list})
+  			})
+  			.fail(function() {
+			  	self.setState({predictions: []})
+  			})
+  	} else {
+	  	self.setState({predictions: []})
+  	}
+  },
   save: function(e) {
 		e.preventDefault()
 		var expense = this.props.expense
@@ -14,10 +31,21 @@ var Expense = React.createClass({
 	update: function(expense,e) {
 		expense[e.target.name] = e.target.value
 		this.props.update(this.props.index, expense)
+		if (e.target.name == 'name') {
+			this.predict(e.target.value)
+		}
+	},
+	select: function(word) {
+		var expense = this.props.expense
+		expense.name = word
+		this.props.update(this.props.index, expense)
 	},
 	delete: function(e) {
     e.preventDefault()
     this.props.delete(this.props.expense, this.props.index)
+  },
+  removePredictions: function(e) {
+		this.setState({predictions: []})
   },
 	render: function() {
 		let expense = this.props.expense
@@ -30,7 +58,8 @@ var Expense = React.createClass({
 				  </div>
 				  <div className="large-2 medium-2 columns">
 				  	<label>Name</label>
-				  	<InputField type='text' name='name' placeholder='(Rent Payment)' onChange={this.update.bind(this, expense)} value={expense.name} className='expense-item-field' errors={expense.errors} />
+				  	<InputField type='text' onBlur={this.removePredictions} name='name' placeholder='(Rent Payment)' onChange={this.update.bind(this, expense)} value={expense.name} className='expense-item-field' errors={expense.errors} />
+				  	<PredictedExpenses select={this.select} predictions={this.state.predictions} />
 				  </div>
 				  <div className="large-2 medium-2 columns">
 				  	<label>Amount</label>

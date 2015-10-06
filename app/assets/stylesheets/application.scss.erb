@@ -813,3 +813,33 @@ ul.main-budget-categories li.no-container li {
   -o-transition-duration: 0.2s;
   transition-duration: 0.2s;
 }
+
+ul.predicted-expenses {
+  background: white;
+  position: absolute;
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  margin: 0;
+  margin-top: -10px;
+  padding: 0;
+  text-shadow: none;
+  width: 10em;
+  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+  z-index: 9327;
+  font-family: $mc_font_family;
+  font-size: 0.9em;
+
+  li {
+    list-style-type: none;
+    border-bottom: 1px solid #CCC;
+    padding: 0.5em;
+    color: #333;
+    background: white;
+
+    &:hover, &.active {
+      cursor: pointer;
+      background: #69F;
+      color: white;
+    }
+  }
+}
