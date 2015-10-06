@@ -2,7 +2,8 @@ var Category = React.createClass({
   propTypes: {
     category: React.PropTypes.object.isRequired,
     expenseFunctions: React.PropTypes.object.isRequired,
-    itemFunctions: React.PropTypes.object.isRequired
+    itemFunctions: React.PropTypes.object.isRequired,
+    import: React.PropTypes.func.isRequired
   },
 	render: function() {
     var headerClasses = classNames('row', 'type-labels', {
@@ -16,7 +17,7 @@ var Category = React.createClass({
         <div className='large-12 medium-12 columns header-row'>
           <h3>
 	          {this.props.category.name}
-	          <a href='#category_copy_path' title='Import items from previous budget' className='right black-color copy-category'>
+	          <a href='#' onClick={this.props.import} title='Import items from previous budget' className='right black-color copy-category'>
 		          <i className="fi-icon fi-download"></i>
 	          </a>
           </h3>

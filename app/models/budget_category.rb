@@ -31,7 +31,7 @@ class BudgetCategory < ActiveRecord::Base
   end
 
   def copy_previous_items
-    previous_items.each do |item|
+    previous_items.map do |item|
       budget_items.create(name: item.name, amount_budgeted: item.amount_budgeted)
     end
   end

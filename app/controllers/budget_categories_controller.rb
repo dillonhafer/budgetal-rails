@@ -2,25 +2,26 @@ class BudgetCategoriesController < AuthenticatedController
   include ActionView::Helpers::TextHelper
 
   before_filter :check_date, except: [:copy]
-  helper_method :budget_category, :budget
+  helper_method :budget_category, :budget, :message, :imported_items
   respond_to :json, :html, :js
 
   def show
     respond_with budget_category
   end
 
-  def copy
-    budget_category.copy_previous_items
+  private
 
-    flash[:notice] = if budget_category.import_count > 0
-      "Finished importing #{pluralize budget_category.import_count, 'item'}"
+  def imported_items
+    @imported_items ||= budget_category.copy_previous_items
+  end
+
+  def message(imported_size=0)
+    @message ||= if imported_size > 0
+      "Finished importing #{pluralize imported_size, 'item'}"
     else
       "There wasn't anything to import."
     end
-    respond_with budget_category
   end
-
-  private
 
   def budget
     year  = params[:year]

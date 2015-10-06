@@ -12,6 +12,7 @@ var CashFlowPlan = React.createClass({
         amount: '',
         budget_items: []
       },
+      importHidden: true,
       modal: {
         hidden: true,
         item: {name: ''},
@@ -148,7 +149,7 @@ var CashFlowPlan = React.createClass({
     this.setState({category: category})
   },
   updateBudget: function(budget) {
-    let current = this.state.budget
+    let current = _.assign({}, this.state.budget, budget)
     current.monthly_income = budget.monthly_income
     this.setState({budget: budget})
   },
@@ -238,6 +239,25 @@ var CashFlowPlan = React.createClass({
       delete: this.confirmExpenseDelete
     }
   },
+  import: function(e) {
+    e.preventDefault();
+    BudgetCategoryController.import(this.state.category.id).done(this.importFinished)
+  },
+  importFinished: function(json) {
+    var category = this.state.category
+    category.budget_items = category.budget_items.concat(json.imported)
+    this.setState({category: category})
+    showMessage(json.message)
+    this.cancelImport()
+  },
+  cancelImport: function(e) {
+    if (e) { e.preventDefault() }
+    this.setState({importHidden: true});
+  },
+  openImport: function(e) {
+    e.preventDefault()
+    this.setState({importHidden: false});
+  },
   render: function() {
     return (
       <section>
@@ -247,13 +267,17 @@ var CashFlowPlan = React.createClass({
           <div>
             <Category expenseFunctions={this.expenseFunctions()}
                       itemFunctions={this.itemFunctions()}
+                      import={this.openImport}
                       category={this.state.category} />
 
             <div className='row collapse overviews'>
               <CategoryOverview category={this.state.category} />
-              <Overview budget={this.state.budget} updateBudget={this.updateBudget} saveBudget={this.saveBudget} />
+              <Overview budget={this.state.budget} saveBudget={this.saveBudget} />
             </div>
-            <ImportModal category={this.state.category} />
+            <ImportModal category={this.state.category}
+                         hidden={this.state.importHidden}
+                         import={this.import}
+                         cancel={this.cancelImport} />
           </div>
         </div>
         <Confirm name={this.state.modal.item.name}

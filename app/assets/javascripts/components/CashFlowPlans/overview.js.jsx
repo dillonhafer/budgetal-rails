@@ -47,7 +47,7 @@ var Overview = React.createClass({
                   </div>
                 </div>
                 <hr />
-                <BudgetForm budget={budget} saveBudget={this.props.saveBudget} updateBudget={this.props.updateBudget} />
+                <BudgetForm budget={budget} saveBudget={this.props.saveBudget} />
                 <Chart selector='monthly-overview' spent={this.percentSpent()} remaining={100 - this.percentSpent()} />
               </li>
             </ul>
