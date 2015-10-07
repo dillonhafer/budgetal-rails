@@ -108,7 +108,7 @@ var CashFlowPlan = React.createClass({
   },
   _budgetItemSaved(index, budget_item, err) {
     let category = this.state.category
-    budget_item.budget_item_expenses = category.budget_items[index].budget_item_expenses
+    budget_item.budget_item_expenses = category.budget_items[index].budget_item_expenses || []
 
     category.budget_items[index] = budget_item
     this.setState({category: category})
@@ -140,7 +140,7 @@ var CashFlowPlan = React.createClass({
   addBudgetItem: function(e) {
     e.preventDefault()
     var category = this.state.category
-    category.budget_items.push({category_id: category.id, amount_budgeted: 0.00, budget_item_expenses: []})
+    category.budget_items.push({category_id: category.id, amount_budgeted: 0.00})
     this.setState({category: category})
   },
   updateBudgetItem: function(index, updatedBudgetItem) {
