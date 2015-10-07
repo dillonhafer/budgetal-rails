@@ -45,7 +45,14 @@
 @mixin rotate($deg){
   transform: rotate($deg);
   -webkit-transform: rotate($deg);
-  -ms-transform: rotate($deg);  
-  -moz-transform: rotate($deg); 
-  -o-transform: rotate($deg); 
+  -ms-transform: rotate($deg);
+  -moz-transform: rotate($deg);
+  -o-transform: rotate($deg);
+}
+
+@mixin category-background() {
+  height: 30px;
+  background-image: url('<%= asset_path('categories.png') %>');
+  background-repeat: no-repeat;
+  background-size: 30px;
 }

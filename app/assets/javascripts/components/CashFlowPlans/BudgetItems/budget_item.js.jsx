@@ -57,13 +57,11 @@ var BudgetItem = React.createClass({
 			<div className='draggable-budget-item'>
 			  <div className='row'>
 				  <form onSubmit={this.save} data-abide>
-				    <div className="large-1 medium-1 columns centered">
-				      <a href='#' onClick={this.toggleExpenses} className='show-expenses'><i className={toggleClasses}></i></a>
-				    </div>
 				    <div className="large-4 medium-4 columns budget-item-name">
+				      <a href='#' onClick={this.toggleExpenses} className='show-expenses'><i className={toggleClasses}></i></a>
 				    	<InputField onChange={this.update.bind(this, item)} type='text' name='name' placeholder='Name' value={item.name} errors={item.errors} />
 				    </div>
-				    <div className="large-2 medium-2 columns text-right budget-item-amount-spent">
+				    <div className="large-1 medium-1 columns text-right budget-item-amount-spent">
 				      {numberToCurrency(this.spent())}
 				    </div>
 				    <div className="large-2 medium-2 columns text-right budget-item-amount-budgeted">
@@ -78,6 +76,7 @@ var BudgetItem = React.createClass({
 	              <li><a href='#' onClick={this.delete} title='Remove this item' className='tiny alert radius button'>delete</a></li>
 	            </ul>
 				    </div>
+				    <div className='large-2 medium-2 columns'></div>
 			    </form>
 			  </div>
 		    <ExpenseList className={expensesClasses} expenses={item.budget_item_expenses} budgetItemId={this.props.budgetItem.id} functions={this.props.expenseFunctions} />

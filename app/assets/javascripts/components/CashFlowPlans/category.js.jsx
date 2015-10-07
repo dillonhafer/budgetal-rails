@@ -6,7 +6,7 @@ var Category = React.createClass({
     import: React.PropTypes.func.isRequired
   },
 	render: function() {
-    var headerClasses = classNames('row', 'type-labels', {
+    var headerClasses = classNames('row', 'budget-item-labels', {
       hide: this.props.category.budget_items.length === 0
     });
     var messageClasses = classNames('text-center', {
@@ -26,17 +26,17 @@ var Category = React.createClass({
           <ul className="main-budget-categories">
             <li>
               <div className={headerClasses}>
-                <div className="large-2 medium-2 large-offset-5 medium-offset-5 columns text-right">
+                <div className="large-1 medium-1 large-offset-4 medium-offset-4 columns text-right">
                   Spent
                 </div>
                 <div className="large-2 medium-2 columns text-right">
                   Budgeted
                 </div>
-                <div className="large-3 medium-3 columns">
+                <div className="large-1 medium-1 columns">
                   Difference
                 </div>
+                <div className="large-4 medium-4 columns"></div>
               </div>
-              <br />
               <p className={messageClasses}>You haven't added any budget items yet.</p>
             	<BudgetItemList functions={this.props.itemFunctions}
                               expenseFunctions={this.props.expenseFunctions}

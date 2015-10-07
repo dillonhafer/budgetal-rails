@@ -270,8 +270,6 @@ ul.main-budget-categories {
   width: 24% !important;
 }
 
-.type-labels div {text-decoration: underline;}
-
 .expense-list div.row {
   border-bottom: 1px dashed #CCC;
   background: #f6f6f6;
@@ -281,17 +279,20 @@ ul.main-budget-categories {
     border: none;
     border: 1px solid #CCC;
     box-shadow: none;
-    background: #f6f6f6;
+    background: #FFF;
   }
 
   .button-group {
     display: flex;
-    margin-top: 1.2em;
 
     li {
       flex: 1;
     }
   }
+}
+div.row.expense-header-row {
+  border-bottom: none;
+  label {text-decoration: underline;}
 }
 
 .remove_nested_fields {
@@ -312,10 +313,38 @@ ul.main-budget-categories {
     }
   }
 }
+.no-expenses {
+  background: #f6f6f6;
+  margin-bottom: 0;
+  text-align: center;
+  padding: 2em 0 0em;
+}
+
+.add-expense-link-row {
+  border-bottom: 1px dashed #CCC;
+  background: #f6f6f6;
+  padding-left: 1em;
+}
+
+.button.add-item-link {
+  margin-top: 1.25rem;
+}
+
+.budget-item-name {
+  display: flex;
+  align-items: center;
+  div {width: 100%;}
+  div input { margin-bottom: 0; }
+}
 
 a.show-expenses {
   font-weight: bold;
   font-size: 20px;
+  margin-right: 0.5em;
+
+  i::before {
+    font-size: 26px;
+  }
 }
 
 #contentmain img {height: 27px; width: 27px;}
@@ -326,14 +355,6 @@ a.show-expenses {
 
 .active-li {
   background: #EEE;
-}
-
-.f-dropdown.active-recent-expenses, .f-dropdown.active-recent-expenses * {
-
-}
-
-.f-dropdown {
-
 }
 
 input[type="text"] {
@@ -723,90 +744,43 @@ ul.main-budget-categories li.no-container li {
 
 .icon-bar .item:not(.header) label {
   padding-left: 40px;
+  @include category-background;
 }
 .sidebar-charity label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px 0px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-saving label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -30px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-housing label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -60px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-utilities label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -90px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-food label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -120px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-clothing label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -150px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-transportation label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -180px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-medical-health label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -210px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-insurance label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -240px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-personal label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -270px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-recreation label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -300px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 .sidebar-debts label {
-  height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
   background-position: 0px -330px;
-  background-repeat: no-repeat;
-  background-size: 30px;
 }
 
 .button.add-expense-link { margin-top: 15px; }
@@ -835,7 +809,6 @@ ul.predicted-expenses {
   width: 10em;
   box-shadow: 0 0 12px rgba(0, 0, 0, .2);
   z-index: 9327;
-  font-family: $mc_font_family;
   font-size: 0.9em;
 
   li {
@@ -853,3 +826,11 @@ ul.predicted-expenses {
   }
 }
 
+.budget-item-labels div {
+  margin-bottom: 0.7em;
+  text-decoration: underline;
+}
+
+.fields {
+  margin-bottom: 20px;
+}
