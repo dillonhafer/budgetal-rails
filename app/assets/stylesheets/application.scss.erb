@@ -829,6 +829,29 @@ ul.predicted-expenses {
       }
     }
   }
+
+  &:after, &:before {
+    bottom: 100%;
+    left: 20%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #fffFFF;
+    border-width: 14px;
+    margin-left: -14px;
+  }
+  &:before {
+    border-color: rgba(204, 204, 204, 0);
+    border-bottom-color: #CCC;
+    border-width: 15px;
+    margin-left: -15px;
+  }
 }
 
 .budget-item-labels div {
