@@ -31,7 +31,7 @@ String.prototype.capitalize = function() {
 
 function showMessage(message) {
   $(".flash-holder").append($('<div class="flash-box"></div>').html(message));
-  $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
+  $(".flash-box").fadeIn(400).delay(1700).fadeOut(250, function() {$(this).remove()});
 }
 
 $(document).on('focus', '.get-date', function(e) {
