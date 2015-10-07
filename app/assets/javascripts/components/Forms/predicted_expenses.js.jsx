@@ -14,7 +14,7 @@ var PredictedExpenses = React.createClass({
       <ul className={cls}>
         {
           _.map(this.props.predictions, function(word, key) {
-            return <li key={key} onMouseDown={self.select}>{word}</li>
+            return <li key={key}><a href='javscript:void(0)' onMouseDown={self.select}>{word}</a></li>
           })
         }
       </ul>

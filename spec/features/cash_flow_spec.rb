@@ -67,6 +67,91 @@ feature 'Budgets', js: true do
         click_link 'Delete Saver'
         expect(page).to have_content("You haven't added any budget items yet.")
       end
+
+      it 'I can add a budget item expense' do
+        create_budget_item
+        create_expense
+      end
+
+      it 'I can edit a budget item expense' do
+        create_budget_item
+        create_expense
+
+        within '.expense-list' do
+          fill_in 'name', with: 'Donuts'
+          fill_in 'amount', with: ''
+          fill_in 'amount', with: '6'
+          click_on 'save'
+        end
+        expect(page).to have_selector '.flash-box', text: 'Saved Donuts'
+
+        within '.expense-list' do
+          expect(page).to have_field('name', with: 'Donuts')
+          expect(page).to have_field('amount', with: '6.00')
+        end
+      end
+
+      it 'I can delete a budget item expense' do
+        create_budget_item
+        create_expense
+        within '.expense-list' do
+          click_on 'delete'
+        end
+
+        click_link "Delete Amazon"
+        expect(page).to have_content("You haven't added any expenses yet")
+      end
+
+      it 'I can use the autocomplete list to add an expense' do
+        budget = FactoryGirl.create(:budget, :with_budget_items)
+        FactoryGirl.create(:budget_item_expense, budget_item: budget.budget_items.first)
+        FactoryGirl.create(:budget_item_expense, budget_item: budget.budget_items.first)
+        create_budget_item
+        create_expense
+
+        within '.expense-list' do
+          fill_in 'name', with: 'ama'
+
+          within '.predicted-expenses' do
+            click_on 'Amazon'
+          end
+
+          expect(page).to have_field('name', with: 'Amazon')
+        end
+      end
     end
   end
+end
+
+def create_budget_item
+  expect(page).to have_content "You haven't added any budget items yet."
+  expect(page).to have_selector 'h5', text: 'You have $4,000.00 Remaining to budget'
+  click_on 'Add a budget item'
+  fill_in 'name', with: 'Gifts'
+  fill_in 'amount_budgeted', with: '3'
+  click_on 'save'
+  expect(page).to have_selector '.flash-box', text: 'Saved Gifts'
+  expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
+end
+
+def create_expense
+  find('.show-expenses').click
+  within '.expense-list' do
+    click_on 'Add an expense'
+    find('.get-date').click
+  end
+
+  within('#minical_calendar_0') do
+    expect(page).to have_selector 'a', text: '25'
+    click_link '25'
+  end
+
+  within '.expense-list' do
+    fill_in 'name', with: 'Amazon'
+    fill_in 'amount', with: '3'
+    click_on 'save'
+  end
+  expect(page).to have_field('name', with: 'Amazon')
+  expect(page).to have_field('amount', with: '3.00')
+  expect(page).to have_selector '.flash-box', text: 'Saved Amazon'
 end

@@ -813,15 +813,20 @@ ul.predicted-expenses {
 
   li {
     list-style-type: none;
-    border-bottom: 1px solid #CCC;
-    padding: 0.5em;
-    color: #333;
-    background: white;
 
-    &:hover, &.active {
-      cursor: pointer;
-      background: #69F;
-      color: white;
+    a {
+      border-bottom: 1px solid #CCC;
+      background: white;
+      padding: 0.5em;
+      width: 100%;
+      display: block;
+      color: #333;
+
+      &:hover, &.active {
+        cursor: pointer;
+        background: #69F;
+        color: white;
+      }
     }
   }
 }

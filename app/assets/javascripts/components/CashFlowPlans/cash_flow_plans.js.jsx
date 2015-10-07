@@ -140,7 +140,7 @@ var CashFlowPlan = React.createClass({
   addBudgetItem: function(e) {
     e.preventDefault()
     var category = this.state.category
-    category.budget_items.push({category_id: category.id, amount_budgeted: 0.00})
+    category.budget_items.push({category_id: category.id, amount_budgeted: 0.00, budget_item_expenses: []})
     this.setState({category: category})
   },
   updateBudgetItem: function(index, updatedBudgetItem) {
