@@ -109,9 +109,15 @@ var AnnualBudget = React.createClass({
     this._fetchBudget({year: year})
     this.setState({showForm: false})
   },
+  hideYearForm: function() {
+    this.setState({showForm: false})
+  },
   showForm(e) {
     e.preventDefault()
     this.setState({showForm: true})
+    setTimeout(function() {
+      document.querySelector('#annual_budget_year').focus()
+    }, 100)
   },
   addItem(e) {
     e.preventDefault()
@@ -139,7 +145,7 @@ var AnnualBudget = React.createClass({
           <span className={formClasses}>
             <p>
               <label htmlFor="annual_budget_year">Change Budget Year</label>
-              <select id="annual_budget_year" name='annual_budget_year' value={this.state.budget.year} onChange={this.changeYear}>
+              <select id="annual_budget_year" name='annual_budget_year' value={this.state.budget.year} onBlur={this.hideYearForm} onChange={this.changeYear}>
                 <option value="2015">2015</option>
                 <option value="2016">2016</option>
               </select>
