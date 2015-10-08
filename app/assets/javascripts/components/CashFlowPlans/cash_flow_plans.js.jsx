@@ -108,10 +108,12 @@ var CashFlowPlan = React.createClass({
   },
   _budgetItemSaved(index, budget_item, err) {
     let category = this.state.category
-    budget_item.budget_item_expenses = category.budget_items[index].budget_item_expenses || []
+    let budget = _.assign({}, this.state.budget, budget_item.budget)
 
+    budget_item.budget_item_expenses = category.budget_items[index].budget_item_expenses || []
     category.budget_items[index] = budget_item
-    this.setState({category: category})
+
+    this.setState({category: category, budget: budget})
     showMessage(`Saved ${budget_item.name}`)
   },
   _saveItemFail(index, xhr, status, err) {
@@ -194,9 +196,11 @@ var CashFlowPlan = React.createClass({
   },
   _expenseSaved(index, expense, err) {
     let category = this.state.category
+    let budget = _.assign({}, this.state.budget, expense.budget)
     var budget_item = _.where(category.budget_items, {'id': expense.budget_item_id})[0]
+
     budget_item.budget_item_expenses[index] = expense
-    this.setState({category: category})
+    this.setState({category: category, budget: budget})
     showMessage(`Saved ${expense.name}`)
   },
   updateExpense: function(index, updatedExpense) {
