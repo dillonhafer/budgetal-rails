@@ -21,6 +21,7 @@ var CategoryList = React.createClass({
   },
   dropped: function(item_id, response) {
     this.props.moveBudgetItem(item_id)
+    document.querySelector('a.item.active').focus()
     showMessage(response.message)
   },
   drop: function(e) {
@@ -34,16 +35,24 @@ var CategoryList = React.createClass({
         .done(this.dropped.bind(null, item_id))
     }
   },
-  dragover: function(e) {e.preventDefault()},
-	render: function() {
+  dragOver: function(e) {
+    e.preventDefault()
+    if (e.target.tagName === 'A') {
+      var link = e.target
+    } else {
+      var link = e.target.parentElement
+    }
+    link.focus()
+  },
+  render: function() {
     let changeYear = classNames({
       'tooltip animate': true,
       fadeInUpBig2: this.state.showForm,
       hide: !this.state.showForm
     });
     var self = this;
-		return (
-			<div className='large-2 medium-2 hide-for-small-down columns category-list'>
+    return (
+      <div className='large-2 medium-2 hide-for-small-down columns category-list'>
         <div className="icon-bar vertical six-up label-right">
           <a onClick={this.toggleChangeBudget} className='item header text-center' href='#'>
             <label><i className='fi-calendar'></i> {monthName(this.props.budget.month)} {this.props.budget.year}</label>
@@ -52,18 +61,18 @@ var CategoryList = React.createClass({
             <p>
               <label htmlFor="budget_month">Change Budget</label>
               <select id="budget_month" name='budget_month' value={this.props.budget.month} onChange={this.changeYear}>
-								<option value="1">January</option>
-								<option value="2">February</option>
-								<option value="3">March</option>
-								<option value="4">April</option>
-								<option value="5">May</option>
-								<option value="6">June</option>
-								<option value="7">July</option>
-								<option value="8">August</option>
-								<option value="9">September</option>
-								<option value="10">October</option>
-								<option value="11">November</option>
-								<option value="12">December</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
               </select>
               <select id="budget_year" name='budget_year' value={this.props.budget.year} onChange={this.changeYear}>
                 <option value="2015">2015</option>
@@ -79,14 +88,14 @@ var CategoryList = React.createClass({
                 'active': category.id === self.props.currentCategoryId
               }, categoryClass);
               return (
-                <a onDrop={self.drop} onDragOver={self.dragover} key={index} data-id={category.id} onClick={self.changeCategory.bind(this, category)} href="#" className={classes}>
-                  <label onDrop={self.drop} onDragOver={self.dragover} data-id={category.id}>{category.name}</label>
+                <a onDrop={self.drop} onDragOver={self.dragOver} key={index} data-id={category.id} onClick={self.changeCategory.bind(this, category)} href="#" className={classes}>
+                  <label onDrop={self.drop} onDragOver={self.dragOver} data-id={category.id}>{category.name}</label>
                 </a>
               );
             })
           }
         </div>
       </div>
-		)
-	}
+    )
+  }
 })
