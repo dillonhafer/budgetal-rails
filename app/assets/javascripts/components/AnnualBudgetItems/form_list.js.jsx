@@ -27,7 +27,7 @@ var AnnualBudgetFormList = React.createClass({
 
 	      <div className='annual-items-forms'>
           {this.forms()}
-          <a href='#' onClick={this.props.addItem} className='tiny button radius add-nested-item'>Add Item</a>
+          <a href='#' onClick={this.props.addItem} className='tiny button radius add-nested-item'><i className='fi-icon fi-plus'></i> Add an Item</a>
         </div>
       </div>
     )

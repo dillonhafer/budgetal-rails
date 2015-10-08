@@ -394,13 +394,8 @@ span.tooltip {
   line-height:30px;
   text-align: left;
   background: #FFF;
-  @include shadow-big;
+  @include shadow;
   @include vendor(border-radius, 3px);
-
-  &.annual-budget-tooltip {
-    margin-left: 245px !important;
-    display: block;
-  }
 
   p {
     label {color: black;}
@@ -431,23 +426,35 @@ span.tooltip {
     border-width: 15px;
     margin-top: -15px;
   }
-}
 
-
-
-span.annual-budget-tooltip:after {
-  left: 100%;
-  top: 40px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(136, 183, 213, 0);
-  border-left-color: #DEDEDE;
-  border-width: 12px;
-  margin-top: -12px;
+  &.annual-budget-tooltip {
+    margin-left: 240px !important;
+    display: block;
+  }
+  &.annual-budget-tooltip:after, &.annual-budget-tooltip:before {
+    left: 100%;
+    bottom: 20%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &.annual-budget-tooltip:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fffFFF;
+    border-width: 14px;
+    margin-bottom: -14px;
+    margin-top: 5px;
+  }
+  &.annual-budget-tooltip:before {
+    border-color: rgba(204, 204, 204, 0);
+    border-left-color: #CCC;
+    border-width: 15px;
+    margin-bottom: -15px;
+    margin-top: 4px;
+  }
 }
 
 span.tooltip:hover {
