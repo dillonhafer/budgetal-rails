@@ -5,6 +5,14 @@ var CategoryOverview = React.createClass({
 		  return parseFloat(previousItem) + parseFloat(currentItem.amount_budgeted);
 		}, 0.00);
 	},
+	getDefaultProps: function() {
+		return {
+			monthlyIncome: 0.00
+		}
+	},
+	percentOfBudget: function() {
+		return parseInt(this.budgeted() / this.props.monthlyIncome * 100);
+	},
 	remaining: function() {
 		return this.budgeted() - this.spent()
 	},
@@ -71,7 +79,7 @@ var CategoryOverview = React.createClass({
 	            </div>
 			        <hr />
 			        <p>
-			          You have budgeted {numberToCurrency(this.budgeted())} ({this.props.percentOfBudget}%) towards {this.props.category.name}, we recommend you only budget {this.props.category.percentage}.
+			          You have budgeted {numberToCurrency(this.budgeted())} ({this.percentOfBudget()}%) towards {this.props.category.name}, we recommend you only budget {this.props.category.percentage}.
 			        </p>
 			        <Chart selector='category-overview' spent={this.percentSpent()} remaining={100 - this.percentSpent()} />
 			      </li>

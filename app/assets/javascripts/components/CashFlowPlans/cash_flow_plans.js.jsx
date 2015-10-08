@@ -283,7 +283,7 @@ var CashFlowPlan = React.createClass({
                       category={this.state.category} />
 
             <div className='row collapse overviews'>
-              <CategoryOverview category={this.state.category} />
+              <CategoryOverview category={this.state.category} monthlyIncome={this.state.budget.monthly_income} />
               <Overview budget={this.state.budget} saveBudget={this.saveBudget} />
             </div>
             <ImportModal category={this.state.category}
