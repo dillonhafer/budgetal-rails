@@ -50,7 +50,7 @@ feature 'Budgets', js: true do
         click_on 'Add a budget item'
         fill_in 'name', with: 'Gifts'
         fill_in 'amount_budgeted', with: '3'
-        click_on 'save'
+        click_on 'Save'
         expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
 
         visit my_budgets_path(year: Date.today.year, month: Date.today.month)
@@ -58,12 +58,12 @@ feature 'Budgets', js: true do
         expect(page).to have_field('amount_budgeted', with: '3.00')
         fill_in 'name', with: 'Saver'
         fill_in 'amount_budgeted', with: '6'
-        click_on 'save'
+        click_on 'Save'
         visit my_budgets_path(year: Date.today.year, month: Date.today.month)
         expect(page).to have_field('name', with: 'Saver')
         expect(page).to have_field('amount_budgeted', with: '6.00')
 
-        click_on 'delete'
+        click_on 'Delete'
         click_link 'Delete Saver'
         expect(page).to have_content("You haven't added any budget items yet.")
       end
@@ -81,7 +81,7 @@ feature 'Budgets', js: true do
           fill_in 'name', with: 'Donuts'
           fill_in 'amount', with: ''
           fill_in 'amount', with: '6'
-          click_on 'save'
+          click_on 'Save'
         end
         expect(page).to have_selector '.flash-box', text: 'Saved Donuts'
 
@@ -95,7 +95,7 @@ feature 'Budgets', js: true do
         create_budget_item
         create_expense
         within '.expense-list' do
-          click_on 'delete'
+          click_on 'Delete'
         end
 
         click_link "Delete Amazon"
@@ -129,7 +129,7 @@ def create_budget_item
   click_on 'Add a budget item'
   fill_in 'name', with: 'Gifts'
   fill_in 'amount_budgeted', with: '3'
-  click_on 'save'
+  click_on 'Save'
   expect(page).to have_selector '.flash-box', text: 'Saved Gifts'
   expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
 end
@@ -149,7 +149,7 @@ def create_expense
   within '.expense-list' do
     fill_in 'name', with: 'Amazon'
     fill_in 'amount', with: '3'
-    click_on 'save'
+    click_on 'Save'
   end
   expect(page).to have_field('name', with: 'Amazon')
   expect(page).to have_field('amount', with: '3.00')

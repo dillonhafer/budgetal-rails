@@ -13,7 +13,7 @@ feature 'Annual Budgets', js: true do
       end
 
       it 'I can add a budget item' do
-        click_on 'Add Item'
+        click_on 'Add an Item'
         fill_in 'name', with: 'Insurrance'
         fill_in 'amount', with: '300'
         find('.get-date').click
@@ -21,7 +21,7 @@ feature 'Annual Budgets', js: true do
           expect(page).to have_selector 'a', text: '25'
           click_link '25'
         end
-        click_link 'save'
+        click_on 'Save'
         visit annual_budgets_path(year: Date.today.year)
         expect(page).to have_content("Insurrance")
       end
@@ -42,7 +42,7 @@ feature 'Annual Budgets', js: true do
           expect(page).to have_selector 'a', text: '25'
           click_link '25'
         end
-        click_link 'save'
+        click_on 'Save'
         visit annual_budgets_path(year: Date.today.year)
         expect(page).to have_content("Gas")
         expect(page).not_to have_content(@item.name)
@@ -50,7 +50,7 @@ feature 'Annual Budgets', js: true do
 
       it 'can delete the item' do
         expect(page).to have_content(@item.name)
-        click_link 'delete'
+        click_link 'Delete'
         click_link "Delete #{@item.name}"
         expect(page).to have_content("You haven't added any budget items yet.")
       end
