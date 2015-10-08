@@ -13,8 +13,7 @@
       <ul class='off-canvas-list'>
         <% @budget.budget_categories.order(:id).each do |c| %>
           <li>
-          <%= link_to "#mobile#{c.name.gsub('/', '-')}", class: 'item' do %>
-            <%= image_tag "#{c.name}.png", class: 'mobile-icon' %>
+          <%= link_to "#mobile#{c.name.gsub('/', '-')}", class: "item sidebar-#{c.name.gsub('/', '-')}" do %>
             <%= c.name %>
           <% end %>
           </li>
@@ -35,8 +34,8 @@
 </div>
 
 <section>
-  <div style='padding-left: 0' class='large-2 medium-2 hide-for-small-down columns'>
-    <div style='width: 100%' class="icon-bar vertical six-up label-right">
+  <div class='large-2 medium-2 hide-for-small-down columns category-list'>
+    <div class="icon-bar vertical six-up label-right">
       <a class='item header text-center' href='#'>
         <label><i class='fi-calendar'></i> <%= Date::MONTHNAMES[@budget.month.to_i].upcase %> <%= @budget.year %></label>
       </a>
@@ -48,8 +47,7 @@
         </p>
       </span>
       <% @budget.budget_categories.order(:id).each do |c| %>
-        <%= link_to "#desktop#{c.name.gsub('/', '-')}", class: 'item side-item' do %>
-          <%= image_tag "#{c.name}.png" %>
+        <%= link_to "#desktop#{c.name.gsub('/', '-')}", class: "item sidebar-#{c.name.downcase.gsub('/', '-')}" do %>
           <label><%= c.name %></label>
         <% end %>
       <% end %>
