@@ -20,6 +20,7 @@ Budgets::Application.configure do
   config.action_mailer.default_url_options = { host: "localhost" }
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
