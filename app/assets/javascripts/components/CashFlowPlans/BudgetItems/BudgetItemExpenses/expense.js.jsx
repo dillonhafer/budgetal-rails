@@ -65,13 +65,11 @@ var Expense = React.createClass({
           <div className="large-2 medium-2 columns">
             <InputField type='number' name='amount' placeholder='0.00' onChange={this.update.bind(this, expense)} defaultValue={numberToCurrency(expense.amount,'')} value={expense.amount} step='any' min='0.00' className='expense-item-field' errors={expense.errors} />
           </div>
-          <div className='large-2 medium-2 columns'>
-            <ul className="button-group radius even-2">
-              <li><input type='submit' title='Save' className='tiny success radius button' value='save' /></li>
-              <li><a href='#' onClick={this.delete} title='Remove this expense' className='tiny alert radius button'>delete</a></li>
-            </ul>
+          <div className='large-6 medium-6 columns'>
+            <button type='submit' title='Save Expense' className='tiny success radius button'><i className='fi-icon fi-check'></i> Save</button>
+            &nbsp;
+            <a href='#' onClick={this.delete} title='Delete Expense' className='tiny alert radius button'><i className='fi-icon fi-trash'></i> Delete</a>
           </div>
-          <div className='large-4 medium-4 columns'></div>
         </div>
       </form>
     )

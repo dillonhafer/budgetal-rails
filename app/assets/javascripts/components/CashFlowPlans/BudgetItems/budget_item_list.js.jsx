@@ -21,7 +21,9 @@ var BudgetItemList = React.createClass({
 		return (
 			<div className="row new-budget-item">
 			 {this.budgetItems()}
-				<a href='#' onClick={this.props.functions.add} className='add-item-link tiny button radius success'>Add a budget item</a>
+				<a href='#' onClick={this.props.functions.add} className='add-item-link tiny button radius'>
+          <i className='fi-icon fi-plus'></i> Add a budget item
+        </a>
 			</div>
 		)
 	}

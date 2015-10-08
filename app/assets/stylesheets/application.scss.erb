@@ -383,50 +383,57 @@ a:active {
 }
 
 span.tooltip {
+  display: block;
+  z-index:10;
+  padding:14px !important;
+  margin-top:-75px !important;
+  margin-left:75px !important;
+  width:200px !important;
+  border: 1px solid #ccc;
+  color: black;
+  line-height:30px;
+  text-align: left;
+  background: #FFF;
+  @include shadow-big;
+  @include vendor(border-radius, 3px);
+
+  &.annual-budget-tooltip {
+    margin-left: 245px !important;
     display: block;
-    z-index:10;
-    padding:14px !important;
-    margin-top:-75px !important;
-    margin-left:75px !important;
-    width:200px !important;
-    color: black;
-    line-height:30px;
-    text-align: left;
-    background: #DEDEDE;
-    @include shadow-big;
-    @include vendor(border-radius, 3px);
+  }
 
-    &.annual-budget-tooltip {
-      margin-left: 245px !important;
-      display: block;
-    }
+  p {
+    label {color: black;}
+    padding: 8px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
 
-    p {
-      label {color: black;}
-      padding: 8px;
-      padding-bottom: 0;
-      margin-bottom: 0;
-
-      input[type="submit"] {
-        margin-bottom: 5px;
-      }
-    }
+  &:after, &:before {
+    right: 100%;
+    top: 20%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-right-color: #fffFFF;
+    border-width: 14px;
+    margin-top: -14px;
+  }
+  &:before {
+    border-color: rgba(204, 204, 204, 0);
+    border-right-color: #CCC;
+    border-width: 15px;
+    margin-top: -15px;
+  }
 }
 
-span.tooltip:after {
-  right: 100%;
-  top: 40px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(136, 183, 213, 0);
-  border-right-color: #DEDEDE;
-  border-width: 12px;
-  margin-top: -12px;
-}
+
 
 span.annual-budget-tooltip:after {
   left: 100%;
@@ -444,7 +451,7 @@ span.annual-budget-tooltip:after {
 }
 
 span.tooltip:hover {
-  background: #DEDEDE !important;
+  background: #FFF !important;
 }
 
 span.tooltip.active {
@@ -607,10 +614,6 @@ ul.main-budget-categories li.no-container li {
   padding: 20px 16px;
   border-radius: 3px;
   z-index: 9999999999;
-}
-
-.move-cursor {
-  cursor: move;
 }
 
 .main-budget-categories.main-annual-budget {

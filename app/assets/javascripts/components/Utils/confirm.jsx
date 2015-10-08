@@ -20,7 +20,9 @@ var Confirm = React.createClass({
           <p>Are you sure you want to delete</p>
           <p><strong>{this.props.name}</strong></p>
           <p>This cannot be undone.</p>
-          <a id="content-settings-overlay-confirm" href='#' className="tiny button alert radius" onClick={this.props.delete}>Delete {this.props.name}</a>
+          <a id="content-settings-overlay-confirm" href='#' className="small button alert radius" onClick={this.props.delete}>
+            <i className='fi-icon fi-trash'></i> Delete {this.props.name}
+          </a>
         </div>
       </div>
     );

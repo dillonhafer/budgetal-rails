@@ -70,13 +70,11 @@ var BudgetItem = React.createClass({
 				    <div className="large-1 medium-1 columns text-right">
 			        <span className={this.remainingClass()}>{numberToCurrency(this.remaining())}</span>
 				    </div>
-				    <div className='large-2 medium-2 columns'>
-					    <ul className="button-group radius even-2">
-	              <li><input type='submit' title='Save' className='tiny success radius button' value='save' /></li>
-	              <li><a href='#' onClick={this.delete} title='Remove this item' className='tiny alert radius button'>delete</a></li>
-	            </ul>
-				    </div>
-				    <div className='large-2 medium-2 columns'></div>
+				    <div className='large-4 medium-4 columns'>
+	            <button type='submit' title='Save Budget Item' className='tiny success radius button'><i className='fi-icon fi-check'></i> Save</button>
+	            &nbsp;
+	            <a href='#' onClick={this.delete} title='Delete Budget Item' className='tiny alert radius button'><i className='fi-icon fi-trash'></i> Delete</a>
+	          </div>
 			    </form>
 			  </div>
 		    <ExpenseList className={expensesClasses} expenses={item.budget_item_expenses} budgetItemId={this.props.budgetItem.id} functions={this.props.expenseFunctions} />

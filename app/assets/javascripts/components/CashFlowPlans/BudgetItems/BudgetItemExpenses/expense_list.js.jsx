@@ -48,7 +48,11 @@ var ExpenseList = React.createClass({
 				<div className="fields">
 					{this.headerRow()}
 					{this.expenses()}
-				  <div className='add-expense-link-row'><a href='#' onClick={this.add} className='add-expense-link tiny button radius yellow'>Add an expense</a></div>
+				  <div className='add-expense-link-row'>
+					  <a href='#' onClick={this.add} className='add-expense-link tiny button radius success'>
+						  <i className='fi-icon fi-plus'></i> Add an expense
+					  </a>
+				  </div>
 				</div>
 			</div>
 		)

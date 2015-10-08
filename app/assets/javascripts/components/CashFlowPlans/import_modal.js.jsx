@@ -17,7 +17,9 @@ var ImportModal = React.createClass({
           <h3 className='text-center blue-color'>Import</h3>
           <hr />
           <p>Do you want to import budget items from your previous month's <strong>{this.props.category.name}</strong> category?</p>
-          <a id="content-settings-overlay-confirm" href='#' className="tiny button expand radius" onClick={this.props.import}>Import</a>
+          <a id="content-settings-overlay-confirm" href='#' className="small button expand radius" onClick={this.props.import}>
+            <i className='fi-icon fi-download'></i> Import {this.props.category.name}
+          </a>
         </div>
       </div>
     );
