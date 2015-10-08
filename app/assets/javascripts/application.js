@@ -15,7 +15,6 @@
 //= require foundation
 //= require foundation/foundation.topbar
 //= require foundation/foundation.reveal
-//= require jquery-ui.min
 //= require highcharts
 //= require react
 //= require react_ujs
@@ -23,7 +22,6 @@
 //= require components
 //= require class-set
 //= require jquery.minical
-//= require_tree .
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -60,6 +58,13 @@ $(document).ready(function() {
       $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
     }
   });
+
+  window.onpopstate = function(e) {
+    if (e.state) {
+      document.title = e.state.pageTitle;
+      return $('#month-view').html(e.state.html);
+    }
+  };
 });
 
 $(function(){$(document).foundation();});
@@ -115,4 +120,22 @@ $(document).on('click', '.option-link', function(e) {
     default:
       return false;
     }
+});
+
+$(document).on('click', '#change-spending', function(e) {
+  var month, year;
+  year = $(this).prev('select').val();
+  month = $(this).prev().prev('select').val();
+  return window.location = "/allocation-plans/" + year + "/" + month;
+});
+
+$(document).on('click', '.item.side-item', function(e) {
+  var id, offset, top;
+  e.preventDefault();
+  id = $(this).attr("href");
+  offset = $(".tabs-content .active " + id).offset();
+  top = offset.top - 5;
+  return $("html, body").animate({
+    scrollTop: top
+  }, 850);
 });

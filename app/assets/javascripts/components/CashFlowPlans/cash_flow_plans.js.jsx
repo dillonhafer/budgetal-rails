@@ -258,10 +258,18 @@ var CashFlowPlan = React.createClass({
     e.preventDefault()
     this.setState({importHidden: false});
   },
+  moveBudgetItem: function(item_id) {
+    var category    = this.state.category
+    var idx = _.findIndex(category.budget_items, function(item) {
+      return item.id === parseInt(item_id);
+    });
+    category.budget_items.splice(idx, 1)
+    this.setState({category: category})
+  },
   render: function() {
     return (
       <section>
-        <CategoryList budget={this.state.budget} changeBudget={this.changeBudget} currentCategoryId={this.state.category.id} changeCategory={this.changeCategory} />
+        <CategoryList budget={this.state.budget} moveBudgetItem={this.moveBudgetItem}changeBudget={this.changeBudget} currentCategoryId={this.state.category.id} changeCategory={this.changeCategory} />
 
         <div className='large-10 medium-10 columns hide-for-small-down'>
           <div>

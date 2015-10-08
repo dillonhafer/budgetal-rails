@@ -4,6 +4,9 @@ var CategoryList = React.createClass({
       showForm: false
     }
   },
+  componentWillMount: function() {
+    this.dropped = _.debounce(this.dropped, 100)
+  },
   changeCategory: function(category, e) {
     e.preventDefault();
     this.props.changeCategory(category.id);
@@ -16,6 +19,22 @@ var CategoryList = React.createClass({
     this.props.changeBudget()
     this.setState({showForm: !this.state.showForm})
   },
+  dropped: function(item_id, response) {
+    this.props.moveBudgetItem(item_id)
+    showMessage(response.message)
+  },
+  drop: function(e) {
+    e.preventDefault();
+    var item_id = e.dataTransfer.getData('budget_item_id');
+    var original_category_id = e.dataTransfer.getData('original_category_id');
+    var category_id = e.target.dataset.id;
+
+    if (category_id !== original_category_id) {
+      BudgetItemController.move(category_id, item_id)
+        .done(this.dropped.bind(null, item_id))
+    }
+  },
+  dragover: function(e) {e.preventDefault()},
 	render: function() {
     let changeYear = classNames({
       'tooltip animate': true,
@@ -56,12 +75,12 @@ var CategoryList = React.createClass({
             this.props.budget.budget_categories.map((category, index) => {
               var categoryClass = 'sidebar-'+category.name.toLowerCase().replace('/','-')
               var classes = classNames({
-                'item droppable-category': true,
+                'item': true,
                 'active': category.id === self.props.currentCategoryId
               }, categoryClass);
               return (
-                <a key={index} data-id={category.id} onClick={self.changeCategory.bind(this, category)} href="#" className={classes}>
-                  <label>{category.name}</label>
+                <a onDrop={self.drop} onDragOver={self.dragover} key={index} data-id={category.id} onClick={self.changeCategory.bind(this, category)} href="#" className={classes}>
+                  <label onDrop={self.drop} onDragOver={self.dragover} data-id={category.id}>{category.name}</label>
                 </a>
               );
             })

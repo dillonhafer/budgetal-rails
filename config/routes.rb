@@ -40,7 +40,7 @@ Budgets::Application.routes.draw do
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
   resources :allocation_plan_budget_items, path: '/budgets/:budget_id/allocation-plans/:id/budget-items/:budget_item_id'
 
-  post '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
+  patch '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
 
   get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
   get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics'

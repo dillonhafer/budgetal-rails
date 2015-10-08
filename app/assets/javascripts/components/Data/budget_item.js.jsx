@@ -21,5 +21,13 @@ var BudgetItemController = {
               dataType: 'json',
               method: 'DELETE'
             })
+  },
+  move: function(category_id, item_id) {
+    return $.ajax({
+              url: '/move-budget-item',
+              dataType: 'json',
+              method: 'PATCH',
+              data: {budget_category_id: category_id, id: item_id}
+            })
   }
 }

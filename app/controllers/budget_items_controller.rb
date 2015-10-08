@@ -24,11 +24,8 @@ class BudgetItemsController < AuthenticatedController
   end
 
   def move_item
-    category = current_user.budget_categories.find(params[:move_category_id])
-    @item    = current_user.budget_items.find(params[:move_item_id])
-    @original_category = @item.budget_category
-    @item.update_attributes(budget_category_id: category.id)
-    flash[:notice] = "Moved #{@item.name} to #{category.name}"
+    budget_item.update_attributes(budget_category_id: category.id)
+    render json: {message: "Moved #{budget_item.name} to #{category.name}"}
   end
 
   private
