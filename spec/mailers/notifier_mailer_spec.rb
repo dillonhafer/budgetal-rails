@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/mailer_helper'
 
 describe Notifier, type: :mailer do
 	describe '#new_user' do

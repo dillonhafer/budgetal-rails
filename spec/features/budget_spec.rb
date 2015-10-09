@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/feature_helper'
 
 feature "Budget navigation", :feature do
   scenario "A user can visit a budgets when they done exist" do

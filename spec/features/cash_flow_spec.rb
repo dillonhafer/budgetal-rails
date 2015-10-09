@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/feature_helper'
 
 feature 'Budgets', js: true do
   before(:each) do
