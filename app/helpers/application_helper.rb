@@ -3,6 +3,10 @@ module ApplicationHelper
     content_for(:title, word)
   end
 
+  def month_name(n)
+    Date.new(2012, n.to_i).strftime("%B")
+  end
+
   def meter_class(number)
     number < 0 ? 'red-meter' : 'blue-meter'
   end

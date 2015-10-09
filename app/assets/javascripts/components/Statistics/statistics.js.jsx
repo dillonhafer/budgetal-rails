@@ -42,8 +42,6 @@ var Statistics = React.createClass({
     this._fetchBudget({year: this.yearParam(), month: this.monthParam()})
   },
   _fetchDataDone(data, textStatus, jqXHR) {
-    console.log(data.budget.month)
-    console.log(data)
     this.setState({
       didFetchData: true,
       budget: data.budget
