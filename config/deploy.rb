@@ -4,7 +4,7 @@ require 'mina/git'
 require 'mina/rvm'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
-set :repository, 'ssh://git@bitbucket.org/dhafer/budgets.git'
+set :repository, 'ssh://git@github.com/dillonhafer/budgetal.git'
 
 case ENV['to']
   when 'beta'
