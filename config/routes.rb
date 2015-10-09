@@ -1,7 +1,6 @@
 Budgets::Application.routes.draw do
   root to: 'welcome#index'
 
-  get '/chart' => 'monthly_statistics#chart', as: 'chart'
   get '/privacy' => 'welcome#privacy', as: 'privacy'
 
   devise_for :users,
@@ -30,6 +29,8 @@ Budgets::Application.routes.draw do
   match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
 
   resources :budget_items, path: 'budget-items'
+  patch '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
+
   resources :budget_item_expenses, path: 'budget-item-expenses'
 
   get '/annual-budgets/:year' => 'annual_budgets#index', as: 'annual_budgets'
@@ -40,11 +41,9 @@ Budgets::Application.routes.draw do
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
   resources :allocation_plan_budget_items, path: '/budgets/:budget_id/allocation-plans/:id/budget-items/:budget_item_id'
 
-  patch '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
-
   get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
-  get "/monthly-statistics" => "monthly_statistics#index", as: 'monthly_statistics'
-  get "/monthly-statistics/:year(/:month)" => "monthly_statistics#show", as: 'monthly_statistic'
+  get "/monthly-statistics/:year/:month" => "monthly_statistics#show", as: 'monthly_statistic'
+  get "/monthly-statistics-budget/:year/:month" => "monthly_statistics#budget"
 
   get '/admin' => 'admin#index', as: 'admin'
   get '/my-account' => 'users#my_account', as: 'my_account'

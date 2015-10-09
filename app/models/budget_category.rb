@@ -30,6 +30,10 @@ class BudgetCategory < ActiveRecord::Base
     end
   end
 
+  def percent_of_budget_spent
+    (total_spent / budget.monthly_income).round(2) * 100
+  end
+
   def copy_previous_items
     previous_items.map do |item|
       budget_items.create(name: item.name, amount_budgeted: item.amount_budgeted)
