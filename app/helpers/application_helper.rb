@@ -7,14 +7,6 @@ module ApplicationHelper
     Date.new(2012, n.to_i).strftime("%B")
   end
 
-  def meter_class(number)
-    number < 0 ? 'red-meter' : 'blue-meter'
-  end
-
-  def remaining_class(number)
-    number < 0 ? 'alert-color' : 'blue-color'
-  end
-
   def assets_cache_key
     asset_dir = File.join(Rails.root, 'public', 'assets')
     sha_sum   = %x(find #{asset_dir} -type f -print0 | sort -z | xargs -0 sha1sum | sha1sum)
@@ -30,27 +22,9 @@ module ApplicationHelper
     content_tag(:div, '', class: "reveal-modal #{size}", id: id.to_s, data: {reveal:''})
   end
 
-  def color_for_number(number)
-    if number.to_f > 0.00
-      'green'
-    elsif number.to_f == 0.00
-      'blue'
-    else
-      'red'
-    end
-  end
-
   def link_to_i(icon, text, path, options={})
     link_to("<i class='fi-icon fi-#{icon}'></i> #{text}".html_safe, path, options)
   end
 
-  def nice_float(float)
-    sprintf '%.2f', float
-  end
-
-  def paid_status(paid)
-    text = paid ? 'Paid' : 'Not Paid'
-    css  = paid ? 'success' : 'alert'
-    content_tag(:span, text, class: "label radius #{css}")
-  end
+  private
 end
