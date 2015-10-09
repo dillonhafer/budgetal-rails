@@ -1,13 +1,9 @@
 class BudgetCategoriesController < AuthenticatedController
   include ActionView::Helpers::TextHelper
-
   before_filter :check_date, except: [:import]
   helper_method :budget_category, :budget, :message, :imported_items
-  respond_to :json, :html, :js
 
-  def show
-    respond_with budget_category
-  end
+  respond_to :json
 
   private
 

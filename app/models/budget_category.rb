@@ -36,14 +36,10 @@ class BudgetCategory < ActiveRecord::Base
     end
   end
 
-  def import_count
-    previous_items.count
-  end
-
   def previous_items
     category_date = Date.new(budget.year.to_i, budget.month.to_i)
     previous_date = category_date.advance(months: -1)
-    previous_budget = Budget.find_by(year: previous_date.year.to_s, month: previous_date.month.to_s, user_id: budget.user_id)
+    previous_budget = Budget.find_by(year: previous_date.year, month: previous_date.month, user_id: budget.user_id)
     previous_budget.budget_categories.find_by(name: name).budget_items
   end
 end

@@ -1,10 +1,13 @@
 class MonthlyStatisticsController < AuthenticatedController
-  def show
-    @date   = Date.new(params[:year].to_i, params[:month].to_i).strftime("%B %Y")
-    @budget = current_user.budgets.where(month: params[:month], year: params[:year]).first
+  helper_method :date, :budget
+
+  private
+
+  def date
+    @date ||= Date.new(params[:year].to_i, params[:month].to_i).strftime("%B %Y")
   end
 
-  def chart
-    render layout: false
+  def budget
+    @budget ||= current_user.budgets.includes(:budget_categories).find_by(month: params[:month], year: params[:year])
   end
 end

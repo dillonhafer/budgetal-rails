@@ -1,7 +1,7 @@
 <div class='row collapse'>
   <div class='large-12 columns header-row'>
     <h3>Admin Panel</h3>
-  </div>  
+  </div>
   <div class="small-12 large-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
       <li style='border-top:none' data-equalizer-watch>
@@ -13,24 +13,17 @@
               <th>Last Sign in</th>
               <th>IP</th>
               <th>#</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-          <% @users.each do |u| %>        
+          <% users.each do |u| %>
             <tr>
               <td><%= u.first_name %>, <b><%= u.last_name %></b></td>
               <td><%= u.email %></td>
               <td><%= u.current_sign_in_at.blank? ? '--:--' : u.current_sign_in_at.strftime("%m/%d/%Y %l:%M %p") %></td>
               <td><%= u.current_sign_in_ip %></td>
               <td><%= u.sign_in_count %></td>
-              <td>
-              <a href="#" data-dropdown="user-drop-<%= u.id %>" class="tiny radius blue button dropdown">Actions</a><br>
-                <ul id="user-drop-<%= u.id %>" data-dropdown-content class="f-dropdown">
-                  <li><%= link_to_if (u!=current_user), "Delete User", user_path(u.id), method: :delete, data: {confirm: "You sure?"}, class: 'red-color' %></li>          
-                </ul>
-              </td>
-            </tr>       
+            </tr>
             <% end %>
           </tbody>
         </table>

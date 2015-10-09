@@ -1,3 +1,7 @@
-<% title("#{Date::MONTHNAMES[budget.month.to_i]} #{budget.year}") %>
+<% title("#{budget.pretty_date} #{budget.year}") %>
 
+<section>
 <%= react_component('CashFlowPlan', {id: budget.budget_categories.first.id}) %>
+</section>
+
+<div class='row'></div>

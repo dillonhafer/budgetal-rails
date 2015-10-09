@@ -2,14 +2,12 @@ class AllocationPlansController < AuthenticatedController
   before_filter :check_date, except: [:edit]
   before_filter :find_budget, only: %w{index create update}
 
-  layout 'budget_categories'
-  
   def new
     @new_allocation_plan = AllocationPlan.new
     render layout: !request.xhr?
   end
-  
-  def index    
+
+  def index
     @budgets = []
     (1..12).each do |month|
       @budgets << OpenStruct.new(month: month, year: Date.today.year)
@@ -18,7 +16,7 @@ class AllocationPlansController < AuthenticatedController
     @new_allocation_plan = AllocationPlan.new
   end
 
-  def create    
+  def create
     @allocation_plan = @budget.allocation_plans.new(allocation_plan_params)
     if @allocation_plan.save
       redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Added pay period'
@@ -43,7 +41,7 @@ class AllocationPlansController < AuthenticatedController
 
   def destroy
     @budget_category = BudgetCategory.find(params[:id])
-    @budget_category.destroy    
+    @budget_category.destroy
   end
 
   private
@@ -64,7 +62,7 @@ class AllocationPlansController < AuthenticatedController
       redirect_to root_path
     elsif params[:year].to_i < 2013
       flash[:error] = "We didn't exist back then, I don't think you'll find a budget there."
-      redirect_to root_path      
+      redirect_to root_path
     elsif !(1..12).include?(params[:month].to_i)
       flash[:error] = "You do know there are only 12 months in a year right?"
       redirect_to root_path

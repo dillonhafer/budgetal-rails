@@ -1,11 +1,11 @@
 <div class='row collapse'>
   <div class='large-12 columns header-row'>
-    <h3><%= @date %> <%= link_to 'all', monthly_statistics_path, class: 'right' %></h3>
+    <h3><%= date %> <%= link_to 'all', monthly_statistics_path, class: 'right' %></h3>
   </div>
   <div class="small-12 large-12 columns">
     <ul style='margin-left: 0' class="main-budget-categories">
       <li style='border-top:none'>
-        <% if @budget %>
+        <% if budget %>
           <div id="container" style='height: 390px;width: 100%'></div>
           <% content_for :ready do %>
             function drawChart() {
@@ -98,10 +98,10 @@
                   name: "Money",
                   colorByPoint: true,
                   data: [
-                  <% @budget.budget_categories.each do |c| %>
+                  <% budget.budget_categories.each do |c| %>
                   {
                     name: "<%= c.name %>",
-                    y: <%= (c.total_spent/@budget.monthly_income).round(2) * 100 %>
+                    y: <%= (c.total_spent/budget.monthly_income).round(2) * 100 %>
                   },
                   <% end %>
                   ]

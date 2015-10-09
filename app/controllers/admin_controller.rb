@@ -1,17 +1,12 @@
 class AdminController < ApplicationController
   before_filter :require_admin!
+  helper_method :users
 
-  def index
-    @users = User.all
+  private
+
+  def users
+    @users ||= User.all
   end
-
-  def destroy
-    user = User.find params[:id]
-    user.destroy
-    redirect_to :back, notice: "Deleted user."
-  end
-
-  protected
 
   def require_admin!
     unless current_user.try(:admin?)

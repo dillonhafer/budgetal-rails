@@ -26,7 +26,9 @@
 
     <%= yield %>
 
-    <%= render template: 'shared/footer' %>
+    <section>
+      <%= render template: 'shared/footer' %>
+    </section>
 
     <%= javascript_include_tag "application" %>
     <script><%= yield(:ready) %></script>

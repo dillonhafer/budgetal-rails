@@ -12,13 +12,9 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name, :last_name
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
-  validates :email, :presence => true, :uniqueness => true, :case_sensitive => false
+  validates :email, presence: true, uniqueness: true, case_sensitive: false
 
   after_create :send_welcome_email
-
-  def self.current
-    Thread.current[:user]
-  end
 
   def full_name
     "#{first_name} #{last_name}"
@@ -26,16 +22,6 @@ class User < ActiveRecord::Base
 
   def admin?
     admin
-  end
-
-  def make_admin
-    self.admin = true
-    self.save
-  end
-
-  def remove_admin
-    self.admin = false
-    self.save
   end
 
   def past_expenses(name)

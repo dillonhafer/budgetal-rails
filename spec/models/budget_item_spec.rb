@@ -6,19 +6,6 @@ describe BudgetItem do
   let(:budget_item) { budget.budget_items.first }
   let(:plan) { budget.allocation_plans.create }
 
-  describe '#past_expenses' do
-    it 'returns a list of expense names that have been used more than twice' do
-      FactoryGirl.create :budget_item_expense, name: 'My Gift', budget_item: budget_item
-      FactoryGirl.create :budget_item_expense, name: 'My Gift', budget_item: budget_item
-      FactoryGirl.create :budget_item_expense, name: 'My Gift', budget_item: budget_item
-      expect(budget_item.past_expenses).to eq(['Add a new item', 'My Gift'])
-    end
-
-    it 'returns nothing for expense names that have not been used more than twice' do
-      expect(budget_item.past_expenses).to eq(['Add a new item'])
-    end
-  end
-
   describe '#amount_allocated' do
     it 'returns the amount allocated to allocation plans' do
       plan.allocation_plan_budget_items.create(amount_budgeted: 25.00, budget_item: budget_item)

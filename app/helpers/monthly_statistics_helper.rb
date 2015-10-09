@@ -1,2 +1,0 @@
-module MonthlyStatisticsHelper
-end
