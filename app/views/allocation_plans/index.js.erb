@@ -1,6 +1,6 @@
 $(".ajax-container.overview").html("<%= escape_javascript(render("overview")) %>");
 
-<% if @budget.amount_remaining < 0 %>
+<% if budget.amount_remaining < 0 %>
   $('#budget-remainder .progress').addClass('alert')
 <% else %>
   $('#budget-remainder .progress').removeClass('alert')

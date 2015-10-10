@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :budget_categories, through: :budgets
   has_many :budget_items, through: :budget_categories
   has_many :budget_item_expenses, through: :budget_items
+  has_many :allocation_plans, through: :budgets
 
   devise :database_authenticatable, :registerable, :timeoutable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -18,10 +19,6 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
-  end
-
-  def admin?
-    admin
   end
 
   def past_expenses(name)

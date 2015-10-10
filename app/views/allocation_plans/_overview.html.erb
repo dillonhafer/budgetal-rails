@@ -1,68 +1,68 @@
 <dl class="tabs" data-tab>
-<% @budget.allocation_plans.order(:start_date).each do |plan| %>
-  <dd class="<%= @budget.allocation_plans.first == plan ? 'active' : '' %>"><a href="#panel-<%= plan.id %>"><%= plan.tab_date %></a></dd>  
+<% budget.allocation_plans.order(:start_date).each do |plan| %>
+  <dd class="<%= budget.allocation_plans.first == plan ? 'active' : '' %>"><a href="#panel-<%= plan.id %>"><%= plan.tab_date %></a></dd>
 <% end %>
   <dd class='new'>
     <a href="<%= new_allocation_plan_path %>" data-reveal-id="new-allocation-plan" class='add-pay-period' data-reveal data-reveal-ajax="true"><i class='fi-plus'></i></a>
   </dd>
 </dl>
 
-<div class="tabs-content">      
-<% @budget.allocation_plans.order(:start_date).each do |plan| %>
-  <div class="content <%= @budget.allocation_plans.first == plan ? 'active' : '' %>" id="panel-<%= plan.id %>">
-    
+<div class="tabs-content">
+<% budget.allocation_plans.order(:start_date).each do |plan| %>
+  <div class="content <%= budget.allocation_plans.first == plan ? 'active' : '' %>" id="panel-<%= plan.id %>">
+
     <div class='row collapse hide-for-medium-up'>
       <div class='large-12 medium-12 columns header-row'>
-        <h3><%= plan.tab_date.gsub('to','-') %> 
+        <h3><%= plan.tab_date.gsub('to','-') %>
           <span class='right'>
-            <%= link_to "<i class='fi-pencil'></i>".html_safe, edit_allocation_plan_path(plan.id), data: {reveal:'', reveal_id: 'edit-allocation-plan', reveal_ajax: true} %>            
+            <%= link_to "<i class='fi-pencil'></i>".html_safe, edit_allocation_plan_path(plan.id), data: {reveal:'', reveal_id: 'edit-allocation-plan', reveal_ajax: true} %>
           </span>
         </h3>
-      </div>  
+      </div>
       <div class="small-12 large-12 medium-12 columns">
         <ul style='margin-left: 0' class="main-budget-categories">
-          <li style='border-top:none'>              
+          <li style='border-top:none'>
             <b>Pay Period Income:</b><br />
-            <span class='green'><%= number_to_currency plan.income %></span>
+            <span class='green pay-period-income'><%= number_to_currency plan.income %></span>
             <br />
             <b>Amount Not Allocated:</b><br />
-            <span class='p-<%= plan.id %>-not-allocated <%= color_for_number(plan.amount_not_allocated) %>'><%= number_to_currency plan.amount_not_allocated %></span>          
+            <span class='p-<%= plan.id %>-not-allocated pay-not-allocated <%= color_for_number(plan.amount_not_allocated) %>'><%= number_to_currency plan.amount_not_allocated %></span>
           </li>
         </ul>
       </div>
-    </div>    
+    </div>
 
     <div class="large-8 medium-8 columns">
       <ul style="margin-left: 0">
         <li style='border-top:none; list-style-type:none'>
-        <% @budget.budget_categories.order(:id).each do |c| %>                
+        <% budget.budget_categories.order(:id).each do |c| %>
           <div id="<%= vp + c.name.gsub('/', '-') %>" class='row collapse'>
             <div class='large-12 medium-12 columns header-row'>
               <h3><%= c.name %></h3>
-            </div>  
+            </div>
             <div class="small-12 large-12 medium-12 columns">
               <ul style='margin-left: 0' class="main-budget-categories">
                 <li style='border-top:none' id='category-<%= c.id %>'>
-                  <div class="row">                                  
+                  <div class="row">
                     <div class="large-2 medium-2 large-offset medium-offset-4 columns">
                       Budgeted
                     </div>
                     <div class="large-6 medium-6 columns">
                       Remaining
-                    </div>              
+                    </div>
                     <div class="large-4 medium-4 columns">
-                    </div> 
+                    </div>
                   </div>
-                  <br />                
+                  <br />
                   <% c.budget_items.each do |bi| %>
                     <div id='p-<%= plan.id %>-bi-<%= bi.id %>' class='row'>
-                      <%= render partial: 'allocation_item', locals: {bi: bi, plan: plan} %>                      
+                      <%= render partial: 'allocation_item', locals: {bi: bi, plan: plan} %>
                     </div>
-                  <% end %>                  
+                  <% end %>
                   </li>
                 </ul>
               </div>
-            </div>                        
+            </div>
         <% end %>
         </li>
       </ul>
@@ -70,31 +70,27 @@
     <div class='large-4 medium-4 columns'>
       <div class='row collapse fixer hide-for-small'>
         <div class='large-12 medium-12 columns header-row'>
-          <h3><%= plan.tab_date.gsub('to','-') %> 
+          <h3><%= plan.tab_date.gsub('to','-') %>
             <span class='right'>
-              <%= link_to "<i class='fi-pencil'></i>".html_safe, edit_allocation_plan_path(plan.id), data: {reveal:'', reveal_id: 'edit-allocation-plan', reveal_ajax: true} %>            
+              <%= link_to "<i class='fi-pencil'></i>".html_safe, edit_allocation_plan_path(plan.id), data: {reveal:'', reveal_id: 'edit-allocation-plan', reveal_ajax: true} %>
             </span>
           </h3>
-        </div>  
+        </div>
         <div class="small-12 large-12 medium-12 columns">
           <ul style='margin-left: 0' class="main-budget-categories">
-            <li style='border-top:none'>              
+            <li style='border-top:none'>
               <b>Pay Period Income:</b><br />
-              <span class='green'><%= number_to_currency plan.income %></span>
+              <span class='green pay-period-income'><%= number_to_currency plan.income %></span>
               <br />
               <b>Amount Not Allocated:</b><br />
-              <span class='p-<%= plan.id %>-not-allocated <%= color_for_number(plan.amount_not_allocated) %>'><%= number_to_currency plan.amount_not_allocated %></span>          
+              <span class='p-<%= plan.id %>-not-allocated pay-not-allocated <%= color_for_number(plan.amount_not_allocated) %>'><%= number_to_currency plan.amount_not_allocated %></span>
             </li>
           </ul>
         </div>
-      </div>      
-    </div>      
+      </div>
+    </div>
   </div>
   <% end %>
-</div>  
+</div>
 
-<%= "<p class='centered add-pay-period'>You don't have any pay periods.<br><br><a href='#{new_allocation_plan_path}' class='tiny success button radius add-pay-period' data-reveal-id='new-allocation-plan' data-reveal data-reveal-ajax='true'>New Pay Period</a></p>".html_safe if @budget.allocation_plans.count < 1 %>
-
-<script>
-  //window.history.pushState({"html": document.getElementById('month-view').innerHTML,"pageTitle":document.title},"", '/allocation-plans/<%= params[:year] %>/<%= params[:month] %>');
-</script>
+<%= "<p class='centered add-pay-period'>You don't have any pay periods.<br><br><a href='#{new_allocation_plan_path}' class='tiny success button radius add-pay-period' data-reveal-id='new-allocation-plan' data-reveal data-reveal-ajax='true'>New Pay Period</a></p>".html_safe if budget.allocation_plans.count < 1 %>

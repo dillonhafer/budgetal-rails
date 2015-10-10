@@ -1,59 +1,52 @@
 class AllocationPlansController < AuthenticatedController
   before_filter :check_date, except: [:edit]
-  before_filter :find_budget, only: %w{index create update}
+  helper_method :budget, :allocation_plan
 
   def new
-    @new_allocation_plan = AllocationPlan.new
     render layout: !request.xhr?
   end
 
-  def index
-    @budgets = []
-    (1..12).each do |month|
-      @budgets << OpenStruct.new(month: month, year: Date.today.year)
-    end
-
-    @new_allocation_plan = AllocationPlan.new
-  end
-
   def create
-    @allocation_plan = @budget.allocation_plans.new(allocation_plan_params)
-    if @allocation_plan.save
-      redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Added pay period'
+    allocation_plan.attributes = allocation_plan_params
+    if allocation_plan.save
+      'Added pay period'
     else
-      redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Something went wrong'
+      'Something went wrong'
     end
+    redirect_to my_allocation_plans_path(month: budget.month, year: budget.year), notice: notice
   end
 
   def edit
-    @allocation_plan = AllocationPlan.find(params[:id])
     render layout: !request.xhr?
   end
 
   def update
-    @allocation_plan = @budget.allocation_plans.find(params[:id])
-    if @allocation_plan.update_attributes(allocation_plan_params)
-      redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Added pay period'
+    notive = if allocation_plan.update_attributes(allocation_plan_params)
+      'Updated pay period'
     else
-      redirect_to my_allocation_plans_path(month: @budget.month, year: @budget.year), notice: 'Something went wrong'
+      'Something went wrong'
     end
-  end
-
-  def destroy
-    @budget_category = BudgetCategory.find(params[:id])
-    @budget_category.destroy
+    redirect_to my_allocation_plans_path(month: budget.month, year: budget.year), notice: notice
   end
 
   private
 
-  def find_budget
+  def allocation_plan
+    @allocation_plan ||= if params[:id]
+      current_user.allocation_plans.find(params[:id])
+    else
+      budget.allocation_plans.new
+    end
+  end
+
+  def budget
     year    = params[:year]
     month   = params[:month]
-    @budget = current_user.budgets.where(month: month.to_s, year: year.to_s).first || Budget.create_template(month, year, current_user.id)
+    @budget ||= current_user.budgets.includes(:budget_categories).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
   end
 
   def allocation_plan_params
-    params.require(:allocation_plan).permit(:month, :id, :start_date, :end_date, :income, allocation_plan_budget_items_attributes: [:id, :amount_budgeted, :budget_item_id, :allocation_plan_id] )
+    params.require(:allocation_plan).permit(:month, :start_date, :end_date, :income, allocation_plan_budget_items_attributes: [:id, :amount_budgeted, :budget_item_id, :allocation_plan_id] )
   end
 
   def check_date

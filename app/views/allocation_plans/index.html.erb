@@ -2,16 +2,16 @@
   <div class='large-2 medium-2 hide-for-small-down columns category-list'>
     <div class="icon-bar vertical six-up label-right">
       <a class='item header text-center' href='#'>
-        <label><i class='fi-calendar'></i> <%= "#{@budget.pretty_date} #{@budget.year}" %></label>
+        <label><i class='fi-calendar'></i> <%= "#{budget.pretty_date} #{budget.year}" %></label>
       </a>
       <span class='tooltip'>
         <p>
           <label for="month_change_budget_2i">Change Budget</label>
-          <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, end_year: Time.now.advance(years: 1).year, default: Date.new(@budget.year.to_i, @budget.month.to_i), order: [:month, :year] %>
+          <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, end_year: Time.now.advance(years: 1).year, default: Date.new(budget.year.to_i, budget.month.to_i), order: [:month, :year] %>
           <%= submit_tag 'change', id: 'change-spending', class: 'expand button radius tiny yellow expand' %>
         </p>
       </span>
-      <% @budget.budget_categories.order(:id).each do |c| %>
+      <% budget.budget_categories.order(:id).each do |c| %>
         <%= link_to "#desktop#{c.name.gsub('/', '-')}", class: "item sidebar-#{c.name.downcase.gsub('/', '-')}" do %>
           <label><%= c.name %></label>
         <% end %>
@@ -29,7 +29,7 @@
 <div id="edit-allocation-plan" class="reveal-modal tiny" data-reveal></div>
 
 <% content_for :ready do %>
-  $('title').text('<%= "#{@budget.pretty_date} #{@budget.year}" %>'+' - Budgetal.com');
+  $('title').text('<%= "#{budget.pretty_date} #{budget.year}" %>'+' - Budgetal.com');
 
   $(window).scroll(function() {
     if (window.scrollY >= 122) {
