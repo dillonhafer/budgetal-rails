@@ -55,6 +55,7 @@ feature 'Cash Flow Plans', js: true do
         expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
 
         visit my_budgets_path(year: Date.today.year, month: Date.today.month)
+        expect(page).not_to have_content "You haven't added any budget items yet."
         expect(page).to have_field('name', with: 'Gifts')
         expect(page).to have_field('amount_budgeted', with: '3.00')
         fill_in 'name', with: 'Saver'
