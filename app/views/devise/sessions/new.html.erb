@@ -72,36 +72,32 @@ input[name="commit"] {
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: {abide: ''}}) do |f| %>
         <%= devise_error_messages! %>
 
-        <div>
-          <%= f.label :email, for: 'new_user_email' %>
-          <%= f.email_field :email, required:'', id: 'new_user_email', placeholder: 'email@example.org', tabindex: 5 %>
-          <small class="error">An email address is required.</small>
-        </div>
+        <%= f.label :email, for: 'new_user_email' %>
+        <%= f.email_field :email, required:'', id: 'new_user_email', placeholder: 'email@example.org', tabindex: 5 %>
+        <small class="error">An email address is required.</small>
 
         <div class='row'>
           <div class='small-6 columns'>
-            <%= f.label :first_name %><br />
-            <%= f.text_field :first_name, required:'', patter: 'alpha' %>
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name, required:'', patter: 'alpha', tabindex: 6 %>
             <small class="error">A first name is required.</small>
           </div>
           <div class='small-6 columns'>
-            <%= f.label :last_name %><br />
-            <%= f.text_field :last_name, required:'', patter: 'alpha' %>
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name, required:'', patter: 'alpha', tabindex: 7 %>
             <small class="error">A last name is required.</small>
           </div>
         </div>
 
         <div class='clearfix'>
           <%= f.label :password, for: 'new_user_password', class: 'left' %> <small class='right'><a id="hide_password" class='hidden_password' href="javascript:void(0)" /></a></small>
-          <%= f.password_field :password, required:'', id: 'new_user_password', id: 'new_user_password', pattern: 'password', tabindex: 7 %>
+          <%= f.password_field :password, required:'', id: 'new_user_password', id: 'new_user_password', tabindex: 8 %>
           <small class="error">Passwords must be at least 8 characters with 1 capital letter, and 1 number.</small>
         </div>
 
-        <div>
-          <%= f.label :password_confirmation, for: 'new_user_password_confirmation' %>
-          <%= f.password_field :password_confirmation, required:'', id: 'new_user_password_confirmation', data: {equalto:'new_user_password'}, tabindex: 8 %>
-          <small class="error">Password confirmation must match.</small>
-        </div>
+        <%= f.label :password_confirmation, for: 'new_user_password_confirmation' %>
+        <%= f.password_field :password_confirmation, required:'', id: 'new_user_password_confirmation', data: {equalto:'new_user_password'}, tabindex: 9 %>
+        <small class="error">Password confirmation must match.</small>
 
         <div><%= f.submit "Sign up", class: 'small button nice radius', tabindex: 9 %></div>
       <% end %>
