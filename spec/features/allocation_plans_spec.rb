@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/feature_helper'
 
-feature 'Annual Budgets', js: true do
+feature 'Allocation Plans', js: true do
   before(:each) do
     @user = login_with
     visit root_path
@@ -15,7 +15,7 @@ feature 'Annual Budgets', js: true do
         expect(page).to have_content("You don't have any pay periods.")
       end
 
-      it 'I can add a pay period' do
+      it 'I can add/update a pay period' do
         click_on 'New Pay Period'
         fill_in 'Income', with: '300'
 
@@ -34,7 +34,7 @@ feature 'Annual Budgets', js: true do
         click_on 'Add Pay Period'
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
-        # Edit
+        # Update
         find('.fi-pencil').click
         fill_in 'Income', with: ''
         fill_in 'Income', with: '400'

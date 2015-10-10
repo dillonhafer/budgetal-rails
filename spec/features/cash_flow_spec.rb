@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/feature_helper'
 
-feature 'Budgets', js: true do
+feature 'Cash Flow Plans', js: true do
   before(:each) do
     @user = login_with
     visit my_budgets_path(year: Date.today.year, month: Date.today.month)
