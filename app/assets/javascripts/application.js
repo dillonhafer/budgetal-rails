@@ -41,23 +41,22 @@ $(document).on('focus', '.get-date', function(e) {
   })
 });
 
+$(document).ajaxComplete(function(event, request){
+  var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));
+  if(!flash) return;
+
+  if(flash.notice) {
+    $(".flash-holder").append($('<div class="flash-box"></div>').html(flash.notice));
+    $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
+  }
+});
+
 $(document).ready(function() {
   if ($(".flash-box").length){
     $(".flash-box").fadeIn(400,function(){
       $(this).delay(1000).fadeOut(250);
     });
   }
-
-  /* Flash to headers */
-  $(document).ajaxComplete(function(event, request){
-    var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));
-    if(!flash) return;
-
-    if(flash.notice) {
-      $(".flash-holder").append($('<div class="flash-box"></div>').html(flash.notice));
-      $(".flash-box").fadeIn(400).delay(2000).fadeOut(250, function() {$(this).remove()});
-    }
-  });
 
   window.onpopstate = function(e) {
     if (e.state) {
