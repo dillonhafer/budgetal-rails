@@ -8,10 +8,10 @@ input[type="text"], input[type="password"] {
   <div class='row collapse'>
     <div class='large-12 medium-12 columns header-row'>
       <h3>Your account</h3>
-    </div>  
+    </div>
     <div class="small-12 large-12 medium-12 columns">
-      <ul style='margin-left: 0' class="main-budget-categories">
-        <li style='border-top:none'>                  
+      <ul class="main-budget-categories">
+        <li>
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, data: {abide: ''} }) do |f| %>
             <%= devise_error_messages! %>
 
@@ -38,7 +38,7 @@ input[type="text"], input[type="password"] {
 
             <div>
               <%= f.label :password, class: 'left' %> <small class='right blue'>(leave blank if you don't want to change it)</small> <br />
-              <%= f.password_field :password, autocomplete: "off" %>        
+              <%= f.password_field :password, autocomplete: "off" %>
             </div>
 
             <div>
@@ -57,7 +57,7 @@ input[type="text"], input[type="password"] {
               <%= f.submit "Update", class: 'small button blue nice radius' %>
               <%= link_to "Back", :back, class: 'small button dark-blue white nice radius' %>
             </div>
-          <% end %>            
+          <% end %>
         </li>
       </ul>
     </div>
@@ -68,10 +68,10 @@ input[type="text"], input[type="password"] {
   <div class='row collapse'>
     <div class='large-12 medium-12 columns header-row'>
       <h3>Cancel account</h3>
-    </div>  
+    </div>
     <div class="small-12 large-12 medium-12 columns">
       <ul style='margin-left: 0' class="main-budget-categories">
-        <li style='border-top:none'>                    
+        <li style='border-top:none'>
           <div class='centered'><p>Unhappy?</p> <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure? You will be missed :(" }, :method => :delete, class: 'tiny alert button radius' %></div>
         </li>
       </ul>
