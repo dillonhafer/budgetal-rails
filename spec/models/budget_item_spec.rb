@@ -4,7 +4,7 @@ describe BudgetItem do
   let(:user)   { FactoryGirl.create :user }
   let(:budget) { FactoryGirl.create :budget, :with_budget_items, user: user }
   let(:budget_item) { budget.budget_items.first }
-  let(:plan) { budget.allocation_plans.create }
+  let(:plan) { FactoryGirl.create :allocation_plan, budget: budget }
 
   describe '#amount_allocated' do
     it 'returns the amount allocated to allocation plans' do

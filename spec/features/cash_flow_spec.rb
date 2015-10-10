@@ -104,7 +104,7 @@ feature 'Budgets', js: true do
       end
 
       it 'I can use the autocomplete list to add an expense' do
-        budget = FactoryGirl.create(:budget, :with_budget_items)
+        budget = FactoryGirl.create(:budget, :with_budget_items, user: @user)
         FactoryGirl.create(:budget_item_expense, budget_item: budget.budget_items.first)
         FactoryGirl.create(:budget_item_expense, budget_item: budget.budget_items.first)
         create_budget_item

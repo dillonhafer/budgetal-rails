@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe BudgetCategory do
-  let(:budget) { FactoryGirl.create :budget, :with_budget_items }
+  let(:user)   { FactoryGirl.create :user }
+  let(:budget) { FactoryGirl.create :budget, :with_budget_items, user: user }
   let(:budget_category) { budget.budget_categories.first }
 
   describe '#total_spent' do
@@ -50,7 +51,7 @@ describe BudgetCategory do
 
   describe 'previous items' do
     let(:previous_month)    { Date.new(budget.year.to_i, budget.month.to_i).advance(months: -1).month }
-    let!(:previous_budget)   { FactoryGirl.create(:budget, :with_budget_items, month: previous_month) }
+    let!(:previous_budget)   { FactoryGirl.create(:budget, :with_budget_items, month: previous_month, user: user) }
     let(:previous_category) { previous_budget.budget_categories.first }
 
     describe '#copy_previous_items' do

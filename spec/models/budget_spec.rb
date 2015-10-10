@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe Budget do
-  let(:budget) { FactoryGirl.create :budget, :with_budget_items }
   let(:user)   { FactoryGirl.create :user }
+  let(:budget) { FactoryGirl.create :budget, :with_budget_items, user: user }
 
   describe '::create_template' do
     it 'creates templates' do
