@@ -103,7 +103,7 @@ ALTER SEQUENCE allocation_plans_id_seq OWNED BY allocation_plans.id;
 CREATE TABLE annual_budget_items (
     id integer NOT NULL,
     annual_budget_id integer NOT NULL,
-    name character varying(255) NOT NULL,
+    name character varying NOT NULL,
     due_date date NOT NULL,
     amount numeric(10,2) NOT NULL,
     paid boolean DEFAULT false NOT NULL,
@@ -170,8 +170,8 @@ ALTER SEQUENCE annual_budgets_id_seq OWNED BY annual_budgets.id;
 CREATE TABLE budget_categories (
     id integer NOT NULL,
     budget_id integer NOT NULL,
-    name character varying(255) NOT NULL,
-    percentage character varying(255) NOT NULL,
+    name character varying NOT NULL,
+    percentage character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -203,7 +203,7 @@ ALTER SEQUENCE budget_categories_id_seq OWNED BY budget_categories.id;
 CREATE TABLE budget_item_expenses (
     id integer NOT NULL,
     budget_item_id integer NOT NULL,
-    name character varying(255) NOT NULL,
+    name character varying NOT NULL,
     amount numeric(10,2) NOT NULL,
     date date NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -237,7 +237,7 @@ ALTER SEQUENCE budget_item_expenses_id_seq OWNED BY budget_item_expenses.id;
 CREATE TABLE budget_items (
     id integer NOT NULL,
     budget_category_id integer NOT NULL,
-    name character varying(255) NOT NULL,
+    name character varying NOT NULL,
     amount_budgeted numeric(10,2) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -270,12 +270,12 @@ ALTER SEQUENCE budget_items_id_seq OWNED BY budget_items.id;
 
 CREATE TABLE budgets (
     id integer NOT NULL,
-    month character varying(255) NOT NULL,
+    month character varying NOT NULL,
     monthly_income numeric(10,2) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id integer NOT NULL,
-    year character varying(255) NOT NULL
+    year character varying NOT NULL
 );
 
 
@@ -313,25 +313,25 @@ CREATE TABLE schema_migrations (
 
 CREATE TABLE users (
     id integer NOT NULL,
+    password_hash character varying,
+    password_salt character varying,
     admin boolean,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    password_reset_token character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    password_reset_token character varying,
     password_reset_sent_at timestamp without time zone,
-    email character varying(255) DEFAULT ''::character varying NOT NULL,
-    encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
-    first_name character varying(255),
-    last_name character varying(255),
-    reset_password_token character varying(255),
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    first_name character varying,
+    last_name character varying,
+    reset_password_token character varying,
     reset_password_sent_at timestamp without time zone,
     remember_created_at timestamp without time zone,
     sign_in_count integer DEFAULT 0 NOT NULL,
     current_sign_in_at timestamp without time zone,
     last_sign_in_at timestamp without time zone,
-    current_sign_in_ip character varying(255),
-    last_sign_in_ip character varying(255),
-    password_salt character varying,
-    password_hash character varying
+    current_sign_in_ip character varying,
+    last_sign_in_ip character varying
 );
 
 
@@ -557,13 +557,6 @@ CREATE INDEX budgets_user_id_idx ON budgets USING btree (user_id);
 --
 
 CREATE UNIQUE INDEX index_annual_budgets_on_user_id_and_year ON annual_budgets USING btree (user_id, year);
-
-
---
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
