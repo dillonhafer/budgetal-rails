@@ -11,6 +11,7 @@ class AddConstraintsToDatabase < ActiveRecord::Migration
       delete from annual_budgets where not exists (select null from users where annual_budgets.user_id = users.id);
 
       delete from allocation_plan_budget_items where not exists (select null from allocation_plans where allocation_plan_budget_items.allocation_plan_id = allocation_plans.id);
+      delete from allocation_plan_budget_items where not exists (select null from allocation_plans where allocation_plan_budget_items.budget_item_id = budget_items.id);
       delete from allocation_plans where not exists (select null from budgets where allocation_plans.budget_id = budgets.id);
 
       -- Budgets
