@@ -1,5 +1,5 @@
 Budgetal
-***
+--------
 
 About
 -----
@@ -15,13 +15,13 @@ Budgetal is designed to be a [12-Factor](http://12factor.net/) application. As s
 
 ### Dependencies
 
-Budgetal tests depends on the selenium chrome driver: `brew install chromedriver`
+Budgetal tests depend on the selenium chrome driver: `brew install chromedriver`
 
 See the [Chrome Driver website](https://sites.google.com/a/chromium.org/chromedriver/) for more details.
 
 ### Testing
 
-1. Setup database `RAILS_ENV=test bundle exec rake db:schema:load`
+1. Setup database `RAILS_ENV=test rake db:schema:load`
 2. Run tests `rake`
 
 ## Credits
