@@ -1,6 +1,6 @@
 class AllocationPlan < ActiveRecord::Base
   belongs_to :budget
-  has_many :allocation_plan_budget_items
+  has_many :allocation_plan_budget_items, dependent: :destroy
   accepts_nested_attributes_for :allocation_plan_budget_items, allow_destroy: true
 
   def tab_date

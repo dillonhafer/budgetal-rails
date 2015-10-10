@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  has_many :annual_budgets
+  has_many :annual_budgets, dependent: :destroy
   has_many :annual_budget_items, through: :annual_budgets
-  has_many :budgets
+  has_many :budgets, dependent: :destroy
   has_many :budget_categories, through: :budgets
   has_many :budget_items, through: :budget_categories
   has_many :budget_item_expenses, through: :budget_items
