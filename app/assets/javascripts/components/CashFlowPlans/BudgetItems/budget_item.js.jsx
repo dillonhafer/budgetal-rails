@@ -14,12 +14,12 @@ var BudgetItem = React.createClass({
   spent: function() {
     let expenses = this.props.budgetItem.budget_item_expenses
     return _.reduce(expenses, function(total, expense, index) {
-      return total + expense.amount;
+      return parseFloat(total) + parseFloat(expense.amount);
     }, 0.00);
   },
   remaining: function() {
-    let amount_budgeted = parseFloat(this.props.budgetItem.amount_budgeted)
-    return amount_budgeted - parseFloat(this.spent())
+    let amount_budgeted = this.props.budgetItem.amount_budgeted
+    return amount_budgeted - this.spent()
   },
   update: function(item,e) {
     item[e.target.name] = e.target.value
@@ -43,10 +43,11 @@ var BudgetItem = React.createClass({
   },
   remainingClass: function() {
     var item = this.props.budgetItem;
+    console.log(this.remaining(), Math.abs(numberToCurrency(this.remaining(), '')))
     return classNames({
       'success-color': this.remaining() > 0,
       'alert-color': this.remaining() < 0,
-      'blue': this.remaining() == 0
+      'blue': Math.abs(numberToCurrency(this.remaining(), '')) == 0
     });
   },
   drag: function(e) {
