@@ -11,7 +11,7 @@ var CategoryOverview = React.createClass({
 		}
 	},
 	percentOfBudget: function() {
-		return this.budgeted() / this.props.monthlyIncome * 100;
+		return parseInt(this.budgeted() / this.props.monthlyIncome * 100);
 	},
 	remaining: function() {
 		return this.budgeted() - this.spent()
@@ -49,7 +49,7 @@ var CategoryOverview = React.createClass({
 	meterClasses: function() {
 		return classNames({
       'meter': true,
-      'red-meter': this.percentSpent() > 100 || this.remaining() < 0
+      'red-meter': this.remaining() < 0
     });
 	},
 	remainingClasses: function() {
