@@ -43,7 +43,6 @@ var BudgetItem = React.createClass({
   },
   remainingClass: function() {
     var item = this.props.budgetItem;
-    console.log(this.remaining(), Math.abs(numberToCurrency(this.remaining(), '')))
     return classNames({
       'success-color': this.remaining() > 0,
       'alert-color': this.remaining() < 0,
