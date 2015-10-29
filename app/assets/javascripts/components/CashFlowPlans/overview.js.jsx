@@ -12,7 +12,7 @@ var Overview = React.createClass({
   meterClasses: function() {
     return classNames({
       'meter': true,
-      'red-meter': this.percentSpent() > 99
+      'red-meter': this.props.budget.remaining < 0
     });
   },
   remainingClasses: function() {
