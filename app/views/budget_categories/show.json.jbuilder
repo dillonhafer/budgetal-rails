@@ -10,6 +10,8 @@ json.budget do
   json.budget_categories budget_category.budget.budget_categories do |category|
     json.id   category.id
     json.name category.name
+    json.amount_spent     sprintf('%.2f', category.total_spent)
+    json.amount_remaining sprintf('%.2f', category.budget_remaining)
   end
 end
 
