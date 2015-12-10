@@ -26,6 +26,7 @@ Budgets::Application.routes.draw do
 
   get '/budget-categories/:id/import' => 'budget_categories#import'
   get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
+  get '/budget-categories/:id' => 'budget_categories#show'
   match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
 
   resources :budget_items, path: 'budget-items'
