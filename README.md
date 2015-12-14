@@ -4,7 +4,7 @@ Budgetal
 About
 -----
 
-Budgetal is about helping you save money, planning for expenses, chasing away emergencies, and begin building wealth.
+Budgetal is about helping you save money, planning for expenses, chasing away emergencies, and beginning to build wealth.
 
 Setup
 -----
