@@ -9,6 +9,18 @@ Budgetal is about helping you save money, planning for expenses, chasing away em
 Setup
 -----
 
+### Quick Setup
+
+```bash
+$ git clone https://github.com/dillonhafer/budgetal
+$ cd budgetal
+$ bundle install
+$ cp .env{.example,}
+$ rake db:create db:migrate
+$ rails s
+$ open http://localhost:3000
+```
+
 ### Environment Variables
 
 Budgetal is designed to be a [12-Factor](http://12factor.net/) application. As such it uses environment variables for each type of deployment. Budgetal uses the [dotenv-rails gem](https://github.com/bkeepers/dotenv) for each environment. When setting up a new development deploy on your local machine, be sure to `cp .env{.example,}` so you can setup your local configuration.
