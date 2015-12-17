@@ -1,10 +1,8 @@
 namespace :budgets do
   desc "Create a year of template budgets"
   task :budgets => :environment do
-    counter = 1
-    12.times do
-      Budget.create(:month => counter, :monthly_income => '3400.00')
-      counter += 1
+    (1..12).each do |month|
+      Budget.create(month: month, monthly_income: '3400.00')
     end
   end
 
@@ -59,7 +57,7 @@ namespace :budgets do
 
     end
   end
-  
+
   desc "Create a year of template budgets, categories, and items"
   task :all => [:budgets, :categories]
 end
