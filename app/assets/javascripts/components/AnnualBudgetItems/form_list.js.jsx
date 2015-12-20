@@ -1,4 +1,22 @@
 var AnnualBudgetFormList = React.createClass({
+  propTypes: {
+    annual_budget_items: React.PropTypes.array,
+    openModal: React.PropTypes.func,
+    addItem: React.PropTypes.func,
+    updateForm: React.PropTypes.func,
+    saveForm: React.PropTypes.func,
+    delete: React.PropTypes.func
+  },
+  getDefaultProps: function() {
+    return {
+      annual_budget_items: [],
+      openModal: function() {},
+      addItem: function() {},
+      updateForm: function() {},
+      saveForm: function() {},
+      delete: function() {}
+    }
+  },
 	forms: function() {
 		return (this.props.annual_budget_items.map((budget_item, index) => {
       return (
