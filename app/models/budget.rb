@@ -20,15 +20,7 @@ class Budget < ActiveRecord::Base
   scope :ordered, -> { order('year::integer desc, month::integer desc') }
 
   def total_expenses
-    total_expense = ActiveRecord::Base.connection.select_all(<<-SQL)
-      select sum(bie.amount)
-      from budgets b
-      join budget_categories bc on bc.budget_id=b.id
-      join budget_items bi on bi.budget_category_id=bc.id
-      join budget_item_expenses bie on bie.budget_item_id=bi.id
-      where b.id = #{id}
-    SQL
-    total_expense.first['sum'].to_f
+    budget_item_expenses.sum(:amount).to_f
   end
 
   def difference
@@ -57,7 +49,7 @@ class Budget < ActiveRecord::Base
   end
 
   def amount_budgeted
-    Budget.where(id: id).joins(:budget_items).sum(:amount_budgeted).to_f
+    budget_items.sum(:amount_budgeted).to_f
   end
 
   def budget_remaining
