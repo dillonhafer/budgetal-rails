@@ -7,9 +7,11 @@ cache:
 
 env:
  - SECRET_KEY_BASE=c8d3918e9944a5b22
+ - RAILS_DATABASE_USER=postgres
 
 services:
   - postgresql
 
-before_script:
-  - psql -c 'create database budgetal_test;' -U postgres
+script:
+  - bundle exec rake db:setup --trace
+  - bundle exec rake
