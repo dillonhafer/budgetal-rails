@@ -14,9 +14,9 @@ Setup
 ```bash
 $ git clone https://github.com/dillonhafer/budgetal
 $ cd budgetal
-$ bundle install
+$ bundle
 $ cp .env{.example,}
-$ rake db:create db:migrate
+$ rake db:setup
 $ rails s
 $ open http://localhost:3000
 ```
