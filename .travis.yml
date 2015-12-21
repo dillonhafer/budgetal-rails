@@ -17,6 +17,7 @@ script:
 
 before_install:
   - export DISPLAY=:99.0
+  - export CHROME_BIN=chromium-browser
   - sh -e /etc/init.d/xvfb start
   - wget https://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip
   - unzip -qq chromedriver_linux64.zip
