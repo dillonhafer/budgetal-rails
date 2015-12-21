@@ -270,12 +270,14 @@ ALTER SEQUENCE budget_items_id_seq OWNED BY budget_items.id;
 
 CREATE TABLE budgets (
     id integer NOT NULL,
-    month character varying NOT NULL,
+    month integer NOT NULL,
     monthly_income numeric(10,2) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id integer NOT NULL,
-    year character varying NOT NULL
+    year integer NOT NULL,
+    CONSTRAINT verify_month CHECK (((month >= 1) AND (month <= 12))),
+    CONSTRAINT verify_year CHECK (((year >= 2013) AND (year <= 2200)))
 );
 
 
@@ -682,4 +684,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150222232818');
 INSERT INTO schema_migrations (version) VALUES ('20150222235043');
 
 INSERT INTO schema_migrations (version) VALUES ('20151010144448');
+
+INSERT INTO schema_migrations (version) VALUES ('20151221065100');
 

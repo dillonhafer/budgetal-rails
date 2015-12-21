@@ -14,10 +14,10 @@ class Budget < ActiveRecord::Base
 
   validates_numericality_of :year,
     only_integer: true,
-    less_than_or_equal_to: 2020,
+    less_than_or_equal_to: 2200,
     greater_than_or_equal_to: 2013
 
-  scope :ordered, -> { order('year::integer desc, month::integer desc') }
+  scope :ordered, -> { order('year desc, month desc') }
 
   def total_expenses
     budget_item_expenses.sum(:amount).to_f
@@ -71,6 +71,6 @@ class Budget < ActiveRecord::Base
   end
 
   def to_date
-    Date.new(year.to_i, month.to_i)
+    Date.new(year, month)
   end
 end
