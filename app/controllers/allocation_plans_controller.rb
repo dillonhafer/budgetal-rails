@@ -7,8 +7,7 @@ class AllocationPlansController < AuthenticatedController
   end
 
   def create
-    allocation_plan.attributes = allocation_plan_params
-    if allocation_plan.save
+    notice = if allocation_plan.save
       'Added pay period'
     else
       'Something went wrong'
@@ -21,7 +20,7 @@ class AllocationPlansController < AuthenticatedController
   end
 
   def update
-    notive = if allocation_plan.update_attributes(allocation_plan_params)
+    notice = if allocation_plan.update_attributes(allocation_plan_params)
       'Updated pay period'
     else
       'Something went wrong'
@@ -35,7 +34,9 @@ class AllocationPlansController < AuthenticatedController
     @allocation_plan ||= if params[:id]
       current_user.allocation_plans.find(params[:id])
     else
-      budget.allocation_plans.new
+      plan = budget.allocation_plans.new
+      plan.attributes = allocation_plan_params if params[:allocation_plan]
+      plan
     end
   end
 
@@ -50,15 +51,26 @@ class AllocationPlansController < AuthenticatedController
   end
 
   def check_date
-    if params[:year].to_i > 2020
-      flash[:error] = "You can't go that far into the future. Who's to say we'd still be around?"
-      redirect_to root_path
-    elsif params[:year].to_i < 2013
-      flash[:error] = "We didn't exist back then, I don't think you'll find a budget there."
-      redirect_to root_path
-    elsif !(1..12).include?(params[:month].to_i)
-      flash[:error] = "You do know there are only 12 months in a year right?"
-      redirect_to root_path
-    end
+    error = if year_too_great?(params[:year])
+              "You can't go that far into the future. Who's to say we'd still be around?"
+            elsif year_too_small?(params[:year])
+              "We didn't exist back then, I don't think you'll find a budget there."
+            elsif invalid_month?(params[:month])
+              "You do know there are only 12 months in a year right?"
+            end
+
+    redirect_to root_path, notice: error unless error.blank?
+  end
+
+  def year_too_great?(year)
+    year.to_i > 1.year.from_now.year
+  end
+
+  def year_too_small?(year)
+    year.to_i < 2013
+  end
+
+  def invalid_month?(month)
+    (1..12).exclude?(month.to_i)
   end
 end
