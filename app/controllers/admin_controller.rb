@@ -1,4 +1,4 @@
-class AdminController < ApplicationController
+class AdminController < AuthenticatedController
   before_filter :require_admin!
   helper_method :users
 
@@ -9,7 +9,7 @@ class AdminController < ApplicationController
   end
 
   def require_admin!
-    unless current_user.try(:admin?)
+    unless current_user.admin?
       sign_out current_user
       flash[:errors] = "You are not authorized. This incident will be reported."
       redirect_to(root_path)
