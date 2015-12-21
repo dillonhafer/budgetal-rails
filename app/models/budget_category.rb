@@ -5,6 +5,8 @@ class BudgetCategory < ActiveRecord::Base
 
   validates_presence_of :budget_id, :name, :percentage
 
+  default_scope -> { order(:id) }
+
   def total_spent
     budget_item_expenses.sum(:amount).to_f
   end
