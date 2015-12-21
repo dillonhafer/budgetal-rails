@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 
 gem 'bcrypt', '~> 3.1.2'
 gem 'coffee-rails', '~> 4.0.0'
