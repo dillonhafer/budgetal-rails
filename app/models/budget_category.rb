@@ -14,7 +14,7 @@ class BudgetCategory < ActiveRecord::Base
   end
 
   def budget_remaining
-    budget_items.sum(:amount_budgeted) - total_spent
+    total_budgeted - total_spent
   end
 
   def percent_used
@@ -23,15 +23,11 @@ class BudgetCategory < ActiveRecord::Base
   end
 
   def percent_of_budget
-    if budget.monthly_income.to_f > 0.0
-      (total_budgeted / budget.monthly_income.to_f * 100).round
-    else
-      0
-    end
+    percentage_of_budget_income(total_budgeted)
   end
 
   def percent_of_budget_spent
-    (total_spent / budget.monthly_income).round(2) * 100
+    percentage_of_budget_income(total_spent)
   end
 
   def copy_previous_items
@@ -45,6 +41,15 @@ class BudgetCategory < ActiveRecord::Base
   end
 
   private
+
+  def percentage_of_budget_income(amount)
+    return 0 if no_monthly_income?
+    (amount / budget.monthly_income * 100).round(2).to_i
+  end
+
+  def no_monthly_income?
+    budget.monthly_income < 0.01
+  end
 
   def previous_budget
     relative_budget(months: -1)
