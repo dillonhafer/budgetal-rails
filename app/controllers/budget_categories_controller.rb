@@ -34,7 +34,6 @@ class BudgetCategoriesController < AuthenticatedController
   end
 
   def check_date
-    year  = params[:year].to_i
     error = if year_too_great?(params[:year])
               "You can't go that far into the future. Who's to say we'd still be around?"
             elsif year_too_small?(params[:year])
@@ -43,10 +42,7 @@ class BudgetCategoriesController < AuthenticatedController
               "You do know there are only 12 months in a year right?"
             end
 
-    unless error.blank?
-      flash[:error] = error
-      redirect_to root_path
-    end
+    redirect_to root_path, notice: error unless error.blank?
   end
 
   def year_too_great?(year)
