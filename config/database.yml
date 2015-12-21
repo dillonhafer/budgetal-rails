@@ -3,7 +3,7 @@ defaults: &defaults
   pool:     <%= ENV.fetch('RAILS_DATABASE_POOL', 5) %>
   timeout:  <%= ENV.fetch('RAILS_DATABASE_TIMEOUT', 5000) %>
   host:     <%= ENV.fetch('RAILS_DATABASE_HOST', 'localhost') %>
-  database: <%= ENV.fetch('RAILS_DATABASE') %>
+  database: <%= ENV.fetch('RAILS_DATABASE', 'budgetal_development') %>
   user:     <%= ENV['RAILS_DATABASE_USER'] %>
   password: <%= ENV['RAILS_DATABASE_PASSWD'] %>
 

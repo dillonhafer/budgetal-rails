@@ -1,3 +1,9 @@
 language: ruby
 rvm:
  - "2.2.1"
+
+cache:
+  bundler: true
+
+env:
+- SECRET_KEY_BASE=c8d3918e9944a5b22
