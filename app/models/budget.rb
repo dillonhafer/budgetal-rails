@@ -53,7 +53,7 @@ class Budget < ActiveRecord::Base
   end
 
   def pretty_date
-    Date.new(1, month.to_i).strftime("%B")
+    to_date.strftime("%B")
   end
 
   def amount_budgeted
@@ -76,5 +76,9 @@ class Budget < ActiveRecord::Base
   def percent_used
     used = (100 - (amount_remaining / monthly_income.to_f * 100))
     used > 100 ? 100 : used
+  end
+
+  def to_date
+    Date.new(year.to_i, month.to_i)
   end
 end
