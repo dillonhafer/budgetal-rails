@@ -43,8 +43,10 @@ class BudgetCategoriesController < AuthenticatedController
               "You do know there are only 12 months in a year right?"
             end
 
-    flash[:error] = error
-    redirect_to root_path unless flash[:error].blank?
+    unless error.blank?
+      flash[:error] = error
+      redirect_to root_path
+    end
   end
 
   def year_too_great?(year)
