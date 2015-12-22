@@ -20,10 +20,10 @@ var Expense = React.createClass({
           self.setState({predictions: list})
         })
         .fail(function() {
-          self.setState({predictions: []})
+          self.removePredictions();
         })
     } else {
-      self.setState({predictions: []})
+      self.removePredictions();
     }
   },
   save: function(e) {
@@ -42,6 +42,7 @@ var Expense = React.createClass({
     var expense = this.props.expense
     expense.name = word
     this.props.update(this.props.index, expense)
+    this.removePredictions();
   },
   delete: function(e) {
     e.preventDefault()

@@ -1,13 +1,21 @@
 var PredictedExpenses = React.createClass({
-  getDefaultProps: function() {
+  propTypes: {
+    predictions: React.PropTypes.array,
+    select: React.PropTypes.func,
+  },
+
+  getDefaultProps() {
     return {
-      predictions: []
+      predictions: [],
+      select: function() {}
     }
   },
-  select: function(e) {
+
+  select(e) {
     this.props.select(e.target.textContent)
   },
-  predictions: function() {
+
+  predictions() {
     var self = this
     let cls = classNames('predicted-expenses', {hide: !this.props.predictions.length})
     return (
@@ -20,7 +28,8 @@ var PredictedExpenses = React.createClass({
       </ul>
     )
   },
-  render: function() {
+
+  render() {
     return (this.predictions())
   }
 })
