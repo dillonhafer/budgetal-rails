@@ -6,6 +6,13 @@ export default class Confirm extends React.Component {
     super(props);
   }
 
+  static propTypes = {
+    name: React.PropTypes.string.isRequired,
+    hidden: React.PropTypes.bool.isRequired,
+    cancel: React.PropTypes.func.isRequired,
+    delete: React.PropTypes.func.isRequired
+  }
+
   render() {
     let classes = classNames({
       overlay: true,
@@ -29,10 +36,3 @@ export default class Confirm extends React.Component {
     );
   }
 }
-
-Confirm.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  hidden: React.PropTypes.bool.isRequired,
-  cancel: React.PropTypes.func.isRequired,
-  delete: React.PropTypes.func.isRequired
-};
