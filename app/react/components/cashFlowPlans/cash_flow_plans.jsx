@@ -21,10 +21,25 @@ export default class CashFlowPlans extends React.Component {
     didFetchData: false,
     showForm: false,
     budget: {
-      budget_categories: []
+      month: (new Date).getMonth() + 1,
+      year: (new Date).getFullYear(),
+      budget_categories: [
+        {name: 'Charity', id: 0},
+        {name: 'Saving'},
+        {name: 'Housing'},
+        {name: 'Utilities'},
+        {name: 'Food'},
+        {name: 'Clothing'},
+        {name: 'Transportation'},
+        {name: 'Medical/Health'},
+        {name: 'Insurance'},
+        {name: 'Personal'},
+        {name: 'Recreation'},
+        {name: 'Debts'}
+      ]
     },
     category: {
-      id: '',
+      id: 0,
       name: '',
       amount: '',
       budget_items: []
