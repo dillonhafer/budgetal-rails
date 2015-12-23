@@ -6,7 +6,7 @@ import Overview from './overview';
 import ImportModal from './import_modal';
 import Confirm from '../Utils/confirm';
 
-import BudgetController from '../Data/budget_controller';
+import {updateBudget} from '../Data/budget_controller';
 import {find, importCategory} from '../Data/budget_category_controller';
 import BudgetItemController from '../Data/budget_item_controller';
 import BudgetItemExpenseController from '../Data/budget_item_expense_controller';
@@ -196,14 +196,8 @@ export default class CashFlowPlans extends React.Component {
     this.setState({category: category})
   }
 
-  updateBudget = (budget) => {
-    let current = _.assign({}, this.state.budget, budget)
-    current.monthly_income = budget.monthly_income
-    this.setState({budget: budget})
-  }
-
-  saveBudget(budget) {
-    BudgetController.update(budget)
+  saveBudget = (budget) => {
+    updateBudget(budget)
       .done(this._budgetUpdated)
       .fail(this._saveBudgetFail.bind(null, budget))
   }

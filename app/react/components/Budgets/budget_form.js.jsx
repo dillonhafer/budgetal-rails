@@ -6,20 +6,21 @@ import {numberToCurrency} from '../Utils/helpers';
 export default class BudgetForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      monthly_income: 0.00,
-      not_budgeted: 0.00
-    }
   }
 
-  componentWillReceiveProps(newProps) {
+  state = {
+    monthly_income: 0.00,
+    not_budgeted: 0.00
+  }
+
+  componentWillReceiveProps = (newProps) => {
     this.setState({
       monthly_income: parseFloat(newProps.budget.monthly_income),
       not_budgeted: parseFloat(newProps.budget.not_budgeted)
     })
   }
 
-  updateBudget(monthly_income, a) {
+  updateBudget = (monthly_income, a) => {
     var income = monthly_income.target.value
     var not_budgeted = income - this.props.budget.budgeted
     this.setState({monthly_income: income, not_budgeted: not_budgeted});

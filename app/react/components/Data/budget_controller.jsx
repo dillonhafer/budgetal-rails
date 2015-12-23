@@ -1,5 +1,5 @@
-var BudgetController = {
-  update: function(data) {
+export default {
+  updateBudget(data) {
     return $.ajax({
       url: `/budgets/${data.id}`,
       dataType: 'json',
@@ -8,5 +8,3 @@ var BudgetController = {
     })
   }
 }
-
-export { BudgetController }
