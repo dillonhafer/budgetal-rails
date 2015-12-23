@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import {allItems, createItem, updateItem, destroyItem} from '../../data/annual_budget_item';
 import classNames from 'classnames';
 import AnnualBudgetItemList from './item_list';
@@ -157,6 +158,15 @@ export default class CashFlowPlans extends React.Component {
     this.setState({budget: this.state.budget})
   }
 
+  yearOptions() {
+    let minYear = 2015;
+    let maxYear = (new Date).getFullYear() + 3;
+    let years = _.range(minYear, maxYear);
+    return _.map(years, (year, index) => {
+      return (<option key={index} value={year}>{year}</option>);
+    });
+  }
+
   render() {
     let formClasses = classNames({
       'tooltip annual-budget-tooltip animate': true,
@@ -174,8 +184,7 @@ export default class CashFlowPlans extends React.Component {
             <p>
               <label htmlFor="annual_budget_year">Change Budget Year</label>
               <select id="annual_budget_year" name='annual_budget_year' value={this.state.budget.year} onBlur={this.hideYearForm} onChange={this.changeYear}>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
+                {this.yearOptions()}
               </select>
             </p>
           </span>
