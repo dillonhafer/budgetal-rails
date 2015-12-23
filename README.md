@@ -13,10 +13,11 @@ Setup
 
 ```bash
 $ git clone https://github.com/dillonhafer/budgetal
-$ cd budgetal
-$ bundle
+$ cd budgetal && bundle
 $ cp .env{.example,}
 $ rake db:setup
+$ npm install
+$ npm start
 $ rails s
 $ open http://localhost:3000
 ```
@@ -24,6 +25,32 @@ $ open http://localhost:3000
 ### Environment Variables
 
 Budgetal is designed to be a [12-Factor](http://12factor.net/) application. As such it uses environment variables for each type of deployment. Budgetal uses the [dotenv-rails gem](https://github.com/bkeepers/dotenv) for each environment. When setting up a new development deploy on your local machine, be sure to `cp .env{.example,}` so you can setup your local configuration.
+
+### Frontend
+
+Budgetal uses webpack to build most of the front end resources, mainly React.
+
+**Development**
+
+Run webpack in watch mode using script:
+
+```
+$ npm start
+```
+
+**Production**
+
+Run webpack in production mode before compiling assets using script (this is done in the mina script):
+
+```
+$ npm run build
+```
+
+Run webpack in hot-auto-reloading mode using script (to use it you have to add react_hot_assets partial from the layouts folder):
+
+```
+$ npm run start-hot-dev
+```
 
 ### Dependencies
 

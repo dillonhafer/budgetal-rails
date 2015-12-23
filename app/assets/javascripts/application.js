@@ -16,12 +16,10 @@
 //= require foundation/foundation.topbar
 //= require foundation/foundation.reveal
 //= require highcharts
-//= require react
-//= require react_ujs
 //= require lodash
-//= require components
-//= require class-set
 //= require jquery.minical
+//= require react_integration
+//= require react_bundle
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);

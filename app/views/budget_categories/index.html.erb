@@ -1,7 +1,7 @@
 <% title("#{budget.pretty_date} #{budget.year}") %>
 
 <section>
-<%= react_component('CashFlowPlan', {id: budget.budget_categories.first.id}) %>
+<%= react_component('CashFlowPlans', {id: budget.budget_categories.first.id}) %>
 </section>
 
 <div class='row'></div>

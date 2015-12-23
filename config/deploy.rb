@@ -2,44 +2,35 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
-# require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
-# require 'mina/rvm'    # for rvm support. (http://rvm.io)
+
 set :repository, 'ssh://git@github.com/dillonhafer/budgetal.git'
 
 case ENV['to']
-  when 'beta'
-    set :domain, 'beta.budgetal.com'
-    set :deploy_to, '/var/www/budgetal-beta'
-    set :branch, 'beta'
-    set :rails_env, 'beta'
-  else
-    ENV['to'] = 'production'
-    set :domain, 'www.budgetal.com'
-    set :deploy_to, '/var/www/budgetal-production'
-    set :branch, 'master'
-    set :rails_env, 'production'
+when 'beta'
+  set :domain, 'beta.budgetal.com'
+  set :deploy_to, '/var/www/budgetal-beta'
+  set :branch, 'beta'
+  set :rails_env, 'beta'
+else
+  ENV['to'] = 'production'
+  set :domain, 'www.budgetal.com'
+  set :deploy_to, '/var/www/budgetal-production'
+  set :branch, 'master'
+  set :rails_env, 'production'
 end
-
-task :environment do
-  # If you're using rbenv, use this to load the rbenv environment.
-  # Be sure to commit your .rbenv-version to your repository.
-  # invoke :'rbenv:load'
-
-  # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.2.1@budgetal]'
-end
-# Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
-# They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['.env', 'log', 'config/database.yml', 'tmp/pids', 'tmp/cache', 'public/system']
-
-# Optional settings:
-set :user, 'deployer'
-set :keep_releases, 4
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
 task :environment do
+  invoke :'rvm:use[ruby-2.2.1@budgetal]'
 end
+
+# Run `mina setup` to create these paths on your server.
+# They will be linked in the 'deploy:link_shared_paths' step.
+set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache']
+
+set :user, 'deployer'
+set :keep_releases, 4
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
 # For Rails apps, we'll make some of the shared paths that are shared between
@@ -48,18 +39,17 @@ task setup: :environment do
   queue! %[mkdir -p "#{deploy_to}/db-backups"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/db-backups"]
 
+  queue! %[mkdir -p "#{deploy_to}/shared"]
+  queue! %[touch "#{deploy_to}/shared/.env"]
+
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
-  queue! %[mkdir -p "#{deploy_to}/shared/config"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/pids"]
 
-  queue! %[touch "#{deploy_to}/shared/config/database.yml"]
-  queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
-
-  # TODO work on converting setup for unicorn scripts
-  #queue! "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
-  #queue! "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/cache"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/cache"]
 end
 
 desc 'Make sure local git is in sync with remote.'
@@ -71,24 +61,15 @@ task :check_revision do
   end
 end
 
-# Define unicorn commands
-namespace :deploy do
-  desc "build missing paperclip styles"
-  task :build_missing_paperclip_styles do
-    queue "cd #{deploy_to}/current/; RAILS_ENV=#{ENV['to']} bundle exec rake paperclip:refresh:missing_styles"
-  end
-end
-
 desc "Deploys the App."
 task deploy: :environment do
   deploy do
-    # Put things that will set up an empty directory into a fully set-up
-    # instance of your project.
     invoke :'check_revision'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
+    invoke :'frontend:build'
     invoke :'rails:assets_precompile'
 
     to :launch do
@@ -99,17 +80,18 @@ task deploy: :environment do
   end
 end
 
+namespace :frontend do
+  desc "Compile Webpack assets"
+  task :build do
+    queue "NODE_ENV=#{ENV['to']} npm run build"
+  end
+end
+
 namespace :logs do
   desc "Follows the log file."
   task :rails do
     queue 'echo "Contents of the log file are as follows:"'
     queue "tail -f #{deploy_to}/current/log/#{ENV['to']}.log"
-  end
-
-  desc "Follows the unicorn error log file."
-  task :unicorn do
-    queue 'echo "Contents of the log file are as follows:"'
-    queue "tail -f #{deploy_to}/current/log/unicorn.stderr.log"
   end
 end
 
@@ -155,10 +137,3 @@ namespace :maintenance do
     }
   end
 end
-
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
