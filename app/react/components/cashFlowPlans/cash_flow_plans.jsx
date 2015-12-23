@@ -8,7 +8,7 @@ import Confirm from '../confirm';
 
 import {updateBudget} from '../../data/budget';
 import {findCategory, importCategory} from '../../data/budget_category';
-import BudgetItemController from '../../data/budget_item';
+import {createItem, updateItem, destroyItem} from '../../data/budget_item';
 import BudgetItemExpenseController from '../../data/budget_item_expense';
 import {monthName, selectedValue} from '../../utils/helpers';
 
@@ -80,7 +80,7 @@ export default class CashFlowPlans extends React.Component {
     return {month: pathNames[monthIndex], year: pathNames[yearIndex]};
   }
 
-  changeBudget() {
+  changeBudget = () => {
     var year  = selectedValue('#budget_year');
     var month = selectedValue('#budget_month');
 
@@ -94,7 +94,7 @@ export default class CashFlowPlans extends React.Component {
     this.setState({showForm: true});
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     let budgetParams = Object.assign({}, this.urlParams(), {id: this.props.id});
     this._fetchBudget(budgetParams);
   }
@@ -115,32 +115,32 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  changeCategory(id) {
+  changeCategory = (id) => {
     this._fetchBudget({
-      year: this.budget.year,
-      month: this.budget.month,
+      year: this.state.budget.year,
+      month: this.state.budget.month,
       id: id
     })
   }
 
-  _fetchBudget(data) {
+  _fetchBudget = (data) => {
     findCategory(data)
       .done(this._fetchDataDone)
       .fail(this._fetchDataFail)
   }
 
   // Budget Item functions
-  saveBudgetItem(item) {
+  saveBudgetItem = (item) => {
     var data = {
       budget_category_id: this.state.category.id,
       budget_item: item
     }
     if (item.id === undefined) {
-      BudgetItemController.create(data)
+      createItem(data)
         .done(this._budgetItemSaved.bind(null, item.index))
         .fail(this._saveItemFail.bind(null, item))
     } else {
-      BudgetItemController.update(item)
+      updateItem(item)
         .done(this._budgetItemSaved.bind(null, item.index))
         .fail(this._saveItemFail.bind(null, item))
     }
@@ -167,7 +167,7 @@ export default class CashFlowPlans extends React.Component {
   deleteBudgetItem(e) {
     e.preventDefault();
     if (this.state.modal.item.id !== undefined) {
-      BudgetItemController.destroy(this.state.modal.item.id)
+      destroyItem(this.state.modal.item.id)
         .done(this._budgetItemDeleted(this.state.modal.index))
         .fail(this._fetchDataFail.bind(null, this.state.modal.item))
     }

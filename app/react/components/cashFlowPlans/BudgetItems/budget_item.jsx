@@ -8,8 +8,17 @@ import {numberToCurrency} from '../../../utils/helpers';
 export default class BudgetItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hideExpenses: true }
   }
+
+  static propTypes = {
+    budgetItem: React.PropTypes.object.isRequired,
+    expenseFunctions: React.PropTypes.object.isRequired,
+    save: React.PropTypes.func.isRequired,
+    update: React.PropTypes.func.isRequired,
+    delete: React.PropTypes.func.isRequired
+  }
+
+  state = { hideExpenses: true }
 
   spent() {
     let expenses = this.props.budgetItem.budget_item_expenses
@@ -28,7 +37,7 @@ export default class BudgetItem extends React.Component {
     this.props.update(this.props.index, item)
   }
 
-  save(e) {
+  save = (e) => {
     e.preventDefault()
     var item = this.props.budgetItem
     item.index = this.props.index
@@ -40,7 +49,7 @@ export default class BudgetItem extends React.Component {
     this.props.delete(this.props.budgetItem, this.props.index)
   }
 
-  toggleExpenses(e) {
+  toggleExpenses = (e) => {
     e.preventDefault();
     if (this.props.budgetItem.budget_item_expenses) {
       this.setState({hideExpenses: !this.state.hideExpenses});
@@ -94,12 +103,4 @@ export default class BudgetItem extends React.Component {
       </div>
     );
   }
-}
-
-BudgetItem.propTypes = {
-  budgetItem: React.PropTypes.object.isRequired,
-  expenseFunctions: React.PropTypes.object.isRequired,
-  save: React.PropTypes.func.isRequired,
-  update: React.PropTypes.func.isRequired,
-  delete: React.PropTypes.func.isRequired
 }
