@@ -1,61 +1,78 @@
-var AnnualBudget = React.createClass({
-  getInitialState() {
-    return {
-      didFetchData: false,
-      showForm: false,
-      budget: {
-        year: '',
-        annual_budget_items: []
-      },
-      modal: {
-        hidden: true,
-        budget_item: {name: ''},
-        index: -1
-      }
+import React from 'react';
+import {allItems, createItem, updateItem, destroyItem} from '../../data/annual_budget_item';
+import classNames from 'classnames';
+import AnnualBudgetItemList from './item_list';
+import AnnualBudgetFormList from './form_list';
+import Confirm from '../confirm';
+
+export default class CashFlowPlans extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  state = {
+    didFetchData: false,
+    showForm: false,
+    budget: {
+      year: '',
+      annual_budget_items: []
+    },
+    modal: {
+      hidden: true,
+      budget_item: {name: ''},
+      index: -1
     }
-  },
-  confirmDelete: function(budget_item, index) {
+  }
+
+  confirmDelete = (budget_item, index) => {
     if (!!budget_item.id) {
       this.setState({modal: {hidden: false, budget_item: budget_item, index: index}});
     } else {
       this._budgetItemDeleted(index)
     }
-  },
-  cancelDelete: function(e) {
+  }
+
+  cancelDelete = (e) => {
     if (e) {
       e.preventDefault()
     }
     this.setState({modal: {hidden: true, index: -1, budget_item: {name: ''}}});
-  },
+  }
+
   componentDidMount() {
     this._fetchBudget({year: this.yearParam()})
-  },
+  }
+
   successMessage(item_name) {
     showMessage("Updated "+item_name)
-  },
+  }
+
   _fetchBudget(data) {
-    AnnualBudgetItemController.all(data)
+    allItems(data)
       .done(this._fetchDataDone)
       .fail(this._fetchDataFail)
-  },
-  _saveBudgetItem(data) {
+  }
+
+  _saveBudgetItem = (data) => {
     if (data.annual_budget_item.id === undefined) {
-      AnnualBudgetItemController.create(data)
+      createItem(data)
         .done(this._budgetItemSaved.bind(null, data.index))
         .fail(this._saveItemFail.bind(null, data.annual_budget_item))
     } else {
-      AnnualBudgetItemController.update(data)
+      updateItem(data)
         .done(this._budgetItemSaved.bind(null, data.index))
         .fail(this._saveItemFail.bind(null, data.annual_budget_item))
     }
-  },
-  _budgetItemSaved(index, budget_item, err) {
+  }
+
+  _budgetItemSaved = (index, budget_item, err) => {
     let budget = this.state.budget
     budget.annual_budget_items[index] = budget_item
     this.setState({budget: budget})
     showMessage("Saved "+budget_item.name)
-  },
-  _saveItemFail(index, xhr, status, err) {
+  }
+
+  _saveItemFail = (index, xhr, status, err) => {
     var errors = JSON.parse(xhr.responseText).errors
     let budget = this.state.budget
     for(idx in budget.annual_budget_items) {
@@ -65,16 +82,18 @@ var AnnualBudget = React.createClass({
       }
     }
     this.setState({budget: budget})
-  },
-  _deleteBudgetItem(e) {
+  }
+
+  _deleteBudgetItem = (e) => {
     e.preventDefault();
     if (this.state.modal.budget_item.id !== undefined) {
-      AnnualBudgetItemController.destroy(this.state.modal.budget_item.id)
+      destroyItem(this.state.modal.budget_item.id)
         .done(this._budgetItemDeleted(this.state.modal.index))
         .fail(this._fetchDataFail.bind(null, this.state.modal.budget_item))
     }
-  },
-  _budgetItemDeleted(index) {
+  }
+
+  _budgetItemDeleted = (index) => {
     let budget = this.state.budget
     budget.annual_budget_items.splice(index, 1)
     if (this.state.modal.budget_item.id !== undefined) {
@@ -82,54 +101,63 @@ var AnnualBudget = React.createClass({
     }
     this.setState({budget: budget})
     this.cancelDelete()
-  },
-  _fetchDataDone(data, textStatus, jqXHR) {
+  }
+
+  _fetchDataDone = (data, textStatus, jqXHR) => {
     this.setState({
       didFetchData: true,
       budget: data
     })
-  },
+  }
+
   _fetchDataFail(xhr, status, err) {
     var errors = JSON.parse(xhr.responseText).errors
     for (idx in errors) {
       var msg = errors[idx]
       showMessage(msg)
     }
-  },
+  }
+
   yearParam() {
     var pathNames = window.location.pathname.split('/')
     var yearIndex = pathNames.length - 1
     return pathNames[yearIndex]
-  },
-  changeYear() {
+  }
+
+  changeYear = () => {
     var s = document.querySelector('#annual_budget_year')
     var year = s.options[s.selectedIndex].value;
     history.pushState({}, 'Budgetal', year)
     document.title = `${year} | Budgetal`
     this._fetchBudget({year: year})
     this.setState({showForm: false})
-  },
-  hideYearForm: function() {
+  }
+
+  hideYearForm = () => {
     this.setState({showForm: false})
-  },
-  showForm(e) {
+  }
+
+  showForm = (e) => {
     e.preventDefault()
     this.setState({showForm: true})
     setTimeout(function() {
       document.querySelector('#annual_budget_year').focus()
-    }, 100)
-  },
-  addItem(e) {
+    },100)
+  }
+
+  addItem = (e) => {
     e.preventDefault()
     var budget = this.state.budget
     budget.annual_budget_items.push({annual_budget_id: budget.id})
     this.setState({budget: budget})
-  },
-  updateForm(index, updatedBudgetItem) {
+  }
+
+  updateForm = (index, updatedBudgetItem) => {
     this.state.budget.annual_budget_items[index] = updatedBudgetItem
     this.setState({budget: this.state.budget})
-  },
-  render: function() {
+  }
+
+  render() {
     let formClasses = classNames({
       'tooltip annual-budget-tooltip animate': true,
       fadeInUpBig2: this.state.showForm,
@@ -172,4 +200,4 @@ var AnnualBudget = React.createClass({
       </div>
     );
   }
-});
+}

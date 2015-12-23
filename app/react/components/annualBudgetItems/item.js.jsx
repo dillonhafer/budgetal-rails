@@ -1,11 +1,20 @@
-var AnnualBudgetItem = React.createClass({
-  paid: function() {
+import React from 'react';
+import classNames from 'classnames';
+import {numberToCurrency} from '../../utils/helpers';
+
+export default class AnnualBudgetItem extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  paid = () => {
     var text = this.props.budgetItem.paid ? 'Paid' : 'Not Paid'
     var css  = 'label radius '
     css += this.props.budgetItem.paid ? 'success' : 'alert'
     return (<span className={css}>{text}</span>)
-  },
-  dueDate: function(date) {
+  }
+
+  dueDate(date) {
     var months = {
       '01': 'Janurary',
       '02': 'Feburary',
@@ -29,11 +38,13 @@ var AnnualBudgetItem = React.createClass({
     var month = months[dateParts[1]]
     var day = parseInt(dateParts[2])
     return `${month} ${day}, ${year}`
-  },
-  hideTable: function() {
+  }
+
+  hideTable = () => {
     return this.props.budgetItem.id === undefined
-  },
-  render: function() {
+  }
+
+  render() {
     let classes = classNames({
       'no-container': true,
       hide: this.hideTable()
@@ -48,6 +59,6 @@ var AnnualBudgetItem = React.createClass({
           <li className="bullet-item">{ this.paid() }</li>
         </ul>
       </li>
-    )
+    );
   }
-});
+}

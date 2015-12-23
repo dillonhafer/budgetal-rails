@@ -1,23 +1,31 @@
-var AnnualBudgetFormList = React.createClass({
-  propTypes: {
+import React from 'react';
+import {allItems, createItem, updateItem, destroyItem} from '../../data/annual_budget_item';
+import AnnualBudgetItemForm from './item_form';
+
+export default class AnnualBudgetFormList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
     annual_budget_items: React.PropTypes.array,
     openModal: React.PropTypes.func,
     addItem: React.PropTypes.func,
     updateForm: React.PropTypes.func,
     saveForm: React.PropTypes.func,
     delete: React.PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      annual_budget_items: [],
-      openModal: function() {},
-      addItem: function() {},
-      updateForm: function() {},
-      saveForm: function() {},
-      delete: function() {}
-    }
-  },
-	forms: function() {
+  }
+
+  static defaultProps = {
+    annual_budget_items: [],
+    openModal: function() {},
+    addItem: function() {},
+    updateForm: function() {},
+    saveForm: function() {},
+    delete: function() {}
+  }
+
+	forms() {
 		return (this.props.annual_budget_items.map((budget_item, index) => {
       return (
         <AnnualBudgetItemForm openModal={this.props.openModal}
@@ -29,8 +37,9 @@ var AnnualBudgetFormList = React.createClass({
 											        delete={this.props.delete} />
       )
     }))
-	},
-  render: function() {
+	}
+
+  render() {
     return (
     	<div>
 	    	<h4>Manage Budget Items</h4>
@@ -48,6 +57,6 @@ var AnnualBudgetFormList = React.createClass({
           <a href='#' onClick={this.props.addItem} className='tiny button radius add-nested-item'><i className='fi-icon fi-plus'></i> Add an Item</a>
         </div>
       </div>
-    )
+    );
   }
-})
+}

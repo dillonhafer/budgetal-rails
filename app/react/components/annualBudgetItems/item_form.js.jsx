@@ -1,15 +1,26 @@
-var AnnualBudgetItemForm = React.createClass({
-  message() {
+import React from 'react';
+import classNames from 'classnames';
+import InputField from '../forms/input_field';
+import {numberToCurrency} from '../../utils/helpers';
+
+export default class AnnualBudgetItemForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  message = () => {
     let message = `Are you sure you want to delete ${this.props.budgetItem.name}?
           This cannot be undone.`
     return message
-  },
-  updateForm(e) {
+  }
+
+  updateForm = (e) => {
     var newValue = (e.target.name === 'paid') ? e.target.checked : e.target.value
     this.props.budgetItem[e.target.name] = newValue
     this.props.updateForm(this.props.index, this.props.budgetItem)
-  },
-  deleteItem(e) {
+  }
+
+  deleteItem = (e) => {
     e.preventDefault()
     if (!this.props.budgetItem.id || confirm(this.message())) {
       this.props.deleteForm({
@@ -17,25 +28,29 @@ var AnnualBudgetItemForm = React.createClass({
         index: this.props.index
       })
     }
-  },
-  saveItem(e) {
+  }
+
+  saveItem = (e) => {
     e.preventDefault()
     this.props.saveForm({
       annual_budget_item: this.props.budgetItem,
       index: this.props.index
     })
-  },
-  paid: function() {
+  }
+
+  paid = () => {
     var text = this.props.budgetItem.paid ? 'Paid' : 'Not Paid'
     var css  = 'label radius '
     css += this.props.budgetItem.paid ? 'success' : 'alert'
     return (<span className={css}>{text}</span>)
-  },
-  _delete: function(e) {
+  }
+
+  _delete = (e) => {
     e.preventDefault()
     this.props.delete(this.props.budgetItem, this.props.index)
-  },
-  render: function() {
+  }
+
+  render() {
     let item = this.props.budgetItem
     return (
       <form onSubmit={this.saveItem} data-abide>
@@ -59,6 +74,6 @@ var AnnualBudgetItemForm = React.createClass({
           </div>
         </div>
       </form>
-    )
+    );
   }
-});
+}

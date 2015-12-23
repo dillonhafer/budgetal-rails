@@ -3,5 +3,8 @@ import ReactDOM from 'react-dom';
 window.React = React;
 window.ReactDOM = ReactDOM;
 
-import CashFlowPlans from './components/CashFlowPlans/cash_flow_plans';
+import CashFlowPlans from './components/cashFlowPlans/cash_flow_plans';
 registerComponent('CashFlowPlans', CashFlowPlans);
+
+import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
+registerComponent('AnnualBudgetItems', AnnualBudgetItems);
