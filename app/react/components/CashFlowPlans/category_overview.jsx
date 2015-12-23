@@ -7,9 +7,10 @@ import {numberToCurrency} from '../Utils/helpers';
 export default class CategoryOverview extends React.Component {
   constructor(props) {
     super(props);
-    this.props = {
-    	monthlyIncome: 0.00
-    }
+  }
+
+  static defaultProps = {
+  	monthlyIncome: 0.00
   }
 
 	budgeted() {

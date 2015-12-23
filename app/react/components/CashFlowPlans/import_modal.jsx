@@ -2,6 +2,17 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default class ImportModal extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
+    category: React.PropTypes.object.isRequired,
+    hidden: React.PropTypes.bool.isRequired,
+    cancel: React.PropTypes.func.isRequired,
+    import: React.PropTypes.func.isRequired
+  }
+
   render() {
     let classes = classNames('overlay tiny', {
       fadeIn: !this.props.hidden,
@@ -21,11 +32,4 @@ export default class ImportModal extends React.Component {
       </div>
     );
   }
-}
-
-ImportModal.propTypes = {
-  category: React.PropTypes.object.isRequired,
-  hidden: React.PropTypes.bool.isRequired,
-  cancel: React.PropTypes.func.isRequired,
-  import: React.PropTypes.func.isRequired
 }

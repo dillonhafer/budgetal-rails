@@ -7,6 +7,13 @@ export default class Category extends React.Component {
     super(props);
   }
 
+  static propTypes = {
+    category: React.PropTypes.object.isRequired,
+    expenseFunctions: React.PropTypes.object.isRequired,
+    itemFunctions: React.PropTypes.object.isRequired,
+    import: React.PropTypes.func.isRequired
+  }
+
 	render() {
     let headerClasses = classNames('row', 'budget-item-labels', {
       hide: this.props.category.budget_items.length === 0
@@ -49,11 +56,4 @@ export default class Category extends React.Component {
       </div>
 		);
 	}
-}
-
-Category.propTypes = {
-  category: React.PropTypes.object.isRequired,
-  expenseFunctions: React.PropTypes.object.isRequired,
-  itemFunctions: React.PropTypes.object.isRequired,
-  import: React.PropTypes.func.isRequired
 }

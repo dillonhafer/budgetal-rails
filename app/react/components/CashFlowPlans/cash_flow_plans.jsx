@@ -15,30 +15,30 @@ import {monthName, selectedValue} from '../Utils/helpers';
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
     super(props);
-    this._fetchDataDone = this._fetchDataDone.bind(this)
-    this.state = {
-      didFetchData: false,
-      showForm: false,
-      budget: {
-        budget_categories: []
-      },
-      category: {
-        id: '',
-        name: '',
-        amount: '',
-        budget_items: []
-      },
-      importHidden: true,
-      modal: {
-        hidden: true,
-        item: {name: ''},
-        index: -1,
-        delete: function(){}
-      }
-    };
   }
 
-  confirmItemDelete(budget_item, index) {
+  state = {
+    didFetchData: false,
+    showForm: false,
+    budget: {
+      budget_categories: []
+    },
+    category: {
+      id: '',
+      name: '',
+      amount: '',
+      budget_items: []
+    },
+    importHidden: true,
+    modal: {
+      hidden: true,
+      item: {name: ''},
+      index: -1,
+      delete: function(){}
+    }
+  };
+
+  confirmItemDelete = (budget_item, index) => {
     if (!!budget_item.id) {
       this.setState({
         modal: {
@@ -53,7 +53,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  confirmExpenseDelete(expense, index) {
+  confirmExpenseDelete = (expense, index) => {
     if (!!expense.id) {
       this.setState({
         modal: {
@@ -68,7 +68,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  cancelDelete(e) {
+  cancelDelete = (e) => {
     if (e) { e.preventDefault() }
     this.setState({modal: {hidden: true, index: -1, item: {name: ''}, delete: function(){}}});
   }
@@ -89,7 +89,7 @@ export default class CashFlowPlans extends React.Component {
     this._fetchBudget({year: year, month: month});
   }
 
-  showForm(e) {
+  showForm = (e) => {
     e.preventDefault();
     this.setState({showForm: true});
   }
@@ -99,7 +99,7 @@ export default class CashFlowPlans extends React.Component {
     this._fetchBudget(budgetParams);
   }
 
-  _fetchDataDone(data, textStatus, jqXHR) {
+  _fetchDataDone = (data, textStatus, jqXHR) => {
     this.setState({
       didFetchData: true,
       budget: data.budget,
@@ -146,7 +146,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  _budgetItemSaved(index, budget_item, err) {
+  _budgetItemSaved = (index, budget_item, err) => {
     let category = this.state.category
     let budget = _.assign({}, this.state.budget, budget_item.budget)
 
@@ -157,7 +157,7 @@ export default class CashFlowPlans extends React.Component {
     showMessage(`Saved ${budget_item.name}`)
   }
 
-  _saveItemFail(index, xhr, status, err) {
+  _saveItemFail = (index, xhr, status, err) => {
     let errors = JSON.parse(xhr.responseText).errors
     let category = this.state.category
     _.where(category.budget_items, {'index': index.index})[0].errors = errors
@@ -173,7 +173,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  _budgetItemDeleted(index) {
+  _budgetItemDeleted = (index) => {
     let category = this.state.category
     category.budget_items.splice(index, 1)
     if (this.state.modal.item.id !== undefined) {
@@ -183,20 +183,20 @@ export default class CashFlowPlans extends React.Component {
     this.cancelDelete()
   }
 
-  addBudgetItem(e) {
+  addBudgetItem = (e) => {
     e.preventDefault()
     var category = this.state.category
     category.budget_items.push({category_id: category.id, amount_budgeted: 0.00})
     this.setState({category: category})
   }
 
-  updateBudgetItem(index, updatedBudgetItem) {
+  updateBudgetItem = (index, updatedBudgetItem) => {
     var category = this.state.category
     category.budget_items[index] = updatedBudgetItem
     this.setState({category: category})
   }
 
-  updateBudget(budget) {
+  updateBudget = (budget) => {
     let current = _.assign({}, this.state.budget, budget)
     current.monthly_income = budget.monthly_income
     this.setState({budget: budget})
@@ -208,19 +208,19 @@ export default class CashFlowPlans extends React.Component {
       .fail(this._saveBudgetFail.bind(null, budget))
   }
 
-  _saveBudgetFail(index, xhr, status, err) {
+  _saveBudgetFail = (index, xhr, status, err) => {
     let errors = JSON.parse(xhr.responseText).errors
     let budget = this.state.budget
     budget.errors = errors
     this.setState({budget: budget})
   }
 
-  _budgetUpdated(xhr, status, err) {
+  _budgetUpdated = (xhr, status, err) => {
     this.setState({budget: xhr.budget})
   }
 
   // Budget Item Expense functions
-  addExpense(id) {
+  addExpense = (id) => {
     var category = this.state.category
     var budget_item = _.where(category.budget_items, {'id': id})[0]
     budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.00})
@@ -239,7 +239,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  _saveExpenseFail(index, xhr, status, err) {
+  _saveExpenseFail = (index, xhr, status, err) => {
     let errors = JSON.parse(xhr.responseText).errors
     let category = this.state.category
     let budget_item = _.where(category.budget_items, {'id': index.budget_item_id})[0]
@@ -247,7 +247,7 @@ export default class CashFlowPlans extends React.Component {
     this.setState({category: category})
   }
 
-  _expenseSaved(index, expense, err) {
+  _expenseSaved = (index, expense, err) => {
     let category = this.state.category
     let budget = _.assign({}, this.state.budget, expense.budget)
     var budget_item = _.where(category.budget_items, {'id': expense.budget_item_id})[0]
@@ -257,7 +257,7 @@ export default class CashFlowPlans extends React.Component {
     showMessage(`Saved ${expense.name}`)
   }
 
-  updateExpense(index, updatedExpense) {
+  updateExpense = (index, updatedExpense) => {
     var category    = this.state.category
     var budget_item = _.where(category.budget_items, {'id': updatedExpense.budget_item_id})[0]
     budget_item.budget_item_expenses[index] = updatedExpense
@@ -273,7 +273,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  _expenseDeleted(budget_item_id, index) {
+  _expenseDeleted = (budget_item_id, index) => {
     let category = this.state.category
     var budget_item = _.where(category.budget_items, {'id': budget_item_id})[0]
     budget_item.budget_item_expenses.splice(index, 1)
@@ -307,7 +307,7 @@ export default class CashFlowPlans extends React.Component {
     importCategory(this.state.category.id).done(this.importFinished)
   }
 
-  importFinished(json) {
+  importFinished = (json) => {
     var category = this.state.category
     category.budget_items = category.budget_items.concat(json.imported)
     this.setState({category: category})
@@ -320,12 +320,12 @@ export default class CashFlowPlans extends React.Component {
     this.setState({importHidden: true});
   }
 
-  openImport(e) {
+  openImport = (e) => {
     e.preventDefault()
     this.setState({importHidden: false});
   }
 
-  moveBudgetItem(item_id) {
+  moveBudgetItem = (item_id) => {
     var category    = this.state.category
     var idx = _.findIndex(category.budget_items, function(item) {
       return item.id === parseInt(item_id);

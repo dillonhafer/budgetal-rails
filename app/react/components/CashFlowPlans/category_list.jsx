@@ -2,18 +2,16 @@ import React from 'react';
 import classNames from 'classnames';
 import BudgetItemController from '../Data/budget_item_controller';
 import _ from 'lodash';
-import {monthName} from '../Utils/helpers';
+import {monthName, selectedValue} from '../Utils/helpers';
 
 export default class CategoryList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showForm: false
-    };
+    this.dropped = _.debounce(this.dropped, 100)
   }
 
-  componentWillMount() {
-    this.dropped = _.debounce(this.dropped, 100)
+  state = {
+    showForm: false
   }
 
   changeCategory(category, e) {
@@ -21,12 +19,12 @@ export default class CategoryList extends React.Component {
     this.props.changeCategory(category.id);
   }
 
-  toggleChangeBudget(e) {
+  toggleChangeBudget = (e) => {
     e.preventDefault()
     this.setState({showForm: !this.state.showForm})
   }
 
-  changeYear() {
+  changeYear = () => {
     this.props.changeBudget()
     this.setState({showForm: !this.state.showForm})
   }
