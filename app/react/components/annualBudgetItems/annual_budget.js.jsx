@@ -66,7 +66,7 @@ export default class CashFlowPlans extends React.Component {
     let budget = this.state.budget
     budget.annual_budget_items[index] = budget_item
     this.setState({budget: budget})
-    showMessage("Saved "+budget_item.name)
+    showMessage(`Saved ${budget_item.name}`)
   }
 
   _saveItemFail = (index, xhr, status, err) => {
