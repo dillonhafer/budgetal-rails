@@ -41,7 +41,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchBudget({year: this.yearParam()})
+    this._fetchBudget(this.yearParam())
   }
 
   _fetchBudget(data) {
@@ -118,7 +118,7 @@ export default class CashFlowPlans extends React.Component {
   yearParam() {
     var pathNames = window.location.pathname.split('/')
     var yearIndex = pathNames.length - 1
-    return pathNames[yearIndex]
+    return {year: pathNames[yearIndex]}
   }
 
   changeYear = () => {
