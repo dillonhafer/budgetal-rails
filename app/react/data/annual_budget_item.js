@@ -1,12 +1,12 @@
-var AnnualBudgetItemController = {
-  all: function(data) {
+export default {
+  allItems(data) {
     return $.ajax({
               url: '/annual-budgets',
               dataType: 'json',
               data: data
             })
   },
-  create: function(budget_item) {
+  createItem(budget_item) {
     return $.ajax({
               url: '/annual-budget-items',
               dataType: 'json',
@@ -14,7 +14,7 @@ var AnnualBudgetItemController = {
               data: budget_item
             })
   },
-  update: function(data) {
+  updateItem(data) {
     return $.ajax({
               url: '/annual-budget-items/' + data.annual_budget_item.id,
               dataType: 'json',
@@ -22,7 +22,7 @@ var AnnualBudgetItemController = {
               data: data
             })
   },
-  destroy: function(id) {
+  destroyItem(id) {
     return $.ajax({
               url: '/annual-budget-items/'+id,
               dataType: 'json',
@@ -30,5 +30,3 @@ var AnnualBudgetItemController = {
             })
   }
 }
-
-export { AnnualBudgetItemController }

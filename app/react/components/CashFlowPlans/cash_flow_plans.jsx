@@ -4,13 +4,13 @@ import Category from './category';
 import CategoryOverview from './category_overview';
 import Overview from './overview';
 import ImportModal from './import_modal';
-import Confirm from '../Utils/confirm';
+import Confirm from '../confirm';
 
-import {updateBudget} from '../Data/budget_controller';
-import {find, importCategory} from '../Data/budget_category_controller';
-import BudgetItemController from '../Data/budget_item_controller';
-import BudgetItemExpenseController from '../Data/budget_item_expense_controller';
-import {monthName, selectedValue} from '../Utils/helpers';
+import {updateBudget} from '../../data/budget';
+import {findCategory, importCategory} from '../../data/budget_category';
+import BudgetItemController from '../../data/budget_item';
+import BudgetItemExpenseController from '../../data/budget_item_expense';
+import {monthName, selectedValue} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -124,7 +124,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _fetchBudget(data) {
-    find(data)
+    findCategory(data)
       .done(this._fetchDataDone)
       .fail(this._fetchDataFail)
   }

@@ -1,8 +1,8 @@
 import React from 'react';
-import InputField from '../../../Forms/input_field';
-import PredictedExpenses from '../../../Forms/predicted_expenses';
-import BudgetItemExpenseController from '../../../Data/budget_item_expense_controller';
-import {numberToCurrency} from '../../../Utils/helpers';
+import InputField from '../../../forms/input_field';
+import PredictedExpenses from '../../../forms/predicted_expenses';
+import {predictions} from '../../../../data/budget_item_expense';
+import {numberToCurrency} from '../../../../utils/helpers';
 
 export default class Expense extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Expense extends React.Component {
     var self = this
     var word = this.props.expense.name
     if (word.length > 2) {
-      BudgetItemExpenseController.predictions(word)
+      predictions(word)
         .done(function(list) {
           self.setState({predictions: list})
         })

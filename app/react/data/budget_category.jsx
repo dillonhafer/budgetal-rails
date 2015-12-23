@@ -1,5 +1,5 @@
 export default {
-  find(data) {
+  findCategory(data) {
     var url = '/budget-categories/'+data.year+'/'+data.month+'/'+data.id;
     return $.ajax({url: url, dataType: 'json'})
   },

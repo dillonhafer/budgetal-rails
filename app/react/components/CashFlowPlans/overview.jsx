@@ -1,7 +1,7 @@
 import React from 'react';
-import BudgetForm from '../Budgets/budget_form';
-import Chart from '../Utils/chart';
-import {numberToCurrency} from '../Utils/helpers';
+import BudgetForm from '../budgets/budget_form';
+import Chart from '../chart';
+import {numberToCurrency} from '../../utils/helpers';
 import classNames from 'classnames';
 
 export default class Overview extends React.Component {

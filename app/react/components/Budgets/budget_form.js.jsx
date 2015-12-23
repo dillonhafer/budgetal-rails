@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import InputField from '../Forms/input_field';
-import {numberToCurrency} from '../Utils/helpers';
+import InputField from '../forms/input_field';
+import {numberToCurrency} from '../../utils/helpers';
 
 export default class BudgetForm extends React.Component {
   constructor(props) {

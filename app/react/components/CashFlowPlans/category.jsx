@@ -1,5 +1,5 @@
 import React from 'react';
-import BudgetItemList from './BudgetItems/budget_item_list';
+import BudgetItemList from './budgetItems/budget_item_list';
 import classNames from 'classnames';
 
 export default class Category extends React.Component {

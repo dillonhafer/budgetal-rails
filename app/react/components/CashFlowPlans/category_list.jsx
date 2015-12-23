@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import BudgetItemController from '../Data/budget_item_controller';
+import {moveItem} from '../../data/budget_item';
 import _ from 'lodash';
-import {monthName, selectedValue} from '../Utils/helpers';
+import {monthName, selectedValue} from '../../utils/helpers';
 
 export default class CategoryList extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class CategoryList extends React.Component {
     var category_id = e.target.dataset.id;
 
     if (category_id !== original_category_id) {
-      BudgetItemController.move(category_id, item_id)
+      moveItem(category_id, item_id)
         .done(this.dropped.bind(null, item_id))
     }
   }

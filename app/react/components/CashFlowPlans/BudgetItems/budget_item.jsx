@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
-import InputField from '../../Forms/input_field';
+import InputField from '../../forms/input_field';
 import _ from 'lodash';
-import ExpenseList from './BudgetItemExpenses/expense_list';
-import {numberToCurrency} from '../../Utils/helpers';
+import ExpenseList from './budgetItemExpenses/expense_list';
+import {numberToCurrency} from '../../../utils/helpers';
 
 export default class BudgetItem extends React.Component {
   constructor(props) {

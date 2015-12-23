@@ -1,5 +1,5 @@
-var BudgetItemController = {
-  create: function(data) {
+export default {
+  createItem(data) {
     return $.ajax({
               url: '/budget-items',
               dataType: 'json',
@@ -7,7 +7,7 @@ var BudgetItemController = {
               data: data
             })
   },
-  update: function(item) {
+  updateItem(item) {
     return $.ajax({
               url: `/budget-items/${item.id}`,
               dataType: 'json',
@@ -15,14 +15,14 @@ var BudgetItemController = {
               data: {budget_item: item}
             })
   },
-  destroy: function(id) {
+  destroyItem(id) {
     return $.ajax({
               url: `/budget-items/${id}`,
               dataType: 'json',
               method: 'DELETE'
             })
   },
-  move: function(category_id, item_id) {
+  moveItem(category_id, item_id) {
     return $.ajax({
               url: '/move-budget-item',
               dataType: 'json',
@@ -31,5 +31,3 @@ var BudgetItemController = {
             })
   }
 }
-
-export { BudgetItemController }

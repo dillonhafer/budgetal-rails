@@ -1,5 +1,5 @@
-var ExpenseController = {
-  create: function(expense) {
+export default {
+  createExpense(expense) {
     return $.ajax({
               url: `/budget-item-expenses`,
               dataType: 'json',
@@ -7,7 +7,7 @@ var ExpenseController = {
               data: {budget_item_expense: expense}
             })
   },
-  update: function(expense) {
+  updateExpense(expense) {
     return $.ajax({
               url: `/budget-item-expenses/${expense.id}`,
               dataType: 'json',
@@ -15,14 +15,14 @@ var ExpenseController = {
               data: {budget_item_expense: expense}
             })
   },
-  destroy: function(id) {
+  destroyExpense(id) {
     return $.ajax({
               url: `/budget-item-expenses/${id}`,
               dataType: 'json',
               method: 'DELETE'
             })
   },
-  predictions: function(name) {
+  predictionsExpense(name) {
     return $.ajax({
               url: `/past-expenses/${name}`,
               dataType: 'json',
@@ -30,5 +30,3 @@ var ExpenseController = {
             })
   }
 }
-
-export { ExpenseController }

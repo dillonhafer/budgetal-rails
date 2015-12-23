@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import Chart from '../Utils/chart';
+import Chart from '../chart';
 import _ from 'lodash';
-import {numberToCurrency} from '../Utils/helpers';
+import {numberToCurrency} from '../../utils/helpers';
 
 export default class CategoryOverview extends React.Component {
   constructor(props) {
