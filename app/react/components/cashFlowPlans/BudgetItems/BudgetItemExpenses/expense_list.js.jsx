@@ -5,17 +5,23 @@ import _ from 'lodash';
 export default class ExpenseList extends React.Component {
   constructor(props) {
     super(props);
-    this.props = {
-			expenses: []
-    }
   }
 
-	add(e) {
+  static defaultProps = {
+		expenses: []
+  }
+
+  static propTypes = {
+		expenses: React.PropTypes.array.isRequired,
+	  functions: React.PropTypes.object.isRequired
+  }
+
+	add = (e) => {
 		e.preventDefault();
 		this.props.functions.add(this.props.budgetItemId);
 	}
 
-	headerRow() {
+	headerRow = () => {
 		if (this.props.expenses.length) {
 			return (
 				<div className='row expense-header-row'>
@@ -28,7 +34,7 @@ export default class ExpenseList extends React.Component {
 		}
 	}
 
-	expenses() {
+	expenses = () => {
 		if (this.props.expenses.length) {
 			return (
 				_.map(this.props.expenses, (expense, index) => {
@@ -62,9 +68,4 @@ export default class ExpenseList extends React.Component {
 			</div>
 		);
 	}
-}
-
-ExpenseList.propTypes = {
-  expenses: React.PropTypes.array.isRequired,
-  functions: React.PropTypes.object.isRequired
 }

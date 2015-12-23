@@ -5,13 +5,19 @@ import _ from 'lodash';
 export default class PredictedExpenses extends React.Component {
   constructor(props) {
     super(props);
-    this.props = {
-      predictions: [],
-      select: function() {}
-    }
   }
 
-  select(e) {
+  static defaultProps = {
+    predictions: [],
+    select: function() {}
+  }
+
+  static propTypes = {
+    predictions: React.PropTypes.array,
+    select: React.PropTypes.func,
+  }
+
+  select = (e) => {
     this.props.select(e.target.textContent)
   }
 
@@ -28,9 +34,4 @@ export default class PredictedExpenses extends React.Component {
       </ul>
     )
   }
-}
-
-PredictedExpenses.propTypes = {
-  predictions: React.PropTypes.array,
-  select: React.PropTypes.func,
 }

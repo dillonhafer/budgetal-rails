@@ -4,10 +4,17 @@ import BudgetItem from './budget_item';
 export default class BudgetItemList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hideExpenses: true }
   }
 
-	budgetItems() {
+  static propTypes = {
+    budgetItems: React.PropTypes.array.isRequired,
+    functions: React.PropTypes.object.isRequired,
+    expenseFunctions: React.PropTypes.object.isRequired
+  }
+
+  state = { hideExpenses: true }
+
+	budgetItems = () => {
 		return (this.props.budgetItems.map((budget_item, index) => {
       return (
         <BudgetItem index={index}
@@ -31,10 +38,4 @@ export default class BudgetItemList extends React.Component {
 			</div>
 		);
 	}
-}
-
-BudgetItemList.propTypes = {
-  budgetItems: React.PropTypes.array.isRequired,
-  functions: React.PropTypes.object.isRequired,
-  expenseFunctions: React.PropTypes.object.isRequired
 }

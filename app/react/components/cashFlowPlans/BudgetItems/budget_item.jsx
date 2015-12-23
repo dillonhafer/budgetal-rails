@@ -44,7 +44,7 @@ export default class BudgetItem extends React.Component {
     this.props.save(this.props.budgetItem)
   }
 
-  delete(e) {
+  delete = (e) => {
     e.preventDefault()
     this.props.delete(this.props.budgetItem, this.props.index)
   }

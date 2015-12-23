@@ -1,24 +1,29 @@
 import React from 'react';
 import InputField from '../../../forms/input_field';
 import PredictedExpenses from '../../../forms/predicted_expenses';
-import {predictions} from '../../../../data/budget_item_expense';
+import {predictionsExpense} from '../../../../data/budget_item_expense';
 import {numberToCurrency} from '../../../../utils/helpers';
 
 export default class Expense extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {predictions: []};
-  }
-
-  componentWillMount() {
     this.predict = _.debounce(this.predict, 500)
   }
 
-  predict() {
+  static propTypes = {
+    expense: React.PropTypes.object.isRequired,
+    save: React.PropTypes.func.isRequired,
+    update: React.PropTypes.func.isRequired,
+    delete: React.PropTypes.func.isRequired
+  }
+
+  state = {predictions: []};
+
+  predict = () => {
     var self = this
     var word = this.props.expense.name
     if (word.length > 2) {
-      predictions(word)
+      predictionsExpense(word)
         .done(function(list) {
           self.setState({predictions: list})
         })
@@ -30,33 +35,33 @@ export default class Expense extends React.Component {
     }
   }
 
-  save(e) {
+  save = (e) => {
     e.preventDefault()
     var expense = this.props.expense
     expense.index = this.props.index
     this.props.save(this.props.expense)
   }
 
-  update(expense,e) {
+  update = (expense,e) => {
     expense[e.target.name] = e.target.value
     this.props.update(this.props.index, expense)
     // Predict expense
     if (e.target.name === 'name') { this.predict() }
   }
 
-  select(word) {
+  select = (word) => {
     var expense = this.props.expense
     expense.name = word
     this.props.update(this.props.index, expense)
     this.removePredictions();
   }
 
-  delete(e) {
+  delete = (e) => {
     e.preventDefault()
     this.props.delete(this.props.expense, this.props.index)
   }
 
-  removePredictions(e) {
+  removePredictions = (e) => {
     this.setState({predictions: []})
   }
 
@@ -84,11 +89,4 @@ export default class Expense extends React.Component {
       </form>
     );
   }
-}
-
-Expense.propTypes = {
-  expense: React.PropTypes.object.isRequired,
-  save: React.PropTypes.func.isRequired,
-  update: React.PropTypes.func.isRequired,
-  delete: React.PropTypes.func.isRequired
 }

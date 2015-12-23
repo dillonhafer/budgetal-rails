@@ -9,7 +9,7 @@ import Confirm from '../confirm';
 import {updateBudget} from '../../data/budget';
 import {findCategory, importCategory} from '../../data/budget_category';
 import {createItem, updateItem, destroyItem} from '../../data/budget_item';
-import BudgetItemExpenseController from '../../data/budget_item_expense';
+import {createExpense, updateExpense, destroyExpense} from '../../data/budget_item_expense';
 import {monthName, selectedValue} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
@@ -164,7 +164,7 @@ export default class CashFlowPlans extends React.Component {
     this.setState({category: category})
   }
 
-  deleteBudgetItem(e) {
+  deleteBudgetItem = (e) => {
     e.preventDefault();
     if (this.state.modal.item.id !== undefined) {
       destroyItem(this.state.modal.item.id)
@@ -221,13 +221,13 @@ export default class CashFlowPlans extends React.Component {
     this.setState({category: category})
   }
 
-  saveExpense(expense) {
+  saveExpense = (expense) => {
     if (expense.id === undefined) {
-      BudgetItemExpenseController.create(expense)
+      createExpense(expense)
         .done(this._expenseSaved.bind(null, expense.index))
         .fail(this._saveExpenseFail.bind(null, expense))
     } else {
-      BudgetItemExpenseController.update(expense)
+      updateExpense(expense)
         .done(this._expenseSaved.bind(null, expense.index))
         .fail(this._saveExpenseFail.bind(null, expense))
     }
@@ -258,10 +258,10 @@ export default class CashFlowPlans extends React.Component {
     this.setState({category: category})
   }
 
-  deleteExpense(e) {
+  deleteExpense = (e) => {
     e.preventDefault();
     if (this.state.modal.item.id !== undefined) {
-      BudgetItemExpenseController.destroy(this.state.modal.item.id)
+      destroyExpense(this.state.modal.item.id)
         .done(this._expenseDeleted(this.state.modal.item.budget_item_id, this.state.modal.index))
         .fail(this._fetchDataFail.bind(null, this.state.modal.item))
     }
