@@ -62,6 +62,7 @@ See the [Chrome Driver website](https://sites.google.com/a/chromium.org/chromedr
 
 1. Setup database `RAILS_ENV=test rake db:schema:load`
 2. Run tests `rake`
+3. Run JS tests `npm test`
 
 ## Credits
 
