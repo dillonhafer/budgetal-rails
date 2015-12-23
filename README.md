@@ -1,6 +1,14 @@
 Budgetal
 --------
 
+Webpack TODO
+------------
+
+- [ ] Get Highcharts working from npm
+- [ ] Get category import working ... and integration tested?
+- [ ] Move item working ... and integration tested?
+- [ ] Move statistics over to webpack
+
 About
 -----
 
