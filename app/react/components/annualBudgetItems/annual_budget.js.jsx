@@ -44,10 +44,6 @@ export default class CashFlowPlans extends React.Component {
     this._fetchBudget({year: this.yearParam()})
   }
 
-  successMessage(item_name) {
-    showMessage("Updated "+item_name)
-  }
-
   _fetchBudget(data) {
     allItems(data)
       .done(this._fetchDataDone)
