@@ -26,7 +26,7 @@ export default class Category extends React.Component {
         <div className='large-12 medium-12 columns header-row'>
           <h3>
 	          {this.props.category.name}
-	          <a href='#' onClick={this.props.import} title='Import items from previous budget' className='right black-color copy-category'>
+	          <a href='#' onClick={this.props.import} title='Import items from previous budget' name='importCategory' className='right black-color copy-category'>
 		          <i className="fi-icon fi-download"></i>
 	          </a>
           </h3>

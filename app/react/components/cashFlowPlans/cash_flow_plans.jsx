@@ -311,7 +311,7 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
-  import(e) {
+  _import = (e) => {
     e.preventDefault();
     importCategory(this.state.category.id).done(this.importFinished)
   }
@@ -365,7 +365,7 @@ export default class CashFlowPlans extends React.Component {
             </div>
             <ImportModal category={this.state.category}
                          hidden={this.state.importHidden}
-                         import={this.import}
+                         import={this._import}
                          cancel={this.cancelImport} />
           </div>
         </div>
