@@ -11,8 +11,7 @@ export default class AnnualBudgetItem extends React.Component {
     budgetItem: React.PropTypes.object.isRequired
   };
 
-  paid = () => {
-    var isPaid  = this.props.budgetItem.paid;
+  paidLabel(isPaid) {
     var classes = classNames('label radius', {success: isPaid, alert: !isPaid});
     return (<span className={classes}>{isPaid ? 'Paid' : 'Not Paid'}</span>);
   }
@@ -24,24 +23,21 @@ export default class AnnualBudgetItem extends React.Component {
       month: monthName(date.getMonth()+1),
       day: parseInt(date.getDate())
     };
-
     return `${parts.month} ${parts.day}, ${parts.year}`;
   }
 
-  hideTable = () => {
-    return this.props.budgetItem.id === undefined;
-  }
-
   render() {
-    let classes = classNames('no-container', {hide: this.hideTable()});
+    let item    = this.props.budgetItem
+    let hide    = item.id === undefined;
+    let classes = classNames('no-container', {hide});
     return (
       <li className={classes}>
         <ul className="pricing-table">
-          <li className="title">{ this.props.budgetItem.name }</li>
-          <li className="price">{ numberToCurrency(this.props.budgetItem.amount) }</li>
-          <li className="description"><b>Due:</b> { this.dueDate(this.props.budgetItem.due_date) }</li>
-          <li className="bullet-item">{ numberToCurrency(this.props.budgetItem.amount / 12) } / month</li>
-          <li className="bullet-item">{ this.paid() }</li>
+          <li className="title">{ item.name }</li>
+          <li className="price">{ numberToCurrency(item.amount) }</li>
+          <li className="description"><b>Due:</b> { this.dueDate(item.due_date) }</li>
+          <li className="bullet-item">{ numberToCurrency(item.amount / 12) } / month</li>
+          <li className="bullet-item">{ this.paidLabel(item.paid) }</li>
         </ul>
       </li>
     );
