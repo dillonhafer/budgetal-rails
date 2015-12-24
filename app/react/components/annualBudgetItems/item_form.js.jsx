@@ -12,7 +12,7 @@ export default class AnnualBudgetItemForm extends React.Component {
     budgetItem: React.PropTypes.object.isRequired,
     updateForm: React.PropTypes.func.isRequired,
     saveForm: React.PropTypes.func.isRequired,
-    delete: React.PropTypes.func.isRequired
+    deleteForm: React.PropTypes.func.isRequired
   }
 
   updateForm = (e) => {
@@ -31,7 +31,7 @@ export default class AnnualBudgetItemForm extends React.Component {
 
   deleteForm = (e) => {
     e.preventDefault();
-    this.props.delete(this.props.budgetItem, this.props.index);
+    this.props.deleteForm(this.props.budgetItem, this.props.index);
   }
 
   render() {

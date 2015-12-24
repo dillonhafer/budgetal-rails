@@ -7,7 +7,7 @@ import AnnualBudgetItemForm from './item_form';
 describe('AnnualBudgetItemForm', () => {
   let f = function(){};
   let budgetItem  = {name: 'Amazon', amount: 12.12, due_date: '2015-3-12', paid: true}
-  let itemForm    = <AnnualBudgetItemForm budgetItem={budgetItem} openModal={f} updateForm={f} delete={f} saveForm={f}  />
+  let itemForm    = <AnnualBudgetItemForm budgetItem={budgetItem} updateForm={f} deleteForm={f} saveForm={f}  />
   var markup      = ReactDOMServer.renderToStaticMarkup(itemForm);
   const component = TestUtils.renderIntoDocument(itemForm);
 

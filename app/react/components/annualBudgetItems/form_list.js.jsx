@@ -28,13 +28,12 @@ export default class AnnualBudgetFormList extends React.Component {
 	forms() {
 		return (this.props.annual_budget_items.map((budget_item, index) => {
       return (
-        <AnnualBudgetItemForm openModal={this.props.openModal}
-											        index={index}
+        <AnnualBudgetItemForm index={index}
 											        budgetItem={budget_item}
 											        key={index}
 											        updateForm={this.props.updateForm}
 											        saveForm={this.props.saveForm}
-											        delete={this.props.delete} />
+											        deleteForm={this.props.delete} />
       )
     }))
 	}
