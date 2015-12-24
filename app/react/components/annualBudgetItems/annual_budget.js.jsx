@@ -188,7 +188,7 @@ export default class CashFlowPlans extends React.Component {
         <div className="small-12 large-12 columns">
           <ul className="main-budget-categories main-annual-budget">
             <li>
-              <AnnualBudgetItemList annual_budget_items={this.state.budget.annual_budget_items} />
+              <AnnualBudgetItemList annualBudgetItems={this.state.budget.annual_budget_items} />
               <AnnualBudgetFormList annual_budget_items={this.state.budget.annual_budget_items}
                                     openModal={this.openModal}
                                     addItem={this.addItem}
