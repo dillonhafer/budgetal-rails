@@ -1,54 +1,39 @@
 import React from 'react';
 import classNames from 'classnames';
-import {numberToCurrency} from '../../utils/helpers';
+import {numberToCurrency, monthName} from '../../utils/helpers';
 
 export default class AnnualBudgetItem extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  static propTypes = {
+    budgetItem: React.PropTypes.object.isRequired
+  };
+
   paid = () => {
-    var text = this.props.budgetItem.paid ? 'Paid' : 'Not Paid'
-    var css  = 'label radius '
-    css += this.props.budgetItem.paid ? 'success' : 'alert'
-    return (<span className={css}>{text}</span>)
+    var isPaid  = this.props.budgetItem.paid;
+    var classes = classNames('label radius', {success: isPaid, alert: !isPaid});
+    return (<span className={classes}>{isPaid ? 'Paid' : 'Not Paid'}</span>);
   }
 
   dueDate(date) {
-    var months = {
-      '01': 'Janurary',
-      '02': 'Feburary',
-      '03': 'March',
-      '04': 'April',
-      '05': 'May',
-      '06': 'June',
-      '07': 'July',
-      '08': 'August',
-      '09': 'September',
-      '10': 'October',
-      '11': 'November',
-      '12': 'December',
-    }
-    if (!date) {
-      date = new Date
-      date = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-    }
-    var dateParts = date.split('-')
-    var year = dateParts[0]
-    var month = months[dateParts[1]]
-    var day = parseInt(dateParts[2])
-    return `${month} ${day}, ${year}`
+    date = new Date(date);
+    var parts = {
+      year: date.getFullYear(),
+      month: monthName(date.getMonth()+1),
+      day: parseInt(date.getDate())
+    };
+
+    return `${parts.month} ${parts.day}, ${parts.year}`;
   }
 
   hideTable = () => {
-    return this.props.budgetItem.id === undefined
+    return this.props.budgetItem.id === undefined;
   }
 
   render() {
-    let classes = classNames({
-      'no-container': true,
-      hide: this.hideTable()
-    });
+    let classes = classNames('no-container', {hide: this.hideTable()});
     return (
       <li className={classes}>
         <ul className="pricing-table">
