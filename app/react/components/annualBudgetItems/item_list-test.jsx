@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
 import AnnualBudgetItemList from './item_list';
@@ -15,7 +16,7 @@ describe('AnnualBudgetItemList', () => {
   describe('With budget items', () => {
     let item   = {name: 'Amazon', amount: 12.12, due_date: '2015-3-12', paid: true}
     let list   = <AnnualBudgetItemList annualBudgetItems={[item]} />
-    var markup = React.renderToStaticMarkup(list);
+    var markup = ReactDOMServer.renderToStaticMarkup(list);
 
     it('shows an item list', () => {
       expect(markup).toContain('<ul class="pricing-table">');
@@ -28,7 +29,7 @@ describe('AnnualBudgetItemList', () => {
 
   describe('Without budget items', () => {
     var empty_list = <AnnualBudgetItemList annualBudgetItems={[]} />
-    var markup     = React.renderToStaticMarkup(empty_list);
+    var markup     = ReactDOMServer.renderToStaticMarkup(empty_list);
 
     it('shows an empty message', () => {
       expect(markup).toContain("You haven&#x27;t added any budget items yet.");

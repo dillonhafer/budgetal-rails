@@ -1,11 +1,12 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
 import AnnualBudgetItem from './item';
 
 describe('AnnualBudgetItem', () => {
   let budgetItem  = {name: 'Amazon', amount: 12.12, due_date: '2015-3-12', paid: true}
-  var markup      = React.renderToStaticMarkup(<AnnualBudgetItem budgetItem={budgetItem} />);
+  var markup      = ReactDOMServer.renderToStaticMarkup(<AnnualBudgetItem budgetItem={budgetItem} />);
   const component = TestUtils.renderIntoDocument(<AnnualBudgetItem budgetItem={budgetItem} />);
 
   it('renders', () => {
