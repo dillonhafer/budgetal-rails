@@ -7,18 +7,19 @@ var CleanPlugin = require('clean-webpack-plugin');
 var config = _.merge({}, baseConfig, {
   cache: false,
   plugins: [
-    {
-      new webpack.optimize.UglifyJsPlugin({
-        output: {
-          comments: false
-        },
-        compress: {
-          warnings: false
-        }
-      }),
-      new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.optimize.AggressiveMergingPlugin(),
-    }
+    new webpack.NoErrorsPlugin(),
+    new CleanPlugin(['build']),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      output: {
+        comments: false
+      },
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
   ]
 }
 
