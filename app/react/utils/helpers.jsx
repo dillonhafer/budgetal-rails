@@ -24,8 +24,8 @@ export default {
 
   numberToCurrency(number, dollarSign='$') {
     if (isNaN(parseFloat(number))) { number = 0 }
-    var replaceRegex = /(\d)(?=(\d{3})+\.)/g
+    var group3Regex = /(\d)(?=(\d{3})+\.)/g
     var number = parseFloat(number).toFixed(2);
-    return dollarSign + number.replace(replaceRegex, '$1,');
+    return dollarSign + number.replace(group3Regex, '$1,');
   }
 }
