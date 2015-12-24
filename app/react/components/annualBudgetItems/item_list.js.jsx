@@ -1,27 +1,28 @@
 import React from 'react';
 import AnnualBudgetItem from './item';
+import _ from 'lodash';
 
 export default class AnnualBudgetItemList extends React.Component {
   constructor(props) {
     super(props);
   }
 
-	budgetItems = () => {
-		if (this.props.annual_budget_items.length > 0) {
-			return this.list()
-		} else {
-			return this.empty();
+  static propTypes = {
+    annualBudgetItems: React.PropTypes.array.isRequired
+  }
+
+	budgetItems(items) {
+    if (_.isEmpty(items)) {
+      return <p className='text-center'>You haven't added any budget items yet.</p>;
+    } else {
+			return this.buildList(items)
 		}
 	}
 
-	empty() {
-		return (<p className='text-center'>You haven't added any budget items yet.</p>)
-	}
-
-	list = () => {
-		return (this.props.annual_budget_items.map((budget_item, index) => {
+	buildList(budgetItems) {
+		return (budgetItems.map((budgetItem, index) => {
       return (
-        <AnnualBudgetItem budgetItem={budget_item} key={index} />
+        <AnnualBudgetItem budgetItem={budgetItem} key={index} />
       )
     }))
 	}
@@ -30,7 +31,7 @@ export default class AnnualBudgetItemList extends React.Component {
     return (
     	<div className='annual-items-status'>
 		    <ul className='large-block-grid-4'>
-			    {this.budgetItems()}
+			    {this.budgetItems(this.props.annualBudgetItems)}
 	      </ul>
       </div>
     );
