@@ -65,7 +65,7 @@ export default class BudgetItem extends React.Component {
     });
   }
 
-  drag(e) {
+  drag = (e) => {
     e.dataTransfer.setData('budget_item_id', this.props.budgetItem.id)
     e.dataTransfer.setData('original_category_id', this.props.budgetItem.budget_category_id)
   }

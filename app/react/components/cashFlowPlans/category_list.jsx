@@ -29,13 +29,13 @@ export default class CategoryList extends React.Component {
     this.setState({showForm: !this.state.showForm})
   }
 
-  dropped(item_id, response) {
+  dropped = (item_id, response) => {
     this.props.moveBudgetItem(item_id)
     document.querySelector('a.item.active').focus()
     showMessage(response.message)
   }
 
-  drop(e) {
+  drop = (e) => {
     e.preventDefault();
     var item_id = e.dataTransfer.getData('budget_item_id');
     var original_category_id = e.dataTransfer.getData('original_category_id');
