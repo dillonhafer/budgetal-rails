@@ -74,6 +74,12 @@ See the [Chrome Driver website](https://sites.google.com/a/chromium.org/chromedr
 2. Run tests `rake`
 3. Run JS tests `npm test`
 
+For continuous integration mode with JS tests run
+
+```
+npm test -- --no-single-run
+```
+
 ## Credits
 
 [![Budgetal](https://s3.amazonaws.com/cdn.budgetal.com/b.png)](https://www.budgetal.com)
