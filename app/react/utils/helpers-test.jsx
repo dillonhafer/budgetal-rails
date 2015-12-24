@@ -37,6 +37,14 @@ describe('Helpers', () => {
     it('returns 0.00 if a number cannot be found', () => {
       expect(numberToCurrency('abc')).toBe('$0.00');
     });
+
+    it('returns only a number if passed empty string', () => {
+      expect(numberToCurrency('4.87', '')).toBe('4.87');
+    });
+
+    it('adds commas appropriately', () => {
+      expect(numberToCurrency('1000')).toBe('$1,000.00');
+    });
   });
 
   describe('selectedValue', () => {
