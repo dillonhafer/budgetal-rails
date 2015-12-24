@@ -27,7 +27,7 @@ end
 
 # Run `mina setup` to create these paths on your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache']
+set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache', 'node_modules']
 
 set :user, 'deployer'
 set :keep_releases, 4
@@ -50,6 +50,9 @@ task setup: :environment do
 
   queue! %[mkdir -p "#{deploy_to}/shared/tmp/cache"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/cache"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/node_modules"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/node_modules"]
 end
 
 desc 'Make sure local git is in sync with remote.'
@@ -81,9 +84,16 @@ task deploy: :environment do
 end
 
 namespace :frontend do
+  desc "Install npm dependencies"
+  task :install do
+    queue "echo 'Installing npm modules'"
+    queue! %[NODE_ENV=#{ENV['to']} npm install]
+  end
+
   desc "Compile Webpack assets"
-  task :build do
-    queue "NODE_ENV=#{ENV['to']} npm run build"
+  task build: :install do
+    queue "echo 'Building react assets'"
+    queue! %[NODE_ENV=#{ENV['to']} npm run build]
   end
 end
 
