@@ -8,7 +8,6 @@ var config = _.merge({}, baseConfig, {
   cache: false,
   plugins: [
     {
-      new webpack.NoErrorsPlugin(),
       new CleanPlugin(['build']),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
