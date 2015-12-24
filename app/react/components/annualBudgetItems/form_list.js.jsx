@@ -8,28 +8,26 @@ export default class AnnualBudgetFormList extends React.Component {
   }
 
   static propTypes = {
-    annual_budget_items: React.PropTypes.array,
-    openModal: React.PropTypes.func,
-    addItem: React.PropTypes.func,
-    updateForm: React.PropTypes.func,
-    saveForm: React.PropTypes.func,
-    delete: React.PropTypes.func
+    annualBudgetItems: React.PropTypes.array.isRequired,
+    addItem: React.PropTypes.func.isRequired,
+    updateForm: React.PropTypes.func.isRequired,
+    saveForm: React.PropTypes.func.isRequired,
+    delete: React.PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    annual_budget_items: [],
-    openModal: function() {},
+    annualBudgetItems: [],
     addItem: function() {},
     updateForm: function() {},
     saveForm: function() {},
     delete: function() {}
   }
 
-	forms() {
-		return (this.props.annual_budget_items.map((budget_item, index) => {
+	buildForms(budgetItems) {
+		return (budgetItems.map((budgetItem, index) => {
       return (
         <AnnualBudgetItemForm index={index}
-											        budgetItem={budget_item}
+											        budgetItem={budgetItem}
 											        key={index}
 											        updateForm={this.props.updateForm}
 											        saveForm={this.props.saveForm}
@@ -52,7 +50,7 @@ export default class AnnualBudgetFormList extends React.Component {
 	      </div>
 
 	      <div className='annual-items-forms'>
-          {this.forms()}
+          {this.buildForms(this.props.annualBudgetItems)}
           <a href='#' onClick={this.props.addItem} className='tiny button radius add-nested-item'><i className='fi-icon fi-plus'></i> Add an Item</a>
         </div>
       </div>

@@ -25,23 +25,21 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this._fetchBudget(this.yearParam());
+  }
+
   confirmDelete = (budget_item, index) => {
     if (!!budget_item.id) {
       this.setState({modal: {hidden: false, budget_item: budget_item, index: index}});
     } else {
-      this._budgetItemDeleted(index)
+      this._budgetItemDeleted(index);
     }
   }
 
   cancelDelete = (e) => {
-    if (e) {
-      e.preventDefault()
-    }
+    if (e) { e.preventDefault(); }
     this.setState({modal: {hidden: true, index: -1, budget_item: {name: ''}}});
-  }
-
-  componentDidMount() {
-    this._fetchBudget(this.yearParam())
   }
 
   _fetchBudget(data) {
@@ -54,31 +52,27 @@ export default class CashFlowPlans extends React.Component {
     if (data.annual_budget_item.id === undefined) {
       createItem(data)
         .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._saveItemFail.bind(null, data.annual_budget_item))
+        .fail(this._saveItemFail.bind(null, data.index))
     } else {
       updateItem(data)
         .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._saveItemFail.bind(null, data.annual_budget_item))
+        .fail(this._saveItemFail.bind(null, data.index))
     }
   }
 
   _budgetItemSaved = (index, budget_item, err) => {
-    let budget = this.state.budget
-    budget.annual_budget_items[index] = budget_item
-    this.setState({budget: budget})
-    showMessage(`Saved ${budget_item.name}`)
+    let budget = this.state.budget;
+    budget.annual_budget_items[index] = budget_item;
+    this.setState({budget: budget});
+    showMessage(`Saved ${budget_item.name}`);
   }
 
   _saveItemFail = (index, xhr, status, err) => {
-    var errors = JSON.parse(xhr.responseText).errors
-    let budget = this.state.budget
-    for(idx in budget.annual_budget_items) {
-      budget_item = budget.annual_budget_items[idx]
-      if (budget_item.id == index.id) {
-        budget.annual_budget_items[idx].errors = errors
-      }
-    }
-    this.setState({budget: budget})
+    var errors = JSON.parse(xhr.responseText).errors;
+    var budget = this.state.budget;
+
+    budget.annual_budget_items[index].errors = errors;
+    this.setState({budget: budget});
   }
 
   _deleteBudgetItem = (e) => {
@@ -134,6 +128,15 @@ export default class CashFlowPlans extends React.Component {
     this.setState({showForm: false})
   }
 
+  yearOptions() {
+    let minYear = 2015;
+    let maxYear = (new Date).getFullYear() + 3;
+    let years = _.range(minYear, maxYear);
+    return _.map(years, (year, index) => {
+      return (<option key={index} value={year}>{year}</option>);
+    });
+  }
+
   showForm = (e) => {
     e.preventDefault()
     this.setState({showForm: true})
@@ -152,15 +155,6 @@ export default class CashFlowPlans extends React.Component {
   updateForm = (index, updatedBudgetItem) => {
     this.state.budget.annual_budget_items[index] = updatedBudgetItem
     this.setState({budget: this.state.budget})
-  }
-
-  yearOptions() {
-    let minYear = 2015;
-    let maxYear = (new Date).getFullYear() + 3;
-    let years = _.range(minYear, maxYear);
-    return _.map(years, (year, index) => {
-      return (<option key={index} value={year}>{year}</option>);
-    });
   }
 
   render() {
@@ -189,7 +183,7 @@ export default class CashFlowPlans extends React.Component {
           <ul className="main-budget-categories main-annual-budget">
             <li>
               <AnnualBudgetItemList annualBudgetItems={this.state.budget.annual_budget_items} />
-              <AnnualBudgetFormList annual_budget_items={this.state.budget.annual_budget_items}
+              <AnnualBudgetFormList annualBudgetItems={this.state.budget.annual_budget_items}
                                     openModal={this.openModal}
                                     addItem={this.addItem}
                                     updateForm={this.updateForm}
