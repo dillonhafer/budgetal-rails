@@ -8,3 +8,6 @@ registerComponent('CashFlowPlans', CashFlowPlans);
 
 import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
 registerComponent('AnnualBudgetItems', AnnualBudgetItems);
+
+import Statistics from './components/statistics/statistics';
+registerComponent('Statistics', Statistics);
