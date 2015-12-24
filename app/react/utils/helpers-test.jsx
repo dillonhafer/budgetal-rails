@@ -1,5 +1,6 @@
 import expect from 'expect';
 import {monthName, selectedValue, numberToCurrency} from './helpers';
+import {elFactory} from '../test/dom_helpers';
 
 describe('Helpers', () => {
   describe('monthName', () => {
@@ -40,18 +41,18 @@ describe('Helpers', () => {
 
   describe('selectedValue', () => {
     it('returns the value of a select tag by CSS selector', () => {
-      var select = document.createElement('select');
-      select.className = 'month-dropdown';
-      ['Janurary', 'July', 'March'].forEach(function(month) {
-        var option = document.createElement('option');
-        option.value = month;
-        option.innerHTML = month;
-        if (month == 'March') {
-          option.setAttribute('selected', 'selected');
-        }
+      var select = elFactory({tag: 'select', attributes: {class: 'month-dropdown'}});
+      var months = [
+        {value: 'Janurary'},
+        {value: 'July'},
+        {value: 'March', selected: 'selected'}
+      ];
+
+      months.forEach(function(attributes) {
+        var option = elFactory({tag: 'option', text: attributes.value, attributes});
         select.appendChild(option);
       })
-      document.body.appendChild(select)
+      document.body.appendChild(select);
 
       expect(selectedValue('.month-dropdown')).toBe('March');
     });
