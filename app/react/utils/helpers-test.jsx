@@ -44,8 +44,8 @@ describe('Helpers', () => {
       var select = elFactory({tag: 'select', attributes: {class: 'month-dropdown'}});
       var months = [
         {value: 'Janurary'},
-        {value: 'July'},
-        {value: 'March', selected: 'selected'}
+        {value: 'March', selected: 'selected'},
+        {value: 'July'}
       ];
 
       months.forEach(function(attributes) {
