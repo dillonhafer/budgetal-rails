@@ -1,5 +1,5 @@
 'use strict';
-const baseConfig = require('./../webpack.config');
+var baseConfig = require('./../webpack.config');
 var _ = require('lodash');
 var webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
