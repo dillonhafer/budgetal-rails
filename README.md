@@ -4,7 +4,8 @@ Budgetal
 Webpack TODO
 ------------
 
-- [ ] Move item working
+- [x] Import category working
+- [x] Move item working
 - [ ] Move statistics over to webpack
 - [ ] Write move item integration tests (drag/drop)
 - [ ] Write category import integration tests
