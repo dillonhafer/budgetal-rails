@@ -1,18 +1,24 @@
-var StatsChart = React.createClass({
-  propTypes: {
+import React from 'react';
+import {findStatistic} from '../../data/budget_category';
+
+export default class StatsChart extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
     budget_categories: React.PropTypes.array.isRequired,
-  },
-  getInitialState: function() {
-    return {
-      chart: ''
-    }
-  },
-  getDefaultProps: function() {
-    return {
-      budget_categories: []
-    }
-  },
-  data: function(categories) {
+  }
+
+  state = {
+    chart: ''
+  }
+
+  static defaultProps= {
+    budget_categories: []
+  }
+
+  data(categories) {
     if (categories === undefined) {
       categories = this.props.budget_categories || []
     }
@@ -21,15 +27,17 @@ var StatsChart = React.createClass({
         return {y: parseFloat(category.percent_spent), name: category.name}
       })
     )
-  },
-  shouldComponentUpdate: function(newProps, state) {
+  }
+
+  shouldComponentUpdate(newProps, state) {
     if (this.state.chart) {
       var newData = this.data(newProps.budget_categories)
       this.state.chart.series[0].setData(newData)
     }
     return false
-  },
-  drawChart: function() {
+  }
+
+  drawChart() {
     var data = this.data()
     return new Highcharts.Chart({
       chart: {
@@ -70,8 +78,9 @@ var StatsChart = React.createClass({
         data: data
       }]
     });
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     Highcharts.theme = {
       colors: ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
       chart: { backgroundColor: null, },
@@ -86,12 +95,9 @@ var StatsChart = React.createClass({
     Highcharts.setOptions(Highcharts.theme);
     var chart = this.drawChart()
     this.setState({chart: chart})
-  },
-  render: function() {
-    return (
-      <div>
-        <div id='stats-container'></div>
-      </div>
-    );
   }
-})
+
+  render() {
+    return <div><div id='stats-container'></div></div>
+  }
+}
