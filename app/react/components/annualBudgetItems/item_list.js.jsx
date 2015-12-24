@@ -15,7 +15,7 @@ export default class AnnualBudgetItemList extends React.Component {
     if (_.isEmpty(items)) {
       return <p className='text-center'>You haven't added any budget items yet.</p>;
     } else {
-			return this.buildList(items)
+			return this.buildList(items);
 		}
 	}
 
