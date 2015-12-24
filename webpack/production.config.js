@@ -21,6 +21,6 @@ var config = _.merge({}, baseConfig, {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
   ]
-}
+});
 
 module.exports = config;
