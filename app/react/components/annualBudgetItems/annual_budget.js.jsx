@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import AnnualBudgetItemList from './item_list';
 import AnnualBudgetFormList from './form_list';
 import Confirm from '../confirm';
+import {selectedValue} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -115,13 +116,17 @@ export default class CashFlowPlans extends React.Component {
     return {year: pathNames[yearIndex]}
   }
 
+  _updateWindow(year) {
+    var title = `${year} | Budgetal`;
+    history.pushState({title}, 'Budgetal', year);
+    document.title = title;
+  }
+
   changeYear = () => {
-    var s = document.querySelector('#annual_budget_year')
-    var year = s.options[s.selectedIndex].value;
-    history.pushState({}, 'Budgetal', year)
-    document.title = `${year} | Budgetal`
-    this._fetchBudget({year: year})
-    this.setState({showForm: false})
+    var year = selectedValue('#annual_budget_year');
+    this._updateWindow(year);
+    this._fetchBudget({year});
+    this.hideYearForm();
   }
 
   hideYearForm = () => {
