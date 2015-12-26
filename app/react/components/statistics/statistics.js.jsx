@@ -1,6 +1,6 @@
 import React from 'react';
 import {findStatistic} from '../../data/statistic';
-import StatsChart from './stats_chart';
+import Highchart from '../highchart';
 import classNames from 'classnames';
 import {monthName, selectedValue} from '../../utils/helpers';
 
@@ -81,7 +81,7 @@ export default class Statistics extends React.Component {
 
   statistics() {
     if (this.state.budget.id) {
-      return <StatsChart selector='stats-container' budget_categories={this.state.budget.budget_categories} />
+      return <Highchart selector='stats-container' budget_categories={this.state.budget.budget_categories} />
     } else {
       return this.missing()
     }

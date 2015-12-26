@@ -15,7 +15,6 @@
 //= require foundation
 //= require foundation/foundation.topbar
 //= require foundation/foundation.reveal
-//= require highcharts
 //= require lodash
 //= require jquery.minical
 //= require react_integration
