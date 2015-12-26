@@ -13,7 +13,6 @@ export default class CashFlowPlans extends React.Component {
   }
 
   state = {
-    didFetchData: false,
     showForm: false,
     budget: {
       year: '',
@@ -45,8 +44,8 @@ export default class CashFlowPlans extends React.Component {
 
   _fetchBudget(data) {
     allItems(data)
-      .done(this._fetchDataDone)
-      .fail(this._fetchDataFail)
+      .done(this._budgetFetched)
+      .fail(this._budgetFetchFailed)
   }
 
   _saveBudgetItem = (data) => {
@@ -62,9 +61,9 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _budgetItemSaved = (index, budget_item, err) => {
-    let budget = this.state.budget;
+    var budget = this.state.budget;
     budget.annual_budget_items[index] = budget_item;
-    this.setState({budget: budget});
+    this.setState({budget});
     showMessage(`Saved ${budget_item.name}`);
   }
 
@@ -81,7 +80,7 @@ export default class CashFlowPlans extends React.Component {
     if (this.state.modal.budget_item.id !== undefined) {
       destroyItem(this.state.modal.budget_item.id)
         .done(this._budgetItemDeleted(this.state.modal.index))
-        .fail(this._fetchDataFail.bind(null, this.state.modal.budget_item))
+        .fail(this._budgetFetchFailed.bind(null, this.state.modal.budget_item))
     }
   }
 
@@ -95,14 +94,11 @@ export default class CashFlowPlans extends React.Component {
     this.cancelDelete()
   }
 
-  _fetchDataDone = (data, textStatus, jqXHR) => {
-    this.setState({
-      didFetchData: true,
-      budget: data
-    })
+  _budgetFetched = (budget) => {
+    this.setState({budget})
   }
 
-  _fetchDataFail(xhr, status, err) {
+  _budgetFetchFailed(xhr, status, err) {
     var errors = JSON.parse(xhr.responseText).errors
     for (idx in errors) {
       var msg = errors[idx]
@@ -134,9 +130,8 @@ export default class CashFlowPlans extends React.Component {
   }
 
   yearOptions() {
-    let minYear = 2015;
     let maxYear = (new Date).getFullYear() + 3;
-    let years = _.range(minYear, maxYear);
+    let years = _.range(2015, maxYear);
     return _.map(years, (year, index) => {
       return (<option key={index} value={year}>{year}</option>);
     });
@@ -152,14 +147,15 @@ export default class CashFlowPlans extends React.Component {
 
   addItem = (e) => {
     e.preventDefault()
-    var budget = this.state.budget
-    budget.annual_budget_items.push({annual_budget_id: budget.id})
-    this.setState({budget: budget})
+    var budget = this.state.budget;
+    budget.annual_budget_items.push({annual_budget_id: budget.id});
+    this.setState({budget});
   }
 
   updateForm = (index, updatedBudgetItem) => {
-    this.state.budget.annual_budget_items[index] = updatedBudgetItem
-    this.setState({budget: this.state.budget})
+    var budget = this.state.budget;
+    budget.annual_budget_items[index] = updatedBudgetItem;
+    this.setState({budget});
   }
 
   render() {

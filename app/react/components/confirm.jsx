@@ -21,9 +21,9 @@ export default class Confirm extends React.Component {
     });
     return (
       <div className={classes}>
-        <div className="page">
+        <div className="page text-center">
           <a href='#' className="close-button" onClick={this.props.cancel}>&#215;</a>
-          <h3 className='text-center alert-color'>Confirm Delete</h3>
+          <h3 className=' alert-color'>Confirm Delete</h3>
           <hr />
           <p>Are you sure you want to delete</p>
           <p><strong>{this.props.name}</strong></p>
