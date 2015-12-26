@@ -4,6 +4,7 @@ import ReactHighcharts from 'react-highcharts/bundle/highcharts';
 export default class Highchart extends React.Component {
   constructor(props) {
     super(props);
+    this.setTheme();
   }
 
   static propTypes = {
@@ -12,6 +13,21 @@ export default class Highchart extends React.Component {
 
   static defaultProps= {
     budget_categories: []
+  }
+
+  setTheme() {
+    ReactHighcharts.Highcharts.theme = {
+      colors: ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+      chart: { backgroundColor: null, },
+      title: { style: {fontSize: '16px',fontWeight: 'bold',textTransform: 'uppercase'} },
+      tooltip: {borderWidth: 0,backgroundColor: 'rgba(219,219,216,0.8)',shadow: false},
+      legend: {itemStyle: {fontWeight: 'bold',fontSize: '13px'}},
+      xAxis: {gridLineWidth: 1,labels: {style: {fontSize: '12px'}}},
+      yAxis: {minorTickInterval: 'auto', title: {style: {textTransform: 'uppercase'}}, labels: {style: {fontSize: '12px'}}},
+      plotOptions: { candlestick: {lineColor: '#404048'}},
+      background2: '#F0F0EA'
+    };
+    ReactHighcharts.Highcharts.setOptions(ReactHighcharts.Highcharts.theme);
   }
 
   data(categories=[]) {
@@ -31,17 +47,6 @@ export default class Highchart extends React.Component {
 
   config(data) {
     return {
-      theme: {
-        colors: ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
-        chart: { backgroundColor: null, },
-        title: { style: {fontSize: '16px',fontWeight: 'bold',textTransform: 'uppercase'} },
-        tooltip: {borderWidth: 0,backgroundColor: 'rgba(219,219,216,0.8)',shadow: false},
-        legend: {itemStyle: {fontWeight: 'bold',fontSize: '13px'}},
-        xAxis: {gridLineWidth: 1,labels: {style: {fontSize: '12px'}}},
-        yAxis: {minorTickInterval: 'auto', title: {style: {textTransform: 'uppercase'}}, labels: {style: {fontSize: '12px'}}},
-        plotOptions: { candlestick: {lineColor: '#404048'}},
-        background2: '#F0F0EA'
-      },
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
