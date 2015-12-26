@@ -9,7 +9,8 @@ Webpack TODO
 - [x] Move statistics over to webpack
 - [ ] Write move item integration tests (drag/drop)
 - [ ] Write category import integration tests
-- [ ] Get Highcharts working from npm
+- [x] Get Highcharts working from npm
+- [ ] Standardize highcharts into one component
 
 About
 -----
