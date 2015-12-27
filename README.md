@@ -1,17 +1,6 @@
 Budgetal
 --------
 
-Webpack TODO
-------------
-
-- [x] Import category working
-- [x] Move item working
-- [x] Move statistics over to webpack
-- [ ] Write move item integration tests (drag/drop)
-- [ ] Write category import integration tests
-- [x] Get Highcharts working from npm
-- [x] Standardize highcharts into one component
-
 About
 -----
 
