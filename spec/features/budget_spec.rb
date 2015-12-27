@@ -7,6 +7,6 @@ feature "Budget navigation", :feature do
     visit root_path
     expect(page).to have_content("Hello, #{user.first_name}!")
     click_link "Cash Flow Plans"
-    expect(page).to have_selector('div[data-react-class="CashFlowPlan"]', count: 1)
+    expect(page).to have_selector('div[data-react-class="CashFlowPlans"]', count: 1)
   end
 end

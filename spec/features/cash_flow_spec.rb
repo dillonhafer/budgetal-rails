@@ -150,9 +150,11 @@ def create_expense
 
   within '.expense-list' do
     fill_in 'name', with: 'Amazon'
+    fill_in 'amount', with: ''
     fill_in 'amount', with: '3'
     click_on 'Save'
   end
+
   expect(page).to have_field('name', with: 'Amazon')
   expect(page).to have_field('amount', with: '3.00')
   expect(page).to have_selector '.flash-box', text: 'Saved Amazon'

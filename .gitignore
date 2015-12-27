@@ -16,6 +16,10 @@
 /log/*.log
 /tmp
 
+# Webpack files
+node_modules
+app/assets/javascripts/react_bundle.js
+
 .DS_Store
 */.DS_Store
 */*/.DS_Store
