@@ -116,21 +116,3 @@ $(document).on('click', '.option-link', function(e) {
       return false;
     }
 });
-
-$(document).on('click', '#change-spending', function(e) {
-  var month, year;
-  year = $(this).prev('select').val();
-  month = $(this).prev().prev('select').val();
-  return window.location = "/allocation-plans/" + year + "/" + month;
-});
-
-$(document).on('click', '.item.side-item', function(e) {
-  var id, offset, top;
-  e.preventDefault();
-  id = $(this).attr("href");
-  offset = $(".tabs-content .active " + id).offset();
-  top = offset.top - 5;
-  return $("html, body").animate({
-    scrollTop: top
-  }, 850);
-});

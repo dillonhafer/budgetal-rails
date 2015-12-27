@@ -38,6 +38,29 @@
       $('.fixer').removeClass('plan-fixer');
     }
   });
+
+  $(document).on('click', '.item.header', function(e) {
+    e.preventDefault();
+    $(this).next('.tooltip').fadeToggle('1');
+  });
+
+  $(document).on('click', '#change-spending', function(e) {
+    var month, year;
+    year = $(this).prev('select').val();
+    month = $(this).prev().prev('select').val();
+    return window.location = "/allocation-plans/" + year + "/" + month;
+  });
+
+  $(document).on('click', '.item.side-item', function(e) {
+    var id, offset, top;
+    e.preventDefault();
+    id = $(this).attr("href");
+    offset = $(".tabs-content .active " + id).offset();
+    top = offset.top - 5;
+    return $("html, body").animate({
+      scrollTop: top
+    }, 850);
+  });
 <% end %>
 
 <div class='row'></div>
