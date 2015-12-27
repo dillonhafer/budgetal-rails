@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import ReactHighcharts from 'react-highcharts/bundle/highcharts';
 
 export default class Highchart extends React.Component {
@@ -8,11 +9,11 @@ export default class Highchart extends React.Component {
   }
 
   static propTypes = {
-    budget_categories: React.PropTypes.array.isRequired,
+    config: React.PropTypes.object.isRequired
   }
 
-  static defaultProps= {
-    budget_categories: []
+  static defaultProps = {
+    config: []
   }
 
   setTheme() {
@@ -30,23 +31,15 @@ export default class Highchart extends React.Component {
     ReactHighcharts.Highcharts.setOptions(ReactHighcharts.Highcharts.theme);
   }
 
-  data(categories=[]) {
-    return (
-      _.map(categories, function(category) {
-        return {y: parseFloat(category.percent_spent), name: category.name}
-      })
-    )
-  }
-
   shouldComponentUpdate(newProps, state) {
-    var newData = this.data(newProps.budget_categories)
     let chart = this.refs.chart.getChart();
-    chart.series[0].setData(newData)
+    let data  = newProps.config.series[0].data;
+    chart.series[0].setData(data);
     return false
   }
 
-  config(data) {
-    return {
+  config(config) {
+    return _.merge({
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -62,12 +55,6 @@ export default class Highchart extends React.Component {
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
       },
-      legend: {
-        align: 'right',
-        verticalAlign: 'top',
-        y: 100,
-        layout: 'vertical'
-      },
       plotOptions: {
         pie: {
           allowPointSelect: true,
@@ -79,16 +66,16 @@ export default class Highchart extends React.Component {
         }
       },
       series: [{
-        name: "Money",
+        name: "Percentage",
         colorByPoint: true,
-        data: data
+        data: []
       }]
-    }
+    },
+    config)
   }
 
   render() {
-    var data   = this.data(this.props.budget_categories);
-    var config = this.config(data);
+    var config = this.config(this.props.config);
     return (
       <ReactHighcharts ref="chart" config={config} />
     );

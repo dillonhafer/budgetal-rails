@@ -13,17 +13,29 @@ export default class Statistics extends React.Component {
     didFetchData: false,
     showForm: false,
     budget: {
-      month: this.urlParams().month,
-      year: this.urlParams().year,
+      month: urlParams().month,
+      year: urlParams().year,
       budget_categories: []
     }
   }
 
-  urlParams() {
-    var pathNames  = window.location.pathname.split('/');
-    var yearIndex  = pathNames.length - 2;
-    var monthIndex = pathNames.length - 1;
-    return {month: pathNames[monthIndex], year: pathNames[yearIndex]};
+  chartData(categories) {
+    return _.map(categories, function(category) {
+             return {y: parseFloat(category.percent_spent), name: category.name}
+           })
+  }
+
+  chartConfig(data) {
+    var categories = this.state.budget.budget_categories;
+    return {
+      legend: {
+        align: 'right',
+        verticalAlign: 'top',
+        y: 100,
+        layout: 'vertical'
+      },
+      series: [{data}]
+    };
   }
 
   changeBudget = (e) => {
@@ -47,7 +59,7 @@ export default class Statistics extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchBudget({year: this.urlParams().year, month: this.urlParams().month})
+    this._fetchBudget({year: urlParams().year, month: urlParams().month})
   }
 
   _fetchDataDone = (data, textStatus, jqXHR) => {
@@ -81,7 +93,9 @@ export default class Statistics extends React.Component {
 
   statistics() {
     if (this.state.budget.id) {
-      return <Highchart selector='stats-container' budget_categories={this.state.budget.budget_categories} />
+      var data   = this.chartData(this.state.budget.budget_categories);
+      var config = this.chartConfig(data);
+      return <Highchart config={config} />
     } else {
       return this.missing()
     }
@@ -97,7 +111,7 @@ export default class Statistics extends React.Component {
   }
 
   fullMonth() {
-    return monthName(this.urlParams().month)
+    return monthName(urlParams().month)
   }
 
   render() {
@@ -111,7 +125,7 @@ export default class Statistics extends React.Component {
       <div className='row collapse'>
         <div className='large-12 columns header-row'>
           <h3>
-            {this.fullMonth()} {this.urlParams().year}
+            {this.fullMonth()} {urlParams().year}
             <a href='#' onClick={this.showForm} title='Change Budget' className='right black-color copy-category'>
               <i className="fi-icon fi-calendar"></i>
             </a>

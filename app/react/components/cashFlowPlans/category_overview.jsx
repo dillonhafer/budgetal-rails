@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import Chart from '../chart';
+import Highchart from '../highchart';
 import _ from 'lodash';
 import {numberToCurrency} from '../../utils/helpers';
 
@@ -77,6 +77,16 @@ export default class CategoryOverview extends React.Component {
     });
 	}
 
+  chartConfig() {
+    var data = [
+            {y: parseFloat(this.percentSpent()), name: 'Spent'},
+            {y: parseFloat(100 - this.percentSpent()), name: 'Remaining'}
+          ]
+    return {
+      series: [{data}]
+    }
+  }
+
 	render() {
 		return (
 			<div className='large-5 medium-5 columns'>
@@ -99,7 +109,7 @@ export default class CategoryOverview extends React.Component {
 			        <p>
 			          You have budgeted {numberToCurrency(this.budgeted())} ({this.percentOfBudget()}%) towards {this.props.category.name}, we recommend you only budget {this.props.category.percentage}.
 			        </p>
-			        <Chart selector='category-overview' spent={this.percentSpent()} remaining={100 - this.percentSpent()} />
+			        <Highchart config={this.chartConfig()} />
 			      </li>
 			    </ul>
         </div>
