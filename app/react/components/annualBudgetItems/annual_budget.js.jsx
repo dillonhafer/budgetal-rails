@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import AnnualBudgetItemList from './item_list';
 import AnnualBudgetFormList from './form_list';
 import Confirm from '../confirm';
-import {selectedValue} from '../../utils/helpers';
+import {selectedValue, yearOptions} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -129,14 +129,6 @@ export default class CashFlowPlans extends React.Component {
     this.setState({showForm: false})
   }
 
-  yearOptions() {
-    let maxYear = (new Date).getFullYear() + 3;
-    let years = _.range(2015, maxYear);
-    return _.map(years, (year, index) => {
-      return (<option key={index} value={year}>{year}</option>);
-    });
-  }
-
   showForm = (e) => {
     e.preventDefault()
     this.setState({showForm: true})
@@ -175,7 +167,7 @@ export default class CashFlowPlans extends React.Component {
             <p>
               <label htmlFor="annual_budget_year">Change Budget Year</label>
               <select id="annual_budget_year" name='annual_budget_year' value={this.state.budget.year} onBlur={this.hideYearForm} onChange={this.changeYear}>
-                {this.yearOptions()}
+                {yearOptions()}
               </select>
             </p>
           </span>
