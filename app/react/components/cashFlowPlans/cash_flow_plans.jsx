@@ -324,7 +324,7 @@ export default class CashFlowPlans extends React.Component {
     this.cancelImport()
   }
 
-  cancelImport(e) {
+  cancelImport = (e) => {
     if (e) { e.preventDefault() }
     this.setState({importHidden: true});
   }
