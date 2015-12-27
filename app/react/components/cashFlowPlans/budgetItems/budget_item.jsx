@@ -80,13 +80,13 @@ export default class BudgetItem extends React.Component {
           <form onSubmit={this.save} data-abide>
             <div className="large-4 medium-4 columns budget-item-name">
               <a href='#' onClick={this.toggleExpenses} className='show-expenses'><i draggable onDragStart={this.drag} className={toggleClasses}></i></a>
-              <InputField onChange={this.update.bind(this, item)} type='text' name='name' placeholder='Name' value={item.name} errors={item.errors} />
+              <InputField onChange={this.update.bind(this, item)} required={true} type='text' name='name' placeholder='Name' value={item.name} errors={item.errors} />
             </div>
             <div className="large-1 medium-1 columns text-right budget-item-amount-spent">
               {numberToCurrency(this.spent())}
             </div>
             <div className="large-2 medium-2 columns text-right budget-item-amount-budgeted">
-              <InputField onChange={this.update.bind(this, item)} type='number' name='amount_budgeted' step='any' min='0.00' required placeholder='0.00' defaultValue={numberToCurrency(this.amount_budgeted, '')} value={item.amount_budgeted} errors={item.errors} />
+              <InputField onChange={this.update.bind(this, item)} required={true} type='number' name='amount_budgeted' step='any' min='0.01' required placeholder='0.00' defaultValue={numberToCurrency(this.amount_budgeted, '')} value={item.amount_budgeted} errors={item.errors} />
             </div>
             <div className="large-1 medium-1 columns text-right">
               <span className={this.remainingClass()}>{numberToCurrency(this.remaining())}</span>

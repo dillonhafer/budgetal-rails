@@ -201,7 +201,7 @@ export default class CashFlowPlans extends React.Component {
   addBudgetItem = (e) => {
     e.preventDefault()
     var category = this.state.category
-    category.budget_items.push({category_id: category.id, amount_budgeted: 0.00})
+    category.budget_items.push({category_id: category.id, amount_budgeted: 0.01})
     this.setState({category: category})
   }
 
@@ -232,7 +232,7 @@ export default class CashFlowPlans extends React.Component {
   addExpense = (id) => {
     var category = this.state.category
     var budget_item = _.where(category.budget_items, {'id': id})[0]
-    budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.00})
+    budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.01})
     this.setState({category: category})
   }
 
