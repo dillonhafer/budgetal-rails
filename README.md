@@ -10,7 +10,7 @@ Webpack TODO
 - [ ] Write move item integration tests (drag/drop)
 - [ ] Write category import integration tests
 - [x] Get Highcharts working from npm
-- [ ] Standardize highcharts into one component
+- [x] Standardize highcharts into one component
 
 About
 -----
