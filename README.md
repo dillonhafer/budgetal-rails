@@ -89,7 +89,7 @@ Budgetal is maintained by [Dillon Hafer](http://www.dillonhafer.com)
 
 ## License
 
-Budgetal is Copyright © 2013-2015 Dillon Hafer. It is free software, and may be redistributed under the terms specified below.
+Budgetal is Copyright © 2013-2016 Dillon Hafer. It is free software, and may be redistributed under the terms specified below.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
