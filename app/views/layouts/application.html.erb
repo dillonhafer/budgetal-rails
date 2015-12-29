@@ -29,7 +29,7 @@
     <script><%= yield(:ready) %></script>
     <% unless current_user %>
       <div id='signInUp' class='reveal-modal small' data-reveal>
-        <%= react_component 'SignIn' %>
+        <%= react_component 'Sessions' %>
         <a class="close-reveal-modal">&#215;</a>
       </div>
     <% end %>
