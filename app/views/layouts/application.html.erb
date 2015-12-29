@@ -33,5 +33,9 @@
         <a class="close-reveal-modal">&#215;</a>
       </div>
     <% end %>
+
+    <% if Rails.env.development? %>
+      <script src='http://localhost:8080/assets/react_bundle.js'></script>
+    <% end %>
   </body>
 </html>
