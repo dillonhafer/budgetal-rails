@@ -46,9 +46,10 @@ Run webpack in production mode before compiling assets using script (this is don
 $ npm run build
 ```
 
-Run webpack in hot-auto-reloading mode using script (to use it you have to add react_hot_assets partial from the layouts folder):
+Run webpack/rails in hot-auto-reloading mode using script (to use it you have to set the `hot` ENV var):
 
 ```
+$ hot=1 rails s
 $ npm run start-hot-dev
 ```
 
