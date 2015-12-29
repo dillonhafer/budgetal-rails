@@ -1,5 +1,5 @@
 export default {
-  login(data) {
+  signIn(data) {
     return $.ajax({
               url: '/api/sessions/sign-in',
               dataType: 'json',
@@ -7,11 +7,12 @@ export default {
               data: data
             })
   },
-  logout(id) {
+  signUp(data) {
     return $.ajax({
-              url: `/budget-items/${id}`,
+              url: '/api/sessions/sign-up',
               dataType: 'json',
-              method: 'DELETE'
+              method: 'POST',
+              data: data
             })
   }
 }

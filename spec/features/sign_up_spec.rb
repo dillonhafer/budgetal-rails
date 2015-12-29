@@ -8,14 +8,14 @@ feature 'Sign up', js: true do
     it 'I can sign up for budgetal' do
       visit root_path
       click_on 'Sign in / Sign up'
-      expect(page).to have_selector '.options-section', text: 'Welcome!'
+      expect(page).to have_selector 'h2', text: 'Welcome!'
       click_on 'Join Us'
       expect(page).to have_selector '#new_user'
       fill_in 'Email', with: user[:email]
-      fill_in 'First name', with: user[:first_name]
-      fill_in 'Last name', with: user[:last_name]
+      fill_in 'First Name', with: user[:first_name]
+      fill_in 'Last Name', with: user[:last_name]
       fill_in 'Password', with: user[:password]
-      fill_in 'Password confirmation', with: user[:password]
+      fill_in 'Password Confirmation', with: user[:password]
       click_on 'Sign up'
       expect(page).to have_selector 'a', text: "Hello, #{user[:first_name]}!"
       expect(first_email.to).to eq([user[:email]])

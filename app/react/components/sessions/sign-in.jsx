@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {login} from '../../data/sessions';
+import {signIn, signUp} from '../../data/sessions';
 import InputField from '../forms/input_field';
 
 export default class SignIn extends React.Component {
@@ -11,7 +11,14 @@ export default class SignIn extends React.Component {
   state = {
     signIn: false,
     signUp: false,
-    showPassword: false
+    showPassword: false,
+    newUser: {
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
+    }
   }
 
   showOptions = (e) => {
@@ -22,14 +29,16 @@ export default class SignIn extends React.Component {
     });
   }
 
-  showSignIn = () => {
+  showSignIn = (e) => {
+    e.preventDefault();
     this.setState({
       signIn: true,
       signUp: false
     });
   }
 
-  showJoinUs = () => {
+  showJoinUs = (e) => {
+    e.preventDefault();
     this.setState({
       signIn: false,
       signUp: true
@@ -41,16 +50,35 @@ export default class SignIn extends React.Component {
     this.setState({showPassword})
   }
 
-  login(e) {
+  signIn(e) {
     e.preventDefault();
-    let email       = e.target.querySelector('#email').value;
-    let password    = e.target.querySelector('#password').value;
+    let email       = e.target.querySelector('#loginEmail').value;
+    let password    = e.target.querySelector('#loginPassword').value;
     let remember_me = e.target.querySelector('#remember_me').checked ? 1 : 0;
     let data = {user: {email, password, remember_me}}
 
-    login(data)
+    signIn(data)
       .done((json) => { window.location = '/'; })
       .fail((json) => { showMessage(json.responseJSON.message); })
+  }
+
+  signUp = (e) => {
+    e.preventDefault();
+    let data = {user: this.state.newUser}
+    signUp(data)
+      .done((json) => { window.location = '/'; })
+      .fail((json) => {
+        let newUser = this.state.newUser;
+        newUser.errors = json.responseJSON.errors;
+        this.setState({newUser});
+        showMessage('Sign up failed');
+      })
+  }
+
+  updateForm = (e) => {
+    let newUser = this.state.newUser;
+    newUser[e.target.name] = e.target.value;
+    this.setState({newUser});
   }
 
   render() {
@@ -59,34 +87,35 @@ export default class SignIn extends React.Component {
     let optionsClasses = classNames('large-12 columns', {hide: this.state.signIn || this.state.signUp});
     let signInClasses  = classNames('large-12 columns', {hide: !this.state.signIn});
     let signUpClasses  = classNames('large-12 columns', {hide: !this.state.signUp});
+    let newUser = this.state.newUser;
     return (
       <div className='row'>
         <div className="small-12 large-12 columns">
           <div className='row'>
             <div className={optionsClasses}>
               <h2 className='text-center'>Welcome!</h2>
-              <a onClick={this.showSignIn} className='option-link button expand radius'>Sign in</a>
-              <a onClick={this.showJoinUs} className='option-link button success radius expand'>Join Us</a>
+              <a onClick={this.showSignIn} href='#' className='option-link button expand radius'>Sign in</a>
+              <a onClick={this.showJoinUs} href='#' className='option-link button success radius expand'>Join Us</a>
             </div>
 
             <div className={signInClasses}>
               <h2>Sign in</h2>
               <hr />
-              <form data-abide onSubmit={this.login}>
+              <form data-abide onSubmit={this.signIn}>
                 <div className='clearfix'>
-                  <label htmlFor='email' className='left'>Email</label>
+                  <label htmlFor='loginEmail' className='left'>Email</label>
                   <label htmlFor='remember_me' className='right'>
                     <input tabIndex="3" type="checkbox" value="1" defaultChecked={true} id="remember_me" />
                     &nbsp; remember me
                   </label>
-                  <input type='email' id='email' required={true} tabIndex={1} />
+                  <input type='email' id='loginEmail' required={true} tabIndex={1} />
                   <small className='error'>An email address is required.</small>
                 </div>
 
                 <div className='clearfix'>
-                  <label className='left' htmlFor='password'>Password</label>
+                  <label className='left' htmlFor='loginPassword'>Password</label>
                   <small className='right'><a id="hide_password" className={lockClass} onClick={this.togglePassword}></a></small>
-                  <input type='password' id='password' required={true} tabIndex={2} />
+                  <input type='password' id='loginPassword' required={true} tabIndex={2} />
                   <small className='error'>A password is required.</small>
                 </div>
                 <div className='row collapse'>
@@ -105,33 +134,28 @@ export default class SignIn extends React.Component {
             <div className={signUpClasses}>
               <h2>Join</h2>
               <hr />
-              <form data-abide>
-                <label htmlFor='new_user_email'>Email</label>
-                <input type='email' id='new_user_email' required={true} tabIndex={5} placeholder='email@example.org' />
-                <small className="error">Email is required.</small>
+              <form onSubmit={this.signUp} data-abide id='new_user'>
+                <label htmlFor='email'>Email</label>
+                <InputField type='email' onChange={this.updateForm} id='email' name='email' required={true} tabIndex={5} placeholder='email@example.org' value={newUser.email} errors={newUser.errors} />
                 <div className='row collapse'>
                   <div className='small-6 columns'>
                     <label htmlFor='first_name'>First Name</label>
-                    <input type='text' id='first_name' required={true} tabIndex={6} pattern='alpha' />
-                    <small className="error">First Name is required.</small>
+                    <InputField type='text' onChange={this.updateForm} id='first_name' name='first_name' required={true} tabIndex={6} value={newUser.first_name} errors={newUser.errors} />
                   </div>
                   <div className='small-5 small-offset-1 columns'>
                     <label htmlFor='last_name'>Last Name</label>
-                    <input type='text' id='last_name' required={true} tabIndex={7} pattern='alpha' />
-                    <small className="error">Last Name is required.</small>
+                    <InputField type='text' onChange={this.updateForm} id='last_name' name='last_name' required={true} tabIndex={7} value={newUser.last_name} errors={newUser.errors} />
                   </div>
                 </div>
 
                 <div className='clearfix'>
-                  <label htmlFor='new_user_password' className='left'>Password</label>
+                  <label htmlFor='password' className='left'>Password</label>
                   <small className='right'><a id="hide_password" className={lockClass} onClick={this.togglePassword}></a></small>
-                  <input type={passwordType} id='new_user_password' required={true} tabIndex={8} />
-                  <small className="error">Passwords must be at least 8 characters.</small>
+                  <InputField type={passwordType} id='password' name='password' onChange={this.updateForm} value={newUser.password} errors={newUser.errors} tabIndex={8} />
                 </div>
 
-                <label htmlFor='new_user_password_confirmation'>Password Confirmation</label>
-                <input type={passwordType} id='new_user_password_confirmation' required={true} data-eualto='new_user_password' tabIndex={9} />
-                <small className="error">Password confirmation must match.</small>
+                <label htmlFor='password_confirmation'>Password Confirmation</label>
+                <InputField type={passwordType} onChange={this.updateForm} value={newUser.password_confirmation} errors={newUser.errors} id='password_confirmation' name='password_confirmation' required={true} data-eualto='new_user_password' tabIndex={9} />
                 <div>
                   <input type='submit' className='small button radius nice' tabIndex={10} value='Sign up' />
                 </div>
