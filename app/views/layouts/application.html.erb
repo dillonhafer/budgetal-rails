@@ -32,6 +32,11 @@
 
     <%= javascript_include_tag "application" %>
     <script><%= yield(:ready) %></script>
-    <%= devise_reveal_modals unless current_user %>
+    <% unless current_user %>
+      <div id='signInUp' class='reveal-modal small' data-reveal>
+        <%= react_component 'SignIn' %>
+        <a class="close-reveal-modal">&#215;</a>
+      </div>
+    <% end %>
   </body>
 </html>

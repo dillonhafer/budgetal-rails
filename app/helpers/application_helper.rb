@@ -7,11 +7,6 @@ module ApplicationHelper
     Date.new(2012, n.to_i).strftime("%B")
   end
 
-  def devise_reveal_modals
-    reveal_modal('signInUp') +
-    reveal_modal('forgotPassword')
-  end
-
   def reveal_modal(id,size='small')
     content_tag(:div, '', class: "reveal-modal #{size}", id: id.to_s, data: {reveal:''})
   end
