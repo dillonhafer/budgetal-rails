@@ -11,7 +11,7 @@ export default class InputError extends React.Component {
   }
 
   render() {
-    let cls = classNames({show: this.props.showError, error: true});
+    let cls = classNames('error', {show: this.props.showError});
     return (
       <small className={cls}>{this.props.message}</small>
     );
