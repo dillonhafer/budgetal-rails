@@ -38,6 +38,7 @@ a#hide_password {
   background-image: url('<%= asset_path "lock.png" %>');
   background-repeat:no-repeat;
   background-position: 0px -23px;
+  @include vendor(transition, all 0.25s ease-out);
   &.hidden_password {
     background-position: 0 0;
   }
@@ -180,6 +181,14 @@ ul.main-budget-categories {
     @include shadow;
   }
 
+  p { margin-top: 20px; }
+}
+
+.body-row {
+  background: white;
+  display: block;
+  padding: 20px;
+  @include shadow;
   p { margin-top: 20px; }
 }
 
@@ -475,6 +484,7 @@ span.tooltip.active {
 }
 
 .footer {
+  margin-top: 20px;
   background: none repeat scroll 0% 0% #333;
   padding: 24px 0px 10px;
 
