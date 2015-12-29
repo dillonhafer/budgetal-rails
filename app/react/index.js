@@ -11,3 +11,6 @@ registerComponent('AnnualBudgetItems', AnnualBudgetItems);
 
 import Statistics from './components/statistics/statistics';
 registerComponent('Statistics', Statistics);
+
+import SignIn from './components/sessions/sign-in';
+registerComponent('SignIn', SignIn);
