@@ -7,14 +7,18 @@ export default class InputField extends React.Component {
     super(props);
   }
 
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   errorMessage() {
     var message = '';
     var field_name = this.props.name;
     var errors     = this.props.errors;
     if (errors && errors[field_name]) {
-      var err = errors[field_name].toString();
-      var name = field_name.capitalize().replace('_', ' ');
-      message = `${name} ${err}`;
+      var err  = errors[field_name].toString();
+      var name = capitalize(field_name).replace('_', ' ');
+      message  = `${name} ${err}`;
     }
     return message;
   }
