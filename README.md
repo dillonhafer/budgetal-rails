@@ -62,8 +62,12 @@ See the [Chrome Driver website](https://sites.google.com/a/chromium.org/chromedr
 ### Testing
 
 1. Setup database `RAILS_ENV=test rake db:schema:load`
-2. Run tests `rake`
-3. Run JS tests `npm test`
+2. Run `rake` to run both JS and rspec suites.
+
+**Individual test suites**
+
+1. Run rpsec tests `rspec spec`
+2. Run JS tests `npm test`
 
 For continuous integration mode with JS tests run
 
