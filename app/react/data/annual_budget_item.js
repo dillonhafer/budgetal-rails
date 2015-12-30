@@ -1,9 +1,8 @@
+import {get, post, put, delete} from './api';
+
 export default {
   allItems(year) {
-    return $.ajax({
-              url: `/annual-budgets/${year}`,
-              dataType: 'json'
-            })
+    return get(`/annual-budgets/${year}`);
   },
   createItem(budget_item) {
     return $.ajax({

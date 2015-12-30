@@ -44,9 +44,11 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _fetchBudget(year) {
+    let self = this;
     allItems(year)
-      .done(this._budgetFetched)
-      .fail(this._budgetFetchFailed)
+      .then((r) => r.json())
+        .then((budget) => {self._budgetFetched(budget)})
+      .catch(this._budgetFetchFailed)
   }
 
   _saveBudgetItem = (data) => {
