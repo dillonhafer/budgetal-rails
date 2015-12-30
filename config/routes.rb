@@ -35,8 +35,7 @@ Budgets::Application.routes.draw do
 
   resources :budget_item_expenses, path: 'budget-item-expenses'
 
-  get '/annual-budgets/:year' => 'annual_budgets#index', as: 'annual_budgets'
-  resources :annual_budgets, path: '/annual-budgets'
+  get '/annual-budgets/:year' => 'annual_budgets#show', as: 'annual_budgets'
   resources :annual_budget_items, path: '/annual-budget-items'
 
   match '/allocation-plans/:id/edit' => 'allocation_plans#edit', as: 'edit_allocation_plan', via: [:get, :post]

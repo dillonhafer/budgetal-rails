@@ -1,9 +1,8 @@
 export default {
-  allItems(data) {
+  allItems(year) {
     return $.ajax({
-              url: '/annual-budgets',
-              dataType: 'json',
-              data: data
+              url: `/annual-budgets/${year}`,
+              dataType: 'json'
             })
   },
   createItem(budget_item) {

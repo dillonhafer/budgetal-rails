@@ -26,7 +26,8 @@ export default class CashFlowPlans extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchBudget(this.yearParam());
+    let year = this.yearParam();
+    this._fetchBudget(year);
   }
 
   confirmDelete = (budget_item, index) => {
@@ -42,8 +43,8 @@ export default class CashFlowPlans extends React.Component {
     this.setState({modal: {hidden: true, index: -1, budget_item: {name: ''}}});
   }
 
-  _fetchBudget(data) {
-    allItems(data)
+  _fetchBudget(year) {
+    allItems(year)
       .done(this._budgetFetched)
       .fail(this._budgetFetchFailed)
   }
@@ -109,7 +110,7 @@ export default class CashFlowPlans extends React.Component {
   yearParam() {
     var pathNames = window.location.pathname.split('/')
     var yearIndex = pathNames.length - 1
-    return {year: pathNames[yearIndex]}
+    return pathNames[yearIndex]
   }
 
   _updateWindow(year) {
@@ -121,7 +122,7 @@ export default class CashFlowPlans extends React.Component {
   changeYear = () => {
     var year = selectedValue('#annual_budget_year');
     this._updateWindow(year);
-    this._fetchBudget({year});
+    this._fetchBudget(year);
     this.hideYearForm();
   }
 
