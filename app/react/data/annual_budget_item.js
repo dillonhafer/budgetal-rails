@@ -1,30 +1,16 @@
-import {get, post, put, delete} from './api';
+import {getRequest, postRequest, putRequest, deleteRequest} from './api';
 
 export default {
   allItems(year) {
-    return get(`/annual-budgets/${year}`);
+    return getRequest(`/annual-budgets/${year}`);
   },
   createItem(budget_item) {
-    return $.ajax({
-              url: '/annual-budget-items',
-              dataType: 'json',
-              method: 'POST',
-              data: budget_item
-            })
+    return postRequest('/annual-budget-items', budget_item);
   },
   updateItem(data) {
-    return $.ajax({
-              url: '/annual-budget-items/' + data.annual_budget_item.id,
-              dataType: 'json',
-              method: 'PUT',
-              data: data
-            })
+    return putRequest(`/annual-budget-items/${data.annual_budget_item.id}`, data);
   },
   destroyItem(id) {
-    return $.ajax({
-              url: '/annual-budget-items/'+id,
-              dataType: 'json',
-              method: 'DELETE'
-            })
+    return deleteRequest(`/annual-budget-items/${id}`);
   }
 }

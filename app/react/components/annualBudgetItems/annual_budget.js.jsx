@@ -46,44 +46,61 @@ export default class CashFlowPlans extends React.Component {
   _fetchBudget(year) {
     let self = this;
     allItems(year)
-      .then((r) => r.json())
-        .then((budget) => {self._budgetFetched(budget)})
+      .then((budget) => {self._budgetFetched(budget)})
       .catch(this._budgetFetchFailed)
   }
 
   _saveBudgetItem = (data) => {
+    let self = this;
     if (data.annual_budget_item.id === undefined) {
       createItem(data)
-        .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._saveItemFail.bind(null, data.index))
+        .then((budget_item) => {
+          if (!!budget_item.errors) {
+            self._saveItemFail(data.index, budget_item.errors)
+          } else {
+            self._budgetItemSaved(data.index, budget_item)
+          }
+        })
     } else {
       updateItem(data)
-        .done(this._budgetItemSaved.bind(null, data.index))
-        .fail(this._saveItemFail.bind(null, data.index))
+        .then((budget_item) => {
+          if (!!budget_item.errors) {
+            self._saveItemFail(data.index, budget_item.errors)
+          } else {
+            self._budgetItemSaved(data.index, budget_item)
+          }
+        })
     }
   }
 
-  _budgetItemSaved = (index, budget_item, err) => {
+  _budgetItemSaved = (index, budget_item) => {
     var budget = this.state.budget;
     budget.annual_budget_items[index] = budget_item;
     this.setState({budget});
     showMessage(`Saved ${budget_item.name}`);
   }
 
-  _saveItemFail = (index, xhr, status, err) => {
-    var errors = JSON.parse(xhr.responseText).errors;
+  _saveItemFail = (index, errors) => {
     var budget = this.state.budget;
-
     budget.annual_budget_items[index].errors = errors;
     this.setState({budget: budget});
   }
 
   _deleteBudgetItem = (e) => {
     e.preventDefault();
-    if (this.state.modal.budget_item.id !== undefined) {
-      destroyItem(this.state.modal.budget_item.id)
-        .done(this._budgetItemDeleted(this.state.modal.index))
-        .fail(this._budgetFetchFailed.bind(null, this.state.modal.budget_item))
+    var self  = this;
+    var index = this.state.modal.index;
+    var item  = this.state.modal.budget_item;
+
+    if (item.id !== undefined) {
+      destroyItem(item.id)
+        .then((budget_item) => {
+          if (!!budget_item.errors) {
+            self._budgetFetchFailed(item)
+          } else {
+            self._budgetItemDeleted(index)
+          }
+        })
     }
   }
 

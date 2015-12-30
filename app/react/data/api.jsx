@@ -1,52 +1,34 @@
-import _ from 'lodash';
-
 export default {
-  get(path) {
+  nonGetRequest(method, path, body) {
+    let meta = document.querySelector('meta[name="csrf-token"]')
+    let csrfToken = meta ? meta.content : '';
+    return fetch(path, {
+      method: method,
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken
+      },
+      body: JSON.stringify(body)
+    }).then((r) => r.json());
+  },
+  getRequest(path) {
     return fetch(path, {
       method: 'GET',
       credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      }});
+      }}).then((r) => r.json());
   },
-  post(path, body = {}, params = {}) {
-    let csrfToken = document.getElementsByName('csrf-token')[0].content;
-    console.log(csrfToken)
-    return fetch(path, _.assign({
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken
-      },
-      body: JSON.stringify(body)
-    }, params));
+  postRequest(path, body={}) {
+    return module.exports.nonGetRequest('POST', path, body);
   },
-  put(path, body = {}, params = {}) {
-    let csrfToken = document.getElementsByName('csrf-token')[0].content;
-    console.log(csrfToken)
-    return fetch(path, _.assign({
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken
-      },
-      body: JSON.stringify(body)
-    }, params));
+  putRequest(path, body={}) {
+    return module.exports.nonGetRequest('PUT', path, body);
   },
-  delete(path, body = {}, params = {}) {
-    let csrfToken = document.getElementsByName('csrf-token')[0].content;
-    console.log(csrfToken)
-    return fetch(path, _.assign({
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken
-      },
-      body: JSON.stringify(body)
-    }, params));
+  deleteRequest(path) {
+    return module.exports.nonGetRequest('DELETE', path);
   }
 }
