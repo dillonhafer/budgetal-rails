@@ -16,6 +16,7 @@ feature 'Cash Flow Plans', js: true do
 
     context 'with a budget' do
       it 'I can change my monthly income' do
+        fill_in 'monthly_income', with: ''
         fill_in 'monthly_income', with: '1234.56'
         click_on 'Save Income'
         expect(page).to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
