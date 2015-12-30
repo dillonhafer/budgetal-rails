@@ -30,10 +30,10 @@ Budgets::Application.routes.draw do
   get '/budget-categories/:id' => 'budget_categories#show'
   match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
 
-  resources :budget_items, path: 'budget-items'
+  resources :budget_items, path: 'budget-items', only: [:create, :update, :destroy]
   patch '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
 
-  resources :budget_item_expenses, path: 'budget-item-expenses'
+  resources :budget_item_expenses, path: 'budget-item-expenses', only: [:create, :update, :destroy]
 
   get '/annual-budgets/:year' => 'annual_budgets#show', as: 'annual_budgets'
   resources :annual_budget_items, path: '/annual-budget-items'
