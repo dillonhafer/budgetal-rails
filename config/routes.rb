@@ -23,7 +23,7 @@ Budgets::Application.routes.draw do
   end
 
   resources :users
-  resources :budgets
+  resources :budgets, only: [:update]
 
   get '/budget-categories/:id/import' => 'budget_categories#import'
   get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
@@ -36,7 +36,7 @@ Budgets::Application.routes.draw do
   resources :budget_item_expenses, path: 'budget-item-expenses', only: [:create, :update, :destroy]
 
   get '/annual-budgets/:year' => 'annual_budgets#show', as: 'annual_budgets'
-  resources :annual_budget_items, path: '/annual-budget-items'
+  resources :annual_budget_items, path: '/annual-budget-items', only: [:create, :update, :destroy]
 
   match '/allocation-plans/:id/edit' => 'allocation_plans#edit', as: 'edit_allocation_plan', via: [:get, :post]
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
