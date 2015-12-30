@@ -24,7 +24,7 @@ export default class SignIn extends React.Component {
     let data = {user: {email, password, remember_me}}
 
     signIn(data)
-      .done((json) => { window.location = '/'; })
+      .done((json) => { window.location = '/signed-in'; })
       .fail((json) => { showMessage(json.responseJSON.message); })
   }
 

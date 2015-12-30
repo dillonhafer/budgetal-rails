@@ -2,6 +2,7 @@ Budgets::Application.routes.draw do
   root to: 'welcome#index'
 
   get '/privacy' => 'welcome#privacy', as: 'privacy'
+  get '/signed-in' => 'welcome#signed_in'
 
   devise_for :users,
              path: 'sessions',
