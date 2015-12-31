@@ -16,20 +16,14 @@ module.exports = {
         exclude: /(node_modules)/,
         loaders: ['babel-loader']
       },
-      {
-        key: 'scss',
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
-      },
-      {
-        key: 'css',
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('css!sass')
-      }
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.scss$/, loader: "style!css!sass!" },
+      { test: /\.(png|otf|eot|svg|ttf|woff)/, loader: 'url-loader?limit=100000' },
+      { test: /\.jpg$/, loader: "file-loader" }
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.js.jsx']
+    extensions: ['', '.js', '.jsx', '.js.jsx', '.scss', '.css']
   },
   plugins: [
     new ExtractTextPlugin('../stylesheets/react_bundle.css', {
