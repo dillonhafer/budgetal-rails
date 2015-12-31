@@ -23,6 +23,7 @@ end
 # `mina deploy` or `mina rake`.
 task :environment do
   invoke :'rvm:use[ruby-2.2.1@budgetal]'
+  invoke :'frontend:load_nvm'
 end
 
 # Run `mina setup` to create these paths on your server.
@@ -84,6 +85,11 @@ task deploy: :environment do
 end
 
 namespace :frontend do
+  desc 'Load NVM and node 4.1.1'
+  task :load_nvm do
+    queue! %[source ~/.nvm/nvm.sh && nvm use 4.1.1]
+  end
+
   desc "Install npm dependencies"
   task :install do
     queue "echo 'Installing npm modules'"
