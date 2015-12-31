@@ -43,6 +43,10 @@
     "build": "webpack -p --config webpack/production.config.js"
   },
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dillonhafer/budgetal.git"
+  },
   "engines": {
     "node": ">= 4.1.1"
   }
