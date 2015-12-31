@@ -1,0 +1,130 @@
+// styles for jQuery Minical v0.9
+
+$mc_font_family: "Helvetica Neue", Helvetica, Arial, sans-serif !default
+$mc_background: #fff !default
+$mc_border: $primary-color !default
+$mc_text: $primary-color !default
+$mc_highlight: $primary-color !default
+
+ul.minical
+  position: absolute
+  display: none
+  color: $mc_text
+  border-radius: 3px
+  background: $mc_background
+  border: 1px solid $mc_border
+  margin: 0
+  padding: 0
+  text-shadow: none
+  width: 16em
+  box-shadow: 0 0 12px rgba(0, 0, 0, .2)
+  z-index: 9327
+  font-family: $mc_font_family
+  font-size: 1.1em
+  &.minical-inline
+    position: static
+    -webkit-box-shadow: none
+    -moz-box-shadow: none
+    box-shadow: none
+    &:before,
+    &:after
+      content: ' '
+      display: table
+    &:after
+      clear: both
+  li
+    padding: 1px 10px 0 10px
+    margin: 0
+    list-style-type: none
+    article
+      float: left
+      width: 100%
+      header
+        background: $mc_border
+        color: white
+        border: 1px solid $mc_border
+        padding: 2px 0
+        position: relative
+        margin: -1px -10px
+        h1
+          font-size: .8em
+          font-weight: bold
+          text-align: center
+          color: white
+          padding: .2em 0
+          margin: 0
+          font-family: $mc_font_family
+        a
+          display: block
+          position: absolute
+          left: 5px
+          top: 50%
+          margin-top: -0.8em
+          font-size: .8em
+          color: white
+          &:after
+            content: '\25C4'
+          &.minical_next
+            left: auto
+            right: 5px
+            &:after
+              content: '\25BA'
+      section
+        margin-bottom: 10px
+        p.minical_clear
+          font-size: .7em
+          display: block
+          text-align: center
+          font-weight: bold
+          padding-top: 10px
+          margin: 0
+          a
+            text-decoration: none
+            color: $mc_highlight
+            &:hover
+              color: lighten($mc_highlight, 10%)
+        table
+          width: 100%
+          border: none
+          margin-bottom: 0
+          color: inherit
+          font-size: inherit
+          border-collapse: collapse
+          thead
+            tr
+              th
+                padding: 5px 0 0 0
+                font-size: .7em
+                font-weight: bold
+                color: $mc_text
+                background: white
+          tbody
+            tr
+              background: white
+              td
+                padding: 1px
+                text-align: right
+                font-size: .9em
+                a
+                  display: block
+                  border: 1px solid transparentize($mc_border, .5)
+                  color: $mc_text
+                  padding: .1em .3em
+                  text-decoration: none
+                &.minical_highlighted a
+                  border-color: transparentize($mc_highlight, .5)
+                  color: $mc_text
+                &.minical_selected a
+                  border-color: $mc_highlight
+                  color: $mc_text
+                &.minical_past_month a,
+                &.minical_future_month a
+                  color: transparentize($mc_text, .5)
+                &.minical_today a
+                  border-color: $mc_highlight
+                  background: $mc_highlight
+                  color: $mc_background
+                &.minical_disabled a
+                  color: transparentize($mc_text, .5)
+                  background: transparentize($mc_border, .8)
+                  border-color: transparentize($mc_border, .8)

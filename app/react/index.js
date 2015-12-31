@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 window.React = React;
 window.ReactDOM = ReactDOM;
+import './assets/stylesheets/app';
 
 import CashFlowPlans from './components/cashFlowPlans/cash_flow_plans';
 registerComponent('CashFlowPlans', CashFlowPlans);

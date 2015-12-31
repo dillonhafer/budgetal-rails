@@ -17,17 +17,12 @@ module.exports = {
         loaders: ['babel-loader']
       },
       { test: /\.css$/, loader: "style-loader!css-loader" },
-      { test: /\.scss$/, loader: "style!css!sass!" },
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', "css!sass!") },
       { test: /\.(png|otf|eot|svg|ttf|woff)/, loader: 'url-loader?limit=100000' },
       { test: /\.jpg$/, loader: "file-loader" }
     ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.js.jsx', '.scss', '.css']
-  },
-  plugins: [
-    new ExtractTextPlugin('../stylesheets/react_bundle.css', {
-      allChunks: true
-    })
-  ]
+  }
 };

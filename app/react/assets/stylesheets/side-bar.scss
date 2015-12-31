@@ -1,0 +1,111 @@
+.icon-bar {
+  width: 100%;
+  font-size: 0;
+  display: inline-block;
+  background: #333333;
+}
+.icon-bar.six-up.vertical .item, .icon-bar.six-up.small-vertical .item {
+  width: auto;
+}
+.icon-bar>* {
+  text-align: center;
+  font-size: 1rem;
+  width: 25%;
+  margin: 0 auto;
+  display: block;
+  padding: 1.25rem;
+  float: left;
+}
+.icon-bar>* i {
+  font-size: 1.875rem;
+  vertical-align: middle;
+}
+div.icon-bar.label-right>* i, div.icon-bar.label-right>* img {
+  margin: 0px 0.6825rem 0px 0px;
+}
+.icon-bar.vertical .item, .icon-bar.small-vertical .item {
+  width: auto;
+  margin: auto;
+  float: none;
+}
+.icon-bar>* label {
+  color: white;
+  cursor: pointer;
+}
+.icon-bar.vertical.label-right>*:not(.header) {
+  text-align: left;
+}
+.icon-bar.label-right>* label {
+  display: inline-block;
+}
+div.icon-bar>.item.active {
+  background: #272727;
+}
+div.icon-bar > :hover {
+  background: #222;
+}
+div.icon-bar>.item.header {
+  padding: 10px 0px 10px !important;
+  border-bottom: 1px solid #444;
+}
+.icon-bar .item:not(.header) label {
+  padding-left: 40px;
+  height: 30px;
+  background-image: url("/assets/categories-22b7f7483fcde127ca168ef06d1030e4aea17f568c58c791a36c34371d11c6ad.png");
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+.icon-bar.vertical, .icon-bar.small-vertical {
+    height: 100%;
+    width: auto;
+}
+.icon-bar.vertical {
+  border-bottom: 1px solid #444;
+}
+.icon-bar.vertical.six-up {
+  width: 100%;
+}
+div.icon-bar > a:focus {
+  background: #222;
+  outline: none;
+}
+.icon-bar .item:not(.header) label {
+  padding-left: 40px;
+  @include category-background;
+}
+.sidebar-charity label {
+  background-position: 0px 0px;
+}
+.sidebar-saving label {
+  background-position: 0px -30px;
+}
+.sidebar-housing label {
+  background-position: 0px -60px;
+}
+.sidebar-utilities label {
+  background-position: 0px -90px;
+}
+.sidebar-food label {
+  background-position: 0px -120px;
+}
+.sidebar-clothing label {
+  background-position: 0px -150px;
+}
+.sidebar-transportation label {
+  background-position: 0px -180px;
+}
+.sidebar-medical-health label {
+  background-position: 0px -210px;
+}
+.sidebar-insurance label {
+  background-position: 0px -240px;
+}
+.sidebar-personal label {
+  background-position: 0px -270px;
+}
+.sidebar-recreation label {
+  background-position: 0px -300px;
+}
+.sidebar-debts label {
+  background-position: 0px -330px;
+}

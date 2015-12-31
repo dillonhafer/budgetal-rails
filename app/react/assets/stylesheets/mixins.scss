@@ -52,7 +52,7 @@
 
 @mixin category-background() {
   height: 30px;
-  background-image: url('<%= asset_path('categories.png') %>');
+  background-image: url(../../assets/images/categories.png);
   background-repeat: no-repeat;
   background-size: 30px;
 }

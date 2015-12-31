@@ -20,7 +20,10 @@ var config = _.merge({}, baseConfig, {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-  ]
+    new ExtractTextPlugin('../../../public/assets/[name]-[hash].css', {
+      allChunks: true
+    })
+  ],
 });
 
 module.exports = config;
