@@ -60,7 +60,7 @@ export default class CategoryList extends React.Component {
   render() {
     let changeYear = classNames({
       'tooltip animate': true,
-      fadeInUpBig2: this.state.showForm,
+      fadeIn: this.state.showForm,
       hide: !this.state.showForm
     });
     var self = this;
