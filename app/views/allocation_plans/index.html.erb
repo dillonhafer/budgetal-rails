@@ -4,7 +4,7 @@
       <a class='item header text-center' href='#'>
         <label><i class='fi-calendar'></i> <%= "#{budget.pretty_date} #{budget.year}" %></label>
       </a>
-      <span class='tooltip'>
+      <span class='tooltip' style='display: none'>
         <p>
           <label for="month_change_budget_2i">Change Budget</label>
           <%= date_select :month, :change_budget, discard_day: true, start_year: 2013, end_year: Time.now.advance(years: 1).year, default: Date.new(budget.year.to_i, budget.month.to_i), order: [:month, :year] %>

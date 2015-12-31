@@ -1,0 +1,64 @@
+.tabs {
+  margin-bottom: 0 !important;
+  margin-left: 0;
+
+  dd, .tab-title {
+    position: relative;
+    margin-bottom: 0 !important;
+    list-style: none;
+    float: left;
+  }
+}
+
+.tabs:before, .tabs:after {
+  content: " ";
+  display: table;
+}
+
+.tabs:after {
+  clear: both;
+}
+
+.tabs dd.active a, .tabs .tab-title.active a {
+  background: #b3ccff;
+  color: white;
+}
+
+.tabs dd>a, .tabs .tab-title>a {
+  outline: none;
+  display: block;
+  background-color: #6699ff;
+  color: white;
+  padding: 1rem 2rem;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+}
+
+.tabs dd.new a {
+    background: #1a66ff !important;
+}
+
+.tabs-content {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.tabs-content:before, .tabs-content:after {
+    content: " ";
+    display: table;
+}
+
+.tabs-content:after {
+    clear: both;
+}
+
+.tabs-content>.content {
+    display: none;
+    float: left;
+    padding: 0.9375rem 0;
+    width: 100%;
+}
+.tabs-content>.content.active {
+    display: block;
+    float: none;
+}

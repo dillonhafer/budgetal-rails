@@ -39,7 +39,6 @@ feature 'Allocation Plans', js: true do
         fill_in 'Income', with: ''
         fill_in 'Income', with: '400'
         click_on 'Update Pay Period'
-        click_on 'Update Pay Period'
         expect(page).to have_selector('.pay-period-income', text: '$400.00')
       end
     end
