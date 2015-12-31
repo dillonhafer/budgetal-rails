@@ -312,13 +312,12 @@ h6.p-recommended {
 
 #budget-remainder {text-align: center;}
 
-/*.blue-color, .blue {color: #6699FF;}*/
 .progress.blue-meter { .meter {background: #6699FF;}}
 .red {color: red;}
 .green {color: green;}
 
-.alert-color   { color: $alert-color;   }
-.blue-color    { color: $primary-color; }
+.alert-color, .red { color: $alert-color;   }
+.blue-color, .blue { color: $primary-color; }
 .success-color { color: $success-color; }
 .light-orange  { color: $light_orange;  }
 
@@ -362,13 +361,6 @@ h6.p-recommended {
   border-bottom: 1px dashed #CCC;
   background: #f6f6f6;
   padding-top: 15px;
-
-  /*input[type="text"], input[type="number"], input[type="date"] {
-    border: none;
-    border: 1px solid #CCC;
-    box-shadow: none;
-    background: #FFF;
-  }*/
 
   .button-group {
     display: flex;
