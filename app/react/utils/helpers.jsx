@@ -3,7 +3,7 @@ import _ from 'lodash';
 export default {
   monthName(number) {
     var months = [
-      'Janurary',
+      'January',
       'February',
       'March',
       'April',

@@ -5,7 +5,7 @@ import {elFactory} from '../test/dom_helpers';
 describe('Helpers', () => {
   describe('monthName', () => {
     var tests = [
-      {args: 1,  expected: 'Janurary'},
+      {args: 1,  expected: 'January'},
       {args: 7,  expected: 'July'},
       {args: 12, expected: 'December'}
     ];
@@ -51,7 +51,7 @@ describe('Helpers', () => {
     it('returns the value of a select tag by CSS selector', () => {
       var select = elFactory({tag: 'select', attributes: {class: 'month-dropdown'}});
       var months = [
-        {value: 'Janurary'},
+        {value: 'January'},
         {value: 'March', selected: 'selected'},
         {value: 'July'}
       ];
