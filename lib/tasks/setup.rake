@@ -1,4 +1,13 @@
 namespace :setup do
+  desc 'Dependancy check'
+  task :dependancies do
+    ['chromedriver', 'npm'].each do |dep|
+      echo "Checking for #{dep}"
+      file = `which #{dep}`.chomp
+      raise fail("#{dep} is missing!") unless File.exist?(file)
+    end
+  end
+
   desc 'Bundle'
   task :bundle do
     echo "Installing gems"
@@ -41,7 +50,7 @@ namespace :setup do
     puts("\e[35mNow run \`rails s' and open your browser to http://localhost:3000\e[0m\n\n")
   end
 
-  task all: [:bundle, :env, :db, :npm_install, :npm_build, :done]
+  task all: [:dependancies, :bundle, :env, :db, :npm_install, :npm_build, :done]
 end
 task setup: ['setup:all']
 

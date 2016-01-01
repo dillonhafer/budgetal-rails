@@ -11,6 +11,8 @@ Setup
 
 ### Quick Setup
 
+First make sure the [dependencies](#dependencies) are met. Then:
+
 **rake**
 
 ```bash
@@ -63,6 +65,17 @@ $ npm run start-hot-dev
 ```
 
 ### Dependencies
+
+**Node/npm/webpack**
+
+Budgetal's frontend is built with webpack and needs npm/node
+
+```bash
+$ brew install node
+$ npm install webpack -g
+```
+
+**Chrome Driver**
 
 Budgetal tests depend on the selenium chrome driver: `brew install chromedriver`
 
