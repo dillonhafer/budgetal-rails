@@ -1,6 +1,15 @@
 <!DOCTYPE html>
   <head>
-    <%= render template: 'shared/head' %>
+    <title>Budgetal</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" media="screen" href='<%= webpack_stylesheet_path %>'>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="With Budgetal.com's website you can stayed smart and organized to win with money." />
+    <meta name="keywords" content="budget budgets budgetal money finance success cash plan win" />
+    <meta name="apple-itunes-app" content="app-id=, app-argument=Budgetal" />
+    <%= csrf_meta_tags %>
+    <%= render template: 'shared/tracking.html' if Rails.env.production? %>
   </head>
   <body>
     <%= render template: 'shared/nav' %>
