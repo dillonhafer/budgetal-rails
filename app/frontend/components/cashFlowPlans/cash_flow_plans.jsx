@@ -10,7 +10,7 @@ import {updateBudget} from '../../data/budget';
 import {findCategory, importCategory} from '../../data/budget_category';
 import {createItem, updateItem, destroyItem} from '../../data/budget_item';
 import {createExpense, updateExpense, destroyExpense} from '../../data/budget_item_expense';
-import {monthName, selectedValue} from '../../utils/helpers';
+import {monthName, selectedValue, title} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -132,7 +132,7 @@ export default class CashFlowPlans extends React.Component {
       category: data.budget_category
     });
     history.pushState({}, 'Budgetal', `/cash-flow-plans/${data.budget.year}/${data.budget.month}`);
-    document.title = `${monthName(data.budget.month)} ${data.budget.year} | Budgetal`;
+    title(`${monthName(data.budget.month)} ${data.budget.year}`);
   }
 
   _fetchDataFail(xhr, status, err) {
@@ -358,36 +358,39 @@ export default class CashFlowPlans extends React.Component {
 
   render() {
     return (
-      <section>
-        <CategoryList budget={this.state.budget}
-                      moveBudgetItem={this.moveBudgetItem}
-                      changeBudget={this.changeBudget}
-                      changeMonth={this.changeMonth}
-                      currentCategoryId={this.state.category.id}
-                      changeCategory={this.changeCategory} />
+      <div>
+        <section>
+          <CategoryList budget={this.state.budget}
+                        moveBudgetItem={this.moveBudgetItem}
+                        changeBudget={this.changeBudget}
+                        changeMonth={this.changeMonth}
+                        currentCategoryId={this.state.category.id}
+                        changeCategory={this.changeCategory} />
 
-        <div className='large-10 medium-10 columns hide-for-small-down'>
-          <div>
-            <Category expenseFunctions={this.expenseFunctions()}
-                      itemFunctions={this.itemFunctions()}
-                      import={this.openImport}
-                      category={this.state.category} />
+          <div className='large-10 medium-10 columns hide-for-small-down'>
+            <div>
+              <Category expenseFunctions={this.expenseFunctions()}
+                        itemFunctions={this.itemFunctions()}
+                        import={this.openImport}
+                        category={this.state.category} />
 
-            <div className='row collapse cash-flow-row overviews'>
-              <CategoryOverview category={this.state.category} monthlyIncome={this.state.budget.monthly_income} />
-              <Overview budget={this.state.budget} saveBudget={this.saveBudget} />
+              <div className='row collapse cash-flow-row overviews'>
+                <CategoryOverview category={this.state.category} monthlyIncome={this.state.budget.monthly_income} />
+                <Overview budget={this.state.budget} saveBudget={this.saveBudget} />
+              </div>
+              <ImportModal category={this.state.category}
+                           hidden={this.state.importHidden}
+                           import={this._import}
+                           cancel={this.cancelImport} />
             </div>
-            <ImportModal category={this.state.category}
-                         hidden={this.state.importHidden}
-                         import={this._import}
-                         cancel={this.cancelImport} />
           </div>
-        </div>
-        <Confirm name={this.state.modal.item.name}
-                 hidden={this.state.modal.hidden}
-                 cancel={this.cancelDelete}
-                 delete={this.state.modal.delete} />
-      </section>
+          <Confirm name={this.state.modal.item.name}
+                   hidden={this.state.modal.hidden}
+                   cancel={this.cancelDelete}
+                   delete={this.state.modal.delete} />
+        </section>
+        <div className='row'></div>
+      </div>
     );
   }
 }
