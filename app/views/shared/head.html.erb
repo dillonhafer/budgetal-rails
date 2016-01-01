@@ -6,3 +6,6 @@
 <% end %>
 <link rel="shortcut icon" type="image/x-icon" href="<%= asset_path('app_logo.png') %>">
 <title><%= content_for?(:title) ? yield(:title) + " | Budgetal" : "Budgetal" %></title>
+<link rel="stylesheet" media="screen" href='<%= webpack_stylesheet_path %>'>
+<%= render template: 'shared/tracking.html' if Rails.env.production? %>
+<%= csrf_meta_tags %>

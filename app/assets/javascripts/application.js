@@ -1,6 +1,5 @@
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 //= require jquery.minical
 //= require react_integration
 //= require react_bundle
@@ -33,8 +32,6 @@ $(document).ready(function() {
     showMessage(message);
   }
 });
-
-$(function(){$(document).foundation();});
 
 $(document).on('click', '.sign-in-close', function() {
   $('#signInUp').removeClass('fadeIn');
