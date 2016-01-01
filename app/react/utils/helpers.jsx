@@ -4,7 +4,7 @@ export default {
   monthName(number) {
     var months = [
       'Janurary',
-      'Feburary',
+      'February',
       'March',
       'April',
       'May',

@@ -36,7 +36,7 @@ feature 'Cash Flow Plans', js: true do
         it 'can view a different months budget' do
           click_on "#{Date.today.strftime("%B")} #{Date.today.year}"
           select 'February', from: 'budget_month'
-          expect(page).to have_selector 'a', text: "Feburary #{Date.today.year}"
+          expect(page).to have_selector 'a', text: "February #{Date.today.year}"
         end
 
         it 'can view a different years budget' do
