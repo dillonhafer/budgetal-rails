@@ -27,15 +27,6 @@
     <%= javascript_include_tag "application" %>
     <script><%= yield(:ready) %></script>
 
-    <% unless current_user %>
-      <div id='signInUp' class='overlay hide'>
-        <div class="page">
-          <a href='#' class="close-button sign-in-close">&#215;</a>
-          <%= react_component 'Sessions' %>
-        </div>
-      </div>
-    <% end %>
-
     <% if ENV.fetch('hot', false) %>
       <script src='http://localhost:8080/assets/react_bundle.js'></script>
     <% end %>
