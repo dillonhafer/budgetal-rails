@@ -30,8 +30,8 @@ feature 'Annual Budgets', js: true do
 
     context 'With an annual budget' do
       before(:each) do
-        @budget = @user.annual_budgets.first
-        @item = FactoryGirl.create(:annual_budget_item, annual_budget: @budget)
+        visit annual_budgets_path(year: Date.today.year)
+        @item = FactoryGirl.create(:annual_budget_item, annual_budget: @user.annual_budgets.first)
         visit annual_budgets_path(year: Date.today.year)
       end
 
