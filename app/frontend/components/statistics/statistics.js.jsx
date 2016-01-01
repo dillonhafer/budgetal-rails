@@ -42,7 +42,6 @@ export default class Statistics extends React.Component {
     var year  = selectedValue('#budget_year')
     var month = selectedValue('#budget_month')
 
-    document.title = `${monthName(month)} ${year} | Budgetal`;
     history.pushState({}, 'Budgetal', `/monthly-statistics/${year}/${month}`)
     this._fetchBudget({year: year, month: month})
     this.setState({showForm: false})
@@ -67,6 +66,7 @@ export default class Statistics extends React.Component {
       didFetchData: true,
       budget: data.budget
     })
+    document.title = `${this.title()} | Budgetal`;
   }
 
   _fetchDataFail(xhr, status, err) {
@@ -114,6 +114,12 @@ export default class Statistics extends React.Component {
     return monthName(urlParams().month)
   }
 
+  title() {
+    var date = urlParams();
+    var month = monthName(date.month);
+    return `${month} ${date.year}`
+  }
+
   render() {
     let formClasses = classNames({
       'tooltip annual-budget-tooltip animate': true,
@@ -125,7 +131,7 @@ export default class Statistics extends React.Component {
       <div className='row collapse'>
         <div className='large-12 columns header-row'>
           <h3>
-            {this.fullMonth()} {urlParams().year}
+            {this.title()}
             <a href='#' onClick={this.showForm} title='Change Budget' className='right black-color copy-category'>
               <i className="fi-icon fi-calendar"></i>
             </a>
