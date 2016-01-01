@@ -1,6 +1,9 @@
 import _ from 'lodash';
 
 export default {
+  title(string) {
+    document.title = `${string} | Budgetal`;
+  },
   monthName(number) {
     var months = [
       'January',

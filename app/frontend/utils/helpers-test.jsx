@@ -1,8 +1,16 @@
 import expect from 'expect';
-import {monthName, selectedValue, numberToCurrency} from './helpers';
+import {monthName, selectedValue, numberToCurrency, title} from './helpers';
 import {elFactory} from '../test/dom_helpers';
 
 describe('Helpers', () => {
+  describe('title', () => {
+    it("sets 'June 2015 | Budgetal' for the page's title", ()=> {
+      expect(document.title).toBe('');
+      title('June 2015');
+      expect(document.title).toBe('June 2015 | Budgetal');
+    });
+  });
+
   describe('monthName', () => {
     var tests = [
       {args: 1,  expected: 'January'},
