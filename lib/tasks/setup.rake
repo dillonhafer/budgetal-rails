@@ -1,4 +1,11 @@
 namespace :setup do
+  desc 'Bundle'
+  task :bundle do
+    echo "Installing gems"
+    system('bundle install')
+    raise fail("Installing gems failed!") unless $?.exitstatus == 0
+  end
+
   desc 'Create .env file'
   task :env do
     echo "Creating .env file"
@@ -34,7 +41,7 @@ namespace :setup do
     puts("\e[35mNow run \`rails s' and open your browser to http://localhost:3000\e[0m\n\n")
   end
 
-  task all: [:env, :db, :npm_install, :npm_build, :done]
+  task all: [:bundle, :env, :db, :npm_install, :npm_build, :done]
 end
 task setup: ['setup:all']
 

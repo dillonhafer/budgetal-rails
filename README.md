@@ -14,7 +14,8 @@ Setup
 **rake**
 
 ```bash
-$ rake setup
+$ git clone https://github.com/dillonhafer/budgetal
+$ cd budgetal && rake setup
 ```
 
 **manually**
