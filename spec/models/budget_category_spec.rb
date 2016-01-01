@@ -50,8 +50,8 @@ describe BudgetCategory do
   end
 
   describe 'previous items' do
-    let(:previous_month)    { Date.new(budget.year.to_i, budget.month.to_i).advance(months: -1).month }
-    let!(:previous_budget)   { FactoryGirl.create(:budget, :with_budget_items, month: previous_month, user: user) }
+    let(:previous_date)     { budget.to_date.advance(months: -1) }
+    let!(:previous_budget)  { FactoryGirl.create(:budget, :with_budget_items, month: previous_date.month, year: previous_date.year, user: user) }
     let(:previous_category) { previous_budget.budget_categories.first }
 
     describe '#copy_previous_items' do
