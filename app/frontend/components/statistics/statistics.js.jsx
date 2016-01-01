@@ -2,7 +2,14 @@ import React from 'react';
 import {findStatistic} from '../../data/statistic';
 import Highchart from '../highchart';
 import classNames from 'classnames';
-import {monthName, selectedValue, urlParams, yearOptions, monthOptions} from '../../utils/helpers';
+import {
+  monthName,
+  selectedValue,
+  urlParams,
+  yearOptions,
+  monthOptions,
+  title
+} from '../../utils/helpers';
 
 export default class Statistics extends React.Component {
   constructor(props) {
@@ -65,8 +72,8 @@ export default class Statistics extends React.Component {
     this.setState({
       didFetchData: true,
       budget: data.budget
-    })
-    document.title = `${this.title()} | Budgetal`;
+    });
+    title(this.title());
   }
 
   _fetchDataFail(xhr, status, err) {
@@ -108,10 +115,6 @@ export default class Statistics extends React.Component {
         <p>It looks like you don't have a budget for this month</p>
       </div>
     )
-  }
-
-  fullMonth() {
-    return monthName(urlParams().month)
   }
 
   title() {
