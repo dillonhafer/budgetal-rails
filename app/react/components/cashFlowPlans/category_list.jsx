@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import {moveItem} from '../../data/budget_item';
 import _ from 'lodash';
-import {monthName, selectedValue} from '../../utils/helpers';
+import {monthName, selectedValue, monthOptions, yearOptions} from '../../utils/helpers';
 
 export default class CategoryList extends React.Component {
   constructor(props) {
@@ -74,22 +74,10 @@ export default class CategoryList extends React.Component {
             <p>
               <label htmlFor="budget_month">Change Budget</label>
               <select id="budget_month" name='budget_month' value={this.props.budget.month} onChange={this.changeYear}>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
+                {monthOptions()}
               </select>
               <select id="budget_year" name='budget_year' value={this.props.budget.year} onChange={this.changeYear}>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
+                {yearOptions()}
               </select>
             </p>
           </span>
