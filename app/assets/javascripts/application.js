@@ -5,8 +5,14 @@
 //= require react_bundle
 
 function showMessage(message) {
-  $(".flash-holder").append($('<div class="flash-box"></div>').html(message));
-  $(".flash-box").fadeIn(400).delay(1700).fadeOut(250, function() {$(this).remove()});
+  $(".flash-holder")
+  var holder = document.querySelector('.flash-holder');
+  var box = document.createElement('div');
+  box.setAttribute('class', 'flash-box');
+  box.innerHTML = message;
+  holder.appendChild(box);
+
+  $(".flash-box").fadeIn(400).delay(1700).fadeOut(250, function() { $(this).remove(); });
 }
 
 $(document).on('focus', '.get-date', function(e) {
@@ -17,23 +23,6 @@ $(document).on('focus', '.get-date', function(e) {
     }
   })
 });
-
-$(document).ajaxComplete(function(event, request){
-  var flash = $.parseJSON(request.getResponseHeader('X-Flash-Messages'));
-  if (!!flash.notice) {
-    showMessage(flash.notice);
-  }
-});
-
-$(document).ready(function() {
-  var message = $(".flash-box").html()
-  if (!!message) {
-    $(".flash-box").remove();
-    showMessage(message);
-  }
-});
-
-$(document).on('click', '.flash-box', function() { $(this).remove(); });
 
 $(document).on('click', '.sign-in-close', function() {
   $('#signInUp').removeClass('fadeIn');
