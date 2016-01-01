@@ -92,14 +92,37 @@ namespace :frontend do
 
   desc "Install npm dependencies"
   task :install do
-    queue "echo 'Installing npm modules'"
-    queue! %[NODE_ENV=#{ENV['to']} npm install]
+    queue check_for_changes_script \
+        check: 'package.json',
+        at: ['package.json'],
+        skip: %[echo "-----> Skipping npm installation"],
+        changed: %[
+          echo "-----> #{message}"
+          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm install]}
+        ],
+        default: %[
+          echo "-----> Installing npm modules"
+          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm install]}
+        ]
   end
 
   desc "Compile Webpack assets"
   task build: :install do
-    queue "echo 'Building react assets'"
-    queue! %[NODE_ENV=#{ENV['to']} npm run build]
+    queue check_for_changes_script \
+        check: 'app/frontend',
+        at: ['app/frontend'],
+        skip: %[
+          echo "-----> Skipping webpack build; using previous one"
+          #{echo_cmd %[cp ../../current/app/assets/javascripts/react_bundle.js app/assets/javascripts/]}
+        ],
+        changed: %[
+          echo "-----> Building react assets"
+          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm run build]}
+        ],
+        default: %[
+          echo "-----> Building react assets"
+          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm run build]}
+        ]
   end
 end
 
