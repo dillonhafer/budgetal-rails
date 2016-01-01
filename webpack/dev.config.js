@@ -10,7 +10,7 @@ var config = _.merge({}, baseConfig, {
   devtool: 'eval-source-map',
   plugins: [
     new WebpackNotifierPlugin(),
-    new ExtractTextPlugin('../../../public/assets/[name]-[hash].css', {
+    new ExtractTextPlugin('../../../public/assets/[name].css', {
       allChunks: true
     }),
   ]
