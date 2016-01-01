@@ -11,6 +11,14 @@ Setup
 
 ### Quick Setup
 
+**rake**
+
+```bash
+$ rake setup
+```
+
+**manually**
+
 ```bash
 $ git clone https://github.com/dillonhafer/budgetal
 $ cd budgetal && bundle
