@@ -22,7 +22,7 @@ export default class Category extends React.Component {
       hide: this.props.category.budget_items.length !== 0
     });
 		return (
-			<div className='row collapse'>
+			<div className='row collapse cash-flow-row'>
         <div className='large-12 medium-12 columns header-row'>
           <h3>
 	          {this.props.category.name}

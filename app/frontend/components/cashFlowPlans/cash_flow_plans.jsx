@@ -373,7 +373,7 @@ export default class CashFlowPlans extends React.Component {
                       import={this.openImport}
                       category={this.state.category} />
 
-            <div className='row collapse overviews'>
+            <div className='row collapse cash-flow-row overviews'>
               <CategoryOverview category={this.state.category} monthlyIncome={this.state.budget.monthly_income} />
               <Overview budget={this.state.budget} saveBudget={this.saveBudget} />
             </div>

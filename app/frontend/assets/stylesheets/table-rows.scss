@@ -745,3 +745,8 @@
 .show-for-small-only, .hide-for-small-up, .show-for-small, .show-for-small-down, .show-for-medium-only, .hide-for-medium-up, .show-for-medium, .show-for-medium-down, .hide-for-large-only, .hide-for-large-up, .hide-for-large, .hide-for-large-down, .show-for-xlarge-only, .show-for-xlarge-up, .show-for-xxlarge-only, .show-for-xxlarge-up {
   display: none !important;
 }
+
+.row.collapse.cash-flow-row {
+  max-width: 65.5rem;
+  margin-left: -14px;
+}
