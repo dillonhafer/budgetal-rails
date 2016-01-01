@@ -6,10 +6,6 @@ module ApplicationHelper
     "/assets/#{stylesheet}"
   end
 
-  def title(word)
-    content_for(:title, word)
-  end
-
   def link_to_i(icon, text, path, options={})
     link_to("<i class='fi-icon fi-#{icon}'></i> #{text}".html_safe, path, options)
   end
