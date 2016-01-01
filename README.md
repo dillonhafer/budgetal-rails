@@ -66,7 +66,7 @@ $ npm run start-hot-dev
 
 ### Dependencies
 
-**Node/npm/webpack**
+**node/npm/webpack**
 
 Budgetal's frontend is built with webpack and needs npm/node
 
@@ -77,7 +77,11 @@ $ npm install webpack -g
 
 **Chrome Driver**
 
-Budgetal tests depend on the selenium chrome driver: `brew install chromedriver`
+Budgetal tests depend on the selenium chrome driver
+
+```bash
+$ brew install chromedriver
+```
 
 See the [Chrome Driver website](https://sites.google.com/a/chromium.org/chromedriver/) for more details.
 
