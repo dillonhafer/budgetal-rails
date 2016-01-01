@@ -5,7 +5,6 @@
 //= require react_bundle
 
 function showMessage(message) {
-  $(".flash-holder")
   var holder = document.querySelector('.flash-holder');
   var box = document.createElement('div');
   box.setAttribute('class', 'flash-box');
