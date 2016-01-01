@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import AnnualBudgetItemList from './item_list';
 import AnnualBudgetFormList from './form_list';
 import Confirm from '../confirm';
-import {selectedValue, yearOptions} from '../../utils/helpers';
+import {selectedValue, yearOptions, title} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -115,7 +115,10 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _budgetFetched = (budget) => {
-    this.setState({budget})
+    this.setState({budget});
+    title(budget.year)
+    history.pushState({title: document.title}, 'Budgetal', budget.
+      year);
   }
 
   _budgetFetchFailed(xhr, status, err) {
@@ -132,15 +135,8 @@ export default class CashFlowPlans extends React.Component {
     return pathNames[yearIndex]
   }
 
-  _updateWindow(year) {
-    var title = `${year} | Budgetal`;
-    history.pushState({title}, 'Budgetal', year);
-    document.title = title;
-  }
-
   changeYear = () => {
     var year = selectedValue('#annual_budget_year');
-    this._updateWindow(year);
     this._fetchBudget(year);
     this.hideYearForm();
   }
