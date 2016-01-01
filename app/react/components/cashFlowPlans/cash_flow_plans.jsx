@@ -95,12 +95,23 @@ export default class CashFlowPlans extends React.Component {
     return {month: pathNames[monthIndex], year: pathNames[yearIndex]};
   }
 
+  incrementMonth(date, number) {
+    var year     = date.getFullYear();
+    var month    = date.getMonth();
+    var newMonth = month + number;
+    return new Date(year, newMonth);
+  }
+
+  changeMonth = (number) => {
+    var currentDate = new Date(this.state.budget.year, this.state.budget.month-1, 1);
+    var newDate = this.incrementMonth(currentDate, number);
+    this._fetchBudget({year: newDate.getFullYear(), month: newDate.getMonth() + 1});
+  }
+
   changeBudget = () => {
     var year  = selectedValue('#budget_year');
     var month = selectedValue('#budget_month');
 
-    document.title = `${monthName(month)} ${year} | Budgetal`;
-    history.pushState({}, 'Budgetal', `/cash-flow-plans/${year}/${month}`);
     this._fetchBudget({year: year, month: month});
   }
 
@@ -120,6 +131,8 @@ export default class CashFlowPlans extends React.Component {
       budget: data.budget,
       category: data.budget_category
     });
+    history.pushState({}, 'Budgetal', `/cash-flow-plans/${data.budget.year}/${data.budget.month}`);
+    document.title = `${monthName(data.budget.month)} ${data.budget.year} | Budgetal`;
   }
 
   _fetchDataFail(xhr, status, err) {
@@ -349,6 +362,7 @@ export default class CashFlowPlans extends React.Component {
         <CategoryList budget={this.state.budget}
                       moveBudgetItem={this.moveBudgetItem}
                       changeBudget={this.changeBudget}
+                      changeMonth={this.changeMonth}
                       currentCategoryId={this.state.category.id}
                       changeCategory={this.changeCategory} />
 

@@ -87,6 +87,25 @@ span.tooltip {
     margin-bottom: -15px;
     margin-top: 4px;
   }
+
+  .fi-arrow-left {
+    margin: 0px 0.6825rem 0px 0px !important;
+    cursor: pointer;
+    color: $primary-color;
+
+    &:hover {
+      color: darken($primary-color, 10%);
+    }
+  }
+  .fi-arrow-right {
+    margin: 0px 0px 0px 0.6825rem !important;
+    cursor: pointer;
+    color: $primary-color;
+
+    &:hover {
+      color: darken($primary-color, 10%);
+    }
+  }
 }
 
 span.tooltip:hover {

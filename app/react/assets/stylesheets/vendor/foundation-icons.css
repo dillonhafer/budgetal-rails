@@ -588,3 +588,15 @@
 .fi-yen:before { content: "\f218"; }
 .fi-zoom-in:before { content: "\f219"; }
 .fi-zoom-out:before { content: "\f21a"; }
+
+.size-12 { font-size: 12px !important; }
+.size-13 { font-size: 13px !important; }
+.size-14 { font-size: 14px !important; }
+.size-16 { font-size: 16px !important; }
+.size-18 { font-size: 18px !important; }
+.size-21 { font-size: 21px !important; }
+.size-24 { font-size: 24px !important; }
+.size-36 { font-size: 36px !important; }
+.size-48 { font-size: 48px !important; }
+.size-60 { font-size: 60px !important; }
+.size-72 { font-size: 72px !important; }

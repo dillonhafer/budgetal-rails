@@ -14,6 +14,15 @@ export default class CategoryList extends React.Component {
     showForm: false
   }
 
+  static propTypes = {
+    budget: React.PropTypes.object.isRequired,
+    moveBudgetItem: React.PropTypes.func.isRequired,
+    changeBudget: React.PropTypes.func.isRequired,
+    changeMonth: React.PropTypes.func.isRequired,
+    currentCategoryId: React.PropTypes.number.isRequired,
+    changeCategory: React.PropTypes.func.isRequired
+  }
+
   changeCategory(category, e) {
     e.preventDefault();
     this.props.changeCategory(category.id);
@@ -57,12 +66,19 @@ export default class CategoryList extends React.Component {
     link.focus()
   }
 
+  prevMonth = () => {
+    this.props.changeMonth(-1);
+  }
+
+  nextMonth = () => {
+    this.props.changeMonth(1);
+  }
+
   render() {
-    let changeYear = classNames({
-      'tooltip animate': true,
-      fadeIn: this.state.showForm,
-      hide: !this.state.showForm
-    });
+    let changeYear = classNames('tooltip animate', {
+          fadeIn: this.state.showForm,
+          hide: !this.state.showForm
+        });
     var self = this;
     return (
       <div className='large-2 medium-2 hide-for-small-down columns category-list'>
@@ -71,8 +87,12 @@ export default class CategoryList extends React.Component {
             <label><i className='fi-calendar'></i> {monthName(this.props.budget.month)} {this.props.budget.year}</label>
           </a>
           <span className={changeYear}>
+            <p className='text-center size-12'>
+              <i onClick={this.prevMonth} className='fi-arrow-left size-16'></i>
+              Change Budget
+              <i onClick={this.nextMonth} className='fi-arrow-right size-16'></i>
+            </p>
             <p>
-              <label htmlFor="budget_month">Change Budget</label>
               <select id="budget_month" name='budget_month' value={this.props.budget.month} onChange={this.changeYear}>
                 {monthOptions()}
               </select>
