@@ -1,5 +1,4 @@
 .flash-box {
-  display: none;
   background: rgba(#000, 0.6);
   color: white;
   padding: 30px 26px;
@@ -7,6 +6,8 @@
   border-radius: 3px;
   margin-top: 20px;
   cursor: pointer;
+   -webkit-animation: fadeinout 3s linear forwards;
+  animation: fadeinout 3s linear forwards;
 }
 
 .flash-holder {
@@ -14,4 +15,18 @@
   position: fixed;
   top: 0px;
   right: 20px;
+}
+
+@-webkit-keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  15% { opacity: 1; }
+  50% { opacity: 1; }
+  85% { opacity: 1; }
+}
+
+@keyframes fadeinout {
+  0%,100% { opacity: 0; }
+  15% { opacity: 1; }
+  50% { opacity: 1; }
+  85% { opacity: 1; }
 }
