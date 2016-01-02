@@ -1,32 +1,16 @@
+import {getRequest, postRequest, putRequest, deleteRequest} from './api';
+
 export default {
-  createExpense(expense) {
-    return $.ajax({
-              url: `/budget-item-expenses`,
-              dataType: 'json',
-              method: 'POST',
-              data: {budget_item_expense: expense}
-            })
+  createExpense(budget_item_expense) {
+    return postRequest(`/budget-item-expenses`, {budget_item_expense});
   },
-  updateExpense(expense) {
-    return $.ajax({
-              url: `/budget-item-expenses/${expense.id}`,
-              dataType: 'json',
-              method: 'PUT',
-              data: {budget_item_expense: expense}
-            })
+  updateExpense(budget_item_expense) {
+    return putRequest(`/budget-item-expenses/${budget_item_expense.id}`, {budget_item_expense});
   },
   destroyExpense(id) {
-    return $.ajax({
-              url: `/budget-item-expenses/${id}`,
-              dataType: 'json',
-              method: 'DELETE'
-            })
+    return deleteRequest(`/budget-item-expenses/${id}`);
   },
   predictionsExpense(name) {
-    return $.ajax({
-              url: `/past-expenses/${name}`,
-              dataType: 'json',
-              method: 'GET'
-            })
+    return getRequest(`/past-expenses/${name}`);
   }
 }

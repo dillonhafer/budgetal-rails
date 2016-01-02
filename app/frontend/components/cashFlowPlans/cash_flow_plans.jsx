@@ -273,26 +273,36 @@ export default class CashFlowPlans extends React.Component {
   }
 
   saveExpense = (expense) => {
+    var self = this;
     if (expense.id === undefined) {
       createExpense(expense)
-        .done(this._expenseSaved.bind(null, expense.index))
-        .fail(this._saveExpenseFail.bind(null, expense))
+        .then((resp) => {
+          if (!!resp.errors) {
+            self._saveExpenseFail(expense.index, resp.errors);
+          } else {
+            self._expenseSaved(expense.index, resp);
+          }
+        });
     } else {
       updateExpense(expense)
-        .done(this._expenseSaved.bind(null, expense.index))
-        .fail(this._saveExpenseFail.bind(null, expense))
+        .then((resp) => {
+          if (!!resp.errors) {
+            self._saveExpenseFail(expense.index, resp.errors);
+          } else {
+            self._expenseSaved(expense.index, resp);
+          }
+        });
     }
   }
 
-  _saveExpenseFail = (index, xhr, status, err) => {
-    let errors = JSON.parse(xhr.responseText).errors
+  _saveExpenseFail = (index, errors) => {
     let category = this.state.category
     let budget_item = _.where(category.budget_items, {'id': index.budget_item_id})[0]
     _.where(budget_item.budget_item_expenses, {'index': index.index})[0].errors = errors
     this.setState({category: category})
   }
 
-  _expenseSaved = (index, expense, err) => {
+  _expenseSaved = (index, expense) => {
     let category = this.state.category
     let budget = _.assign({}, this.state.budget, expense.budget)
     var budget_item = _.where(category.budget_items, {'id': expense.budget_item_id})[0]
@@ -311,10 +321,18 @@ export default class CashFlowPlans extends React.Component {
 
   deleteExpense = (e) => {
     e.preventDefault();
-    if (this.state.modal.item.id !== undefined) {
-      destroyExpense(this.state.modal.item.id)
-        .done(this._expenseDeleted(this.state.modal.item.budget_item_id, this.state.modal.index))
-        .fail(this._fetchDataFail.bind(null, this.state.modal.item))
+    var modal = this.state.modal;
+    var self = this;
+
+    if (modal.item.id !== undefined) {
+      destroyExpense(modal.item.id)
+        .then((resp) => {
+          if (resp.success) {
+            self._expenseDeleted(modal.item.budget_item_id, modal.index);
+          } else {
+            self._fetchDataFail(resp.message);
+          }
+        });
     }
   }
 

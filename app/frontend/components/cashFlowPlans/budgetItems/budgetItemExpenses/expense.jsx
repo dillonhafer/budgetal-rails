@@ -24,11 +24,8 @@ export default class Expense extends React.Component {
     var word = this.props.expense.name
     if (word.length > 2) {
       predictionsExpense(word)
-        .done(function(list) {
-          self.setState({predictions: list})
-        })
-        .fail(function() {
-          self.removePredictions();
+        .then((predictions) => {
+          self.setState({predictions})
         })
     } else {
       self.removePredictions();
