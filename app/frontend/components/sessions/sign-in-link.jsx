@@ -27,7 +27,7 @@ export default class Footer extends React.Component {
     let overlayClasses = classNames('overlay', {hide: this.state.hide, fadeIn: !this.state.hide})
     return (
       <div>
-        <a onClick={this.showForm} title='Sign In or Sign Up'>Sign in / Sign up</a>
+        <a onClick={this.showForm} href='#' title='Sign In or Sign Up'>Sign in / Sign up</a>
         <div id='signInUp' className={overlayClasses}>
           <div className="page">
             <a className="close-button" onClick={this.hideForm}>&#215;</a>
