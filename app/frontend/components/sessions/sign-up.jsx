@@ -27,13 +27,17 @@ export default class SignIn extends React.Component {
   signUp = (e) => {
     e.preventDefault();
     let data = {user: this.state.newUser}
+    let self = this;
     signUp(data)
-      .done((json) => { window.location = '/'; })
-      .fail((json) => {
-        let newUser = this.state.newUser;
-        newUser.errors = json.responseJSON.errors;
-        this.setState({newUser});
-        showMessage('Sign up failed');
+      .then((resp) => {
+        if (!!resp.errors) {
+          let newUser = data.user;
+          newUser.errors = resp.errors;
+          self.setState({newUser});
+          showMessage('Oh no! Sign up failed');
+        } else {
+          window.location = '/';
+        }
       })
   }
 
