@@ -1,5 +1,4 @@
 //= require jquery
-//= require jquery_ujs
 //= require jquery.minical
 //= require react_integration
 //= require react_bundle
