@@ -141,12 +141,12 @@ def create_expense
   find('.show-expenses').click
   within '.expense-list' do
     click_on 'Add an expense'
-    find('.get-date').click
+    find('fieldset').click
   end
 
-  within('#minical_calendar_0') do
-    expect(page).to have_selector 'a', text: '25'
-    click_link '25'
+  within('.input-calendar-wrapper') do
+    expect(page).to have_selector '.day.today.cell'
+    find('.day.today.cell').click()
   end
 
   within '.expense-list' do

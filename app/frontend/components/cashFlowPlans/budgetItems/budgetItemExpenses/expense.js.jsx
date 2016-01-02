@@ -42,7 +42,15 @@ export default class Expense extends React.Component {
     this.props.save(this.props.expense)
   }
 
+  _isDueDate(value) {
+    return typeof(value) === 'string';
+  }
+
   update = (expense,e) => {
+    if (this._isDueDate(e)) {
+      var fakeTarget = {name: 'date', value: e};
+      e = {target: fakeTarget};
+    }
     expense[e.target.name] = e.target.value
     this.props.update(this.props.index, expense)
     // Predict expense
@@ -71,7 +79,7 @@ export default class Expense extends React.Component {
       <form onSubmit={this.save} data-abide>
         <div className='row'>
           <div className="large-2 medium-2 columns">
-            <InputField type='text' required={true} name='date' readOnly placeholder='2015-07-01' onChange={this.update.bind(this, expense)} value={expense.date} className='get-date' errors={expense.errors} />
+            <InputField type='date' date={expense.date} onChange={this.update.bind(this,expense)} name='date' errors={expense.errors} />
           </div>
           <div className="large-2 medium-2 columns">
             <InputField type='text' required={true} onBlur={this.removePredictions} name='name' placeholder='(Rent Payment)' onChange={this.update.bind(this, expense)} value={expense.name} className='expense-item-field' errors={expense.errors} />
