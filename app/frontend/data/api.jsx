@@ -30,5 +30,8 @@ export default {
   },
   deleteRequest(path) {
     return module.exports.nonGetRequest('DELETE', path);
+  },
+  patchRequest(path) {
+    return module.exports.nonGetRequest('PATCH', path, body);
   }
 }
