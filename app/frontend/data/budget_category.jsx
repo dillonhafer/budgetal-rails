@@ -1,13 +1,10 @@
+import {getRequest} from './api';
+
 export default {
   findCategory(data) {
-    var url = '/budget-categories/'+data.year+'/'+data.month+'/'+data.id;
-    return $.ajax({url: url, dataType: 'json'})
+    return getRequest(`/budget-categories/${data.year}/${data.month}/${data.id}`);
   },
   importCategory(id) {
-    return $.ajax({
-              url: `/budget-categories/${id}/import`,
-              dataType: 'json',
-              method: 'GET'
-            })
+    return getRequest(`/budget-categories/${id}/import`);
   }
 }

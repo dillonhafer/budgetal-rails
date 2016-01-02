@@ -125,7 +125,7 @@ export default class CashFlowPlans extends React.Component {
     this._fetchBudget(budgetParams);
   }
 
-  _fetchDataDone = (data, textStatus, jqXHR) => {
+  _fetchDataDone = (data) => {
     this.setState({
       didFetchData: true,
       budget: data.budget,
@@ -135,12 +135,8 @@ export default class CashFlowPlans extends React.Component {
     title(`${monthName(data.budget.month)} ${data.budget.year}`);
   }
 
-  _fetchDataFail(xhr, status, err) {
-    var errors = JSON.parse(xhr.responseText).errors
-    for (idx in errors) {
-      var msg = errors[idx]
-      showMessage(msg)
-    }
+  _fetchDataFail(message) {
+    showMessage(message);
   }
 
   changeCategory = (id) => {
@@ -152,9 +148,15 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _fetchBudget = (data) => {
+    var self = this;
     findCategory(data)
-      .done(this._fetchDataDone)
-      .fail(this._fetchDataFail)
+      .then((resp) => {
+        if (!!resp.errors) {
+          self._fetchDataFail(resp.errors);
+        } else {
+          self._fetchDataDone(resp);
+        }
+      });
   }
 
   // Budget Item functions
@@ -331,14 +333,18 @@ export default class CashFlowPlans extends React.Component {
 
   _import = (e) => {
     e.preventDefault();
-    importCategory(this.state.category.id).done(this.importFinished)
+    var self = this;
+    importCategory(this.state.category.id)
+      .then((resp) => {
+        self.importFinished(resp.imported, resp.message);
+      });
   }
 
-  importFinished = (json) => {
+  importFinished = (imported_items, message) => {
     var category = this.state.category
-    category.budget_items = category.budget_items.concat(json.imported)
+    category.budget_items = category.budget_items.concat(imported_items)
     this.setState({category: category})
-    showMessage(json.message)
+    showMessage(message)
     this.cancelImport()
   }
 
