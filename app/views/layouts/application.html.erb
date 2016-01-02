@@ -22,7 +22,7 @@
 
     <%= yield %>
 
-    <%= render template: 'shared/footer' %>
+    <%= react_component 'Footer' %>
 
     <%= javascript_include_tag "application" %>
     <script><%= yield(:ready) %></script>
