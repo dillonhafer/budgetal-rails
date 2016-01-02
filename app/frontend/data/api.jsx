@@ -17,7 +17,7 @@ export default {
   deleteRequest(path) {
     return nonGetRequest('DELETE', path);
   },
-  patchRequest(path) {
+  patchRequest(path, body) {
     return nonGetRequest('PATCH', path, body);
   }
 }
