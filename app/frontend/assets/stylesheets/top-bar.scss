@@ -125,7 +125,7 @@
       background: #3366cc;
     }
 
-    li > div > div > a {
+    li > a, li > div > div > a {
       display: block;
       width: 100%;
       color: white;
@@ -245,7 +245,7 @@
       line-height: 35px;
     }
 
-    li:not(.has-form) > div > div > a:not(.button) {
+    li:not(.has-form) > a, li:not(.has-form) > div > div > a:not(.button) {
       padding: 0 1.45833rem;
       line-height: 4.375rem;
       background: $primary-color;
