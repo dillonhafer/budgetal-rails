@@ -18,7 +18,6 @@ export default class CashFlowPlans extends React.Component {
   }
 
   state = {
-    didFetchData: false,
     showForm: false,
     budget: {
       month: (new Date).getMonth() + 1,
@@ -127,7 +126,6 @@ export default class CashFlowPlans extends React.Component {
 
   _fetchDataDone = (data) => {
     this.setState({
-      didFetchData: true,
       budget: data.budget,
       category: data.budget_category
     });
