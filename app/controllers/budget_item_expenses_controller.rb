@@ -19,8 +19,11 @@ class BudgetItemExpensesController < AuthenticatedController
   end
 
   def destroy
-    budget_item_expense.destroy
-    respond_with budget_item_expense
+    if budget_item_expense.destroy
+      render json: { success: true }
+    else
+      render json: { success: false, message: "Could not delete #{budget_item_expense.name}" }, status: 422
+    end
   end
 
   private
