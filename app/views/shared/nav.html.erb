@@ -22,15 +22,7 @@
       </li>
       <li><%= link_to('Sign out', destroy_user_session_path, method: :delete, title: 'Sign out') %></li>
       <% else %>
-      <li>
-        <%= link_to 'Sign in / Sign up', '#', class: "sign-in", title: "Sign In" %>
-        <div id='signInUp' class='overlay hide'>
-          <div class="page">
-            <a href='#' class="close-button sign-in-close">&#215;</a>
-            <%= react_component 'Sessions' %>
-          </div>
-        </div>
-      </li>
+      <li><%= react_component 'SignInLink' %></li>
       <% end %>
     </ul>
   </section>

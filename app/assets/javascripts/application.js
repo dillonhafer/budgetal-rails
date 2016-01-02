@@ -12,13 +12,3 @@ $(document).on('focus', '.get-date', function(e) {
     }
   })
 });
-
-$(document).on('click', '.sign-in-close', function() {
-  $('#signInUp').removeClass('fadeIn');
-  $('#signInUp').addClass('hide');
-});
-
-$(document).on('click', '.sign-in', function() {
-  $('#signInUp').addClass('fadeIn');
-  $('#signInUp').removeClass('hide');
-});

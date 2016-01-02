@@ -20,6 +20,9 @@ registerComponent('Statistics', Statistics);
 import Sessions from './components/sessions/sessions';
 registerComponent('Sessions', Sessions);
 
+import SignInLink from './components/sessions/sign-in-link';
+registerComponent('SignInLink', SignInLink);
+
 import Footer from './components/layout/footer';
 registerComponent('Footer', Footer);
 
