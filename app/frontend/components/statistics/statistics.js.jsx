@@ -17,7 +17,6 @@ export default class Statistics extends React.Component {
   }
 
   state = {
-    didFetchData: false,
     showForm: false,
     budget: {
       month: urlParams().month,
@@ -68,11 +67,8 @@ export default class Statistics extends React.Component {
     this._fetchBudget({year: urlParams().year, month: urlParams().month})
   }
 
-  _fetchDataDone = (data, textStatus, jqXHR) => {
-    this.setState({
-      didFetchData: true,
-      budget: data.budget
-    });
+  _fetchDataDone = (budget) => {
+    this.setState({budget});
     title(this.title());
   }
 
@@ -93,9 +89,15 @@ export default class Statistics extends React.Component {
   }
 
   _fetchBudget(data) {
+    var self = this;
     findStatistic(data)
-      .done(this._fetchDataDone)
-      .fail(this._fetchDataFail)
+      .then((resp) => {
+        if (!!resp.errors) {
+          self._fetchDataFail
+        } else {
+          self._fetchDataDone(resp.budget)
+        }
+      })
   }
 
   statistics() {

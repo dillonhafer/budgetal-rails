@@ -1,6 +1,7 @@
+import {getRequest} from './api';
+
 export default {
-  findStatistic: function(data) {
-    var url = `/monthly-statistics-budget/${data.year}/${data.month}`;
-    return $.ajax({url: url, dataType: 'json'})
+  findStatistic(date) {
+    return getRequest(`/monthly-statistics-budget/${date.year}/${date.month}`);
   }
 }
