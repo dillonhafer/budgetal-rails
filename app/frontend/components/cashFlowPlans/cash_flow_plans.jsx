@@ -10,7 +10,7 @@ import {updateBudget} from '../../data/budget';
 import {findCategory, importCategory} from '../../data/budget_category';
 import {createItem, updateItem, destroyItem} from '../../data/budget_item';
 import {createExpense, updateExpense, destroyExpense} from '../../data/budget_item_expense';
-import {monthName, selectedValue, title} from '../../utils/helpers';
+import {monthName, selectedValue, title, today} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -245,7 +245,7 @@ export default class CashFlowPlans extends React.Component {
   addExpense = (id) => {
     var category = this.state.category
     var budget_item = _.where(category.budget_items, {'id': id})[0]
-    budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.01})
+    budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.01, date: today()})
     this.setState({category: category})
   }
 
