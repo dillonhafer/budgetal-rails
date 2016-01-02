@@ -65,7 +65,7 @@ export default class SignIn extends React.Component {
         <div className='clearfix'>
           <label htmlFor='password' className='left'>Password</label>
           <small className='right'><a id="hide_password" className={lockClass} onClick={this.togglePassword}></a></small>
-          <InputField type={passwordType} id='password' name='password' onChange={this.updateForm} value={newUser.password} errors={newUser.errors} tabIndex={8} />
+          <InputField type={passwordType} id='password' name='password' onChange={this.updateForm} value={newUser.password} errors={newUser.errors} required={true} tabIndex={8} />
         </div>
 
         <label htmlFor='password_confirmation'>Password Confirmation</label>
