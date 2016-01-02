@@ -17,11 +17,11 @@ export default class AnnualBudgetItem extends React.Component {
   }
 
   dueDate(date) {
-    date = new Date(date);
+    var dateArray = date.split('-');
     var parts = {
-      year: date.getFullYear(),
-      month: monthName(date.getMonth()+1),
-      day: parseInt(date.getDate())
+      year: dateArray[0],
+      month: monthName(dateArray[1]),
+      day: parseInt(dateArray[2])
     };
     return `${parts.month} ${parts.day}, ${parts.year}`;
   }

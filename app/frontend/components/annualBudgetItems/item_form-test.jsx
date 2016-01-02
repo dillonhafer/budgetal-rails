@@ -6,7 +6,7 @@ import AnnualBudgetItemForm from './item_form';
 
 describe('AnnualBudgetItemForm', () => {
   let f = function(){};
-  let budgetItem  = {name: 'Amazon', amount: 12.12, due_date: '2015-3-12', paid: true}
+  let budgetItem  = {name: 'Amazon', amount: 12.12, due_date: '2015-03-12', paid: true}
   let itemForm    = <AnnualBudgetItemForm budgetItem={budgetItem} updateForm={f} deleteForm={f} saveForm={f}  />
   var markup      = ReactDOMServer.renderToStaticMarkup(itemForm);
   const component = TestUtils.renderIntoDocument(itemForm);
@@ -19,7 +19,7 @@ describe('AnnualBudgetItemForm', () => {
   var inputs = [
     {args: 12.12, name: 'amount'},
     {args: 'Amazon', name: 'name'},
-    {args: '2015-3-12', name: 'due_date'}
+    {args: '2015-03-12', name: 'due_date'}
   ]
 
   inputs.forEach(function(test) {

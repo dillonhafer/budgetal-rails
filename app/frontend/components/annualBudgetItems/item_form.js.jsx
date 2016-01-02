@@ -15,7 +15,15 @@ export default class AnnualBudgetItemForm extends React.Component {
     deleteForm: React.PropTypes.func.isRequired
   }
 
+  _isDueDate(value) {
+    return typeof(value) === 'string';
+  }
+
   updateForm = (e) => {
+    if (this._isDueDate(e)) {
+      var fakeTarget = {name: 'due_date', value: e};
+      e = {target: fakeTarget};
+    }
     var newValue = (e.target.name === 'paid') ? e.target.checked : e.target.value;
     this.props.budgetItem[e.target.name] = newValue;
     this.props.updateForm(this.props.index, this.props.budgetItem);
@@ -46,7 +54,7 @@ export default class AnnualBudgetItemForm extends React.Component {
             <InputField type="number" name='amount' onChange={this.updateForm} value={numberToCurrency(item.amount, '')} step='any' min='0.00' placeholder='0.00' errors={item.errors} />
           </div>
           <div className='large-2 columns'>
-            <InputField type='text' name='due_date' readOnly onChange={this.updateForm} placeholder='2015-07-01' value={item.due_date} className='get-date' errors={item.errors} />
+            <InputField type='date' date={item.due_date} onChange={this.updateForm} name='due_date' errors={item.errors} />
           </div>
           <div className='large-1 columns text-center'>
             <input type='checkbox' name='paid' onChange={this.updateForm} defaultChecked={item.paid} />

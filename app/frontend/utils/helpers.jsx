@@ -4,6 +4,15 @@ export default {
   title(string) {
     document.title = `${string} | Budgetal`;
   },
+
+  today() {
+    var date  = new Date;
+    var year  = date.getFullYear();
+    var month = pad(date.getMonth() + 1);
+    var day   = pad(date.getDate());
+    return `${year}-${month}-${day}`;
+  },
+
   monthName(number) {
     var months = [
       'January',
@@ -55,4 +64,11 @@ export default {
       return (<option key={index} value={month}>{module.exports.monthName(month)}</option>);
     });
   }
+}
+
+function pad(number, char='0') {
+  if (number < 10) {
+    number = `${char}${number}`;
+  }
+  return number;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import InputError from './input_error';
+import Calendar from 'react-input-calendar';
 
 export default class InputField extends React.Component {
   constructor(props) {
@@ -27,11 +28,38 @@ export default class InputField extends React.Component {
     return this.props.errors && this.props.errors[this.props.name];
   }
 
+  focusCalendar = (e) => {
+    // Nasty hack to create a 'readonly' attribute
+    e.target.parentElement.parentElement.disabled = false
+    e.target.focus();
+    e.target.parentElement.parentElement.disabled = true
+  }
+
+  field = () => {
+    if (this.props.type === 'date') {
+      var utcDate = this.props.date+'T12:00';
+      return (
+        <fieldset disabled onClick={this.focusCalendar}>
+        <Calendar format="YYYY-MM-DD"
+                  computableFormat='YYYY-MM-DD'
+                  placeholder='2015-08-01'
+                  onChange={this.props.onChange}
+                  closeOnSelect={true}
+                  openOnInputFocus={true}
+                  hideIcon={true}
+                  date={utcDate} />
+        </fieldset>
+      )
+    } else {
+      return <input {...this.props} />
+    }
+  }
+
   render() {
     let cls = classNames({error: this.showError()});
     return (
       <div className={cls}>
-        <input {...this.props} />
+        {this.field()}
         <InputError showError={this.showError()} message={this.errorMessage()} />
       </div>
     );

@@ -7,8 +7,8 @@
 @import 'pricing-table';
 @import 'block-grid';
 @import 'forms';
-@import './vendor/jquery.minical.sass';
 @import './vendor/foundation-icons';
+@import './vendor/jquery.minical.sass';
 @import 'animations';
 @import 'tooltip';
 @import 'predicted-expense-list';
@@ -22,6 +22,7 @@
 @import 'allocation-plans';
 @import 'home';
 @import 'flash-box';
+@import './vendor/react-calendar';
 
 @font-face {
   font-family: 'Open Sans';
@@ -236,6 +237,12 @@ ul.main-budget-categories {
 
 .columns.category-list {
   padding-left: 0;
+}
+
+fieldset[disabled] {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 @media only screen and (min-width: 40.063em) {

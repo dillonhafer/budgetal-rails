@@ -17,10 +17,10 @@ feature 'Annual Budgets', js: true do
         click_on 'Add an Item'
         fill_in 'name', with: 'Insurrance'
         fill_in 'amount', with: '300'
-        find('.get-date').click
-        within('#minical_calendar_0') do
-          expect(page).to have_selector 'a', text: '25'
-          click_link '25'
+        find('fieldset').click
+        within('.input-calendar-wrapper') do
+          expect(page).to have_selector '.day.today.cell'
+          find('.day.today.cell').click()
         end
         click_on 'Save'
         visit annual_budgets_path(year: Date.today.year)
@@ -38,10 +38,10 @@ feature 'Annual Budgets', js: true do
       it 'can update the item' do
         fill_in 'name', with: 'Gas'
         fill_in 'amount', with: '600'
-        find('.get-date').click
-        within('#minical_calendar_0') do
-          expect(page).to have_selector 'a', text: '25'
-          click_link '25'
+        find('fieldset').click
+        within('.input-calendar-wrapper') do
+          expect(page).to have_selector '.day.today.cell'
+          find('.day.today.cell').click()
         end
         click_on 'Save'
         visit annual_budgets_path(year: Date.today.year)
