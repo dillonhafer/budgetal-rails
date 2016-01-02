@@ -225,20 +225,25 @@ export default class CashFlowPlans extends React.Component {
   }
 
   saveBudget = (budget) => {
+    var self = this;
     updateBudget(budget)
-      .done(this._budgetUpdated)
-      .fail(this._saveBudgetFail.bind(null, budget))
+      .then((resp) => {
+        if (!!resp.errors) {
+          self._saveBudgetFail(budget, resp.errors);
+        } else {
+          self._budgetUpdated(resp.budget);
+        }
+      });
   }
 
-  _saveBudgetFail = (index, xhr, status, err) => {
-    let errors = JSON.parse(xhr.responseText).errors
-    let budget = this.state.budget
-    budget.errors = errors
-    this.setState({budget: budget})
+  _saveBudgetFail = (budget, errors) => {
+    budget.errors = errors;
+    this.setState({budget});
   }
 
-  _budgetUpdated = (xhr, status, err) => {
-    this.setState({budget: xhr.budget})
+  _budgetUpdated = (budget) => {
+    showMessage('Updated Budget');
+    this.setState({budget});
   }
 
   // Budget Item Expense functions
