@@ -35,7 +35,11 @@
 }
 
 .tabs dd.new a {
-    background: #1a66ff !important;
+  background: $success-color;
+  &:hover {
+    color: white;
+    background: darken($success-color, 7%);
+  }
 }
 
 .tabs-content {

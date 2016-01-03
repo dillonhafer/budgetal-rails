@@ -20,7 +20,7 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
   transition: box-shadow 0.45s, border-color 0.45s ease-in-out;
 }
 
-[data-abide] .error small.error, [data-abide] .error span.error, [data-abide] span.error, [data-abide] small.error {
+.error small.error, .error span.error, span.error, small.error {
   display: block;
   padding: 0.375rem 0.5625rem 0.5625rem;
   margin-top: -1px;
@@ -41,7 +41,7 @@ input[type=checkbox] {
   cursor:pointer;
 }
 
-[data-abide] small.error.show {
+small.error.show {
   display: block !important;
 }
 
