@@ -39,7 +39,7 @@ Budgets::Application.routes.draw do
 
   match '/allocation-plans/:id/edit' => 'allocation_plans#edit', as: 'edit_allocation_plan', via: [:get, :post]
   resources :allocation_plans, path: '/allocation-plans/:year/:month'
-  resources :allocation_plan_budget_items, path: '/budgets/:budget_id/allocation-plans/:id/budget-items/:budget_item_id'
+  resources :allocation_plan_budget_items, path: '/allocation-plan-budget-items'
 
   get "/monthly-statistics/:year/:month" => "monthly_statistics#show", as: 'monthly_statistic'
   get "/monthly-statistics-budget/:year/:month" => "monthly_statistics#budget"
@@ -47,6 +47,7 @@ Budgets::Application.routes.draw do
   get '/my-account' => 'users#my_account', as: 'my_account'
   get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
 
+  get '/allocation-plans/:id' => 'allocation_plans#show'
   match '/allocation-plans/:year/:month' => 'allocation_plans#index', as: 'my_allocation_plans', via: [:get, :post]
   match '/allocation-plan-budget-items/create' => 'allocation_plan_budget_items#create', as: 'create_allocation_plan_budget_item', via: [:get, :post, :patch]
 
