@@ -11,6 +11,9 @@ import './assets/stylesheets/app';
 import CashFlowPlans from './components/cashFlowPlans/cash_flow_plans';
 registerComponent('CashFlowPlans', CashFlowPlans);
 
+import AllocationPlans from './components/allocationPlans/allocation-plans';
+registerComponent('AllocationPlans', AllocationPlans);
+
 import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
 registerComponent('AnnualBudgetItems', AnnualBudgetItems);
 

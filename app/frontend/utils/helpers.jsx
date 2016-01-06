@@ -5,6 +5,16 @@ export default {
     document.title = `${string} | Budgetal`;
   },
 
+  remainingClass(number) {
+    if (_.lt(number, 0.00)) {
+      return 'alert-color';
+    } else if (_.gt(number, 0.00)) {
+      return 'success-color';
+    } else {
+      return 'blue-color';
+    }
+  },
+
   today() {
     var date  = new Date;
     var year  = date.getFullYear();
