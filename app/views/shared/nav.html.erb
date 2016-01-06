@@ -11,7 +11,7 @@
       <li class="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'>Hello, <%= current_user.first_name %>!</a>
         <ul class="dropdown shadow nav-links">
           <li><%= link_to_i 'dollar', "&nbsp;&nbsp;Cash Flow Plans", my_budgets_path(year: Date.today.year, month: Date.today.month), title: 'Cash Flow Plans' %></li>
-          <li><%= link_to_i 'clipboard-pencil', "Allocated Spending Plans", my_allocation_plans_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
+          <li><%= link_to_i 'clipboard-pencil', "Allocated Spending Plans", allocation_plans_path(year: Date.today.year, month: Date.today.month), title: 'Allocated Spending Plans' %></li>
           <li><%= link_to_i 'calendar', "Annual Budgets", annual_budgets_path(year: Date.today.year), title: 'Annual Budgets' %></li>
           <li><%= link_to_i 'graph-pie', "Statistics (for geeks)", monthly_statistic_path(year: Date.today.year, month: Date.today.month), title: '(for geeks)' %></li>
           <li><%= link_to_i 'widget', "My Account", edit_user_registration_path, title: 'My Account' %></li>
