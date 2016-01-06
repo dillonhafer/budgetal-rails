@@ -66,9 +66,6 @@ GEM
     dotenv-rails (2.0.0)
       dotenv (= 2.0.0)
     erubis (2.7.0)
-    exception_notification (4.0.1)
-      actionmailer (>= 3.0.4)
-      activesupport (>= 3.0.4)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.5.0)
@@ -96,9 +93,6 @@ GEM
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
-    passenger (5.0.4)
-      rack
-      rake (>= 0.8.1)
     pg (0.18.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -193,11 +187,9 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
-  exception_notification
   factory_girl_rails
   faker
   jbuilder (~> 1.2)
-  passenger
   pg
   pry
   puma
