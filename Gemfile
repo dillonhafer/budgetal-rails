@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails', '~> 2.0'
 gem 'rails',        '4.2.5'
 gem 'devise',       '~> 3.5'
 gem 'jbuilder',     '~> 2.4'

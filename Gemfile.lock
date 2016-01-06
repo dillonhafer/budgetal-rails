@@ -62,10 +62,6 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    dotenv (2.0.2)
-    dotenv-rails (2.0.2)
-      dotenv (= 2.0.2)
-      railties (~> 4.0)
     erubis (2.7.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -185,7 +181,6 @@ DEPENDENCIES
   capybara
   database_cleaner
   devise (~> 3.5)
-  dotenv-rails (~> 2.0)
   factory_girl_rails
   faker
   jbuilder (~> 2.4)
