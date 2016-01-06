@@ -184,12 +184,12 @@ DEPENDENCIES
   bullet
   capybara
   database_cleaner
-  devise
-  dotenv-rails
+  devise (~> 3.5)
+  dotenv-rails (~> 2.0)
   factory_girl_rails
   faker
   jbuilder (~> 2.4)
-  pg
+  pg (~> 0.18)
   pry
   puma
   rails (= 4.2.5)

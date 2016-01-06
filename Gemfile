@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails'
-gem 'rails', '4.2.5'
-gem 'devise'
-gem 'jbuilder', '~> 2.4'
-gem 'pg'
+gem 'dotenv-rails', '~> 2.0'
+gem 'rails',        '4.2.5'
+gem 'devise',       '~> 3.5'
+gem 'jbuilder',     '~> 2.4'
+gem 'pg',           '~> 0.18'
 gem 'react_webpack_rails', '~> 0.0.5'
 
 group :development, :test do
