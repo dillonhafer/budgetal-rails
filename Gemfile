@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails'
 gem 'rails', '4.2.5'
 gem 'devise'
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.4'
 gem 'pg'
 gem 'react_webpack_rails', '~> 0.0.5'
 
