@@ -1,5 +1,0 @@
-$('#p-<%= @apbi.allocation_plan_id %>-bi-<%= @apbi.budget_item_id %>').html("<%= escape_javascript(render(partial: 'allocation_plans/allocation_item', locals: {bi: @apbi.budget_item, plan: @apbi.allocation_plan})) %>");
-$('.bi-remaining-<%= @apbi.budget_item_id %>').html('<%= number_to_currency(@apbi.budget_item.remaining_allocations) %>');
-$('.bi-remaining-<%= @apbi.budget_item_id %>').removeClass('red green blue').addClass('<%= color_for_number(@apbi.budget_item.remaining_allocations) %>')
-$('.p-<%= @apbi.allocation_plan_id %>-not-allocated').html('<%= number_to_currency(@apbi.allocation_plan.amount_not_allocated) %>');
-$('.p-<%= @apbi.allocation_plan_id %>-not-allocated').removeClass('red green blue').addClass('<%= color_for_number(@apbi.allocation_plan.amount_not_allocated) %>')
