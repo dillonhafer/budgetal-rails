@@ -4,6 +4,7 @@ class Budget < ActiveRecord::Base
   has_many :budget_items, through: :budget_categories
   has_many :budget_item_expenses, through: :budget_items
   has_many :allocation_plans, dependent: :destroy
+  has_many :allocation_plan_budget_items, through: :budget_items
 
   validates_presence_of :monthly_income
 
