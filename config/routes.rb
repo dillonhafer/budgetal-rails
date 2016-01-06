@@ -47,6 +47,5 @@ Budgets::Application.routes.draw do
   get '/my-account' => 'users#my_account', as: 'my_account'
   get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
 
-
   get '/admin' => 'admin#index', as: 'admin'
 end
