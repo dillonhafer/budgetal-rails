@@ -1,31 +1,25 @@
 class AllocationPlansController < AuthenticatedController
-  before_filter :check_date, except: [:edit]
+  before_filter :check_date, except: [:edit, :show]
   helper_method :budget, :allocation_plan
 
-  def new
-    render layout: !request.xhr?
+  def show
+    render allocation_plan
   end
 
   def create
-    notice = if allocation_plan.save
-      'Added pay period'
+    if allocation_plan.save
+      render json: allocation_plan
     else
-      'Something went wrong'
+      render json: { errors: allocation_plan.errors }, status: 422
     end
-    redirect_to my_allocation_plans_path(month: budget.month, year: budget.year), notice: notice
-  end
-
-  def edit
-    render layout: !request.xhr?
   end
 
   def update
-    notice = if allocation_plan.update_attributes(allocation_plan_params)
-      'Updated pay period'
+    if allocation_plan.update_attributes(allocation_plan_params)
+      render json: allocation_plan
     else
-      'Something went wrong'
+      render json: { errors: allocation_plan.errors }, status: 422
     end
-    redirect_to my_allocation_plans_path(month: budget.month, year: budget.year), notice: notice
   end
 
   private
@@ -43,7 +37,7 @@ class AllocationPlansController < AuthenticatedController
   def budget
     year    = params[:year]
     month   = params[:month]
-    @budget ||= current_user.budgets.includes(:budget_categories).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
+    @budget ||= current_user.budgets.includes(:allocation_plans, :budget_categories, :budget_items, :allocation_plan_budget_items).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
   end
 
   def allocation_plan_params
