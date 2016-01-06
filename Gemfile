@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gem 'dotenv-rails'
 gem 'rails', '4.2.5'
 
-gem 'bcrypt', '~> 3.1.2'
 gem 'devise'
 gem 'jbuilder', '~> 1.2'
 gem 'pg'
