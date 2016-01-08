@@ -5,8 +5,8 @@ module.exports = {
     main: ['./app/frontend/index.js']
   },
   output: {
-    path: __dirname + '/app/assets/javascripts',
-    filename: 'react_bundle.js'
+    path: __dirname + '/public/assets',
+    filename: 'main.js'
   },
   module: {
     loaders: [

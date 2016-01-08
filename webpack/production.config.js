@@ -7,6 +7,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = _.merge({}, baseConfig, {
   cache: false,
+  output: {
+    path: __dirname + '/../public/assets',
+    filename: 'main-[hash].js'
+  },
   plugins: [
     new webpack.NoErrorsPlugin(),
     new CleanPlugin(['build']),
