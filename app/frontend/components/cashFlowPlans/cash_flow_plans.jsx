@@ -39,7 +39,7 @@ export default class CashFlowPlans extends React.Component {
     },
     category: {
       id: 0,
-      name: '',
+      name: 'Charity',
       amount: '',
       budget_items: []
     },
