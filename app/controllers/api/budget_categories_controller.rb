@@ -1,4 +1,4 @@
-class BudgetCategoriesController < AuthenticatedController
+class Api::BudgetCategoriesController < AuthenticatedController
   include ActionView::Helpers::TextHelper
   before_filter :check_date, except: [:import, :show]
   helper_method :budget_category, :budget, :message, :imported_items

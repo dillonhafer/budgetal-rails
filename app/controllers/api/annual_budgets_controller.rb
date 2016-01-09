@@ -1,4 +1,4 @@
-class AnnualBudgetsController < AuthenticatedController
+class Api::AnnualBudgetsController < AuthenticatedController
   def show
     respond_to do |f|
       f.html

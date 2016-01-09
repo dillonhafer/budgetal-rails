@@ -1,8 +1,13 @@
 Budgets::Application.routes.draw do
   root to: 'welcome#index'
 
-  get '/privacy' => 'welcome#privacy', as: 'privacy'
   get '/signed-in' => 'welcome#signed_in'
+
+  get '/privacy' => 'welcome#index'
+  get '/cash-flow-plans/:year/:month' => 'welcome#index'
+  get '/allocation-plans/:year/:month' => 'welcome#index'
+  get '/annual-budgets/:year' => 'welcome#index'
+  get '/monthly-statistics/:year/:month' => 'welcome#index'
 
   devise_for :users,
              path: 'sessions',
@@ -20,32 +25,31 @@ Budgets::Application.routes.draw do
     devise_for :users,
                path: 'sessions',
                path_names: { sign_in: 'sign-in', sign_out: 'sign-out', registration: 'sign-up' }
+
+    resources :budgets, only: [:update]
+    get '/budget-categories/:id/import' => 'budget_categories#import'
+    get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
+    get '/budget-categories/:id' => 'budget_categories#show'
+    match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
+
+    resources :budget_items, path: 'budget-items', only: [:create, :update, :destroy]
+    patch '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
+
+    resources :budget_item_expenses, path: 'budget-item-expenses', only: [:create, :update, :destroy]
+
+    get '/annual-budgets/:year' => 'annual_budgets#show', as: 'annual_budgets'
+    resources :annual_budget_items, path: '/annual-budget-items', only: [:create, :update, :destroy]
+
+    get '/allocation-plans/:id' => 'allocation_plans#show'
+    resources :allocation_plans, path: '/allocation-plans/:year/:month', only: [:index, :create, :update]
+    resources :allocation_plan_budget_items, path: '/allocation-plan-budget-items', only: [:create, :update]
+
+    get "/monthly-statistics/:year/:month" => "monthly_statistics#show", as: 'monthly_statistic'
+    get "/monthly-statistics-budget/:year/:month" => "monthly_statistics#budget"
+
+    get '/my-account' => 'users#my_account', as: 'my_account'
+    get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
   end
-
-  resources :budgets, only: [:update]
-
-  get '/budget-categories/:id/import' => 'budget_categories#import'
-  get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
-  get '/budget-categories/:id' => 'budget_categories#show'
-  match '/cash-flow-plans/:year/:month' => 'budget_categories#index', as: 'my_budgets', via: [:get, :post]
-
-  resources :budget_items, path: 'budget-items', only: [:create, :update, :destroy]
-  patch '/move-budget-item' => 'budget_items#move_item', as: 'move_item'
-
-  resources :budget_item_expenses, path: 'budget-item-expenses', only: [:create, :update, :destroy]
-
-  get '/annual-budgets/:year' => 'annual_budgets#show', as: 'annual_budgets'
-  resources :annual_budget_items, path: '/annual-budget-items', only: [:create, :update, :destroy]
-
-  get '/allocation-plans/:id' => 'allocation_plans#show'
-  resources :allocation_plans, path: '/allocation-plans/:year/:month', only: [:index, :create, :update]
-  resources :allocation_plan_budget_items, path: '/allocation-plan-budget-items', only: [:create, :update]
-
-  get "/monthly-statistics/:year/:month" => "monthly_statistics#show", as: 'monthly_statistic'
-  get "/monthly-statistics-budget/:year/:month" => "monthly_statistics#budget"
-
-  get '/my-account' => 'users#my_account', as: 'my_account'
-  get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
 
   get '/admin' => 'admin#index', as: 'admin'
 end

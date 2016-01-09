@@ -6,6 +6,7 @@ RSpec.configure {|r| r.include MailerHelper}
 feature 'Sign up', js: true do
   context 'As a visitor' do
     it 'I can sign up for budgetal' do
+      logout(:user)
       visit root_path
       click_on 'Sign in / Sign up'
       expect(page).to have_selector 'h2', text: 'Welcome!'

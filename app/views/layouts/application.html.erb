@@ -12,19 +12,15 @@
     <%= render template: 'shared/tracking.html' if Rails.env.production? %>
   </head>
   <body>
-    <%= render template: 'shared/nav' %>
-
     <div class='flash-holder'>
       <% flash.each do |key, msg| %>
         <div class="flash-box"><%= msg %></div>
       <% end %>
     </div>
 
-    <%= yield %>
+    <div id='main'></div>
 
-    <%= react_component 'Footer' %>
-
-    <%= javascript_include_tag "application" %>
+    <script type='text/javascript' src='<%= webpack_javascript_path %>'></script>
     <% if ENV.fetch('hot', false) %>
       <script src='http://localhost:8080/assets/react_bundle.js'></script>
     <% end %>

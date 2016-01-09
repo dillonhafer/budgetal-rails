@@ -1,9 +1,17 @@
 module ApplicationHelper
+  def webpack_hash(ext)
+    build_path = File.join(Rails.root, 'public', 'assets', "*.#{ext}")
+    files      = Dir[build_path].sort_by(&File.method(:mtime))
+    asset      = Pathname.new(files.last).basename
+    "/assets/#{asset}"
+  end
+
   def webpack_stylesheet_path
-    build_path = File.join(Rails.root, 'public', 'assets', '*.css')
-    css_files  = Dir[build_path].sort_by(&File.method(:mtime))
-    stylesheet = Pathname.new(css_files.last).basename
-    "/assets/#{stylesheet}"
+    webpack_hash('css')
+  end
+
+  def webpack_javascript_path
+    webpack_hash('js')
   end
 
   def link_to_i(icon, text, path, options={})

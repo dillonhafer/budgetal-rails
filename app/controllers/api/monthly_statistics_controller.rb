@@ -1,4 +1,4 @@
-class MonthlyStatisticsController < AuthenticatedController
+class Api::MonthlyStatisticsController < AuthenticatedController
   helper_method :budget
 
   respond_to :json

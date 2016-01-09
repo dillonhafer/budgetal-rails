@@ -1,4 +1,4 @@
-class BudgetItemsController < AuthenticatedController
+class Api::BudgetItemsController < AuthenticatedController
   respond_to :html, :js, :json
   helper_method :budget_item
 

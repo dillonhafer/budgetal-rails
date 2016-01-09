@@ -1,4 +1,4 @@
-class AllocationPlansController < AuthenticatedController
+class Api::AllocationPlansController < AuthenticatedController
   before_filter :check_date, except: [:edit, :show]
   helper_method :budget, :allocation_plan
 

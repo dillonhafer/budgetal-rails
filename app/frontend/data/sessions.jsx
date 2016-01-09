@@ -1,10 +1,13 @@
-import {postRequest} from './api';
+import {postRequest, deleteRequest} from './api';
 
 export default {
   signIn(data) {
-    return postRequest('/api/sessions/sign-in', data);
+    return postRequest('/sessions/sign-in', data);
   },
   signUp(data) {
-    return postRequest('/api/sessions/sign-up', data);
+    return postRequest('/sessions/sign-up', data);
+  },
+  signOut() {
+    return deleteRequest('/sessions/sign-out');
   }
 }

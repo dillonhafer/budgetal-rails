@@ -1,4 +1,4 @@
-class BudgetsController < AuthenticatedController
+class Api::BudgetsController < AuthenticatedController
   helper_method :budget, :updated_budget
   respond_to :json, only: %w{show update}
 

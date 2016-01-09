@@ -1,4 +1,4 @@
-class AdminController < AuthenticatedController
+class Api::AdminController < AuthenticatedController
   before_filter :require_admin!
   helper_method :users
 

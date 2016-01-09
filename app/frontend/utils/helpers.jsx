@@ -5,6 +5,11 @@ export default {
     document.title = `${string} | Budgetal`;
   },
 
+  userAuthenticated() {
+    var cookie = module.exports.getCookie('signed_in');
+    return cookie == 'true';
+  },
+
   remainingClass(number) {
     if (_.lt(number, 0.00)) {
       return 'alert-color';
@@ -73,6 +78,17 @@ export default {
     return _.map(months, (month, index) => {
       return (<option key={index} value={month}>{module.exports.monthName(month)}</option>);
     });
+  },
+
+  getCookie(name) {
+    var name = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
   }
 }
 

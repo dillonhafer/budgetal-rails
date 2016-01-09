@@ -17,6 +17,7 @@ export default class Home extends React.Component {
               <div className=''> <img src={showcase} /> </div>
           </div>
           <div className='large-4 medium-4 columns'>
+            <div className='spacer'></div>
             <h1>Budgetal.com</h1>
             <p>Take control of your life now and prepare for your future. Get started today with our awesome, easy-to-use budgeting software. All for free!</p>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import logo from '../../assets/images/logo.png';
 
 export default class Footer extends React.Component {
@@ -11,8 +12,8 @@ export default class Footer extends React.Component {
       <div className="footer">
         <div className="row">
           <div className="medium-8 medium-8 pull-4 columns">
-            <a href="/" className="budgetal-logo"><img src={logo} alt='Budgetal' /></a>
-            <p className="copyright">© 2013–{(new Date).getFullYear()} Budgetal.com. All rights reserved. <a href='/privacy' title='Privacy'>Privacy</a></p>
+            <Link to="/" className="budgetal-logo"><img src={logo} alt='Budgetal' /></Link>
+            <p className="copyright">© 2013–{(new Date).getFullYear()} Budgetal.com. All rights reserved. <Link to='/privacy'>Privacy</Link></p>
           </div>
           <div className="medium-4 medium-4 push-8 columns">
             <ul className="social-icons">
