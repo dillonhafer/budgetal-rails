@@ -101,6 +101,22 @@ For continuous integration mode with JS tests run
 npm test -- --no-single-run
 ```
 
+### Deployment
+
+If you plan on using the included deploy tasks please make sure you have `mina` and `mina-hooks` gems installed on your system.
+
+A full deploy would look like this:
+
+```
+$ gem install mina
+$ gem install mina-hooks
+$ mina setup
+$ mina deploy
+```
+
+TODO:
+ - [ ] Add deployment config env variables
+
 ## Credits
 
 [![Budgetal](https://s3.amazonaws.com/cdn.budgetal.com/b.png)](https://www.budgetal.com)
