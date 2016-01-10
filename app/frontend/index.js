@@ -17,6 +17,7 @@ import Footer from './components/layout/footer';
 import Nav from './components/layout/nav';
 import Home from './components/home/home';
 import Privacy from './components/home/privacy';
+import Admin from './components/admin/admin';
 
 document.addEventListener('DOMContentLoaded', function() {
   var box = document.querySelector('.flash-box');
@@ -64,6 +65,7 @@ render((
       <Route path='allocation-plans/:year/:month' component={AllocationPlans} />
       <Route path='annual-budgets/:year' component={AnnualBudgetItems} />
       <Route path='monthly-statistics/:year/:month' component={Statistics} />
+      <Route path='admin' component={Admin} />
     </Route>
   </Router>
 ), document.getElementById('main'))

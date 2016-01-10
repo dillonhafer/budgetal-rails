@@ -2,12 +2,12 @@ Budgets::Application.routes.draw do
   root to: 'welcome#index'
 
   get '/signed-in' => 'welcome#signed_in'
-
   get '/privacy' => 'welcome#index'
   get '/cash-flow-plans/:year/:month' => 'welcome#index'
   get '/allocation-plans/:year/:month' => 'welcome#index'
   get '/annual-budgets/:year' => 'welcome#index'
   get '/monthly-statistics/:year/:month' => 'welcome#index'
+  get '/admin' => 'welcome#index'
 
   devise_for :users,
              path: 'sessions',
@@ -49,7 +49,7 @@ Budgets::Application.routes.draw do
 
     get '/my-account' => 'users#my_account', as: 'my_account'
     get '/past-expenses/:name' => 'users#past_expenses', as: 'past_expenses'
-  end
 
-  get '/admin' => 'admin#index', as: 'admin'
+    get '/admin/users' => 'admin#users'
+  end
 end
