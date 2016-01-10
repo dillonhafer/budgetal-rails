@@ -24,12 +24,11 @@ end
 # `mina deploy` or `mina rake`.
 task :environment do
   invoke :'rvm:use[ruby-2.2.1@budgetal]'
-  invoke :'frontend:load_nvm'
 end
 
 # Run `mina setup` to create these paths on your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache', 'node_modules']
+set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache', 'public/assets']
 
 set :user, 'deployer'
 set :keep_releases, 4
@@ -53,8 +52,8 @@ task setup: :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/tmp/cache"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/cache"]
 
-  queue! %[mkdir -p "#{deploy_to}/shared/node_modules"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/node_modules"]
+  queue! %[mkdir -p "#{deploy_to}/shared/public/assets"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/assets"]
 end
 
 desc 'Make sure local git is in sync with remote.'
@@ -75,10 +74,10 @@ task deploy: :environment do
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'frontend:build'
-    invoke :'rails:assets_precompile'
 
     to :launch do
       invoke :'passenger:restart'
+      invoke :'frontend:sync'
     end
 
     invoke :'deploy:cleanup'
@@ -86,45 +85,36 @@ task deploy: :environment do
 end
 
 namespace :frontend do
-  desc 'Load NVM and node 4.1.1'
-  task :load_nvm do
-    queue! %[source ~/.nvm/nvm.sh && nvm use 4.1.1]
-  end
-
-  desc "Install npm dependencies"
-  task :install do
-    queue check_for_changes_script \
-        check: 'package.json',
-        at: ['package.json'],
-        skip: %[echo "-----> Skipping npm installation"],
-        changed: %[
-          echo "-----> #{message}"
-          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm install]}
-        ],
-        default: %[
-          echo "-----> Installing npm modules"
-          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm install]}
-        ]
+  desc "Synchronize new assets"
+  task :sync do
+    if check_for_local_changes('app/frontend')
+      puts "\e[32m----->\e[0m Synchronizing assets"
+      `rsync -r --exclude main.css --exclude main.js public/assets/ #{user}@#{domain}:#{deploy_to}/shared/public/assets/`
+      `rm -f public/assets/main-* public/assets/manifest`
+    else
+      puts "\e[32m----->\e[0m Skipping asset synchronizing"
+    end
   end
 
   desc "Compile Webpack assets"
-  task build: :install do
-    queue check_for_changes_script \
-        check: 'app/frontend',
-        at: ['app/frontend'],
-        skip: %[
-          echo "-----> Skipping webpack build; using previous one"
-          #{echo_cmd %[cp ../../current/app/assets/javascripts/react_bundle.js app/assets/javascripts/]}
-        ],
-        changed: %[
-          echo "-----> Building react assets"
-          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm run build]}
-        ],
-        default: %[
-          echo "-----> Building react assets"
-          #{echo_cmd %[NODE_ENV=#{ENV['to']} npm run build]}
-        ]
+  task :build do
+    if check_for_local_changes('app/frontend')
+      puts "\e[32m----->\e[0m Building assets"
+      sha = Digest::SHA1.hexdigest(Time.now.to_s)
+      `NODE_ENV=#{ENV['to']} npm run build`
+      `mv public/assets/main-{replace-with-hash,#{sha}}.js`
+      `mv public/assets/main-{replace-with-hash,#{sha}}.css`
+      `echo #{sha} > public/assets/manifest`
+    else
+      puts "\e[32m----->\e[0m Skipping asset building"
+    end
   end
+end
+
+def check_for_local_changes(path)
+  current_sha = `ssh #{user}@#{domain} 'cd #{deploy_to}/scm && git rev-parse HEAD'`
+  diffs = `git diff --name-only HEAD #{current_sha}`.split("\n")
+  diffs.map {|s| s.include?(path)}.any?
 end
 
 namespace :logs do
