@@ -23,7 +23,7 @@ end
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
 task :environment do
-  invoke :'rvm:use[ruby-2.2.1@budgetal]'
+  invoke :'rvm:use[ruby-2.3.0@budgetal]'
 end
 
 # Run `mina setup` to create these paths on your server.
