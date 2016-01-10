@@ -149,8 +149,7 @@ namespace :passenger do
   task :restart do
     queue %{
       echo "-----> Restarting passenger"
-      #{echo_cmd %[mkdir -p tmp]}
-      #{echo_cmd %[touch tmp/restart.txt]}
+      #{echo_cmd %[passenger-config restart-app #{deploy_to}]}
     }
   end
 end
