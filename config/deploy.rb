@@ -4,6 +4,7 @@ require 'mina/git'
 require 'mina/rvm'
 
 set :repository, 'ssh://git@github.com/dillonhafer/budgetal.git'
+set :git_revision_file, 'REVISION'
 
 case ENV['to']
 when 'beta'
