@@ -2,6 +2,7 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
+require 'mina/hooks'
 
 set :repository, 'ssh://git@github.com/dillonhafer/budgetal.git'
 
@@ -66,21 +67,24 @@ end
 
 desc "Deploys the App."
 task deploy: :environment do
+  before_mina :'frontend:build'
+
   deploy do
     invoke :'check_revision'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'frontend:build'
 
     to :launch do
       invoke :'passenger:restart'
-      invoke :'frontend:sync'
     end
 
-    invoke :'deploy:cleanup'
+    to :clean do
+      invoke :'deploy:cleanup'
+    end
   end
+  after_mina :'frontend:sync'
 end
 
 namespace :frontend do
