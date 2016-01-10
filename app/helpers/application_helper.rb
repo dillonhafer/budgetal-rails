@@ -8,8 +8,4 @@ module ApplicationHelper
       '/assets/main'
     end
   end
-
-  def link_to_i(icon, text, path, options={})
-    link_to("<i class='fi-icon fi-#{icon}'></i> #{text}".html_safe, path, options)
-  end
 end
