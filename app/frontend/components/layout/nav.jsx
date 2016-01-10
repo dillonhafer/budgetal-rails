@@ -48,7 +48,7 @@ export default class Nav extends React.Component {
               <li><Link to={`/allocation-plans/${year}/${month}`}>{this.icon('clipboard-pencil')} Allocated Spending Plans</Link></li>
               <li><Link to={`/annual-budgets/${year}`}>{this.icon('calendar')} Annual Budgets</Link></li>
               <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('graph-pie')} Statistics (for geeks)</Link></li>
-              <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('widget')} My Account</Link></li>
+              <li><a href='/sessions/sign-up/edit'>{this.icon('widget')} My Account</a></li>
               {this.adminLink(user.admin)}
             </ul>
           </li>
