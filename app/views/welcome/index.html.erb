@@ -3,7 +3,7 @@
     <title>Budgetal</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" media="screen" href='<%= webpack_stylesheet_path %>'>
+    <link rel="stylesheet" media="screen" href='<%= webpack_filename %>.css'>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
     <meta name="description" content="With Budgetal.com's website you can stayed smart and organized to win with money." />
     <meta name="keywords" content="budget budgets budgetal money finance success cash plan win" />
@@ -20,7 +20,7 @@
 
     <div id='main'></div>
 
-    <script type='text/javascript' src='<%= webpack_javascript_path %>'></script>
+    <script type='text/javascript' src='<%= webpack_filename %>.js'></script>
     <% if ENV.fetch('hot', false) %>
       <script src='http://localhost:8080/assets/react_bundle.js'></script>
     <% end %>
