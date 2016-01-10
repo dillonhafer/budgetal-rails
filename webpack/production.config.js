@@ -7,6 +7,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var config = _.merge({}, baseConfig, {
   cache: false,
+  output: {
+    path: __dirname + '/../public/assets',
+    filename: 'main-replace-with-hash.js'
+  },
   plugins: [
     new webpack.NoErrorsPlugin(),
     new CleanPlugin(['build']),
@@ -21,7 +25,7 @@ var config = _.merge({}, baseConfig, {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new ExtractTextPlugin('../../../public/assets/[name]-[hash].css', {
+    new ExtractTextPlugin('../../public/assets/main-replace-with-hash.css', {
       allChunks: true
     })
   ],

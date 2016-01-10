@@ -19,6 +19,7 @@
     </div>
 
     <div id='main'></div>
+    <%= yield %>
 
     <script type='text/javascript' src='<%= webpack_filename %>.js'></script>
     <% if ENV.fetch('hot', false) %>

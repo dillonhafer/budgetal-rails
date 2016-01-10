@@ -1,8 +1,9 @@
 require 'rails_helper'
-include Warden::Test::Helpers
-Warden.test_mode!
 
 module FeatureHelper
+  include Warden::Test::Helpers
+  Warden.test_mode!
+
   def login(user = FactoryGirl.create(:user))
     login_as user, scope: :user
     user

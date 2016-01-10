@@ -172,7 +172,7 @@ export default class CashFlowPlans extends React.Component {
       hide: !this.state.showForm
     });
     return (
-      <div>
+      <div className='row collapse'>
         <div className='large-12 columns header-row'>
           <h3>
             Annual Budget for {this.state.budget.year}

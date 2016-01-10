@@ -2,20 +2,16 @@ require 'rails_helper'
 require 'support/feature_helper'
 
 feature 'Allocation Plans', js: true do
-  before(:each) do
-    @user = login_with
-    visit root_path
-    click_on "Hello, #{@user.first_name}!"
-    click_on 'Allocated Spending Plans'
-  end
-
   context 'As a logged in user' do
     context 'Without any allocation plans' do
-      it 'I see that I have no pay periods' do
-        expect(page).to have_content("You haven't added any pay periods yet.")
-      end
-
       it 'I can add/update a pay period' do
+        user = login_with
+        visit root_path
+        click_on "Hello, #{user.first_name}!"
+        click_on 'Allocated Spending Plans'
+
+        # I see that I have no pay periods
+        expect(page).to have_content("You haven't added any pay periods yet.")
         click_on 'New Pay Period'
         fill_in 'Pay Period Income', with: '300'
 

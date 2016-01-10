@@ -9,7 +9,19 @@ module.exports = function (config) {
     preprocessors: {
       'webpack/tests.config.js': ['webpack', 'sourcemap']
     },
-    reporters: ['dots'],
+    reporters: ['super-dots'],
+    superDotsReporter: {
+      icon: {
+        success : '.',
+        failure : 'F',
+        ignore  : '-'
+      },
+      color: {
+        success : 'blue',
+        failure : 'red',
+        ignore  : 'yellow'
+      }
+    },
     webpack: {
       module: {
         loaders: [

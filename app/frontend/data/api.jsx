@@ -1,5 +1,6 @@
 export default {
   getRequest(path) {
+    var path = `/api${path}`;
     return fetch(path, {
       method: 'GET',
       credentials: 'include',
@@ -23,6 +24,7 @@ export default {
 }
 
 function nonGetRequest(method, path, body) {
+  var path = `/api${path}`;
   let meta = document.querySelector('meta[name="csrf-token"]')
   let csrfToken = meta ? meta.content : '';
   return fetch(path, {

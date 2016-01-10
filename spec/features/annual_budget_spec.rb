@@ -1,60 +1,47 @@
 require 'rails_helper'
 require 'support/feature_helper'
 
-feature 'Annual Budgets', js: true do
-  before(:each) do
-    @user = login_with
-    visit annual_budgets_path(year: Date.today.year)
-  end
-
+feature 'Annual Budgets', :js do
   context 'As a logged in user' do
     context 'Without any annual budgets' do
-      it 'I see that I have no budget items' do
+      it 'I can add/edit/delete a budget item' do
+        login_with
+        visit root_path
+        find('[title="this is you!"]').click
+        click_link "Annual Budgets"
+
+        # I have no budget items
         expect(page).to have_content("You haven't added any budget items yet.")
-      end
 
-      it 'I can add a budget item' do
+        # Add the item
         click_on 'Add an Item'
-        fill_in 'name', with: 'Insurrance'
-        fill_in 'amount', with: '300'
-        find('fieldset').click
-        within('.input-calendar-wrapper') do
-          expect(page).to have_selector '.day.today.cell'
-          find('.day.today.cell').click()
-        end
-        click_on 'Save'
-        visit annual_budgets_path(year: Date.today.year)
+        edit_form_with(name: 'Insurrance', amount: '300')
+        expect(page).to have_content("Saved Insurrance")
         expect(page).to have_content("Insurrance")
-      end
-    end
 
-    context 'With an annual budget' do
-      before(:each) do
-        visit annual_budgets_path(year: Date.today.year)
-        @item = FactoryGirl.create(:annual_budget_item, annual_budget: @user.annual_budgets.first)
-        visit annual_budgets_path(year: Date.today.year)
-      end
-
-      it 'can update the item' do
-        fill_in 'name', with: 'Gas'
-        fill_in 'amount', with: '600'
-        find('fieldset').click
-        within('.input-calendar-wrapper') do
-          expect(page).to have_selector '.day.today.cell'
-          find('.day.today.cell').click()
-        end
-        click_on 'Save'
-        visit annual_budgets_path(year: Date.today.year)
+        # Edit the item
+        edit_form_with(name: 'Gas', amount: '600')
+        expect(page).to have_content("Saved Gas")
         expect(page).to have_content("Gas")
-        expect(page).not_to have_content(@item.name)
-      end
+        expect(page).not_to have_content("Insurrance")
 
-      it 'can delete the item' do
-        expect(page).to have_content(@item.name)
+        # Delete the item
         click_link 'Delete'
-        click_link "Delete #{@item.name}"
+        click_link "Delete Gas"
+        expect(page).to have_content("Deleted Gas")
         expect(page).to have_content("You haven't added any budget items yet.")
       end
     end
   end
+end
+
+def edit_form_with(name:,amount:)
+  fill_in 'name', with: name
+  fill_in 'amount', with: amount
+  find('fieldset').click
+  within('.input-calendar-wrapper') do
+    expect(page).to have_selector '.day.today.cell'
+    find('.day.today.cell').click()
+  end
+  click_on 'Save'
 end

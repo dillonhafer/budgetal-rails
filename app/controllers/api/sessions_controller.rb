@@ -16,7 +16,6 @@ class Api::SessionsController < Api::ApiController
 
     if resource.valid_password?(params[:user][:password])
       sign_in("user", resource)
-      set_signed_in
       render json: {
         success: true,
         email: resource.email
@@ -28,19 +27,10 @@ class Api::SessionsController < Api::ApiController
 
   def destroy
     sign_out(current_user)
-    remove_sign_in_cookie
-    head :no_content
+    render json: {success: true, message: 'You are now signed out.'}
   end
 
   protected
-
-  def remove_sign_in_cookie
-    cookies.delete :signed_in
-  end
-
-  def set_signed_in
-    cookies[:signed_in] = true
-  end
 
   def set_csrf_header
     response.headers['X-CSRF-Token'] = form_authenticity_token

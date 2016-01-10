@@ -57,7 +57,7 @@ Devise.setup do |config|
   # :token         = Support basic authentication with token authentication key
   # :token_options = Support token authentication with options as defined in
   #                  http://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Token.html
-  config.http_authenticatable = true
+  config.http_authenticatable = false
 
   # If http headers should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -247,4 +247,14 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = "/my_engine/users/auth"
+end
+
+Warden::Manager.after_set_user do |user, auth, opts|
+  auth.cookies[:signed_in] = true
+  auth.cookies[:current_user] = {admin: user.admin?, first_name: user.first_name}.to_json
+end
+
+Warden::Manager.before_logout do |user, auth, opts|
+  auth.cookies.delete :signed_in
+  auth.cookies.delete :current_user
 end
