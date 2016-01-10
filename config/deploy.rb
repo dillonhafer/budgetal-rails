@@ -4,7 +4,7 @@ require 'mina/git'
 require 'mina/rvm'
 require 'mina/hooks'
 
-set :repository, 'ssh://git@github.com/dillonhafer/budgetal.git'
+set :repository, 'https://github.com/dillonhafer/budgetal.git'
 
 case ENV['to']
 when 'beta'
