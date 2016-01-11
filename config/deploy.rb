@@ -90,7 +90,7 @@ end
 namespace :frontend do
   desc "Synchronize new assets"
   task :sync do
-    if check_for_local_changes('app/frontend')
+    if !Dir.glob('public/assets/main-*').empty?
       puts "\e[32m----->\e[0m Synchronizing assets"
       `rsync -r --exclude main.css --exclude main.js public/assets/ #{user}@#{domain}:#{deploy_to}/shared/public/assets/`
       `rm -f public/assets/main-* public/assets/manifest`
@@ -99,8 +99,14 @@ namespace :frontend do
     end
   end
 
+  desc "Make sure no existing assets exist"
+  task :clean do
+    `rm -f public/assets/manifest`
+    `rm -f public/assets/main-*`
+  end
+
   desc "Compile Webpack assets"
-  task :build do
+  task build: :clean do
     if check_for_local_changes('app/frontend')
       puts "\e[32m----->\e[0m Building assets"
       sha = Digest::SHA1.hexdigest(Time.now.to_s)
