@@ -12,11 +12,7 @@ export default class Footer extends React.Component {
   }
 
   showForm = () => {
-    if (window.location.pathname == '/sessions/sign-in') {
-      showMessage('Really?')
-    } else {
-      this.setState({hide: false});
-    }
+    this.setState({hide: false});
   }
 
   hideForm = () => {
