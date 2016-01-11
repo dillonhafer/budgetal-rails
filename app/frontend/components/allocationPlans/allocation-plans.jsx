@@ -17,8 +17,8 @@ export default class AllocationPlans extends React.Component {
   state = {
     showPlanForm: false,
     budget: {
-      month: this.urlParams().month,
-      year: this.urlParams().year,
+      month: parseInt(this.props.params.month),
+      year: parseInt(this.props.params.year),
       allocation_plans: [
       ]
     },
@@ -83,13 +83,6 @@ export default class AllocationPlans extends React.Component {
     this.setState({modal: {hidden: true, index: -1, item: {name: ''}, delete: function(){}}});
   }
 
-  urlParams() {
-    var pathNames  = window.location.pathname.split('/');
-    var yearIndex  = pathNames.length - 2;
-    var monthIndex = pathNames.length - 1;
-    return {month: parseInt(pathNames[monthIndex]), year: parseInt(pathNames[yearIndex])};
-  }
-
   incrementMonth(date, number) {
     var year     = date.getFullYear();
     var month    = date.getMonth();
@@ -116,7 +109,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   componentDidMount = () => {
-    this._fetchBudget(this.urlParams());
+    this._fetchBudget(this.props.params);
   }
 
   _fetchDataDone = (data) => {
@@ -456,7 +449,7 @@ export default class AllocationPlans extends React.Component {
     e.preventDefault();
     var self = this;
     var allocation_plan = this.state.modalPlan;
-    var dateParams = this.urlParams();
+    var dateParams = this.props.params;
 
     if (allocation_plan.id) {
       var data = {allocation_plan, id: allocation_plan.id};
