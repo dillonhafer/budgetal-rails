@@ -13,6 +13,10 @@ export default class Sessions extends React.Component {
     signUp: false,
   }
 
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
   showOptions = (e) => {
     e.preventDefault();
     this.setState({
@@ -37,7 +41,7 @@ export default class Sessions extends React.Component {
     });
   }
 
-  signIn(e) {
+  signIn = (e) => {
     e.preventDefault();
     let email       = e.target.querySelector('#loginEmail').value;
     let password    = e.target.querySelector('#loginPassword').value;
@@ -45,7 +49,7 @@ export default class Sessions extends React.Component {
     let data = {user: {email, password, remember_me}}
 
     signIn(data)
-      .done((json) => { window.location = '/'; })
+      .done((json) => { this.context.history.replace('/'); })
       .fail((json) => { showMessage(json.responseJSON.message); })
   }
 

@@ -19,6 +19,10 @@ export default class SignIn extends React.Component {
     }
   }
 
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
   togglePassword = () => {
     let showPassword = !this.state.showPassword;
     this.setState({showPassword})
@@ -36,7 +40,8 @@ export default class SignIn extends React.Component {
           self.setState({newUser});
           showMessage('Oh no! Sign up failed');
         } else {
-          window.location = '/';
+          showMessage('Welcome to Budgetal!');
+          this.context.history.replace('/');
         }
       })
   }
