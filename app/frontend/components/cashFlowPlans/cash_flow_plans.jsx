@@ -20,8 +20,8 @@ export default class CashFlowPlans extends React.Component {
   state = {
     showForm: false,
     budget: {
-      month: (new Date).getMonth() + 1,
-      year: (new Date).getFullYear(),
+      month: this.props.params.month,
+      year: this.props.params.year,
       budget_categories: [
         {name: 'Charity', id: 0},
         {name: 'Saving'},
@@ -87,13 +87,6 @@ export default class CashFlowPlans extends React.Component {
     this.setState({modal: {hidden: true, index: -1, item: {name: ''}, delete: function(){}}});
   }
 
-  urlParams() {
-    var pathNames  = window.location.pathname.split('/');
-    var yearIndex  = pathNames.length - 2;
-    var monthIndex = pathNames.length - 1;
-    return {month: pathNames[monthIndex], year: pathNames[yearIndex]};
-  }
-
   incrementMonth(date, number) {
     var year     = date.getFullYear();
     var month    = date.getMonth();
@@ -120,7 +113,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   componentDidMount = () => {
-    let budgetParams = Object.assign({}, this.urlParams(), {id: this.props.id});
+    let budgetParams = Object.assign({}, this.props.params, {id: this.props.id});
     this._fetchBudget(budgetParams);
   }
 
