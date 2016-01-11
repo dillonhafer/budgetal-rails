@@ -12,14 +12,8 @@
     <%= render template: 'welcome/tracking.html' if Rails.env.production? %>
   </head>
   <body>
-    <div class='flash-holder'>
-      <% flash.each do |key, msg| %>
-        <div class="flash-box"><%= msg %></div>
-      <% end %>
-    </div>
-
+    <div class='flash-holder'></div>
     <div id='main'></div>
-
     <script type='text/javascript' src='<%= webpack_filename %>.js'></script>
     <% if ENV.fetch('hot', false) %>
       <script src='http://localhost:8080/assets/react_bundle.js'></script>

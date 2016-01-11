@@ -11,12 +11,16 @@ export default class SignIn extends React.Component {
     showPassword: false
   }
 
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
   togglePassword = () => {
     let showPassword = !this.state.showPassword;
     this.setState({showPassword})
   }
 
-  signIn(e) {
+  signIn = (e) => {
     e.preventDefault();
     let email       = e.target.querySelector('#loginEmail').value;
     let password    = e.target.querySelector('#loginPassword').value;
@@ -26,7 +30,8 @@ export default class SignIn extends React.Component {
     signIn(data)
       .then((resp) => {
         if (resp.success) {
-          window.location = '/signed-in';
+          showMessage('You are now signed in');
+          this.context.history.replace('/');
         } else {
           showMessage(resp.message)
         }
