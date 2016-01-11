@@ -26,8 +26,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   componentDidMount() {
-    let year = this.yearParam();
-    this._fetchBudget(year);
+    this._fetchBudget(this.props.params.year);
   }
 
   confirmDelete = (budget_item, index) => {
@@ -126,12 +125,6 @@ export default class CashFlowPlans extends React.Component {
       var msg = errors[idx]
       showMessage(msg)
     }
-  }
-
-  yearParam() {
-    var pathNames = window.location.pathname.split('/')
-    var yearIndex = pathNames.length - 1
-    return pathNames[yearIndex]
   }
 
   changeYear = () => {
