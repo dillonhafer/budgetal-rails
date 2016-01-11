@@ -58,13 +58,6 @@ export default {
     return dollarSign + number.replace(group3Regex, '$1,');
   },
 
-  urlParams() {
-    var pathNames  = window.location.pathname.split('/');
-    var yearIndex  = pathNames.length - 2;
-    var monthIndex = pathNames.length - 1;
-    return {month: pathNames[monthIndex], year: pathNames[yearIndex]};
-  },
-
   yearOptions() {
     let maxYear = (new Date).getFullYear() + 3;
     let years = _.range(2015, maxYear);

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import {
   monthName,
   selectedValue,
-  urlParams,
   yearOptions,
   monthOptions,
   title
@@ -19,8 +18,8 @@ export default class Statistics extends React.Component {
   state = {
     showForm: false,
     budget: {
-      month: urlParams().month,
-      year: urlParams().year,
+      month: this.props.params.month,
+      year: this.props.params.year,
       budget_categories: []
     }
   }
@@ -64,7 +63,7 @@ export default class Statistics extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchBudget({year: urlParams().year, month: urlParams().month})
+    this._fetchBudget(this.props.params);
   }
 
   _fetchDataDone = (budget) => {
@@ -120,9 +119,8 @@ export default class Statistics extends React.Component {
   }
 
   title() {
-    var date = urlParams();
-    var month = monthName(date.month);
-    return `${month} ${date.year}`
+    var month = monthName(this.props.params.month);
+    return `${month} ${this.props.params.year}`
   }
 
   render() {
