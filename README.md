@@ -121,7 +121,7 @@ TODO:
 
 [![Budgetal](https://s3.amazonaws.com/cdn.budgetal.com/b.png)](https://www.budgetal.com)
 
-Budgetal is maintained by [Dillon Hafer](http://www.dillonhafer.com). Special thanks to (Mike Chau)[https://github.com/mikechau] for his support and inspiration for making react/webpack possible on this project.
+Budgetal is maintained by [Dillon Hafer](http://www.dillonhafer.com). Special thanks to [Mike Chau](https://github.com/mikechau) for his support and inspiration for making react/webpack possible on this project.
 
 ## License
 
