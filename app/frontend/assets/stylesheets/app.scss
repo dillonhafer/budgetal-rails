@@ -281,7 +281,10 @@ fieldset[disabled] {
   opacity: 0;
 }
 
-.spacer {
-  display: block;
-  padding-top: 130px;
+.home-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+#main-content { padding-top: 2.75rem; }

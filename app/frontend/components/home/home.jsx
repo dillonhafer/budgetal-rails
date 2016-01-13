@@ -12,38 +12,24 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
-        <div className='row'>
+        <div className='row home-intro'>
           <div className='large-8 medium-8 columns'>
-              <div className=''> <img src={showcase} /> </div>
+            <div><img src={showcase} /></div>
           </div>
           <div className='large-4 medium-4 columns'>
-            <div className='spacer'></div>
-            <h1>Budgetal.com</h1>
-            <p>Take control of your life now and prepare for your future. Get started today with our awesome, easy-to-use budgeting software. All for free!</p>
+            <h1>Budgetal</h1>
+            <p>Take control of your finances and prepare for your future. Get started today with our easy-to-use, zero-sum budgeting software. All for free!</p>
           </div>
         </div>
         <section className='start-today'>
           <div className="row collapse">
-            <div className="large-8 columns text-center">
-              <h4>Start planning a budget and take control!</h4>
-            </div>
-            <div className="large-4 columns">
-              <a data-reveal-id="signInUp" className='button radius secondary expand' title="Join Now">Join Now</a>
+            <div className="large-12 columns text-center">
+              <h4>Budgetal gives you the tools to change your life.</h4>
             </div>
           </div>
         </section>
 
         <section id="main-content">
-          <div className="row centered-text">
-            <div className="large-12 columns">
-              <br />
-              <br />
-              <h2 className='text-center'>Budgetal gives You tools.</h2>
-              <h4 className="subheader text-center">You change your life.</h4>
-              <br />
-              <br />
-            </div>
-          </div>
           <div className="row centered-text marketing-row">
             <div className="medium-4 large-4 columns">
               <div className='text-center'>
