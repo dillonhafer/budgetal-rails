@@ -23,6 +23,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -310,6 +324,22 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: sessions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE sessions (
+    authentication_key uuid DEFAULT gen_random_uuid() NOT NULL,
+    authentication_token character varying NOT NULL,
+    user_id integer NOT NULL,
+    ip character varying NOT NULL,
+    user_agent character varying NOT NULL,
+    expired_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -484,11 +514,34 @@ ALTER TABLE ONLY budgets
 
 
 --
+-- Name: index_budgets_on_user_id_and_year_and_month; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY budgets
+    ADD CONSTRAINT index_budgets_on_user_id_and_year_and_month UNIQUE (user_id, year, month);
+
+
+--
+-- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY sessions
+    ADD CONSTRAINT sessions_pkey PRIMARY KEY (authentication_key);
+
+
+--
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: active_sessions_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX active_sessions_idx ON sessions USING btree (authentication_key) WHERE (expired_at IS NULL);
 
 
 --
@@ -569,6 +622,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 
 --
+-- Name: sessions_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX sessions_user_id_idx ON sessions USING btree (user_id);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -640,6 +700,14 @@ ALTER TABLE ONLY budget_item_expenses
 
 
 --
+-- Name: sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY sessions
+    ADD CONSTRAINT sessions_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
 -- Name: user_foreign_key; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -686,4 +754,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150222235043');
 INSERT INTO schema_migrations (version) VALUES ('20151010144448');
 
 INSERT INTO schema_migrations (version) VALUES ('20151221065100');
+
+INSERT INTO schema_migrations (version) VALUES ('20160113144631');
 
