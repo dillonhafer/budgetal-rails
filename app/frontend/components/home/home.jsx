@@ -24,7 +24,7 @@ export default class Home extends React.Component {
         <section className='start-today'>
           <div className="row collapse">
             <div className="large-12 columns text-center">
-              <h4>Budgetal gives you the tools to change your life.</h4>
+              <h4>Budgetal gives you tools to help</h4>
             </div>
           </div>
         </section>
