@@ -60,9 +60,9 @@ export default class Home extends React.Component {
             <div className="medium-4 large-4 columns">
               <div className='text-center'>
                  <img src={debts} />
-                <h4>Embrace Freedom</h4>
+                <h4>Enjoy your Freedom</h4>
               </div>
-              <p className='text-center'>Get out of debt.</p>
+              <p className='text-center'>Erase debt.</p>
               <p>
                 The fastest way to build wealth is to be debt free.
                 Having no debts means you have no payments. No
