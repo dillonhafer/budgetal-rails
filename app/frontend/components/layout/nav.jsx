@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import {signOut} from '../../data/sessions';
-import {userAuthenticated, getCookie} from '../../utils/helpers';
+import {userAuthenticated} from '../../utils/helpers';
 import logo from '../../assets/images/logo.png';
 import SignInLink from '../sessions/sign-in-link';
 
@@ -18,6 +18,8 @@ export default class Nav extends React.Component {
     e.preventDefault();
     var self = this;
     signOut().then((resp) => {
+      localStorage.removeItem('session');
+      localStorage.removeItem('user');
       showMessage(resp.message);
       self.context.history.replace('/');
     });
@@ -39,7 +41,7 @@ export default class Nav extends React.Component {
     if (signedIn) {
       var year  = (new Date).getFullYear();
       var month = (new Date).getMonth()+1;
-      var user = JSON.parse(decodeURIComponent(getCookie('current_user')));
+      var user = JSON.parse(localStorage['user'])
       return (
         <ul className="right">
           <li className="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'>Hello, {user.first_name}!</a>

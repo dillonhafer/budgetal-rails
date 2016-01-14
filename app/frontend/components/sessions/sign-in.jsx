@@ -30,6 +30,8 @@ export default class SignIn extends React.Component {
     signIn(data)
       .then((resp) => {
         if (resp.success) {
+          localStorage.setItem('session', JSON.stringify(resp.session));
+          localStorage.setItem('user', JSON.stringify(resp.user));
           showMessage('You are now signed in');
           this.context.history.replace('/');
         } else {

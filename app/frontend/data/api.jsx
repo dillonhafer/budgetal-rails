@@ -1,12 +1,14 @@
 export default {
   getRequest(path) {
+    var session = findSession();
     var path = `/api${path}`;
     return fetch(path, {
       method: 'GET',
-      credentials: 'include',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'AUTHENTICATION_TOKEN': session.authentication_token,
+        'AUTHENTICATION_KEY': session.authentication_key
       }}).then((r) => r.json());
   },
   postRequest(path, body={}) {
@@ -23,17 +25,24 @@ export default {
   }
 }
 
+function findSession() {
+  var defaultSession = JSON.stringify({
+    authentication_token: '',
+    authentication_key: ''
+  });
+  return JSON.parse(localStorage['session'] || defaultSession);
+}
+
 function nonGetRequest(method, path, body) {
   var path = `/api${path}`;
-  let meta = document.querySelector('meta[name="csrf-token"]')
-  let csrfToken = meta ? meta.content : '';
+  var session = findSession();
   return fetch(path, {
     method: method,
-    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-CSRF-Token': csrfToken
+      'AUTHENTICATION_TOKEN': session.authentication_token,
+      'AUTHENTICATION_KEY': session.authentication_key
     },
     body: JSON.stringify(body)
   }).then((r) => r.json());

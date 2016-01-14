@@ -43,7 +43,7 @@ module Budgets
     config.active_record.schema_format = :sql
 
     # Enable the asset pipeline
-    config.assets.enabled = true
+    config.assets.enabled = false
 
     config.before_configuration do
       env_file = File.join(Rails.root, '.env')

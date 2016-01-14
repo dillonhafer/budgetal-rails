@@ -6,7 +6,7 @@ RSpec.configure {|r| r.include MailerHelper}
 feature 'Sign up', js: true do
   context 'As a visitor' do
     it 'I can sign up for budgetal' do
-      logout(:user)
+      sign_out
       visit root_path
       click_on 'Sign in / Sign up'
       expect(page).to have_selector 'h2', text: 'Welcome!'
@@ -31,4 +31,9 @@ def user
     last_name: Faker::Name.last_name,
     password: 'Password1'
   }
+end
+
+def sign_out
+  visit '/'
+  page.execute_script "localStorage.clear()"
 end
