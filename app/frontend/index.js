@@ -4,6 +4,7 @@ window.React = React;
 window.ReactDOM = ReactDOM;
 
 import {showMessage} from './utils/flash-box';
+import {userAuthenticated} from './utils/helpers';
 window.showMessage = showMessage;
 
 import './assets/stylesheets/app';

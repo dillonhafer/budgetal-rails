@@ -40,6 +40,8 @@ export default class SignIn extends React.Component {
           self.setState({newUser});
           showMessage('Oh no! Sign up failed');
         } else {
+          localStorage.setItem('session', JSON.stringify(resp.session));
+          localStorage.setItem('user', JSON.stringify(resp.user));
           showMessage('Welcome to Budgetal!');
           this.context.history.replace('/');
         }
