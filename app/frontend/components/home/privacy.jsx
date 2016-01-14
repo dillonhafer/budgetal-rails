@@ -86,25 +86,9 @@ export default class Privacy extends React.Component {
                 </div>
                 <br />
                 <div className='innerText'>
-                  Yes. Cookies are small files that a site or its service provider transfers to your computer's hard drive through your Web browser (if you allow) that enables the site's or service provider's systems to recognize your browser and capture and remember certain information. For instance, we use cookies to help us remember and process the items in your shopping cart. They are also used to help us understand your preferences based on previous or current site activity, which enables us to provide you with improved services. We also use cookies to help us compile aggregate data about site traffic and site interaction so that we can offer better site experiences and tools in the future.
+                  No.
                 </div>
-                <div className='innerText'>
-                  <br />
-                  <strong>We use cookies to:</strong>
-                </div>
-                <div className='innerText'>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Understand and save user's preferences for future visits and allow you to login to your account.
-                </div>
-                <div className='innerText'>
-                  <br />You can choose to have your computer warn you each time a cookie is being sent, or you can choose to turn off all cookies. You do this through your browser (like Internet Explorer) settings. Each browser is a little different, so look at your browser's Help menu to learn the correct way to modify your cookies.
-                  <br />
-                </div>
-                <div className='innerText'>
-              <br /><strong>If users disable cookies in their browser:</strong>
-              </div><br /><div className='innerText'>If you disable cookies off, some features will be disabled It will turn off some of the features that make your site experience more efficient and some of our services will not function properly.
-              </div><br /><div className='innerText'>However, you can still place orders <div className='innerText'>Ability to login.
-              </div>.
-              </div><br /><span id='trDi'></span><br />
+              <br /><span id='trDi'></span><br />
               <div className='grayText'>
                 <a name='third-p-disc'></a>
                 <strong data-magellan-destination="third-p-disc">Third Party Disclosure</strong>
@@ -273,7 +257,7 @@ export default class Privacy extends React.Component {
               </div>
               <div className='innerText'>privacy@budgetal.com</div>
               <div className='innerText'>
-                <br />Last Edited on 2014-09-10
+                <br />Last Edited on 2016-01-14
               </div>
               </div>
               </div>
