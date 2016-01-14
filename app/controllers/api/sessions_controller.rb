@@ -1,24 +1,32 @@
-class Api::SessionsController < Api::ApiController
-  prepend_before_filter :require_no_authentication, only: [:create]
-  skip_before_filter :verify_signed_out_user, only: [:delete]
-  after_action :set_csrf_header, only: [:create, :new]
+class Api::SessionsController < AuthenticatedController
+  skip_before_action :authenticate_user_from_token, only: [:create]
   respond_to :json
 
-  def new
-    render json: { success: true }
-  end
-
   def create
-    resource = User.find_for_database_authentication(
+    user = User.find_for_database_authentication(
       email: params[:user][:email]
     )
-    return invalid_login_attempt unless resource
+    return invalid_login_attempt unless user
 
-    if resource.valid_password?(params[:user][:password])
-      sign_in("user", resource)
+    if user.valid_password?(params[:user][:password])
+      expire_sessions(user)
+
+      active_session = user.sessions.create({
+        authentication_token: SecureRandom.hex(16),
+        ip: request.remote_ip,
+        user_agent: request.env.fetch('HTTP_USER_AGENT', 'Unknown')
+      })
+
       render json: {
+        session: {
+          authentication_key: active_session.authentication_key,
+          authentication_token: active_session.authentication_token
+        },
+        user: {
+          first_name: user.first_name,
+          admin: user.admin?
+        },
         success: true,
-        email: resource.email
       }
       return
     end
@@ -26,14 +34,19 @@ class Api::SessionsController < Api::ApiController
   end
 
   def destroy
-    sign_out(current_user)
+    sign_out_session(current_user)
     render json: {success: true, message: 'You are now signed out.'}
   end
 
   protected
 
-  def set_csrf_header
-    response.headers['X-CSRF-Token'] = form_authenticity_token
+  def expire_sessions(user)
+    user.sessions.active.update_all(expired_at: Time.now)
+  end
+
+  def sign_out_session(user)
+    user.sessions.active.find_by_authentication_key(request.headers.fetch('HTTP_AUTHENTICATION_KEY'))
+      .update_attributes(expired_at: Time.now)
   end
 
   def invalid_login_attempt
