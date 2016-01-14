@@ -68,7 +68,7 @@ $ npm run start-hot-dev
 
 **PostgreSQL**
 
-Your postgres installation must have the `pgcrypto` extension installed by a superuser.
+Your postgres installation must have the `pgcrypto` extension installed by a superuser and be at a version >= 9.4.
 
 ```sql
 create extension pgcrypto;
