@@ -5,8 +5,8 @@ class AuthenticatedController < ApplicationController
   protected
 
   def authenticate_user_from_token
-    auth_key   = request.headers.fetch('HTTP_AUTHENTICATION_KEY')
-    auth_token = request.headers.fetch('HTTP_AUTHENTICATION_TOKEN')
+    auth_key   = request.headers.fetch('HTTP_X_AUTHENTICATION_KEY')
+    auth_token = request.headers.fetch('HTTP_X_AUTHENTICATION_TOKEN')
 
     active_session = Session.active.find_by_authentication_key(auth_key)
 

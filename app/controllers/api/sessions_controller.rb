@@ -45,7 +45,7 @@ class Api::SessionsController < AuthenticatedController
   end
 
   def sign_out_session(user)
-    user.sessions.active.find_by_authentication_key(request.headers.fetch('HTTP_AUTHENTICATION_KEY'))
+    user.sessions.active.find_by_authentication_key(request.headers.fetch('HTTP_X_AUTHENTICATION_KEY'))
       .update_attributes(expired_at: Time.now)
   end
 

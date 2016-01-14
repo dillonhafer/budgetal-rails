@@ -7,8 +7,8 @@ export default {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'AUTHENTICATION_TOKEN': session.authentication_token,
-        'AUTHENTICATION_KEY': session.authentication_key
+        'X-AUTHENTICATION-TOKEN': session.authentication_token,
+        'X-AUTHENTICATION-KEY': session.authentication_key
       }}).then((r) => r.json());
   },
   postRequest(path, body={}) {
@@ -41,8 +41,8 @@ function nonGetRequest(method, path, body) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'AUTHENTICATION_TOKEN': session.authentication_token,
-      'AUTHENTICATION_KEY': session.authentication_key
+      'X-AUTHENTICATION-TOKEN': session.authentication_token,
+      'X-AUTHENTICATION-KEY': session.authentication_key
     },
     body: JSON.stringify(body)
   }).then((r) => r.json());
