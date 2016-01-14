@@ -1,7 +1,6 @@
 class CreateSessions < ActiveRecord::Migration
   def up
     execute <<-SQL
-      create extension pgcrypto;
       create table sessions (
         authentication_key uuid primary key default gen_random_uuid(),
         authentication_token varchar not null,
@@ -21,7 +20,6 @@ class CreateSessions < ActiveRecord::Migration
   def down
     execute <<-SQL
       drop table sessions;
-      drop extension pgcrypto;
     SQL
   end
 end

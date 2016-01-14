@@ -66,6 +66,14 @@ $ npm run start-hot-dev
 
 ### Dependencies
 
+**PostgreSQL**
+
+Your postgres installation must have the `pgcrypto` extension installed by a superuser.
+
+```sql
+create extension pgcrypto;
+```
+
 **node/npm/webpack**
 
 Budgetal's frontend is built with webpack and needs npm/node
