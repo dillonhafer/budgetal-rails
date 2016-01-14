@@ -57,16 +57,23 @@ class App extends React.Component {
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 let history = createBrowserHistory();
 
+function requireAuth(nextState, replace) {
+  if (!userAuthenticated()) {
+    replace(null, '/', null);
+    showMessage('You need to sign in.');
+  }
+}
+
 render((
   <Router history={history}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="privacy" component={Privacy} />
-      <Route path="cash-flow-plans/:year/:month" component={CashFlowPlans} />
-      <Route path='allocation-plans/:year/:month' component={AllocationPlans} />
-      <Route path='annual-budgets/:year' component={AnnualBudgetItems} />
-      <Route path='monthly-statistics/:year/:month' component={Statistics} />
-      <Route path='admin' component={Admin} />
+      <Route path="cash-flow-plans/:year/:month" component={CashFlowPlans} onEnter={requireAuth} />
+      <Route path='allocation-plans/:year/:month' component={AllocationPlans} onEnter={requireAuth} />
+      <Route path='annual-budgets/:year' component={AnnualBudgetItems} onEnter={requireAuth} />
+      <Route path='monthly-statistics/:year/:month' component={Statistics} onEnter={requireAuth} />
+      <Route path='admin' component={Admin} onEnter={requireAuth} />
     </Route>
   </Router>
 ), document.getElementById('main'))
