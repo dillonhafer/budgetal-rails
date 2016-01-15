@@ -143,13 +143,6 @@ namespace :logs do
   end
 end
 
-namespace :run do
-  desc "Runs a rails console session."
-  task :console do
-    queue "cd #{deploy_to}/current ; bundle exec rails console #{ENV['to']}"
-  end
-end
-
 namespace :pg do
   desc "Creates a postgres backup."
   task backup: :environment do
