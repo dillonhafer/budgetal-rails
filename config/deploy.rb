@@ -107,7 +107,7 @@ namespace :frontend do
 
   desc "Compile Webpack assets"
   task build: :clean do
-    if check_for_local_changes('app/frontend')
+    if asset_build_required
       puts "\e[32m----->\e[0m Building assets"
       sha = Digest::SHA1.hexdigest(Time.now.to_s)
       `NODE_ENV=#{ENV['to']} npm run build`
@@ -120,10 +120,16 @@ namespace :frontend do
   end
 end
 
-def check_for_local_changes(path)
-  current_sha = `ssh #{user}@#{domain} 'cd #{deploy_to}/scm && git rev-parse HEAD'`
-  diffs = `git diff --name-only HEAD #{current_sha}`.split("\n")
-  diffs.map {|s| s.include?(path)}.any?
+def asset_build_required
+  check_for_deployed_changes('app/frontend')
+end
+
+def deployed_head
+  `ssh #{user}@#{domain} 'cd #{deploy_to}/scm && git rev-parse HEAD'`.chomp
+end
+
+def check_for_deployed_changes(path)
+  !`git diff --name-only HEAD #{deployed_head} -- #{path}`.empty?
 end
 
 namespace :logs do
