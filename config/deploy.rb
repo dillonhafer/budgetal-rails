@@ -43,6 +43,7 @@ task setup: :environment do
 
   queue! %[mkdir -p "#{deploy_to}/shared"]
   queue! %[touch "#{deploy_to}/shared/.env"]
+  queue! %[touch "#{deploy_to}/shared/overrides.env"]
 
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]

@@ -68,11 +68,9 @@ $ npm run start-hot-dev
 
 **PostgreSQL**
 
-Your postgres installation must have the `pgcrypto` extension installed by a superuser and be at a version >= 9.4.
-
-```sql
-create extension pgcrypto;
-```
+Your postgres installation must be at a version >= 9.4. This is due to the `pgcrypto` extension needed to run migrations.
+Migrations can/should be run with a *superuser* in production environments by adding `RAILS_DATABASE_USER=my_super_pg_user`
+to the `overrides.env` file that was created during `mina setup`.
 
 **node/npm/webpack**
 
