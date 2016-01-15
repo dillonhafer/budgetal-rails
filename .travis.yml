@@ -7,7 +7,7 @@ cache:
   directories:
   - node_modules
 env:
- - SECRET_KEY_BASE=c8d3918e9944a5b22 RAILS_DATABASE_USER=postgres webdriver.chrome.driver=$(which chromium-browser)
+ - SECRET_KEY_BASE=c8d3918e9944a5b22 RAILS_DATABASE_USER=postgres
 addons:
   postgresql: '9.4'
 services:
@@ -20,6 +20,9 @@ before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - wget https://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip
+  - unzip -qq chromedriver_linux64.zip
+  - export PATH=$PATH:$PWD
 branches:
   only:
   - master
