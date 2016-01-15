@@ -70,6 +70,7 @@ task deploy: :environment do
   before_mina :'frontend:build'
 
   deploy do
+    invoke :'maintenance:on'
     invoke :'check_revision'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
@@ -78,6 +79,7 @@ task deploy: :environment do
 
     to :launch do
       invoke :'passenger:restart'
+      invoke :'maintenance:off'
     end
 
     to :clean do
@@ -177,7 +179,7 @@ namespace :maintenance do
   task :off do
     queue %{
       echo "-----> Disabling maintenance mode"
-      #{echo_cmd %[rm #{deploy_to}/current/public/maintenance]}
+      #{echo_cmd %[rm -f #{deploy_to}/current/public/maintenance]}
     }
   end
 end
