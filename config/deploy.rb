@@ -24,6 +24,7 @@ end
 # `mina deploy` or `mina rake`.
 task :environment do
   invoke :'rvm:use[ruby-2.3.0@budgetal]'
+  queue! %[source #{deploy_to}/shared/overrides.env]
 end
 
 # Run `mina setup` to create these paths on your server.
