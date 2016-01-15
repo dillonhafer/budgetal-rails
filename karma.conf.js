@@ -1,7 +1,15 @@
 var webpack = require('webpack');
 
 module.exports = function (config) {
+  var customLaunchers = {
+    ChromeCi: {
+      base: 'Chrome',
+      flags: [ '--no-sandbox' ]
+    }
+  }
+
   config.set({
+    customLaunchers: customLaunchers,
     browsers: ['Chrome'],
     singleRun: true,
     frameworks: ['mocha', 'sinon'],
@@ -41,4 +49,8 @@ module.exports = function (config) {
       noInfo: true
     }
   });
+
+  if (process.env.TRAVIS) {
+    config.browsers.unshift('ChromeCi');
+  }
 };
