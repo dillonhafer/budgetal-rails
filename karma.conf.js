@@ -9,6 +9,10 @@ module.exports = function (config) {
   }
 
   config.set({
+    browserDisconnectTimeout: 10000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 30000,
+    captureTimeout: 120000,
     customLaunchers: customLaunchers,
     browsers: ['Chrome'],
     singleRun: true,
