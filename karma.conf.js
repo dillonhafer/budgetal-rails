@@ -55,6 +55,6 @@ module.exports = function (config) {
   });
 
   if (process.env.TRAVIS) {
-    config.browsers.unshift('ChromeCi');
+    config.browsers = ['ChromeCi'];
   }
 };
