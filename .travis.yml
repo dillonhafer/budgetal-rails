@@ -8,6 +8,8 @@ cache:
   - node_modules
 env:
  - SECRET_KEY_BASE=c8d3918e9944a5b22 RAILS_DATABASE_USER=postgres
+addons:
+  postgresql: '9.4'
 services:
   - postgresql
 script:
