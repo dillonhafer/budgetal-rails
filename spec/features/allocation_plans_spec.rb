@@ -23,9 +23,7 @@ feature 'Allocation Plans', js: true do
         end
 
         click_on 'Save'
-        visit root_path
-        click_on "Hello, #{user.first_name}!"
-        click_on 'Allocated Spending Plans'
+        sleep 0.5
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
