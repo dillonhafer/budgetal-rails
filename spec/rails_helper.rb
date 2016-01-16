@@ -7,9 +7,8 @@ require 'capybara/rails'
 require 'database_cleaner'
 require 'support/hide_seed'
 
-# Selenium::WebDriver::Chrome::Service.executable_path = ENV.fetch('CHROME_DRIVER', '/usr/local/bin/chromedriver')
 
-Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"binary" => ENV['CHROME_BIN']})
+Selenium::WebDriver::Chrome::Service.executable_path = ENV.fetch('CHROME_DRIVER', '/usr/local/bin/chromedriver')
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, switches: %w[—-test-type --no-sandbox])
 end
