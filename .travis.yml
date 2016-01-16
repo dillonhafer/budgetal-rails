@@ -1,5 +1,7 @@
 sudo: false
 language: ruby
+node_js:
+  - "4.1"
 rvm:
  - "2.3.0"
 cache:
