@@ -16,14 +16,18 @@ feature 'Annual Budgets', :js do
         # Add the item
         click_on 'Add an Item'
         edit_form_with(name: 'Insurrance', amount: '300')
+        expect(page).to have_field('amount', with: '3.00')
         expect(page).to have_content("Saved Insurrance")
-        expect(page).to have_content("Insurrance")
+        expect(page).to have_field('name', with: 'Insurrance')
 
         # Edit the item
         edit_form_with(name: 'Gas', amount: '600')
+        expect(page).to have_field('amount', with: '6.00')
+        expect(page).to have_field('name', with: 'Gas')
         expect(page).to have_content("Saved Gas")
-        expect(page).to have_content("Gas")
-        expect(page).not_to have_content("Insurrance")
+
+        expect(page).not_to have_field('amount', with: '3.00')
+        expect(page).not_to have_field('name', with: 'Insurrance')
 
         # Delete the item
         click_link 'Delete'
