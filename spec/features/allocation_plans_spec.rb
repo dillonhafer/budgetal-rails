@@ -23,6 +23,7 @@ feature 'Allocation Plans', js: true do
         end
 
         click_on 'Save'
+        puts page.body
         expect(page).to have_selector('.flash-box', text: 'Saved Plan')
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
