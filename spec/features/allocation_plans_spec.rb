@@ -22,8 +22,8 @@ feature 'Allocation Plans', js: true do
           find('.day.today.cell').click()
         end
 
+        sleep 1
         click_on 'Save'
-        sleep 4
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
