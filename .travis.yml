@@ -14,6 +14,7 @@ services:
   - postgresql
 script:
   - npm install
+  - npm run ci
   - bundle exec rake db:setup
   - bundle exec rake
 before_install:
