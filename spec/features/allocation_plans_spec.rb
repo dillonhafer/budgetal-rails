@@ -23,7 +23,7 @@ feature 'Allocation Plans', js: true do
         end
 
         click_on 'Save'
-        sleep 0.5
+        sleep 4
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
