@@ -13,6 +13,10 @@ var config = _.merge({}, baseConfig, {
     new ExtractTextPlugin('../../public/assets/[name].css', {
       allChunks: true
     }),
+    new webpack.ProvidePlugin({
+      'Promise': 'exports?global.Promise!es6-promise',
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
   ]
 })
 module.exports = config;
