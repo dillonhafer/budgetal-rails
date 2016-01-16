@@ -8,7 +8,6 @@ feature 'Sign up', js: true do
     it 'I can sign up for budgetal' do
       sign_out
       visit root_path
-      puts page.body
       click_on 'Sign in / Sign up'
       expect(page).to have_selector 'h2', text: 'Welcome!'
       click_on 'Join Us'
