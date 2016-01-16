@@ -14,6 +14,7 @@ feature 'Allocation Plans', js: true do
         expect(page).to have_content("You haven't added any pay periods yet.")
         expect(page).to have_selector('.pay-period-income', text: '$0.00')
         click_on 'New Pay Period'
+        sleep 1
         fill_in 'Pay Period Income', with: '300'
 
         first('fieldset').click
@@ -24,6 +25,7 @@ feature 'Allocation Plans', js: true do
 
         sleep 1
         click_on 'Save'
+        sleep 1
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
