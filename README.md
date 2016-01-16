@@ -1,4 +1,4 @@
-Budgetal
+Budgetal [![Budgetal](https://travis-ci.org/dillonhafer/budgetal.svg)](https://travis-ci.org/dillonhafer/budgetal)
 --------
 
 About
