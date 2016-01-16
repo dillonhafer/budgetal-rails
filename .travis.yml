@@ -24,7 +24,7 @@ before_install:
   - export CHROME_DRIVER=$(pwd)/chromedriver
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - wget https://chromedriver.storage.googleapis.com/2.15/chromedriver_linux64.zip
+  - wget https://chromedriver.storage.googleapis.com/2.14/chromedriver_linux64.zip
   - unzip -qq chromedriver_linux64.zip
 branches:
   only:
