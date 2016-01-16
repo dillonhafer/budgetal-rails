@@ -23,6 +23,7 @@ feature 'Allocation Plans', js: true do
         end
 
         click_on 'Save'
+        expect(page).to have_selector('.flash-box', text: 'Saved Plan')
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
@@ -30,6 +31,7 @@ feature 'Allocation Plans', js: true do
         fill_in 'Income', with: ''
         fill_in 'Income', with: '400'
         click_on 'Save'
+        expect(page).to have_selector('.flash-box', text: 'Saved Plan')
         expect(page).to have_selector('.pay-period-income', text: '$400.00')
       end
     end
