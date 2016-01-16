@@ -12,6 +12,7 @@ feature 'Allocation Plans', js: true do
 
         # I see that I have no pay periods
         expect(page).to have_content("You haven't added any pay periods yet.")
+        expect(page).to have_selector('.pay-period-income', text: '$0.00')
         click_on 'New Pay Period'
         fill_in 'Pay Period Income', with: '300'
 
@@ -22,6 +23,9 @@ feature 'Allocation Plans', js: true do
         end
 
         click_on 'Save'
+        find('.flash-box').click
+        click_on "Hello, #{user.first_name}!"
+        click_on 'Allocated Spending Plans'
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
