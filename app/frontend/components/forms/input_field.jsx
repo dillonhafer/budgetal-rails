@@ -36,7 +36,7 @@ export default class InputField extends React.Component {
   }
 
   field = () => {
-    if (this.props.type === 'date') {
+    if (this.props.type === 'date' && this.props.date !== undefined) {
       var utcDate = this.props.date+'T12:00';
       return (
         <fieldset disabled onClick={this.focusCalendar}>
