@@ -1,15 +1,14 @@
 export default {
   getRequest(path) {
-    var session = findSession();
     var path = `/api${path}`;
-    return fetch(path, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-AUTHENTICATION-TOKEN': session.authentication_token,
-        'X-AUTHENTICATION-KEY': session.authentication_key
-      }}).then((r) => r.json());
+    var headers = requestHeaders();
+    return fetch(path, {method: 'GET', headers}).then((r) => {
+      if (r.ok) {
+        return r.json();
+      } else {
+        return {success: false, message: r.statusText};
+      }
+    });
   },
   postRequest(path, body={}) {
     return nonGetRequest('POST', path, body);
@@ -25,25 +24,30 @@ export default {
   }
 }
 
-function findSession() {
-  var defaultSession = JSON.stringify({
-    authentication_token: '',
-    authentication_key: ''
-  });
+function getSession() {
+  var defaultSession = '{"authentication_token":"","authentication_key":""}';
   return JSON.parse(localStorage['session'] || defaultSession);
+}
+
+function requestHeaders() {
+  var session = getSession();
+  return {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-AUTHENTICATION-TOKEN': session.authentication_token,
+    'X-AUTHENTICATION-KEY': session.authentication_key
+  }
 }
 
 function nonGetRequest(method, path, body) {
   var path = `/api${path}`;
-  var session = findSession();
-  return fetch(path, {
-    method: method,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-AUTHENTICATION-TOKEN': session.authentication_token,
-      'X-AUTHENTICATION-KEY': session.authentication_key
-    },
-    body: JSON.stringify(body)
-  }).then((r) => r.json());
+  var headers = requestHeaders();
+  var body = JSON.stringify(body);
+  return fetch(path, {method, headers, body}).then((r) => {
+    if (r.ok) {
+      return r.json();
+    } else {
+      return {success: false, message: r.statusText};
+    }
+  });
 }

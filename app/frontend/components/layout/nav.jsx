@@ -20,8 +20,8 @@ export default class Nav extends React.Component {
     signOut().then((resp) => {
       localStorage.removeItem('session');
       localStorage.removeItem('user');
-      showMessage(resp.message);
-      self.context.history.replace('/');
+      showMessage('You are now logged out');
+      this.context.history.replace('/');
     });
   }
 
