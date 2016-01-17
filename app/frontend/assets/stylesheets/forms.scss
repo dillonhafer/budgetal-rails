@@ -111,6 +111,17 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus
   border-color: #3366cc;
   outline: none;
   box-shadow: 0 0 5px #3366cc;
+
+  &:invalid {
+    background-color: rgba($alert-color, 0.1);
+    border-color: $alert-color;
+    box-shadow: 0 0 5px $alert-color;
+  }
+
+  &:valid {
+    border-color: $primary-color;
+    box-shadow: 0 0 5px $primary-color;
+  }
 }
 
 .f-dropdown {
