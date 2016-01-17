@@ -1,9 +1,6 @@
 Budgetal [![Budgetal](https://travis-ci.org/dillonhafer/budgetal.svg)](https://travis-ci.org/dillonhafer/budgetal)
 --------
 
-About
------
-
 Budgetal is about helping you save money, planning for expenses, chasing away emergencies, and beginning to build wealth.
 
 Setup
