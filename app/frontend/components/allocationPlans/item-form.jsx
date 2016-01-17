@@ -47,7 +47,7 @@ export default class ItemForm extends React.Component {
             <span className={remainClass}>{numberToCurrency(remaining)}</span>
           </div>
           <div className='large-4 medium-3 columns'>
-            <button className='tiny radius success button'>
+            <button type='submit' className='tiny radius success button'>
               <i className='fi-icon fi-check'></i> Save
             </button>
           </div>
