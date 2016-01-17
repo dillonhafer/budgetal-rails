@@ -47,7 +47,7 @@ module.exports = function (config) {
       resolve: {
         extensions: ["", ".js", ".jsx", ".js.jsx"]
       },
-      devtool: 'inline-source-map',
+      devtool: 'inline-source-map'
     },
     webpackServer: {
       noInfo: true

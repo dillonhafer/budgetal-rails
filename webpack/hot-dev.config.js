@@ -1,6 +1,6 @@
 var config = require('./dev.config');
 
-var jsxLoader = config.module.loaders.filter(function(loader) { return loader.key == 'jsx' })[0]
+var jsxLoader = config.module.loaders.filter(function(loader) { return loader.key === 'jsx' })[0]
 jsxLoader.loaders.unshift('react-hot');
 
 config.output.publicPath = 'http://localhost:8080/assets/'
