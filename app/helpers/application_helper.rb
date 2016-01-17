@@ -8,4 +8,9 @@ module ApplicationHelper
       '/assets/main'
     end
   end
+
+  def do_not_track?
+    return true unless Rails.env.production?
+    request.headers.fetch('HTTP_DNT', '') == '1'
+  end
 end
