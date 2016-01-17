@@ -13,6 +13,12 @@ export default class Confirm extends React.Component {
     delete: React.PropTypes.func.isRequired
   }
 
+  cancel = (e) => {
+    e.preventDefault();
+    var stayOpen = _.isEmpty(_.intersection(e.target.classList, ['overlay', 'close-button']));
+    if (!stayOpen) { this.props.cancel(); }
+  }
+
   render() {
     let classes = classNames({
       overlay: true,
@@ -20,9 +26,9 @@ export default class Confirm extends React.Component {
       hide: this.props.hidden
     });
     return (
-      <div className={classes}>
+      <div className={classes} onClick={this.cancel}>
         <div className="page text-center">
-          <a href='#' className="close-button" onClick={this.props.cancel}>&#215;</a>
+          <a href='#' className="close-button" onClick={this.cancel}>&#215;</a>
           <h3 className=' alert-color'>Confirm Delete</h3>
           <hr />
           <p>Are you sure you want to delete</p>

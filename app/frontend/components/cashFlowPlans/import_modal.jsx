@@ -13,15 +13,21 @@ export default class ImportModal extends React.Component {
     import: React.PropTypes.func.isRequired
   }
 
+  cancel = (e) => {
+    e.preventDefault();
+    var stayOpen = _.isEmpty(_.intersection(e.target.classList, ['overlay', 'close-button']));
+    if (!stayOpen) { this.props.cancel(); }
+  }
+
   render() {
     let classes = classNames('overlay tiny', {
       fadeIn: !this.props.hidden,
       hide: this.props.hidden
     });
     return (
-      <div className={classes}>
+      <div className={classes} onClick={this.cancel}>
         <div className="page">
-          <a href='#' className="close-button" onClick={this.props.cancel}>&#215;</a>
+          <a href='#' className="close-button" onClick={this.cancel}>&#215;</a>
           <h3 className='text-center blue-color'>Import</h3>
           <hr />
           <p>Do you want to import budget items from your previous month's <strong>{this.props.category.name}</strong> category?</p>
