@@ -1,9 +1,11 @@
+import _ from 'lodash';
+
 export default {
   getRequest(path) {
     var path = `/api${path}`;
     var headers = requestHeaders();
     return fetch(path, {method: 'GET', headers}).then((r) => {
-      if (r.ok) {
+      if (r.ok || [401,422].includes(r.status)) {
         return r.json();
       } else {
         return {success: false, message: r.statusText};
@@ -44,7 +46,7 @@ function nonGetRequest(method, path, body) {
   var headers = requestHeaders();
   var body = JSON.stringify(body);
   return fetch(path, {method, headers, body}).then((r) => {
-    if (r.ok) {
+    if (r.ok || [401,422].includes(r.status)) {
       return r.json();
     } else {
       return {success: false, message: r.statusText};
