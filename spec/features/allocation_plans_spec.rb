@@ -14,27 +14,34 @@ feature 'Allocation Plans', js: true do
         expect(page).to have_content("You haven't added any pay periods yet.")
         expect(page).to have_selector('.pay-period-income', text: '$0.00')
         click_on 'New Pay Period'
-        fill_in 'income', with: '300'
 
-        within('.start-date') do
-          expect(page).to have_selector('fieldset')
-          find('fieldset').click
-          within('.input-calendar-wrapper') do
-            expect(page).to have_selector '.day.today.cell'
-            find('.day.today.cell').click()
+        expect(page).to have_selector('.overlay')
+        within('.overlay') do
+          fill_in 'income', with: '300'
+          expect(page).to have_field('income', with: '300')
+          expect(page).not_to have_content("Income can't be blank")
+
+          within('.start-date') do
+            expect(page).to have_selector('fieldset')
+            find('fieldset').click
+            within('.input-calendar-wrapper') do
+              expect(page).to have_selector '.day.today.cell'
+              find('.day.today.cell').click()
+            end
           end
+
+          within('.end-date') do
+            expect(page).to have_selector('fieldset')
+            find('fieldset').click
+            within('.input-calendar-wrapper') do
+              expect(page).to have_selector '.day.today.cell'
+              find('.day.today.cell').click()
+            end
+          end
+
+          click_on 'Save'
         end
 
-        within('.end-date') do
-          expect(page).to have_selector('fieldset')
-          find('fieldset').click
-          within('.input-calendar-wrapper') do
-            expect(page).to have_selector '.day.today.cell'
-            find('.day.today.cell').click()
-          end
-        end
-
-        click_on 'Save'
         expect(page).to have_selector('.flash-box', text: 'Saved Plan')
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
