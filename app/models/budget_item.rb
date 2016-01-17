@@ -1,7 +1,7 @@
 class BudgetItem < ActiveRecord::Base
   belongs_to :budget_category
   has_many :budget_item_expenses, dependent: :destroy
-  has_many :allocation_plan_budget_items
+  has_many :allocation_plan_budget_items, dependent: :destroy
   validates_presence_of :budget_category_id, :amount_budgeted, :name
 
   default_scope -> { order(:id) }
