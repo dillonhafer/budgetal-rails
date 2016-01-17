@@ -17,10 +17,17 @@ export default class AllocationPlanModal extends React.Component {
     cancel: React.PropTypes.func.isRequired
   }
 
+  isFormSubmission(event) {
+    return event.target.type === 'submit' || event.target.parentElement.type === 'submit';
+  }
+
   cancel = (e) => {
-    e.preventDefault();
-    var stayOpen = _.isEmpty(_.intersection(e.target.classList, ['overlay', 'close-button']));
-    if (!stayOpen) { this.props.cancel(); }
+    var notFormSubmission = !this.isFormSubmission(e);
+    if (notFormSubmission) {
+      e.preventDefault();
+      var stayOpen = _.isEmpty(_.intersection(e.target.classList, ['overlay', 'close-button']));
+      if (!stayOpen) { this.props.cancel(); }
+    }
   }
 
   update = (plan, event) => {
@@ -47,7 +54,7 @@ export default class AllocationPlanModal extends React.Component {
       hide: !this.props.hidden
     });
     return (
-      <div className={classes}>
+      <div className={classes} onClick={this.cancel}>
         <div className="page">
           <a href='#' className="close-button" onClick={this.cancel}>&#215;</a>
           <h3 className='text-center'>Pay Period</h3>
