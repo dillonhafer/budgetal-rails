@@ -1,4 +1,4 @@
-Budgetal [![Budgetal](https://travis-ci.org/dillonhafer/budgetal.svg)](https://travis-ci.org/dillonhafer/budgetal)
+Budgetal [![Budgetal](https://img.shields.io/travis/dillonhafer/budgetal/master.svg?style=flat-square)](https://travis-ci.org/dillonhafer/budgetal)
 --------
 
 Budgetal is about helping you save money, planning for expenses, chasing away emergencies, and beginning to build wealth.
