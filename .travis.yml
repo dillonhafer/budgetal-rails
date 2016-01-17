@@ -30,4 +30,4 @@ before_install:
   - unzip -qq chromedriver_linux64.zip
 branches:
   only:
-  - travis
+  - master
