@@ -16,10 +16,22 @@ feature 'Allocation Plans', js: true do
         click_on 'New Pay Period'
         fill_in 'Pay Period Income', with: '300'
 
-        first('fieldset').click
-        within('.input-calendar-wrapper') do
-          expect(page).to have_selector '.day.today.cell'
-          find('.day.today.cell').click()
+        within('.start-date') do
+          expect(page).to have_selector('fieldset')
+          find('fieldset').click
+          within('.input-calendar-wrapper') do
+            expect(page).to have_selector '.day.today.cell'
+            find('.day.today.cell').click()
+          end
+        end
+
+        within('.end-date') do
+          expect(page).to have_selector('fieldset')
+          find('fieldset').click
+          within('.input-calendar-wrapper') do
+            expect(page).to have_selector '.day.today.cell'
+            find('.day.today.cell').click()
+          end
         end
 
         click_on 'Save'

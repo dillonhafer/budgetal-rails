@@ -49,12 +49,12 @@ export default class AllocationPlanModal extends React.Component {
 
           <form onSubmit={this.props.save}>
             <div className='row'>
-              <div className='large-5 columns'>
+              <div className='large-5 columns start-date'>
                 <label htmlFor='start_date'>Start Date</label>
                 <InputField type='date' date={plan.start_date} onChange={this.updateForm.bind(null, 'start_date')} name='start_date' errors={plan.errors} />
               </div>
               <div className='large-2 columns centered'><br />TO</div>
-              <div className='large-5 columns'>
+              <div className='large-5 columns end-date'>
                 <label htmlFor='end_date'>End Date</label>
                 <InputField type='date' date={plan.end_date} onChange={this.updateForm.bind(null, 'end_date')} name='end_date' errors={plan.errors} />
               </div>
