@@ -7,7 +7,6 @@ import {createItem, updateItem} from '../../data/allocation_plan_budget_item';
 import {monthName, selectedValue, title, today, numberToCurrency, remainingClass} from '../../utils/helpers';
 import AllocationPlanModal from './allocation-plan-modal';
 
-
 export default class AllocationPlans extends React.Component {
   constructor(props) {
     super(props);
@@ -32,21 +31,6 @@ export default class AllocationPlans extends React.Component {
     },
     fixer: false,
     modalPlan: {}
-  }
-
-  confirmItemDelete = (budget_item, index) => {
-    if (!!budget_item.id) {
-      this.setState({
-        modal: {
-          hidden: false,
-          item: budget_item,
-          index: index,
-          delete: this.deleteBudgetItem
-        }
-      });
-    } else {
-      this._budgetItemDeleted(index)
-    }
   }
 
   componentWillUnmount() {
@@ -134,20 +118,18 @@ export default class AllocationPlans extends React.Component {
   }
 
   _fetchBudget = (data) => {
-    var self = this;
     allPlans(data)
       .then((resp) => {
         if (!!resp.errors) {
-          self._fetchDataFail(resp.errors);
+          this._fetchDataFail(resp.errors);
         } else {
-          self._fetchDataDone(resp);
+          this._fetchDataDone(resp);
         }
       });
   }
 
   // Budget Item functions
   saveBudgetItem = (item) => {
-    var self = this;
     if (item.id == '') {
       var data = {
         budget_item_id: item.budget_item.id,
@@ -157,9 +139,9 @@ export default class AllocationPlans extends React.Component {
       createItem(data)
         .then((budget_item) => {
           if (!!budget_item.errors) {
-            self._saveItemFail(item.budget_item, budget_item.errors);
+            this._saveItemFail(item.budget_item, budget_item.errors);
           } else {
-            self._budgetItemSaved(item.budget_item, budget_item);
+            this._budgetItemSaved(item.budget_item, budget_item);
           }
         });
     } else {
@@ -172,9 +154,9 @@ export default class AllocationPlans extends React.Component {
       updateItem(data)
         .then((budget_item) => {
           if (!!budget_item.errors) {
-            self._saveItemFail(item.budget_item, budget_item.errors);
+            this._saveItemFail(item.budget_item, budget_item.errors);
           } else {
-            self._budgetItemSaved(item.budget_item, budget_item);
+            this._budgetItemSaved(item.budget_item, budget_item);
           }
         });
     }
@@ -204,33 +186,6 @@ export default class AllocationPlans extends React.Component {
 
     allocation_plan.item_groups[groupIndex].budget_items[itemIndex].errors = errors;
     this.setState({allocation_plan});
-  }
-
-  deleteBudgetItem = (e) => {
-    e.preventDefault();
-    var modal = this.state.modal;
-    var self = this;
-
-    if (modal.item.id !== undefined) {
-      destroyItem(modal.item.id)
-        .then((resp) => {
-          if (resp.success) {
-            self._budgetItemDeleted(modal.index);
-          } else {
-            self._fetchDataFail(resp.message);
-          }
-        });
-    }
-  }
-
-  _budgetItemDeleted = (index) => {
-    let category = this.state.category
-    category.budget_items.splice(index, 1)
-    if (this.state.modal.item.id !== undefined) {
-      showMessage("Deleted "+this.state.modal.item.name)
-    }
-    this.setState({category: category})
-    this.cancelDelete()
   }
 
   addBudgetItem = (e) => {
@@ -408,15 +363,14 @@ export default class AllocationPlans extends React.Component {
   }
 
   addPlan = () => {
-    this.setState({showPlanForm: true, modalPlan: {start_date: today(), end_date: today()}});
+    this.setState({showPlanForm: true, modalPlan: {income: 0, start_date: today(), end_date: today()}});
   }
 
   changePlan = (plan, e) => {
     e.preventDefault();
-    var self = this;
     find(plan.id)
       .then((resp) => {
-        self.setState({allocation_plan: resp.allocation_plan});
+        this.setState({allocation_plan: resp.allocation_plan});
       })
   }
 
@@ -445,31 +399,22 @@ export default class AllocationPlans extends React.Component {
     this.cancelPlanModal();
   }
 
-  savePlan = (e) => {
-    e.preventDefault();
-    var self = this;
-    var allocation_plan = this.state.modalPlan;
-    var dateParams = this.props.params;
+  savePlan = (allocation_plan) => {
+    var data = {allocation_plan};
+    var strategy = createPlan;
 
     if (allocation_plan.id) {
-      var data = {allocation_plan, id: allocation_plan.id};
-      updatePlan(dateParams, data)
-        .then((resp) => {
-          self.updatePlan(resp);
-          if (!resp.errors) {
-            self.planSaved(resp);
-          }
-        });
-    } else {
-      var data = {allocation_plan};
-      createPlan(dateParams, data)
-        .then((resp) => {
-          self.updatePlan(resp);
-          if (!resp.errors) {
-            self.planSaved(resp);
-          }
-        });
+      data.id  = allocation_plan.id;
+      strategy = updatePlan;
     }
+
+    strategy(this.props.params, data)
+      .then((resp) => {
+        this.updatePlan(resp);
+        if (!resp.errors) {
+          this.planSaved(resp);
+        }
+      });
   }
 
   notAllocated(allocation_plan) {
@@ -498,7 +443,6 @@ export default class AllocationPlans extends React.Component {
   }
 
   render() {
-    var self = this;
     var allocation_plan = this.state.allocation_plan;
     var notAllocated = this.notAllocated(allocation_plan)
     var fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
@@ -515,13 +459,13 @@ export default class AllocationPlans extends React.Component {
                     var ddClass = classNames({active: allocation_plan.id == plan.id})
                     return (
                       <dd key={index} className={ddClass}>
-                        <a href="#" onClick={self.changePlan.bind(null, plan)}>{self.tabDate(plan)}</a>
+                        <a href="#" onClick={this.changePlan.bind(null, plan)}>{this.tabDate(plan)}</a>
                       </dd>
                     );
                   })
                 }
                 <dd className='new'>
-                  <a href='#' onClick={self.addPlan} className='add-pay-period'><i className='fi-plus'></i></a>
+                  <a href='#' onClick={this.addPlan} className='add-pay-period'><i className='fi-plus'></i></a>
                 </dd>
               </dl>
 

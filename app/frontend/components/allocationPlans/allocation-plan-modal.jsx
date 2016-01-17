@@ -17,21 +17,27 @@ export default class AllocationPlanModal extends React.Component {
     cancel: React.PropTypes.func.isRequired
   }
 
-  updateForm = (event, date) => {
-    var dateFields = ['start_date', 'end_date'];
-    if (dateFields.includes(event)) {
-      var fakeTarget = {name: event, value: date};
-      event = {target: fakeTarget};
-    }
-    let newProperties = { [event.target.name]: event.target.value };
-    var plan = _.assign({}, this.props.plan, newProperties)
-    this.props.update(plan);
-  }
-
   cancel = (e) => {
     e.preventDefault();
     var stayOpen = _.isEmpty(_.intersection(e.target.classList, ['overlay', 'close-button']));
     if (!stayOpen) { this.props.cancel(); }
+  }
+
+  update = (plan, event) => {
+    var dateFields = ['start_date', 'end_date'];
+    if (dateFields.includes(plan)) {
+      event = {target: {name: plan, value: event}};
+      plan  = this.props.plan;
+    }
+
+    plan[event.target.name] = event.target.value;
+    var updatedPlan = _.assign({}, this.props.plan, plan)
+    this.props.update(updatedPlan);
+  }
+
+  save = (e) => {
+    e.preventDefault();
+    this.props.save(this.props.plan)
   }
 
   render() {
@@ -41,32 +47,32 @@ export default class AllocationPlanModal extends React.Component {
       hide: !this.props.hidden
     });
     return (
-      <div className={classes} onClick={this.cancel}>
+      <div className={classes}>
         <div className="page">
           <a href='#' className="close-button" onClick={this.cancel}>&#215;</a>
-          <h3>Pay Period</h3>
+          <h3 className='text-center'>Pay Period</h3>
           <hr />
 
-          <form onSubmit={this.props.save}>
+          <form onSubmit={this.save}>
             <div className='row'>
               <div className='large-5 columns start-date'>
                 <label htmlFor='start_date'>Start Date</label>
-                <InputField type='date' date={plan.start_date} onChange={this.updateForm.bind(null, 'start_date')} name='start_date' errors={plan.errors} />
+                <InputField type='date' date={plan.start_date} onChange={this.update.bind(null, 'start_date')} name='start_date' errors={plan.errors} />
               </div>
               <div className='large-2 columns centered'><br />TO</div>
               <div className='large-5 columns end-date'>
                 <label htmlFor='end_date'>End Date</label>
-                <InputField type='date' date={plan.end_date} onChange={this.updateForm.bind(null, 'end_date')} name='end_date' errors={plan.errors} />
+                <InputField type='date' date={plan.end_date} onChange={this.update.bind(null, 'end_date')} name='end_date' errors={plan.errors} />
               </div>
             </div>
             <div className='row'>
               <div className='large-7 columns'>
                 <label htmlFor='income'>Pay Period Income</label>
-                <InputField type="number" id='income' name='income' onChange={this.updateForm} defaulValue={numberToCurrency(plan.income, '')} value={plan.income} step='any' min='0.00' required={true} placeholder='0.00' errors={plan.errors} />
+                <InputField onChange={this.update.bind(this,plan)} required type="number" name='income' defaultValue={numberToCurrency(plan.income,'')} value={plan.income} step='any' min='0.01' placeholder='0.00' errors={plan.errors} />
               </div>
               <div className='large-5 columns text-center'>
                 <label>&nbsp;</label>
-                <button href='#' className="tiny success button radius" onClick={this.props.save}>
+                <button type='submit' title='Save Plan' className="tiny success button radius">
                   <i className='fi-icon fi-check'></i> Save
                 </button>
               </div>
