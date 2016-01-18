@@ -22,8 +22,8 @@ feature 'Allocation Plans', js: true do
           expect(page).not_to have_content("Income can't be blank")
 
           within('.start-date') do
-            expect(page).to have_selector('fieldset')
-            find('fieldset').click
+            expect(page).to have_selector('.input-calendar')
+            find('.input-calendar').click
             within('.input-calendar-wrapper') do
               expect(page).to have_selector '.day.today.cell'
               find('.day.today.cell').click()
@@ -31,8 +31,8 @@ feature 'Allocation Plans', js: true do
           end
 
           within('.end-date') do
-            expect(page).to have_selector('fieldset')
-            find('fieldset').click
+            expect(page).to have_selector('.input-calendar')
+            find('.input-calendar').click
             within('.input-calendar-wrapper') do
               expect(page).to have_selector '.day.today.cell'
               find('.day.today.cell').click()

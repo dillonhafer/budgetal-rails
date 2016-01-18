@@ -67,7 +67,8 @@ feature 'Cash Flow Plans', js: true do
       expect(page).to have_content "You haven't added any expenses yet"
       within '.expense-list' do
         click_on 'Add an expense'
-        find('fieldset').click
+        expect(page).to have_selector('.input-calendar')
+        find('.input-calendar').click
       end
 
       within('.input-calendar-wrapper') do
