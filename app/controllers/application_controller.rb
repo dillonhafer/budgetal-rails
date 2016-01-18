@@ -13,6 +13,28 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def create_session(user)
+    user.sessions.create({
+      authentication_token: SecureRandom.hex(16),
+      ip: request.remote_ip,
+      user_agent: request.env.fetch('HTTP_USER_AGENT', 'Unknown')
+    })
+  end
+
+  def session_json(user:, session:)
+    {
+      session: {
+        authentication_key: session.authentication_key,
+        authentication_token: session.authentication_token
+      },
+      user: {
+        first_name: user.first_name,
+        admin: user.admin?
+      },
+      success: true,
+    }
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(

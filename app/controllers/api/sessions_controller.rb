@@ -9,28 +9,11 @@ class Api::SessionsController < AuthenticatedController
     return invalid_login_attempt unless user
 
     if user.valid_password?(params[:user][:password])
-      expire_sessions(user)
-
-      active_session = user.sessions.create({
-        authentication_token: SecureRandom.hex(16),
-        ip: request.remote_ip,
-        user_agent: request.env.fetch('HTTP_USER_AGENT', 'Unknown')
-      })
-
-      render json: {
-        session: {
-          authentication_key: active_session.authentication_key,
-          authentication_token: active_session.authentication_token
-        },
-        user: {
-          first_name: user.first_name,
-          admin: user.admin?
-        },
-        success: true,
-      }
-      return
+      active_session = create_session(user)
+      render json: session_json(user: user, session: active_session)
+    else
+      invalid_login_attempt
     end
-    invalid_login_attempt
   end
 
   def destroy
@@ -56,4 +39,6 @@ class Api::SessionsController < AuthenticatedController
       message: "Incorrect email or password"
     }, status: 401
   end
+
+
 end
