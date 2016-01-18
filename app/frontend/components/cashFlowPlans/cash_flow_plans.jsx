@@ -4,7 +4,7 @@ import Category from './category';
 import CategoryOverview from './category_overview';
 import Overview from './overview';
 import ImportModal from './import_modal';
-import Confirm from '../confirm';
+import Confirm from '../../utils/confirm';
 
 import {updateBudget} from '../../data/budget';
 import {findCategory, importCategory} from '../../data/budget_category';

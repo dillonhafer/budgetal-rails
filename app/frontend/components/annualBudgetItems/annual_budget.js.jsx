@@ -4,7 +4,7 @@ import {allItems, createItem, updateItem, destroyItem} from '../../data/annual_b
 import classNames from 'classnames';
 import AnnualBudgetItemList from './item_list';
 import AnnualBudgetFormList from './form_list';
-import Confirm from '../confirm';
+import Confirm from '../../utils/confirm';
 import {selectedValue, yearOptions, title, today} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
