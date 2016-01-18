@@ -11,7 +11,8 @@ Selenium::WebDriver::Chrome::Service.executable_path = ENV.fetch('CHROME_DRIVER'
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, switches: %w[—-test-type --no-sandbox])
 end
-Capybara.javascript_driver = :chrome
+
+Capybara.javascript_driver = ENV.fetch('selenium', 'chrome').to_sym
 Capybara.default_max_wait_time = 5
 
 ActiveRecord::Migration.maintain_test_schema!
