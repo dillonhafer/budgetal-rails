@@ -3,14 +3,15 @@
     max-width: 30%;
   }
 
-  -webkit-box-align: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-pack: center;
-  -webkit-perspective: 1px;
-  -webkit-transition: 200ms opacity;
+  @include vendor(box-align, center);
+  @include vendor(box-orient, vertical);
+  @include vendor(box-pack, center);
+  @include vendor(perspective, 1px);
+  @include vendor(transition, 200ms opacity);
   background-color: rgba(20, 20, 20, 0.75);
   bottom: 0;
   display: -webkit-box;
+  display: -moz-box;
   left: 0;
   overflow: auto;
   padding: 20px;
@@ -20,13 +21,14 @@
   top: 0;
 
   .page {
-    -webkit-border-radius: 3px;
-    -webkit-box-orient: vertical;
-    -webkit-transition: 200ms -webkit-transform;
+    @include vendor(border-radius, 3px);
+    @include vendor(box-orient, vertical);
+    @include vendor(transition, 200ms);
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     color: #333;
     display: -webkit-box;
+    display: -moz-box;
     min-width: 400px;
     padding: 30px;
     position: relative;
@@ -55,7 +57,7 @@
 }
 
 .overlay .page .content-area {
-  -webkit-box-flex: 1;
+  @include vendor(box-flex, 1);
   overflow: auto;
   padding: 6px 17px 6px;
   position: relative;
@@ -63,9 +65,11 @@
 }
 
 .overlay .page .action-area {
-  -webkit-box-align: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-pack: end;
+  @include vendor(box-align, center);
+  @include vendor(box-orient, horizontal);
+  @include vendor(box-pack, end);
+
   display: -webkit-box;
+  display: -moz-box;
   padding: 14px 17px;
 }
