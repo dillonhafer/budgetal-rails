@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import InputError from './input_error';
 import Calendar from 'react-input-calendar';
+import ReactDOM from 'react-dom';
 
 export default class InputField extends React.Component {
   constructor(props) {
