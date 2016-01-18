@@ -48,10 +48,10 @@ export default class AnnualBudgetItemForm extends React.Component {
       <form onSubmit={this.saveForm} data-abide>
         <div className='row'>
           <div className='large-4 columns'>
-            <InputField type='text' name='name' onChange={this.updateForm} value={item.name} placeholder='Name' errors={item.errors} />
+            <InputField type='text' name='name' required onChange={this.updateForm} value={item.name} placeholder='Name' errors={item.errors} />
           </div>
           <div className='large-2 columns'>
-            <InputField type="number" name='amount' onChange={this.updateForm} value={numberToCurrency(item.amount, '')} step='any' min='0.00' placeholder='0.00' errors={item.errors} />
+            <InputField type="number" name='amount' required onChange={this.updateForm} defaultValue={numberToCurrency(item.amount, '')} value={item.amount} step='any' min='0.01' placeholder='0.00' errors={item.errors} />
           </div>
           <div className='large-2 columns'>
             <InputField type='date' date={item.due_date} onChange={this.updateForm} name='due_date' errors={item.errors} />
