@@ -5,7 +5,8 @@ import ItemForm from './item-form';
 import {allPlans, find, createPlan, updatePlan} from '../../data/allocation_plan';
 import {createItem, updateItem} from '../../data/allocation_plan_budget_item';
 import {monthName, selectedValue, title, today, numberToCurrency, remainingClass} from '../../utils/helpers';
-import AllocationPlanModal from './allocation-plan-modal';
+import AllocationPlanForm from './allocation-plan-form';
+import Modal from '../../utils/modal';
 
 export default class AllocationPlans extends React.Component {
   constructor(props) {
@@ -443,6 +444,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   render() {
+    var planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updatePlan} />
     var allocation_plan = this.state.allocation_plan;
     var notAllocated = this.notAllocated(allocation_plan)
     var fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
@@ -450,7 +452,7 @@ export default class AllocationPlans extends React.Component {
       <div>
         <section>
           <CategoryList budget={this.state.budget} categories={allocation_plan.item_groups} changeBudget={this.changeBudget} changeMonth={this.changeMonth} />
-          <AllocationPlanModal plan={this.state.modalPlan} save={this.savePlan} hidden={this.state.showPlanForm} update={this.updatePlan} cancel={this.cancelPlanModal} />
+          <Modal title='Pay Period' hidden={this.state.showPlanForm} cancel={this.cancelPlanModal} content={planForm} modalType='blue' modalSize='tiny' />
           <div className='large-10 medium-10 columns hide-for-small-down'>
             <div>
               <dl className="tabs" data-tab>
