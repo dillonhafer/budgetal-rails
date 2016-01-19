@@ -1,6 +1,5 @@
 class Api::BudgetCategoriesController < AuthenticatedController
   include ActionView::Helpers::TextHelper
-  before_filter :check_date, except: [:import, :show]
   helper_method :budget_category, :budget, :message, :imported_items
 
   respond_to :json
@@ -31,29 +30,5 @@ class Api::BudgetCategoriesController < AuthenticatedController
 
   def category_id
     params[:id] == 'undefined' ? budget.budget_categories.first.id : params[:id]
-  end
-
-  def check_date
-    error = if year_too_great?(params[:year])
-              "You can't go that far into the future. Who's to say we'd still be around?"
-            elsif year_too_small?(params[:year])
-              "We didn't exist back then, I don't think you'll find a budget there."
-            elsif invalid_month?(params[:month])
-              "You do know there are only 12 months in a year right?"
-            end
-
-    redirect_to root_path, notice: error unless error.blank?
-  end
-
-  def year_too_great?(year)
-    year.to_i > 1.year.from_now.year
-  end
-
-  def year_too_small?(year)
-    year.to_i < 2013
-  end
-
-  def invalid_month?(month)
-    (1..12).exclude?(month.to_i)
   end
 end
