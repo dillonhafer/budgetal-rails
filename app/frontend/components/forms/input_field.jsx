@@ -29,11 +29,14 @@ export default class InputField extends React.Component {
     return this.props.errors && this.props.errors[this.props.name];
   }
 
-  setReadOnly(c) {
-    var el = ReactDOM.findDOMNode(c)
+  setAttributes(name, calendar) {
+    var el = ReactDOM.findDOMNode(calendar)
     if (el) {
       let input = el.children[0]
       input.setAttribute('readonly', true)
+      input.setAttribute('required', true)
+      input.setAttribute('name', name)
+      input.setAttribute('id', name)
     }
   }
 
@@ -42,7 +45,7 @@ export default class InputField extends React.Component {
       var utcDate = this.props.date+'T12:00';
       return (
         <Calendar format="YYYY-MM-DD"
-                  ref={this.setReadOnly}
+                  ref={this.setAttributes.bind(null, this.props.name)}
                   computableFormat='YYYY-MM-DD'
                   placeholder='2015-08-01'
                   onChange={this.props.onChange}
