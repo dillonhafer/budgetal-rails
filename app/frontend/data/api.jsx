@@ -46,6 +46,7 @@ function request(method, path, body) {
 
   return fetch(path, request).then((r) => {
     if (r.status === 401) {
+      localStorage.clear();
       let json = r.json();
       return json.then(Promise.reject.bind(Promise));
     } else if (r.ok) {
