@@ -30,6 +30,12 @@ class User < ActiveRecord::Base
                         .pluck('budget_item_expenses.name')
   end
 
+  def expire_previous_sessions(keep:, time: Time.now)
+    sessions.active.where(user_agent: keep.user_agent)
+            .where('authentication_key <> ?', keep.authentication_key)
+            .update_all(expired_at: time)
+  end
+
   private
 
   def send_welcome_email

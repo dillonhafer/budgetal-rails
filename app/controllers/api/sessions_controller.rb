@@ -10,6 +10,7 @@ class Api::SessionsController < AuthenticatedController
 
     if user.valid_password?(params[:user][:password])
       active_session = create_session(user)
+      user.expire_previous_sessions(keep: active_session)
       render json: session_json(user: user, session: active_session)
     else
       invalid_login_attempt
@@ -23,10 +24,6 @@ class Api::SessionsController < AuthenticatedController
 
   protected
 
-  def expire_sessions(user)
-    user.sessions.active.update_all(expired_at: Time.now)
-  end
-
   def sign_out_session(user)
     user.sessions.active.find_by_authentication_key(request.headers.fetch('HTTP_X_AUTHENTICATION_KEY'))
       .update_attributes(expired_at: Time.now)
@@ -39,6 +36,4 @@ class Api::SessionsController < AuthenticatedController
       message: "Incorrect email or password"
     }, status: 401
   end
-
-
 end
