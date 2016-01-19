@@ -3,9 +3,7 @@ class Api::SessionsController < AuthenticatedController
   respond_to :json
 
   def create
-    user = User.find_for_database_authentication(
-      email: params[:user][:email]
-    )
+    user = User.find_for_database_authentication(email: params[:user][:email])
     return invalid_login_attempt unless user
 
     if user.valid_password?(params[:user][:password])
@@ -18,16 +16,11 @@ class Api::SessionsController < AuthenticatedController
   end
 
   def destroy
-    sign_out_session(current_user)
+    current_user.expire_session(authentication_key: request.headers.fetch('HTTP_X_AUTHENTICATION_KEY'))
     render json: {success: true, message: 'You are now signed out.'}
   end
 
   protected
-
-  def sign_out_session(user)
-    user.sessions.active.find_by_authentication_key(request.headers.fetch('HTTP_X_AUTHENTICATION_KEY'))
-      .update_attributes(expired_at: Time.now)
-  end
 
   def invalid_login_attempt
     warden.custom_failure!

@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
             .update_all(expired_at: time)
   end
 
+  def expire_session(authentication_key:, time: Time.now)
+    sessions.active.find(authentication_key).update_attributes(expired_at: time)
+  end
+
   private
 
   def send_welcome_email

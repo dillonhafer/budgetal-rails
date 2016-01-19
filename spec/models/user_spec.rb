@@ -3,9 +3,27 @@ require 'rails_helper'
 describe User do
   subject { FactoryGirl.create :user }
 
+  describe '#expire_session' do
+    let(:session) { FactoryGirl.create(:session, user: subject) }
+
+    it 'expires the session from the given key' do
+      expect {
+        subject.expire_session(authentication_key: session.authentication_key)
+      }.to change {session.reload.expired_at}.from(nil)
+    end
+
+    it 'expires the session at the given time' do
+      time = Time.new(1998,8,3)
+
+      expect {
+        subject.expire_session(authentication_key: session.authentication_key, time: time)
+      }.to change {session.reload.expired_at}.from(nil).to time
+    end
+  end
+
   describe '#expire_previous_sessions' do
-    let!(:old_session)    { FactoryGirl.create(:session, user: subject, user_agent: 'MATCHER') }
-    let!(:active_session) { FactoryGirl.create(:session, user: subject, user_agent: 'MATCHER') }
+    let(:old_session)    { FactoryGirl.create(:session, user: subject, user_agent: 'MATCHER') }
+    let(:active_session) { FactoryGirl.create(:session, user: subject, user_agent: 'MATCHER') }
 
     it 'expires sessions with a matching user agent' do
       expect {
