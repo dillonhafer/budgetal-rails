@@ -8,7 +8,7 @@ feature 'Allocation Plans', js: true do
         user = login_with
         visit root_path
         click_on "Hello, #{user.first_name}!"
-        click_on 'Allocated Spending Plans'
+        click_on 'Detailed Budgets'
 
         # I see that I have no pay periods
         expect(page).to have_content("You haven't added any pay periods yet.")

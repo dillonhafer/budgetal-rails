@@ -17,10 +17,11 @@ feature 'Sign in', js: true do
       fill_in 'Password', with: user.password
       click_on 'Sign in'
       expect(page).to have_selector '.flash-box', text: "You are now signed in"
+      find('.flash-box').click
       expect(page).to have_selector 'a', text: "Hello, #{user.first_name}!"
 
       # Sign Out Spec
-      find('.flash-box').click
+      find('#js-user-greeting').click
       click_on 'Sign out'
       expect(page).to have_selector '.flash-box', text: "You are now signed out"
       expect(page).to have_selector 'a', text: "Sign in / Sign up"

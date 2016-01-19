@@ -6,8 +6,8 @@ feature 'Cash Flow Plans', js: true do
     it 'can add/edit/delete budget_items and expenses' do
       login
       visit root_path
-      find('[title="this is you!"]').click
-      click_link "Cash Flow Plans"
+      find('#js-user-greeting').click
+      click_link "Budgets"
 
       # It creates a budget
       expect(page).to have_content("You haven't added any budget items yet.")

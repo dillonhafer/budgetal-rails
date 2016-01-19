@@ -37,24 +37,36 @@ export default class Nav extends React.Component {
     return <i className={`fi-${name}`}></i>
   }
 
-  sessionLink(signedIn) {
+  leftSection(signedIn) {
     if (signedIn) {
       var year  = (new Date).getFullYear();
       var month = (new Date).getMonth()+1;
       var user = JSON.parse(localStorage['user'])
       return (
         <ul className="right">
-          <li className="has-dropdown not-click"><a href="javascript:void(0)" title='this is you!'>Hello, {user.first_name}!</a>
+        </ul>
+      );
+    }
+  }
+
+  rightSection(signedIn) {
+    if (signedIn) {
+      var year  = (new Date).getFullYear();
+      var month = (new Date).getMonth()+1;
+      var user = JSON.parse(localStorage['user'])
+      return (
+        <ul className="right">
+          <li><Link to={`/cash-flow-plans/${year}/${month}`}> Budgets</Link></li>
+          <li><Link to={`/allocation-plans/${year}/${month}`}> Detailed Budgets</Link></li>
+          <li><Link to={`/annual-budgets/${year}`}> Annual Budgets</Link></li>
+          <li className="has-dropdown not-click"><a href="javascript:void(0)" id='js-user-greeting' title='this is you!'>Hello, {user.first_name}!</a>
             <ul className="dropdown shadow nav-links">
-              <li><Link to={`/cash-flow-plans/${year}/${month}`}>{this.icon('dollar')} Cash Flow Plans</Link></li>
-              <li><Link to={`/allocation-plans/${year}/${month}`}>{this.icon('clipboard-pencil')} Allocated Spending Plans</Link></li>
-              <li><Link to={`/annual-budgets/${year}`}>{this.icon('calendar')} Annual Budgets</Link></li>
               <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('graph-pie')} Statistics (for geeks)</Link></li>
               <li><a href='/sessions/sign-up/edit'>{this.icon('widget')} My Account</a></li>
               {this.adminLink(user.admin)}
+              <li><a onClick={this.signOut} title="Sign out" rel="nofollow" href="#">{this.icon('x')} Sign out</a></li>
             </ul>
           </li>
-          <li><a onClick={this.signOut} title="Sign out" rel="nofollow" href="#">Sign out</a></li>
         </ul>
       );
     } else {
@@ -74,11 +86,14 @@ export default class Nav extends React.Component {
           <li className="name">
             <h1><Link to='/'><img src={logo} style={{width: '200px'}}/></Link></h1>
           </li>
-          <li className="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+          <li className="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
         </ul>
         <section className="top-bar-section">
+          <ul className="left">
+            {this.leftSection(signedIn)}
+          </ul>
           <ul className="right">
-            {this.sessionLink(signedIn)}
+            {this.rightSection(signedIn)}
           </ul>
         </section>
       </nav>
