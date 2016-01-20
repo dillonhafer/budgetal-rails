@@ -6,4 +6,12 @@ class Session < ActiveRecord::Base
   def self.active
     where(expired_at: nil)
   end
+
+  def self.expired
+    where('expired_at is not null')
+  end
+
+  def self.expire(time: Time.now)
+    update_all(expired_at: time)
+  end
 end

@@ -150,6 +150,58 @@ feature 'Cash Flow Plans', js: true do
       click_link 'Delete Saver'
       expect(page).to have_content("You haven't added any budget items yet.")
     end
+
+    context 'And my session expired' do
+      before(:each) do
+        user = login
+        visit root_path
+        click_on "Budgets"
+        sleep 0.3
+        user.sessions.expire
+      end
+
+      it 'gets redirected on Categories' do
+        within('.icon-bar') do
+          click_on 'Saving'
+        end
+        assert_redirected
+      end
+
+      it 'gets redirected on Import' do
+        find('.fi-download').click
+        click_on 'Import Charity'
+        assert_redirected
+      end
+
+      it 'gets redirected on Update Budget' do
+        click_on 'Save Income'
+        assert_redirected
+      end
+
+      it 'gets redirected on Save Item' do
+        click_on 'Add a budget item'
+        fill_in 'name', with: 'Gifts'
+        fill_in 'amount_budgeted', with: '3'
+        click_on 'Save'
+        assert_redirected
+      end
+
+      it 'gets redirected on Detailed Budgets' do
+        click_on 'Detailed Budgets'
+        assert_redirected
+      end
+
+      it 'gets redirected on Annual Budgets' do
+        click_on 'Annual Budgets'
+        assert_redirected
+      end
+    end
+  end
+
+  def assert_redirected
+    expect(page).to have_selector('.flash-box')
+    expect(page).not_to have_selector('a', text: 'Budgets')
+    expect(current_path).to eq('/')
   end
 
   def import_items

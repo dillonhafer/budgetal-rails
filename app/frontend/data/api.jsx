@@ -2,28 +2,24 @@ import _ from 'lodash';
 
 export default {
   getRequest(path) {
-    var path = `/api${path}`;
-    var headers = requestHeaders();
-    return fetch(path, {method: 'GET', headers}).then((r) => {
-      if (r.ok || [401,422].includes(r.status)) {
-        return r.json();
-      } else {
-        return {success: false, message: r.statusText};
-      }
-    });
+    return request('GET', path, {})
   },
   postRequest(path, body={}) {
-    return nonGetRequest('POST', path, body);
+    return request('POST', path, body);
   },
   putRequest(path, body={}) {
-    return nonGetRequest('PUT', path, body);
+    return request('PUT', path, body);
   },
   deleteRequest(path) {
-    return nonGetRequest('DELETE', path);
+    return request('DELETE', path);
   },
   patchRequest(path, body) {
-    return nonGetRequest('PATCH', path, body);
+    return request('PATCH', path, body);
   }
+}
+
+function requestOk(request) {
+  return request.ok || [401, 422].includes(request.status);
 }
 
 function getSession() {
@@ -41,15 +37,22 @@ function requestHeaders() {
   }
 }
 
-function nonGetRequest(method, path, body) {
+function request(method, path, body) {
   var path = `/api${path}`;
   var headers = requestHeaders();
-  var body = JSON.stringify(body);
-  return fetch(path, {method, headers, body}).then((r) => {
-    if (r.ok || [401,422].includes(r.status)) {
+  var request = {method, headers};
+  if (method !== 'GET')
+    request.body = JSON.stringify(body);
+
+  return fetch(path, request).then((r) => {
+    if (r.status === 401) {
+      localStorage.clear();
+      let json = r.json();
+      return json.then(Promise.reject.bind(Promise));
+    } else if (r.ok) {
       return r.json();
     } else {
       return {success: false, message: r.statusText};
     }
-  });
+  })
 }

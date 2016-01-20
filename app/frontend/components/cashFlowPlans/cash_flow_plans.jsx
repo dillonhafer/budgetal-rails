@@ -5,12 +5,12 @@ import CategoryOverview from './category_overview';
 import Overview from './overview';
 import ImportModal from './import_modal';
 import Confirm from '../../utils/confirm';
+import {monthName, selectedValue, title, today} from '../../utils/helpers';
 
 import {updateBudget} from '../../data/budget';
 import {findCategory, importCategory} from '../../data/budget_category';
 import {createItem, updateItem, destroyItem} from '../../data/budget_item';
 import {createExpense, updateExpense, destroyExpense} from '../../data/budget_item_expense';
-import {monthName, selectedValue, title, today} from '../../utils/helpers';
 
 export default class CashFlowPlans extends React.Component {
   constructor(props) {
@@ -51,6 +51,10 @@ export default class CashFlowPlans extends React.Component {
       delete: function(){}
     }
   };
+
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
 
   confirmItemDelete = (budget_item, index) => {
     if (!!budget_item.id) {
@@ -126,8 +130,9 @@ export default class CashFlowPlans extends React.Component {
     title(`${monthName(data.budget.month)} ${data.budget.year}`);
   }
 
-  _fetchDataFail(message) {
-    showMessage(message);
+  _fetchDataFail = (e) => {
+    showMessage(e.message)
+    this.context.history.replace('/');
   }
 
   changeCategory = (id) => {
@@ -139,42 +144,37 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _fetchBudget = (data) => {
-    var self = this;
     findCategory(data)
-      .then((resp) => {
-        if (!!resp.errors) {
-          self._fetchDataFail(resp.errors);
-        } else {
-          self._fetchDataDone(resp);
-        }
-      });
+      .then(this._fetchDataDone)
+      .catch(this._fetchDataFail);
   }
 
   // Budget Item functions
   saveBudgetItem = (item) => {
-    var self = this;
     var data = {
-      budget_category_id: self.state.category.id,
+      budget_category_id: this.state.category.id,
       budget_item: item
     }
     if (item.id === undefined) {
       createItem(data)
         .then((budget_item) => {
           if (!!budget_item.errors) {
-            self._saveItemFail(item.index, budget_item.errors);
+            this._saveItemFail(item.index, budget_item.errors);
           } else {
-            self._budgetItemSaved(item.index, budget_item);
+            this._budgetItemSaved(item.index, budget_item);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     } else {
       updateItem(item)
         .then((budget_item) => {
           if (!!budget_item.errors) {
-            self._saveItemFail(item.index, budget_item.errors);
+            this._saveItemFail(item.index, budget_item.errors);
           } else {
-            self._budgetItemSaved(item.index, budget_item);
+            this._budgetItemSaved(item.index, budget_item);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -198,17 +198,17 @@ export default class CashFlowPlans extends React.Component {
   deleteBudgetItem = (e) => {
     e.preventDefault();
     var modal = this.state.modal;
-    var self = this;
 
     if (modal.item.id !== undefined) {
       destroyItem(modal.item.id)
         .then((resp) => {
           if (resp.success) {
-            self._budgetItemDeleted(modal.index);
+            this._budgetItemDeleted(modal.index);
           } else {
-            self._fetchDataFail(resp.message);
+            this._fetchDataFail(resp.message);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -236,15 +236,15 @@ export default class CashFlowPlans extends React.Component {
   }
 
   saveBudget = (budget) => {
-    var self = this;
     updateBudget(budget)
       .then((resp) => {
         if (!!resp.errors) {
-          self._saveBudgetFail(budget, resp.errors);
+          this._saveBudgetFail(budget, resp.errors);
         } else {
-          self._budgetUpdated(resp.budget);
+          this._budgetUpdated(resp.budget);
         }
-      });
+      })
+      .catch(this._fetchDataFail)
   }
 
   _saveBudgetFail = (budget, errors) => {
@@ -275,7 +275,8 @@ export default class CashFlowPlans extends React.Component {
           } else {
             self._expenseSaved(expense.index, resp);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     } else {
       updateExpense(expense)
         .then((resp) => {
@@ -284,7 +285,8 @@ export default class CashFlowPlans extends React.Component {
           } else {
             self._expenseSaved(expense.index, resp);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -315,17 +317,13 @@ export default class CashFlowPlans extends React.Component {
   deleteExpense = (e) => {
     e.preventDefault();
     var modal = this.state.modal;
-    var self = this;
 
     if (modal.item.id !== undefined) {
       destroyExpense(modal.item.id)
         .then((resp) => {
-          if (resp.success) {
-            self._expenseDeleted(modal.item.budget_item_id, modal.index);
-          } else {
-            self._fetchDataFail(resp.message);
-          }
-        });
+          this._expenseDeleted(modal.item.budget_item_id, modal.index);
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -360,11 +358,11 @@ export default class CashFlowPlans extends React.Component {
 
   _import = (e) => {
     e.preventDefault();
-    var self = this;
     importCategory(this.state.category.id)
       .then((resp) => {
-        self.importFinished(resp.imported, resp.message);
-      });
+        this.importFinished(resp.imported, resp.message);
+      })
+      .catch(this._fetchDataFail)
   }
 
   importFinished = (imported_items, message) => {

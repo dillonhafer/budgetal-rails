@@ -27,6 +27,6 @@ class Api::SessionsController < AuthenticatedController
     render json: {
       success: false,
       message: "Incorrect email or password"
-    }, status: 401
+    }, status: 422
   end
 end
