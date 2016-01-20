@@ -34,6 +34,10 @@ export default class AllocationPlans extends React.Component {
     modalPlan: {}
   }
 
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
@@ -106,8 +110,9 @@ export default class AllocationPlans extends React.Component {
     title(`${monthName(data.budget.month)} ${data.budget.year} | Allocated Spending Plans`);
   }
 
-  _fetchDataFail(message) {
-    showMessage(message);
+  _fetchDataFail = (e) => {
+    showMessage(e.message)
+    this.context.history.replace('/');
   }
 
   changeCategory = (id) => {
@@ -121,12 +126,9 @@ export default class AllocationPlans extends React.Component {
   _fetchBudget = (data) => {
     allPlans(data)
       .then((resp) => {
-        if (!!resp.errors) {
-          this._fetchDataFail(resp.errors);
-        } else {
-          this._fetchDataDone(resp);
-        }
-      });
+        this._fetchDataDone(resp);
+      })
+      .catch(this._fetchDataFail)
   }
 
   // Budget Item functions
@@ -144,7 +146,8 @@ export default class AllocationPlans extends React.Component {
           } else {
             this._budgetItemSaved(item.budget_item, budget_item);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     } else {
       var data = {
         id: item.id,
@@ -159,7 +162,8 @@ export default class AllocationPlans extends React.Component {
           } else {
             this._budgetItemSaved(item.budget_item, budget_item);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -212,7 +216,8 @@ export default class AllocationPlans extends React.Component {
         } else {
           self._budgetUpdated(resp.budget);
         }
-      });
+      })
+      .catch(this._fetchDataFail)
   }
 
   _saveBudgetFail = (budget, errors) => {
@@ -243,7 +248,8 @@ export default class AllocationPlans extends React.Component {
           } else {
             self._expenseSaved(expense.index, resp);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     } else {
       updateExpense(expense)
         .then((resp) => {
@@ -252,7 +258,8 @@ export default class AllocationPlans extends React.Component {
           } else {
             self._expenseSaved(expense.index, resp);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -276,17 +283,14 @@ export default class AllocationPlans extends React.Component {
   deleteExpense = (e) => {
     e.preventDefault();
     var modal = this.state.modal;
-    var self = this;
-
     if (modal.item.id !== undefined) {
       destroyExpense(modal.item.id)
         .then((resp) => {
           if (resp.success) {
-            self._expenseDeleted(modal.item.budget_item_id, modal.index);
-          } else {
-            self._fetchDataFail(resp.message);
+            this._expenseDeleted(modal.item.budget_item_id, modal.index);
           }
-        });
+        })
+        .catch(this._fetchDataFail)
     }
   }
 
@@ -323,7 +327,8 @@ export default class AllocationPlans extends React.Component {
     importCategory(this.state.category.id)
       .then((resp) => {
         self.importFinished(resp.imported, resp.message);
-      });
+      })
+      .catch(this._fetchDataFail)
   }
 
   importFinished = (imported_items, message) => {
@@ -373,6 +378,7 @@ export default class AllocationPlans extends React.Component {
       .then((resp) => {
         this.setState({allocation_plan: resp.allocation_plan});
       })
+      .catch(this._fetchDataFail)
   }
 
   cancelPlanModal = () => {
@@ -415,7 +421,8 @@ export default class AllocationPlans extends React.Component {
         if (!resp.errors) {
           this.planSaved(resp);
         }
-      });
+      })
+      .catch(this._fetchDataFail)
   }
 
   notAllocated(allocation_plan) {

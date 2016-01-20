@@ -25,6 +25,10 @@ export default class CashFlowPlans extends React.Component {
     }
   }
 
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
   componentDidMount() {
     this._fetchBudget(this.props.params.year);
   }
@@ -43,9 +47,8 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _fetchBudget(year) {
-    let self = this;
     allItems(year)
-      .then((budget) => {self._budgetFetched(budget)})
+      .then((budget) => {this._budgetFetched(budget)})
       .catch(this._budgetFetchFailed)
   }
 
@@ -60,6 +63,7 @@ export default class CashFlowPlans extends React.Component {
             self._budgetItemSaved(data.index, budget_item)
           }
         })
+        .catch(this._budgetFetchFailed)
     } else {
       updateItem(data)
         .then((budget_item) => {
@@ -69,6 +73,7 @@ export default class CashFlowPlans extends React.Component {
             self._budgetItemSaved(data.index, budget_item)
           }
         })
+        .catch(this._budgetFetchFailed)
     }
   }
 
@@ -100,6 +105,7 @@ export default class CashFlowPlans extends React.Component {
             self._budgetItemDeleted(index)
           }
         })
+        .catch(this._budgetFetchFailed)
     }
   }
 
@@ -119,12 +125,9 @@ export default class CashFlowPlans extends React.Component {
     history.pushState({title: document.title}, 'Budgetal', budget.year);
   }
 
-  _budgetFetchFailed(xhr, status, err) {
-    var errors = JSON.parse(xhr.responseText).errors
-    for (idx in errors) {
-      var msg = errors[idx]
-      showMessage(msg)
-    }
+  _budgetFetchFailed = (e) => {
+    showMessage(e.message)
+    this.context.history.replace('/');
   }
 
   changeYear = () => {
