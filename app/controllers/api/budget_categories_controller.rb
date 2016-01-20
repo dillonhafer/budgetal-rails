@@ -1,18 +1,18 @@
 class Api::BudgetCategoriesController < AuthenticatedController
-  include ActionView::Helpers::TextHelper
   helper_method :budget_category, :budget, :message, :imported_items
-
   respond_to :json
 
   private
 
   def imported_items
-    @imported_items ||= budget_category.copy_previous_items
+    category = current_user.budget_categories.find_by(id: params[:id]) || OpenStruct.new(copy_previous_items:[])
+    @imported_items ||= category.copy_previous_items
   end
 
   def message(imported_size=0)
     @message ||= if imported_size > 0
-      "Finished importing #{pluralize imported_size, 'item'}"
+      plural = imported_size > 1 ? 'items' : 'item'
+      "Finished importing #{imported_size} #{plural}"
     else
       "There wasn't anything to import."
     end

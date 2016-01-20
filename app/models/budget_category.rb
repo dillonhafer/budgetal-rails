@@ -39,7 +39,11 @@ class BudgetCategory < ActiveRecord::Base
   end
 
   def previous_items
-    previous_budget.budget_categories.find_by(name: name).budget_items
+    if previous_budget
+      previous_budget.budget_categories.find_by(name: name).budget_items
+    else
+      []
+    end
   end
 
   private
@@ -54,7 +58,7 @@ class BudgetCategory < ActiveRecord::Base
   end
 
   def previous_budget
-    relative_budget(months: -1)
+    @previous_budget ||= relative_budget(months: -1)
   end
 
   def relative_budget(months:)

@@ -3,10 +3,32 @@ require 'support/feature_helper'
 
 feature 'Cash Flow Plans', js: true do
   context 'As a logged in user' do
+    context 'I can import previous budget items' do
+      let(:previous_date) { Date.today.advance(months: -1) }
+      let(:user) { login }
+
+      it 'can import previous budget items' do
+        FactoryGirl.create(:budget, :with_budget_items, user: user, month: previous_date.month, year: previous_date.year)
+        import_items
+        expect(page).to have_selector('.flash-box', text: 'Finished importing 1 item')
+      end
+
+      it 'can import multiple previous budget items' do
+        FactoryGirl.create(:budget, :with_multiple_budget_items, user: user, month: previous_date.month, year: previous_date.year)
+        import_items
+        expect(page).to have_selector('.flash-box', text: 'Finished importing 2 items')
+      end
+
+      it 'can import nothing from the previous budget' do
+        user
+        import_items
+        expect(page).to have_selector('.flash-box', text: "There wasn't anything to import.")
+      end
+    end
+
     it 'can add/edit/delete budget_items and expenses' do
       login
       visit root_path
-      find('#js-user-greeting').click
       click_link "Budgets"
 
       # It creates a budget
@@ -128,5 +150,12 @@ feature 'Cash Flow Plans', js: true do
       click_link 'Delete Saver'
       expect(page).to have_content("You haven't added any budget items yet.")
     end
+  end
+
+  def import_items
+    visit root_path
+    click_link "Budgets"
+    find('.fi-download').click
+    click_on 'Import Charity'
   end
 end

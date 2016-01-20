@@ -11,4 +11,12 @@ FactoryGirl.define do
       FactoryGirl.create :budget_item, budget_category: category
     end
   end
+
+  trait :with_multiple_budget_items do
+    after :create do |budget|
+      category = FactoryGirl.create :budget_category, budget: budget
+      FactoryGirl.create :budget_item, budget_category: category
+      FactoryGirl.create :budget_item, budget_category: category
+    end
+  end
 end
