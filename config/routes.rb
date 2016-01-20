@@ -2,8 +2,8 @@ Budgets::Application.routes.draw do
   root to: 'welcome#index'
 
   get '/privacy' => 'welcome#index'
-  get '/cash-flow-plans/:year/:month' => 'welcome#index'
-  get '/allocation-plans/:year/:month' => 'welcome#index'
+  get '/budgets/:year/:month' => 'welcome#index'
+  get '/detailed-budgets/:year/:month' => 'welcome#index'
   get '/annual-budgets/:year' => 'welcome#index'
   get '/monthly-statistics/:year/:month' => 'welcome#index'
   get '/admin' => 'welcome#index'

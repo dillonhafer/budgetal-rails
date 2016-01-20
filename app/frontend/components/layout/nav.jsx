@@ -56,8 +56,8 @@ export default class Nav extends React.Component {
       var user = JSON.parse(localStorage['user'])
       return (
         <ul className="right">
-          <li><Link to={`/cash-flow-plans/${year}/${month}`}> Budgets</Link></li>
-          <li><Link to={`/allocation-plans/${year}/${month}`}> Detailed Budgets</Link></li>
+          <li><Link to={`/budgets/${year}/${month}`}> Budgets</Link></li>
+          <li><Link to={`/detailed-budgets/${year}/${month}`}> Detailed Budgets</Link></li>
           <li><Link to={`/annual-budgets/${year}`}> Annual Budgets</Link></li>
           <li className="has-dropdown not-click"><a href="javascript:void(0)" id='js-user-greeting' title='this is you!'>Hello, {user.first_name}!</a>
             <ul className="dropdown shadow nav-links">

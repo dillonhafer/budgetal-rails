@@ -121,8 +121,7 @@ export default class CashFlowPlans extends React.Component {
 
   _budgetFetched = (budget) => {
     this.setState({budget});
-    title(budget.year)
-    history.pushState({title: document.title}, 'Budgetal', budget.year);
+    title(budget.year);
   }
 
   _budgetFetchFailed = (e) => {
@@ -132,7 +131,7 @@ export default class CashFlowPlans extends React.Component {
 
   changeYear = () => {
     var year = selectedValue('#annual_budget_year');
-    this._fetchBudget(year);
+    this.context.history.push(`/annual-budgets/${year}`)
     this.hideYearForm();
   }
 

@@ -82,14 +82,14 @@ export default class AllocationPlans extends React.Component {
   changeMonth = (number) => {
     var currentDate = new Date(this.state.budget.year, this.state.budget.month-1, 1);
     var newDate = this.incrementMonth(currentDate, number);
-    this._fetchBudget({year: newDate.getFullYear(), month: newDate.getMonth() + 1});
+    var date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
+    this.context.history.push(`/detailed-budgets/${date.year}/${date.month}`)
   }
 
   changeBudget = () => {
     var year  = selectedValue('#budget_year');
     var month = selectedValue('#budget_month');
-
-    this._fetchBudget({year: year, month: month});
+    this.context.history.push(`/detailed-budgets/${year}/${month}`)
   }
 
   showPlaForm = (e) => {
@@ -106,8 +106,7 @@ export default class AllocationPlans extends React.Component {
       budget: data.budget,
       allocation_plan: data.allocation_plan || {item_groups: []}
     });
-    history.pushState({}, 'Budgetal', `/allocation-plans/${data.budget.year}/${data.budget.month}`);
-    title(`${monthName(data.budget.month)} ${data.budget.year} | Allocated Spending Plans`);
+    title(`${monthName(data.budget.month)} ${data.budget.year} | Detailed Budgets`);
   }
 
   _fetchDataFail = (e) => {

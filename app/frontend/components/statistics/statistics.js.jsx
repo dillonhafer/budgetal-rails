@@ -24,6 +24,10 @@ export default class Statistics extends React.Component {
     }
   }
 
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
   chartData(categories) {
     return _.map(categories, function(category) {
              return {y: parseFloat(category.percent_spent), name: category.name}
@@ -47,8 +51,7 @@ export default class Statistics extends React.Component {
     var year  = selectedValue('#budget_year')
     var month = selectedValue('#budget_month')
 
-    history.pushState({}, 'Budgetal', `/monthly-statistics/${year}/${month}`)
-    this._fetchBudget({year: year, month: month})
+    this.context.history.push(`/monthly-statistics/${year}/${month}`)
     this.setState({showForm: false})
   }
 
@@ -71,12 +74,9 @@ export default class Statistics extends React.Component {
     title(this.title());
   }
 
-  _fetchDataFail(xhr, status, err) {
-    var errors = JSON.parse(xhr.responseText).errors
-    for (idx in errors) {
-      var msg = errors[idx]
-      showMessage(msg)
-    }
+  _fetchDataFail = (e) => {
+    showMessage(e.message)
+    this.context.history.replace('/');
   }
 
   changeCategory(id) {
@@ -88,15 +88,11 @@ export default class Statistics extends React.Component {
   }
 
   _fetchBudget(data) {
-    var self = this;
     findStatistic(data)
       .then((resp) => {
-        if (!!resp.errors) {
-          self._fetchDataFail
-        } else {
-          self._fetchDataDone(resp.budget)
-        }
+        this._fetchDataDone(resp.budget)
       })
+      .catch(this._fetchDataFail)
   }
 
   statistics() {

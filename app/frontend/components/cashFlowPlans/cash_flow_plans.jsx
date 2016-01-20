@@ -101,14 +101,14 @@ export default class CashFlowPlans extends React.Component {
   changeMonth = (number) => {
     var currentDate = new Date(this.state.budget.year, this.state.budget.month-1, 1);
     var newDate = this.incrementMonth(currentDate, number);
-    this._fetchBudget({year: newDate.getFullYear(), month: newDate.getMonth() + 1});
+    var date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
+    this.context.history.push(`/budgets/${date.year}/${date.month}`)
   }
 
   changeBudget = () => {
     var year  = selectedValue('#budget_year');
     var month = selectedValue('#budget_month');
-
-    this._fetchBudget({year: year, month: month});
+    this.context.history.push(`/budgets/${year}/${month}`)
   }
 
   showForm = (e) => {
@@ -126,7 +126,6 @@ export default class CashFlowPlans extends React.Component {
       budget: data.budget,
       category: data.budget_category
     });
-    history.pushState({}, 'Budgetal', `/cash-flow-plans/${data.budget.year}/${data.budget.month}`);
     title(`${monthName(data.budget.month)} ${data.budget.year}`);
   }
 

@@ -69,8 +69,8 @@ render((
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="privacy" component={Privacy} />
-      <Route path="cash-flow-plans/:year/:month" component={CashFlowPlans} onEnter={requireAuth} />
-      <Route path='allocation-plans/:year/:month' component={AllocationPlans} onEnter={requireAuth} />
+      <Route path="budgets/:year/:month" component={CashFlowPlans} onEnter={requireAuth} />
+      <Route path='detailed-budgets/:year/:month' component={AllocationPlans} onEnter={requireAuth} />
       <Route path='annual-budgets/:year' component={AnnualBudgetItems} onEnter={requireAuth} />
       <Route path='monthly-statistics/:year/:month' component={Statistics} onEnter={requireAuth} />
       <Route path='admin' component={Admin} onEnter={requireAuth} />
