@@ -119,6 +119,20 @@ export default class Statistics extends React.Component {
     return `${month} ${this.props.params.year}`
   }
 
+  incrementMonth = (date, number) => {
+    var year     = date.getFullYear();
+    var month    = date.getMonth();
+    var newMonth = month + number;
+    return new Date(year, newMonth);
+  }
+
+  changeMonth = (number) => {
+    var currentDate = new Date(this.props.params.year, this.props.params.month-1, 1);
+    var newDate = this.incrementMonth(currentDate, number);
+    var date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
+    this.context.history.push(`/monthly-statistics/${date.year}/${date.month}`)
+  }
+
   render() {
     let formClasses = classNames({
       'tooltip annual-budget-tooltip animate': true,
@@ -135,8 +149,12 @@ export default class Statistics extends React.Component {
               <i className="fi-icon fi-calendar"></i>
             </a>
             <span className={formClasses}>
+              <p className='text-center size-12'>
+                <i onClick={this.changeMonth.bind(null,-1)} className='fi-arrow-left size-16'></i>
+                Change Budget
+                <i onClick={this.changeMonth.bind(null,1)} className='fi-arrow-right size-16'></i>
+              </p>
               <p>
-                <label htmlFor="budget_month">Change Budget</label>
                 <select id="budget_month" value={budget.month} onBlur={this.hideForm} onChange={this.changeBudget}>{monthOptions()}</select>
                 <select id="budget_year" value={budget.year} onBlur={this.hideForm} onChange={this.changeBudget}>{yearOptions()}</select>
               </p>
