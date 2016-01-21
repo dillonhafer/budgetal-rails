@@ -7,7 +7,6 @@ feature 'Allocation Plans', js: true do
       it 'I can add/update a pay period' do
         user = login_with
         visit root_path
-        click_on "Hello, #{user.first_name}!"
         click_on 'Detailed Budgets'
 
         # I see that I have no pay periods
@@ -19,7 +18,6 @@ feature 'Allocation Plans', js: true do
         within('.overlay') do
           fill_in 'income', with: '300'
           expect(page).to have_field('income', with: '300')
-          expect(page).not_to have_content("Income can't be blank")
 
           within('.start-date') do
             expect(page).to have_selector('.input-calendar')
