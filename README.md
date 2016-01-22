@@ -117,9 +117,6 @@ $ mina setup
 $ mina deploy
 ```
 
-TODO:
- - [ ] Add deployment config env variables
-
 ## Credits
 
 [![Budgetal](https://s3.amazonaws.com/cdn.budgetal.com/b.png)](https://www.budgetal.com)
