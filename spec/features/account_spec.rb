@@ -18,6 +18,7 @@ feature 'Account', js: true do
       find('#js-user-greeting').click
       click_on 'Account Settings'
       expect(page).to have_selector('h3', text: 'ACCOUNT SETTINGS', count: 1)
+      expect(page).to have_selector('h3', text: 'SESSIONS', count: 1)
     end
   end
 end
