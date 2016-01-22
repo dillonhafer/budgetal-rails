@@ -1,6 +1,10 @@
 import _ from 'lodash';
 
 export default {
+  currentUser() {
+    return JSON.parse(localStorage['user'])
+  },
+
   title(string) {
     document.title = `${string} | Budgetal`;
   },
