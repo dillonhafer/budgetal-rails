@@ -19,6 +19,14 @@ export default {
     document.title = `${string} | Budgetal`;
   },
 
+  pluralize(count, singlular, plural) {
+    let word = plural;
+    if (count === 1)
+      word = singlular;
+
+    return `${count} ${word}`;
+  },
+
   userAuthenticated() {
     return localStorage.getItem('user') !== null;
   },
