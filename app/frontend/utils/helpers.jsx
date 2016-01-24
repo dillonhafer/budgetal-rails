@@ -1,8 +1,18 @@
 import _ from 'lodash';
+import parser from 'ua-parser-js';
 
 export default {
   currentUser() {
     return JSON.parse(localStorage['user'])
+  },
+
+  currentSession() {
+    return JSON.parse(localStorage['session'])
+  },
+
+  humanUA(userAgent) {
+    let ua = parser(userAgent);
+    return `${ua.browser.name} ${ua.browser.major} on ${ua.os.name}`;
   },
 
   title(string) {
