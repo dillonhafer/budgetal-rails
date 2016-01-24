@@ -1,5 +1,5 @@
 import React from 'react';
-import {currentUser, title, currentSession, humanUA} from '../../utils/helpers';
+import {currentUser, title, currentSession, humanUA, pluralize} from '../../utils/helpers';
 
 import {allSessions} from '../../data/sessions';
 
@@ -44,8 +44,23 @@ export default class AccountSettings extends React.Component {
     this.setState({sessions: data.sessions});
   }
 
+  fullSessionDate(date) {
+    let sessionDate = new Date(date);
+    return `${sessionDate.toDateString()} at ${sessionDate.toLocaleTimeString()}`;
+  }
+
+  sessionDate = (date) => {
+    let startDate = new Date(date);
+    let secs = Math.floor(((new Date).getTime() - startDate.getTime()) / 1000);
+    if (secs < 3600) return `${pluralize(Math.floor(secs / 60), 'minute', 'minutes')} ago`;
+    if (secs < 86400) return `${pluralize(Math.floor(secs / 3600), 'hour', 'hours')} ago`;
+    if (secs < 604800) return `${pluralize(Math.floor(secs / 86400), 'day', 'days')} ago`;
+    return this.fullSessionDate(date);
+  }
+
   render() {
-    var user = this.state.user;
+    let user    = this.state.user;
+    let session = currentSession();
     return (
       <div className='row collapse'>
         <div className='large-12 columns header-row'>
@@ -77,17 +92,18 @@ export default class AccountSettings extends React.Component {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>{humanUA(navigator.userAgent)}</td>
-                        <td>{currentSession.created_at}</td>
+                      <tr title={`Signed in from ${session.ip}`}>
+                        <td>{humanUA(session.user_agent)}</td>
+                        <td>{this.sessionDate(session.created_at)}</td>
                         <td>(Current Session)</td>
                       </tr>
                     {
                       this.state.sessions.active.map((session, index) => {
+                        let ipTitle = `Signed in from ${session.ip}`;
                         return (
-                          <tr key={index}>
+                          <tr key={index} title={ipTitle}>
                             <td>{humanUA(session.user_agent)}</td>
-                            <td>{session.created_at}</td>
+                            <td>{this.sessionDate(session.created_at)}</td>
                             <td><a className='tiny alert button radius'>End Session</a></td>
                           </tr>
                         )
@@ -111,11 +127,12 @@ export default class AccountSettings extends React.Component {
                     <tbody>
                     {
                       this.state.sessions.expired.map((session, index) => {
+                        let ipTitle = `Signed in from ${session.ip}`;
                         return (
-                          <tr key={index}>
+                          <tr key={index} title={ipTitle}>
                             <td>{humanUA(session.user_agent)}</td>
-                            <td>{session.created_at}</td>
-                            <td>{session.expired_at}</td>
+                            <td>{this.sessionDate(session.created_at)}</td>
+                            <td>{this.fullSessionDate(session.expired_at)}</td>
                           </tr>
                         )
                       })
