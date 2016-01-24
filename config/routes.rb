@@ -51,5 +51,6 @@ Budgets::Application.routes.draw do
     get '/past-expenses/:name' => 'users#past_expenses'
 
     get '/admin/users' => 'admin#users'
+    get '/sessions' => 'sessions#index'
   end
 end

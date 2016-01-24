@@ -2,6 +2,12 @@ class Api::SessionsController < AuthenticatedController
   skip_before_action :authenticate_user_from_token, only: [:create]
   respond_to :json
 
+  def index
+    render json: {
+      sessions: sessions
+    }
+  end
+
   def create
     user = User.find_for_database_authentication(email: params[:user][:email])
     return invalid_login_attempt unless user
@@ -28,5 +34,14 @@ class Api::SessionsController < AuthenticatedController
       success: false,
       message: "Incorrect email or password"
     }, status: 422
+  end
+
+  private
+
+  def sessions
+    {
+      active: current_user.sessions.active.where('authentication_key <> ?', request.headers.fetch('HTTP_X_AUTHENTICATION_KEY')).order('created_at desc'),
+      expired: current_user.sessions.expired.order('expired_at desc').limit(10)
+    }
   end
 end
