@@ -3,9 +3,7 @@ class Api::SessionsController < AuthenticatedController
   respond_to :json
 
   def index
-    render json: {
-      sessions: sessions
-    }
+    render json: sessions
   end
 
   def create
@@ -22,8 +20,12 @@ class Api::SessionsController < AuthenticatedController
   end
 
   def destroy
-    current_user.expire_session(authentication_key: request.headers.fetch('HTTP_X_AUTHENTICATION_KEY'))
-    render json: {success: true, message: 'You are now signed out.'}
+    current_user.expire_session(authentication_key: authentication_key)
+    if params[:authentication_key]
+      render json: sessions
+    else
+      render json: {success: true, message: 'You are now signed out.'}
+    end
   end
 
   protected
@@ -38,10 +40,16 @@ class Api::SessionsController < AuthenticatedController
 
   private
 
+  def authentication_key
+    params.fetch(:authentication_key, request.headers.fetch('HTTP_X_AUTHENTICATION_KEY'))
+  end
+
   def sessions
     {
-      active: current_user.sessions.active.where('authentication_key <> ?', request.headers.fetch('HTTP_X_AUTHENTICATION_KEY')).order('created_at desc'),
-      expired: current_user.sessions.expired.order('created_at desc').limit(10)
+      sessions: {
+        active: current_user.sessions.active.where('authentication_key <> ?', request.headers.fetch('HTTP_X_AUTHENTICATION_KEY')).order('created_at desc'),
+        expired: current_user.sessions.expired.order('created_at desc').limit(10)
+      }
     }
   end
 end
