@@ -41,7 +41,7 @@ class Api::SessionsController < AuthenticatedController
   def sessions
     {
       active: current_user.sessions.active.where('authentication_key <> ?', request.headers.fetch('HTTP_X_AUTHENTICATION_KEY')).order('created_at desc'),
-      expired: current_user.sessions.expired.order('expired_at desc').limit(10)
+      expired: current_user.sessions.expired.order('created_at desc').limit(10)
     }
   end
 end
