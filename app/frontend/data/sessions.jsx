@@ -11,6 +11,9 @@ export default {
     return deleteRequest('/sessions/sign-out');
   },
   allSessions() {
-    return getRequest('/sessions')
+    return getRequest('/sessions');
+  },
+  endSession(session) {
+    return deleteRequest(`/sessions/sign-out?authentication_key=${session.authentication_key}`);
   }
 }

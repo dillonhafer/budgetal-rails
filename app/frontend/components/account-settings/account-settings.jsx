@@ -1,7 +1,8 @@
 import React from 'react';
 import {currentUser, title, currentSession, humanUA, pluralize} from '../../utils/helpers';
-
-import {allSessions} from '../../data/sessions';
+import Modal from '../../utils/modal';
+import EndSession from './end-session';
+import {allSessions, endSession} from '../../data/sessions';
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
@@ -15,7 +16,9 @@ export default class AccountSettings extends React.Component {
       ],
       active: [
       ]
-    }
+    },
+    showEndSession: false,
+    endSession: {}
   }
 
   static contextTypes = {
@@ -58,9 +61,40 @@ export default class AccountSettings extends React.Component {
     return this.fullSessionDate(date);
   }
 
+  endSession = (session) => {
+    endSession(session)
+      .then((resp) => {
+        this.endSessionDone(resp.sessions)
+      })
+      .catch(this._fetchDataFail)
+  }
+
+  endSessionDone(sessions) {
+    showMessage('Session Ended');
+    this.setState({sessions})
+    this.cancelEndSession();
+  }
+
+  cancelEndSession = (e) => {
+    if (e) { e.preventDefault() }
+    this.setState({
+      showEndSession: false,
+      endSession: {}
+    });
+  }
+
+  showEndSession = (session, e) => {
+    e.preventDefault();
+    this.setState({
+      showEndSession: true,
+      endSession: session
+    });
+  }
+
   render() {
-    let user    = this.state.user;
-    let session = currentSession();
+    let user       = this.state.user;
+    let session    = currentSession();
+    let endSession = <EndSession end={this.endSession} session={this.state.endSession} />;
     return (
       <div className='row collapse'>
         <div className='large-12 columns header-row'>
@@ -82,6 +116,7 @@ export default class AccountSettings extends React.Component {
             <li>
               <div className='row'>
                 <div className="small-12 large-12 columns">
+                  <Modal title='End Session' hidden={this.state.showEndSession} cancel={this.cancelEndSession} modalType='alert' modalSize='tiny' content={endSession} />
                   <table>
                     <caption><b>Active Sessions</b></caption>
                     <thead>
@@ -104,7 +139,7 @@ export default class AccountSettings extends React.Component {
                           <tr key={index} title={ipTitle}>
                             <td>{humanUA(session.user_agent)}</td>
                             <td>{this.sessionDate(session.created_at)}</td>
-                            <td><a className='tiny alert button radius'>End Session</a></td>
+                            <td><a onClick={this.showEndSession.bind(null, session)} className='tiny alert button radius'>End Session</a></td>
                           </tr>
                         )
                       })
