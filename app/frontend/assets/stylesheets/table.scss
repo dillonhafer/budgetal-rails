@@ -2,6 +2,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
+
+  caption {
+    padding: 1.25em;
+    text-decoration: underline;
+  }
 }
 
 thead, tbody, tfoot {

@@ -97,6 +97,12 @@ button, .button {
   width: 100%;
 }
 
+td {
+  button, .button {
+    margin-bottom: 0;
+  }
+}
+
 @media only screen and (min-width: 40.063em) {
   button, .button {
     display: inline-block;
