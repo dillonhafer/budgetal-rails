@@ -1,6 +1,7 @@
 import React from 'react';
-import parser from 'ua-parser-js';
-import {currentUser} from '../../utils/helpers';
+import {currentUser, title, currentSession, humanUA} from '../../utils/helpers';
+
+import {allSessions} from '../../data/sessions';
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
@@ -17,9 +18,30 @@ export default class AccountSettings extends React.Component {
     }
   }
 
-  humanUA(userAgent) {
-    let ua = parser(userAgent);
-    return `${ua.browser.name} ${ua.browser.major} on ${ua.os.name}`;
+  static contextTypes = {
+    history: React.PropTypes.object.isRequired
+  }
+
+  componentDidMount = () => {
+    title('Account Settings');
+    this._fetchSessions();
+  }
+
+  _fetchSessions = () => {
+    allSessions()
+      .then((resp) => {
+        this._fetchDataDone(resp);
+      })
+      .catch(this._fetchDataFail)
+  }
+
+  _fetchDataFail = (e) => {
+    showMessage(e.message)
+    this.context.history.replace('/');
+  }
+
+  _fetchDataDone = (data) => {
+    this.setState({sessions: data.sessions});
   }
 
   render() {
@@ -44,37 +66,62 @@ export default class AccountSettings extends React.Component {
           <ul className="main-budget-categories">
             <li>
               <div className='row'>
-                <div className='small-12 columns'>
-                  <b>Current Session:</b> {this.humanUA(navigator.userAgent)}
-                </div>
-              </div>
-              <div className='row'>
-                <div className="small-6 large-6 columns">
-                  <b>Active Sessions</b>
-                  <ul>
+                <div className="small-12 large-12 columns">
+                  <table>
+                    <caption><b>Active Sessions</b></caption>
+                    <thead>
+                      <tr>
+                        <th>Browser</th>
+                        <th>Signed in</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{humanUA(navigator.userAgent)}</td>
+                        <td>{currentSession.created_at}</td>
+                        <td>(Current Session)</td>
+                      </tr>
                     {
                       this.state.sessions.active.map((session, index) => {
                         return (
-                          <li key={index}>
-                            {this.humanUA(session.user_agent)}
-                            <a className='tiny alert button radius'>End Session</a>
-                          </li>
+                          <tr key={index}>
+                            <td>{humanUA(session.user_agent)}</td>
+                            <td>{session.created_at}</td>
+                            <td><a className='tiny alert button radius'>End Session</a></td>
+                          </tr>
                         )
                       })
                     }
-                  </ul>
+                    </tbody>
+                  </table>
                 </div>
-                <div className="small-6 large-6 columns">
-                  <b>Expired Sessions</b>
-                  <ul>
+              </div>
+              <div className='row'>
+                <div className="small-12 large-12 columns">
+                  <table>
+                    <caption><b>Expired Sessions (last 10)</b></caption>
+                    <thead>
+                      <tr>
+                        <th>Browser</th>
+                        <th>Signed in</th>
+                        <th>Signed out</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                     {
                       this.state.sessions.expired.map((session, index) => {
                         return (
-                          <li key={index}>{this.humanUA(session.user_agent)}</li>
+                          <tr key={index}>
+                            <td>{humanUA(session.user_agent)}</td>
+                            <td>{session.created_at}</td>
+                            <td>{session.expired_at}</td>
+                          </tr>
                         )
                       })
                     }
-                  </ul>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </li>
