@@ -62,7 +62,7 @@ export default class Nav extends React.Component {
           <li className="has-dropdown not-click"><a href="javascript:void(0)" id='js-user-greeting' title='this is you!'>Hello, {user.first_name}!</a>
             <ul className="dropdown shadow nav-links">
               <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('graph-pie')} Statistics (for geeks)</Link></li>
-              <li><a href='/account'>{this.icon('widget')} Account Settings</a></li>
+              <li><Link to='/account-settings'>{this.icon('widget')} Account Settings</Link></li>
               {this.adminLink(user.admin)}
               <li><a onClick={this.signOut} title="Sign out" rel="nofollow" href="#">{this.icon('x')} Sign out</a></li>
             </ul>

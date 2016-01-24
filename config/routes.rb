@@ -7,7 +7,7 @@ Budgets::Application.routes.draw do
   get '/annual-budgets/:year'            => 'welcome#index'
   get '/monthly-statistics/:year/:month' => 'welcome#index'
   get '/admin'                           => 'welcome#index'
-  get '/account'                         => 'welcome#index'
+  get '/account-settings'                => 'welcome#index'
 
   devise_for :users,
              path: 'sessions',
@@ -22,9 +22,9 @@ Budgets::Application.routes.draw do
              }
 
   namespace :api, defaults: {format: 'json'} do
-    devise_for :users,
-               path: 'sessions',
+    devise_for :users, path: 'sessions',
                path_names: { sign_in: 'sign-in', sign_out: 'sign-out', registration: 'sign-up' }
+    get '/sessions' => 'sessions#index'
 
     resources :budgets, only: [:update]
     get '/budget-categories/:id/import' => 'budget_categories#import'
@@ -47,10 +47,8 @@ Budgets::Application.routes.draw do
     get "/monthly-statistics/:year/:month" => "monthly_statistics#show"
     get "/monthly-statistics-budget/:year/:month" => "monthly_statistics#budget"
 
-    get '/my-account' => 'users#my_account'
     get '/past-expenses/:name' => 'users#past_expenses'
 
     get '/admin/users' => 'admin#users'
-    get '/sessions' => 'sessions#index'
   end
 end

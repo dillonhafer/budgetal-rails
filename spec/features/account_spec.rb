@@ -5,7 +5,7 @@ feature 'Account', js: true do
   context 'Without a logged in user' do
     it 'gets redirected' do
       sign_out
-      visit '/account'
+      visit '/account-settings'
       expect(page).to have_selector('.flash-box')
       expect(page).not_to have_selector('#js-user-greeting')
       expect(current_path).to eq('/')
