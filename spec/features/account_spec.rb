@@ -4,6 +4,7 @@ require 'support/feature_helper'
 feature 'Account', js: true do
   context 'Without a logged in user' do
     it 'gets redirected' do
+      sign_out
       visit '/account'
       expect(page).to have_selector('.flash-box')
       expect(page).not_to have_selector('#js-user-greeting')

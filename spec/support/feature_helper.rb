@@ -26,6 +26,11 @@ module FeatureHelper
       localStorage.setItem('user', JSON.stringify(user));
     JS
   end
+
+  def sign_out
+    visit '/'
+    page.execute_script "localStorage.clear()"
+  end
 end
 
 RSpec.configure do |config|
