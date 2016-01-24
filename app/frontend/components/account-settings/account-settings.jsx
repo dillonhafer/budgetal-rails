@@ -19,16 +19,32 @@ export default class AccountSettings extends React.Component {
       ]
     },
     showEndSession: false,
-    endSession: {}
+    endSession: {},
+    currentTime: (new Date).getTime()
   }
 
   static contextTypes = {
     history: React.PropTypes.object.isRequired
   }
 
+  componentWillUnmount() {
+    window.clearInterval(this.state.intervalId);
+  }
+
   componentDidMount = () => {
     title('Account Settings');
     this._fetchSessions();
+    this._startTimer();
+  }
+
+  _startTimer = () => {
+    let intervalId = setInterval(this.updateTime, 60000);
+    this.setState({intervalId});
+  }
+
+  updateTime = () => {
+    let currentTime = (new Date).getTime();
+    this.setState({currentTime});
   }
 
   _fetchSessions = () => {
@@ -53,9 +69,9 @@ export default class AccountSettings extends React.Component {
     return `${sessionDate.toDateString()} at ${sessionDate.toLocaleTimeString()}`;
   }
 
-  sessionDate = (date) => {
+  sessionDate = (currentTime, date) => {
     let startDate = new Date(date);
-    let secs = Math.floor(((new Date).getTime() - startDate.getTime()) / 1000);
+    let secs = Math.floor((currentTime - startDate.getTime()) / 1000);
     if (secs < 3600) return `${pluralize(Math.floor(secs / 60), 'minute', 'minutes')} ago`;
     if (secs < 86400) return `${pluralize(Math.floor(secs / 3600), 'hour', 'hours')} ago`;
     if (secs < 604800) return `${pluralize(Math.floor(secs / 86400), 'day', 'days')} ago`;
@@ -193,7 +209,7 @@ export default class AccountSettings extends React.Component {
                     <tbody>
                       <tr title={`Signed in from ${session.ip}`}>
                         <td>{humanUA(session.user_agent)}</td>
-                        <td>{this.sessionDate(session.created_at)}</td>
+                        <td>{this.sessionDate(this.state.currentTime, session.created_at)}</td>
                         <td>(Current Session)</td>
                       </tr>
                     {
@@ -202,7 +218,7 @@ export default class AccountSettings extends React.Component {
                         return (
                           <tr key={index} title={ipTitle}>
                             <td>{humanUA(session.user_agent)}</td>
-                            <td>{this.sessionDate(session.created_at)}</td>
+                            <td>{this.sessionDate(this.state.currentTime, session.created_at)}</td>
                             <td><a onClick={this.showEndSession.bind(null, session)} className='tiny alert button radius'>End Session</a></td>
                           </tr>
                         )
@@ -230,7 +246,7 @@ export default class AccountSettings extends React.Component {
                         return (
                           <tr key={index} title={ipTitle}>
                             <td>{humanUA(session.user_agent)}</td>
-                            <td>{this.sessionDate(session.created_at)}</td>
+                            <td>{this.sessionDate(this.state.currentTime, session.created_at)}</td>
                             <td>{this.fullSessionDate(session.expired_at)}</td>
                           </tr>
                         )
