@@ -2,7 +2,7 @@ import React from 'react';
 import {changePassword} from '../../data/user';
 import InputField from '../forms/input_field';
 
-export default class AccountSettings extends React.Component {
+export default class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
   }
