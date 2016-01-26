@@ -11,7 +11,7 @@ class AuthenticatedController < ApplicationController
     active_session = Session.active.find_by(authentication_key: auth_key)
 
     if active_session && Devise.secure_compare(active_session.authentication_token, auth_token)
-      @current_user = active_session.user
+      @current_user ||= active_session.user
     else
       render json: {success: false, message: 'You must sign in or up before continuing'}, status: 401 and return
     end

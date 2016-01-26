@@ -25,13 +25,18 @@ class ApplicationController < ActionController::Base
     {
       session: {
         authentication_key: session.authentication_key,
-        authentication_token: session.authentication_token
+        authentication_token: session.authentication_token,
+        user_agent: session.user_agent,
+        ip: session.ip,
+        created_at: session.created_at
       },
       user: {
         first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
         admin: user.admin?
       },
-      success: true,
+      success: true
     }
   end
 

@@ -32,8 +32,3 @@ def user
     password: 'Password1'
   }
 end
-
-def sign_out
-  visit '/'
-  page.execute_script "localStorage.clear()"
-end

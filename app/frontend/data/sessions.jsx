@@ -1,4 +1,4 @@
-import {postRequest, deleteRequest} from './api';
+import {getRequest, postRequest, deleteRequest} from './api';
 
 export default {
   signIn(data) {
@@ -9,5 +9,11 @@ export default {
   },
   signOut() {
     return deleteRequest('/sessions/sign-out');
+  },
+  allSessions() {
+    return getRequest('/sessions');
+  },
+  endSession(session) {
+    return deleteRequest(`/sessions/sign-out?authentication_key=${session.authentication_key}`);
   }
 }

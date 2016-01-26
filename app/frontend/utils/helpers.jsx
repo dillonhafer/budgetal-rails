@@ -1,8 +1,30 @@
 import _ from 'lodash';
+import parser from 'ua-parser-js';
 
 export default {
+  currentUser() {
+    return JSON.parse(localStorage['user'])
+  },
+
+  currentSession() {
+    return JSON.parse(localStorage['session'])
+  },
+
+  humanUA(userAgent) {
+    let ua = parser(userAgent);
+    return `${ua.browser.name} ${ua.browser.major} on ${ua.os.name}`;
+  },
+
   title(string) {
     document.title = `${string} | Budgetal`;
+  },
+
+  pluralize(count, singlular, plural) {
+    let word = plural;
+    if (count === 1)
+      word = singlular;
+
+    return `${count} ${word}`;
   },
 
   userAuthenticated() {
