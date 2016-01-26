@@ -19,7 +19,7 @@ export default {
 }
 
 function requestOk(request) {
-  return request.ok || [401, 422].includes(request.status);
+  return request.ok || request.status === 422;
 }
 
 function getSession() {
@@ -49,7 +49,7 @@ function request(method, path, body) {
       localStorage.clear();
       let json = r.json();
       return json.then(Promise.reject.bind(Promise));
-    } else if (r.ok) {
+    } else if (requestOk(r)) {
       return r.json();
     } else {
       return {success: false, message: r.statusText};
