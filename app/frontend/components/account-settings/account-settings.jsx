@@ -3,7 +3,9 @@ import {currentUser, title, currentSession, humanUA, pluralize} from '../../util
 import Modal from '../../utils/modal';
 import EndSession from './end-session';
 import {allSessions, endSession} from '../../data/sessions';
+import {updateAccountInfo} from '../../data/user';
 import InputField from '../forms/input_field';
+import ChangePassword from './change-password';
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
@@ -156,36 +158,7 @@ export default class AccountSettings extends React.Component {
         </div>
 
         <div className='large-5 columns'>
-          <div className='row collapse'>
-            <div className='large-12 columns header-row'>
-              <h3>Change Password</h3>
-            </div>
-            <div className="small-12 large-12 columns">
-              <ul className="main-budget-categories">
-                <li>
-                  <div className='row '>
-                    <form onSubmit={this.save}>
-                      <div className='large-12 medium-12 columns'>
-                        <label htmlFor='password'>New Password</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='password' id='password' name='password' placeholder='New Password' value={user.current_password} errors={user.errors} />
-                      </div>
-                      <div className='large-12 medium-12 columns'>
-                        <label htmlFor='password_confirmation'>Password Confirmation</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='password' id='password_confirmation' name='password_confirmation' placeholder='Password Confirmation' value={user.current_password} errors={user.errors} />
-                      </div>
-                      <div className='large-12 medium-12 columns'>
-                        <label htmlFor='current_password_change'>Current Password</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='password' id='current_password_change' name='current_password' placeholder='Current Password' value={user.current_password} errors={user.errors} />
-                      </div>
-                      <div className='large-12 medium-12 columns'>
-                        <button type='submit' title='Update' className='tiny success radius button'><i className='fi-icon fi-check'></i> Change Password</button>
-                      </div>
-                    </form>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <ChangePassword />
         </div>
 
         <div className='large-12 columns header-row'>
