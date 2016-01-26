@@ -1,11 +1,10 @@
 import React from 'react';
-import {currentUser, title, currentSession, humanUA, pluralize} from '../../utils/helpers';
+import {title, currentSession, humanUA, pluralize} from '../../utils/helpers';
 import Modal from '../../utils/modal';
 import EndSession from './end-session';
 import {allSessions, endSession} from '../../data/sessions';
-import {updateAccountInfo} from '../../data/user';
-import InputField from '../forms/input_field';
 import ChangePassword from './change-password';
+import UpdateAccountInfo from './update-account-info';
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
@@ -13,7 +12,6 @@ export default class AccountSettings extends React.Component {
   }
 
   state = {
-    user: currentUser(),
     sessions: {
       expired: [
       ],
@@ -110,10 +108,6 @@ export default class AccountSettings extends React.Component {
     });
   }
 
-  update = (user) => {
-
-  }
-
   render() {
     let user       = this.state.user;
     let session    = currentSession();
@@ -121,40 +115,7 @@ export default class AccountSettings extends React.Component {
     return (
       <div className='row'>
         <div className='large-7 columns'>
-          <div className='row collapse'>
-            <div className='large-12 columns header-row'>
-              <h3>Account Info</h3>
-            </div>
-            <div className="small-12 large-12 columns">
-              <ul className="main-budget-categories">
-                <li>
-                  <div className='row collapse'>
-                    <form onSubmit={this.save}>
-                      <div className="large-6 medium-6 columns">
-                        <label htmlFor='first_name'>First Name</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='text' id='first_name' name='first_name' placeholder='First Name' value={user.first_name} errors={user.errors} />
-                      </div>
-                      <div className="large-6 medium-6 columns">
-                        <label htmlFor='last_name'>Last Name</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='text' id='last_name' name='last_name' placeholder='Last Name' value={user.last_name} errors={user.errors} />
-                      </div>
-                      <div className='large-12 medium-12 columns'>
-                        <label htmlFor='email'>Email</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='email' id='email' name='email' placeholder='email@example.com' value={user.email} errors={user.errors} />
-                      </div>
-                      <div className='large-12 medium-12 columns'>
-                        <label htmlFor='current_password'>Current Password</label>
-                        <InputField onChange={this.update.bind(this, user)} required={true} type='password' id='current_password' name='current_password' placeholder='Current Password' value={user.current_password} errors={user.errors} />
-                      </div>
-                      <div className='large-12 medium-12 columns'>
-                        <button type='submit' title='Update' className='tiny success radius button'><i className='fi-icon fi-check'></i> Update Account Info</button>
-                      </div>
-                    </form>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <UpdateAccountInfo />
         </div>
 
         <div className='large-5 columns'>
