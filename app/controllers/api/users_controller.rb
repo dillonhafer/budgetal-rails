@@ -1,5 +1,5 @@
 class Api::UsersController < AuthenticatedController
-  before_action :check_current_password
+  before_action :check_current_password, except: [:past_expenses]
 
   def past_expenses
     render json: current_user.past_expenses(params[:name])

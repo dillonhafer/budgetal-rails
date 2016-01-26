@@ -18,7 +18,8 @@ feature 'Account', js: true do
       visit root_path
       find('#js-user-greeting').click
       click_on 'Account Settings'
-      expect(page).to have_selector('h3', text: 'ACCOUNT SETTINGS', count: 1)
+      expect(page).to have_selector('h3', text: 'ACCOUNT INFO', count: 1)
+      expect(page).to have_selector('h3', text: 'CHANGE PASSWORD', count: 1)
       expect(page).to have_selector('h3', text: 'SESSIONS', count: 1)
     end
   end
