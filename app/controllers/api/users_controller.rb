@@ -6,7 +6,7 @@ class Api::UsersController < AuthenticatedController
   end
 
   def update_account_info
-    if update_user(change_password_params)
+    if update_user(update_account_info_params)
       render json: {success: true, message: 'Account info updated'}
     else
       render json: {success: false, errors: current_user.errors}, status: 422
