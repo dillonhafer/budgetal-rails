@@ -47,7 +47,9 @@ Budgets::Application.routes.draw do
     get "/monthly-statistics/:year/:month" => "monthly_statistics#show"
     get "/monthly-statistics-budget/:year/:month" => "monthly_statistics#budget"
 
-    get '/past-expenses/:name' => 'users#past_expenses'
+    get  '/past-expenses/:name' => 'users#past_expenses'
+    post '/update-account-info' => 'users#update_account_info'
+    post '/change-password'     => 'users#change_password'
 
     get '/admin/users' => 'admin#users'
   end
