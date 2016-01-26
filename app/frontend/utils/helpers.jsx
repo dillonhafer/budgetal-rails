@@ -3,11 +3,15 @@ import parser from 'ua-parser-js';
 
 export default {
   currentUser() {
-    return JSON.parse(localStorage['user'])
+    return getFromStorage('user');
   },
 
   currentSession() {
-    return JSON.parse(localStorage['session'])
+    return getFromStorage('session');
+  },
+
+  userAuthenticated() {
+    return _.keys(module.exports.currentUser()).length;
   },
 
   humanUA(userAgent) {
@@ -25,10 +29,6 @@ export default {
       word = singlular;
 
     return `${count} ${word}`;
-  },
-
-  userAuthenticated() {
-    return localStorage.getItem('user') !== null;
   },
 
   remainingClass(number) {
@@ -100,4 +100,12 @@ function pad(number, char='0') {
     number = `${char}${number}`;
   }
   return number;
+}
+
+function getFromStorage(key) {
+  let item = localStorage.getItem(key);
+  if (item === null)
+    item = '{}'
+
+  return JSON.parse(item);
 }
