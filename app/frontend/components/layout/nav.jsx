@@ -59,7 +59,10 @@ export default class Nav extends React.Component {
           <li><Link to={`/budgets/${year}/${month}`}> Budgets</Link></li>
           <li><Link to={`/detailed-budgets/${year}/${month}`}> Detailed Budgets</Link></li>
           <li><Link to={`/annual-budgets/${year}`}> Annual Budgets</Link></li>
-          <li className="has-dropdown not-click"><a href="javascript:void(0)" id='js-user-greeting' title='this is you!'>Hello, {user.first_name}!</a>
+          <li className="has-dropdown not-click">
+            <a href="javascript:void(0)" id='js-user-greeting' title='this is you!'>
+              <img src={user.avatar} />Hello, {user.first_name}!
+            </a>
             <ul className="dropdown shadow nav-links">
               <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('graph-pie')} Statistics (for geeks)</Link></li>
               <li><Link to='/account-settings'>{this.icon('widget')} Account Settings</Link></li>

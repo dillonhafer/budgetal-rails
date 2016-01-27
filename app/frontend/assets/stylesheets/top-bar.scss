@@ -294,3 +294,14 @@
     box-shadow: 0 7px 0 #fefefe,0 14px 0 #fefefe;
   }
 }
+
+.has-dropdown {
+  img {
+    vertical-align: middle;
+    margin-right: 10px;
+    border: 1px solid white;
+    width: 30px;
+    height: 30px;
+    @include vendor(border-radius, 15px);
+  }
+}
