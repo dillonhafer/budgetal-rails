@@ -55,7 +55,7 @@ export default class ChangePassword extends React.Component {
           <h3>Change Password</h3>
         </div>
         <div className="small-12 large-12 columns">
-          <ul className="main-budget-categories">
+          <ul className="main-budget-categories account-settings">
             <li>
               <div className='row '>
                 <form onSubmit={this.save} ref='form'>
@@ -71,7 +71,8 @@ export default class ChangePassword extends React.Component {
                     <label htmlFor='current_password_change'>Current Password</label>
                     <InputField onChange={this.update} required={true} type='password' id='current_password_change' name='current_password' placeholder='Current Password' value={passwordChange.current_password} errors={passwordChange.errors} />
                   </div>
-                  <div className='large-12 medium-12 columns'>
+                  <hr />
+                  <div className='large-12 medium-12 columns text-right'>
                     <button type='submit' title='Change Password' className='tiny success radius button'><i className='fi-icon fi-check'></i> Change Password</button>
                   </div>
                 </form>
