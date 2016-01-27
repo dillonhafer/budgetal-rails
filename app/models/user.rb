@@ -17,10 +17,9 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, on: :create
   validates :email, presence: true, uniqueness: true, case_sensitive: false
 
-  has_attached_file :avatar, styles: { thumb: "300x300#" }, default_url: "/images/:style/missing.png"
-  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+  has_attached_file :avatar, styles: { thumb: "300x300#" }, default_url: "/images/missing-profile.png"
 
-  validates_attachment :avatar, presence: true,
+  validates_attachment :avatar,
     content_type: { content_type: /\Aimage\/.*\Z/ },
     size: { in: 0..1.megabytes }
 
