@@ -47,7 +47,8 @@ class User < ActiveRecord::Base
   end
 
   def data_avatar
-    encoded_avatar = File.open(avatar.path(:thumb)) { |f| Base64.encode64(f.read) }
+    path = avatar.path(:thumb) || File.join(Rails.root, 'public', 'images', 'missing-profile.png')
+    encoded_avatar = File.open(path) { |f| Base64.encode64(f.read) }
     "data:#{avatar.content_type};base64,#{encoded_avatar}"
   end
 
