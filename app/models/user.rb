@@ -17,6 +17,13 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, on: :create
   validates :email, presence: true, uniqueness: true, case_sensitive: false
 
+  has_attached_file :avatar, styles: { thumb: "300x300#" }, default_url: "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+
+  validates_attachment :avatar, presence: true,
+    content_type: { content_type: /\Aimage\/.*\Z/ },
+    size: { in: 0..1.megabytes }
+
   after_create :send_welcome_email
 
   def full_name
