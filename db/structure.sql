@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.0
+-- Dumped by pg_dump version 9.5.0
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -44,7 +48,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: allocation_plan_budget_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plan_budget_items; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE allocation_plan_budget_items (
@@ -77,7 +81,7 @@ ALTER SEQUENCE allocation_plan_budget_items_id_seq OWNED BY allocation_plan_budg
 
 
 --
--- Name: allocation_plans; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plans; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE allocation_plans (
@@ -111,7 +115,7 @@ ALTER SEQUENCE allocation_plans_id_seq OWNED BY allocation_plans.id;
 
 
 --
--- Name: annual_budget_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: annual_budget_items; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE annual_budget_items (
@@ -146,7 +150,7 @@ ALTER SEQUENCE annual_budget_items_id_seq OWNED BY annual_budget_items.id;
 
 
 --
--- Name: annual_budgets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: annual_budgets; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE annual_budgets (
@@ -178,7 +182,7 @@ ALTER SEQUENCE annual_budgets_id_seq OWNED BY annual_budgets.id;
 
 
 --
--- Name: budget_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_categories; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE budget_categories (
@@ -211,7 +215,7 @@ ALTER SEQUENCE budget_categories_id_seq OWNED BY budget_categories.id;
 
 
 --
--- Name: budget_item_expenses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_item_expenses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE budget_item_expenses (
@@ -245,7 +249,7 @@ ALTER SEQUENCE budget_item_expenses_id_seq OWNED BY budget_item_expenses.id;
 
 
 --
--- Name: budget_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_items; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE budget_items (
@@ -279,7 +283,7 @@ ALTER SEQUENCE budget_items_id_seq OWNED BY budget_items.id;
 
 
 --
--- Name: budgets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: budgets; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE budgets (
@@ -315,7 +319,7 @@ ALTER SEQUENCE budgets_id_seq OWNED BY budgets.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -324,7 +328,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: sessions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE sessions (
@@ -340,7 +344,7 @@ CREATE TABLE sessions (
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -363,7 +367,11 @@ CREATE TABLE users (
     current_sign_in_at timestamp without time zone,
     last_sign_in_at timestamp without time zone,
     current_sign_in_ip character varying,
-    last_sign_in_ip character varying
+    last_sign_in_ip character varying,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -450,7 +458,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: allocation_plan_budget_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plan_budget_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY allocation_plan_budget_items
@@ -458,7 +466,7 @@ ALTER TABLE ONLY allocation_plan_budget_items
 
 
 --
--- Name: allocation_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY allocation_plans
@@ -466,7 +474,7 @@ ALTER TABLE ONLY allocation_plans
 
 
 --
--- Name: annual_budget_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: annual_budget_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY annual_budget_items
@@ -474,7 +482,7 @@ ALTER TABLE ONLY annual_budget_items
 
 
 --
--- Name: annual_budgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: annual_budgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY annual_budgets
@@ -482,7 +490,7 @@ ALTER TABLE ONLY annual_budgets
 
 
 --
--- Name: budget_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY budget_categories
@@ -490,7 +498,7 @@ ALTER TABLE ONLY budget_categories
 
 
 --
--- Name: budget_item_expenses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_item_expenses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY budget_item_expenses
@@ -498,7 +506,7 @@ ALTER TABLE ONLY budget_item_expenses
 
 
 --
--- Name: budget_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY budget_items
@@ -506,7 +514,7 @@ ALTER TABLE ONLY budget_items
 
 
 --
--- Name: budgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: budgets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY budgets
@@ -514,7 +522,7 @@ ALTER TABLE ONLY budgets
 
 
 --
--- Name: index_budgets_on_user_id_and_year_and_month; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: index_budgets_on_user_id_and_year_and_month; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY budgets
@@ -522,7 +530,7 @@ ALTER TABLE ONLY budgets
 
 
 --
--- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY sessions
@@ -530,7 +538,7 @@ ALTER TABLE ONLY sessions
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -538,98 +546,98 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: active_sessions_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: active_sessions_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX active_sessions_idx ON sessions USING btree (authentication_key) WHERE (expired_at IS NULL);
 
 
 --
--- Name: allocation_plan_bdgt_itms_alc_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plan_bdgt_itms_alc_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX allocation_plan_bdgt_itms_alc_id_idx ON allocation_plan_budget_items USING btree (allocation_plan_id);
 
 
 --
--- Name: allocation_plan_bdgt_itms_budget_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plan_bdgt_itms_budget_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX allocation_plan_bdgt_itms_budget_id_idx ON allocation_plan_budget_items USING btree (budget_item_id);
 
 
 --
--- Name: allocation_plans_budget_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: allocation_plans_budget_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX allocation_plans_budget_id_idx ON allocation_plans USING btree (budget_id);
 
 
 --
--- Name: annual_budget_items_budget_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: annual_budget_items_budget_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX annual_budget_items_budget_id_idx ON annual_budget_items USING btree (annual_budget_id);
 
 
 --
--- Name: annual_budgets_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: annual_budgets_user_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX annual_budgets_user_id_idx ON annual_budgets USING btree (user_id);
 
 
 --
--- Name: budget_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX budget_id_idx ON budget_categories USING btree (budget_id);
 
 
 --
--- Name: budget_item_expenses_item_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_item_expenses_item_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX budget_item_expenses_item_idx ON budget_item_expenses USING btree (budget_item_id);
 
 
 --
--- Name: budget_items_category_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: budget_items_category_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX budget_items_category_idx ON budget_items USING btree (budget_category_id);
 
 
 --
--- Name: budgets_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: budgets_user_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX budgets_user_id_idx ON budgets USING btree (user_id);
 
 
 --
--- Name: index_annual_budgets_on_user_id_and_year; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_annual_budgets_on_user_id_and_year; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_annual_budgets_on_user_id_and_year ON annual_budgets USING btree (user_id, year);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: sessions_user_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: sessions_user_id_idx; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX sessions_user_id_idx ON sessions USING btree (user_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -719,7 +727,7 @@ ALTER TABLE ONLY budgets
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20130309203554');
 
@@ -756,4 +764,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151010144448');
 INSERT INTO schema_migrations (version) VALUES ('20151221065100');
 
 INSERT INTO schema_migrations (version) VALUES ('20160113144631');
+
+INSERT INTO schema_migrations (version) VALUES ('20160127002618');
 
