@@ -38,6 +38,6 @@ class Api::UsersController < AuthenticatedController
   end
 
   def update_account_info_params
-    params.require(:user).permit(:first_name, :last_name, :email)
+    params.require(:user).permit(:first_name, :last_name, :email, :avatar)
   end
 end
