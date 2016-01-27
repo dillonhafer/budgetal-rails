@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'devise',   '~> 3.5'
-gem 'jbuilder', '~> 2.4'
-gem 'pg',       '~> 0.18'
-gem 'rails',    '4.2.5'
+gem 'devise',    '~> 3.5'
+gem 'jbuilder',  '~> 2.4'
+gem 'paperclip', '~> 4.3'
+gem 'pg',        '~> 0.18'
+gem 'rails',     '4.2.5'
 
 group :development, :test do
   gem 'awesome_print'
