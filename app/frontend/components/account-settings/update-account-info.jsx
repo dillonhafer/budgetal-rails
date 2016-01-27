@@ -52,6 +52,24 @@ export default class UpdateAccountInfo extends React.Component {
     this.context.history.replace('/account-settings');
   }
 
+  handleFile = (e) => {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    let user = this.state.user;
+
+    reader.onload = (upload) => {
+      user.avatar = upload.target.result;
+      this.setState({user});
+    }
+
+    reader.readAsDataURL(file);
+  }
+
+  selectFile = (e) => {
+    e.preventDefault();
+    this.refs.file.click();
+  }
+
   render() {
     const user = this.state.user;
     return (
@@ -60,27 +78,34 @@ export default class UpdateAccountInfo extends React.Component {
           <h3>Account Info</h3>
         </div>
         <div className="small-12 large-12 columns">
-          <ul className="main-budget-categories">
+          <ul className="main-budget-categories account-settings">
             <li>
               <div className='row collapse'>
                 <form onSubmit={this.save} ref='form'>
-                  <div className="large-6 medium-6 columns">
+                  <div className='large-4 columns text-center'>
+                    <img className='shadow' style={{height: '140px', width: '140px', border: '5px solid white'}} onClick={this.selectFile} src={user.avatar} />
+                    <br />
+                    <a onClick={this.selectFile} className='button tiny radius'>Upload Photo</a>
+                    <input className='hide' type="file" ref='file' onChange={this.handleFile} />
+                  </div>
+                  <div className="large-8 medium-8 columns">
                     <label htmlFor='first_name'>First Name</label>
                     <InputField onChange={this.update} required={true} type='text' id='first_name' name='first_name' placeholder='First Name' value={user.first_name} errors={user.errors} />
                   </div>
-                  <div className="large-6 medium-6 columns">
+                  <div className="large-8 medium-8 columns">
                     <label htmlFor='last_name'>Last Name</label>
                     <InputField onChange={this.update} required={true} type='text' id='last_name' name='last_name' placeholder='Last Name' value={user.last_name} errors={user.errors} />
                   </div>
-                  <div className='large-12 medium-12 columns'>
+                  <div className='large-8 medium-8 columns'>
                     <label htmlFor='email'>Email</label>
                     <InputField onChange={this.update} required={true} type='email' id='email' name='email' placeholder='email@example.com' value={user.email} errors={user.errors} />
                   </div>
-                  <div className='large-12 medium-12 columns'>
+                  <hr />
+                  <div className='large-7 medium-7 columns'>
                     <label htmlFor='current_password'>Current Password</label>
                     <InputField onChange={this.update} required={true} type='password' id='current_password' name='current_password' placeholder='Current Password' value={user.current_password} errors={user.errors} />
                   </div>
-                  <div className='large-12 medium-12 columns'>
+                  <div className='large-5 medium-5 columns'>
                     <button type='submit' title='Update' className='tiny success radius button'><i className='fi-icon fi-check'></i> Update Account Info</button>
                   </div>
                 </form>
