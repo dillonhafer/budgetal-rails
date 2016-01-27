@@ -3,6 +3,7 @@
 
 button, .button {
   border-style: solid;
+  width: 100%;
   border-width: 0;
   cursor: pointer;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
@@ -106,5 +107,6 @@ td {
 @media only screen and (min-width: 40.063em) {
   button, .button {
     display: inline-block;
+    width: auto;
   }
 }
