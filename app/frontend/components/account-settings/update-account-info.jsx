@@ -57,12 +57,16 @@ export default class UpdateAccountInfo extends React.Component {
     const file = e.target.files[0];
     let user = this.state.user;
 
-    reader.onload = (upload) => {
-      user.avatar = upload.target.result;
-      this.setState({user});
-    }
+    if (_.round(e.target.files[0].size / 1048576, 2) > 1) {
+      showMessage('Your photo is too large. The limit is 1 MB')
+    } else {
+      reader.onload = (upload) => {
+        user.avatar = upload.target.result;
+        this.setState({user});
+      }
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    }
   }
 
   selectFile = (e) => {
