@@ -1,4 +1,4 @@
-Budgetal [![Budgetal](https://img.shields.io/travis/dillonhafer/budgetal/master.svg?style=flat-square)](https://travis-ci.org/dillonhafer/budgetal) [![Budgetal](https://img.shields.io/codeclimate/github/dillonhafer/budgetal.svg?style=flat-square)](https://codeclimate.com/github/dillonhafer/budgetal)
+Budgetal [![Budgetal](https://img.shields.io/travis/dillonhafer/budgetal/master.svg?style=flat-square)](https://travis-ci.org/dillonhafer/budgetal) [![Budgetal](https://img.shields.io/codeclimate/github/dillonhafer/budgetal.svg?style=flat-square)](https://codeclimate.com/github/dillonhafer/budgetal) [![BADGINATOR](https://img.shields.io/badge/badges-2-brightgreen.svg?style=flat-square)](https://github.com/defunctzombie/badginator)
 --------
 
 Budgetal is about helping you save money, planning for expenses, chasing away emergencies, and beginning to build wealth.
