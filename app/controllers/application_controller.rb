@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
         last_name: user.last_name,
         email: user.email,
         admin: user.admin?,
-        avatar: user.avatar.url(:thumb)
+        avatar: user.data_avatar
       },
       success: true
     }

@@ -46,6 +46,11 @@ class User < ActiveRecord::Base
     sessions.active.find(authentication_key).update_attributes(expired_at: time)
   end
 
+  def data_avatar
+    encoded_avatar = File.open(avatar.path(:thumb)) { |f| Base64.encode64(f.read) }
+    "data:#{avatar.content_type};base64,#{encoded_avatar}"
+  end
+
   private
 
   def send_welcome_email
