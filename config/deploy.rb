@@ -29,7 +29,7 @@ end
 
 # Run `mina setup` to create these paths on your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache', 'public/assets']
+set :shared_paths, ['.env', 'log', 'tmp/pids', 'tmp/cache', 'public/assets', 'public/system']
 
 set :user, 'deployer'
 set :keep_releases, 4
@@ -56,6 +56,9 @@ task setup: :environment do
 
   queue! %[mkdir -p "#{deploy_to}/shared/public/assets"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/assets"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/public/system"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/public/system"]
 end
 
 desc 'Make sure local git is in sync with remote.'
