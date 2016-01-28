@@ -53,4 +53,6 @@ Budgets::Application.routes.draw do
 
     get '/admin/users' => 'admin#users'
   end
+
+  get '*all' => 'welcome#index'
 end
