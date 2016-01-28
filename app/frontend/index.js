@@ -16,6 +16,7 @@ import Statistics from './components/statistics/statistics';
 import Sessions from './components/sessions/sessions';
 import Footer from './components/layout/footer';
 import Nav from './components/layout/nav';
+import NotFound from './components/layout/not-found';
 import Home from './components/home/home';
 import Privacy from './components/home/privacy';
 import Admin from './components/admin/admin';
@@ -76,6 +77,7 @@ render((
       <Route path='monthly-statistics/:year/:month' component={Statistics} onEnter={requireAuth} />
       <Route path='account-settings' component={AccountSettings} onEnter={requireAuth} />
       <Route path='admin' component={Admin} onEnter={requireAuth} />
+      <Route path="*" component={NotFound}/>
     </Route>
   </Router>
 ), document.getElementById('main'))

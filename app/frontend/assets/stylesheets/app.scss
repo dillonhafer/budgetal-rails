@@ -289,3 +289,11 @@ fieldset[disabled] {
 }
 
 #main-content { padding-top: 2.75rem; }
+
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  padding: 1rem;
+}
