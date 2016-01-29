@@ -20,7 +20,9 @@ public/system
 # Webpack files
 node_modules
 public/assets
+public/index.html
 app/assets/javascripts/react_bundle.js
+webpack/build
 
 .DS_Store
 */.DS_Store
