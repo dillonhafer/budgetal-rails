@@ -4,6 +4,7 @@ gem 'devise',    '~> 3.5'
 gem 'jbuilder',  '~> 2.4'
 gem 'paperclip', '~> 4.3'
 gem 'pg',        '~> 0.18'
+gem 'rack-cors', '~> 0.4.0'
 gem 'rails',     '4.2.5'
 
 group :development, :test do
