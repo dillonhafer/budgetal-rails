@@ -1,26 +1,4 @@
 Budgets::Application.routes.draw do
-  root to: 'welcome#index'
-
-  get '/privacy'                         => 'welcome#index'
-  get '/budgets/:year/:month'            => 'welcome#index'
-  get '/detailed-budgets/:year/:month'   => 'welcome#index'
-  get '/annual-budgets/:year'            => 'welcome#index'
-  get '/monthly-statistics/:year/:month' => 'welcome#index'
-  get '/admin'                           => 'welcome#index'
-  get '/account-settings'                => 'welcome#index'
-
-  devise_for :users,
-             path: 'sessions',
-             path_names: {
-               sign_in: 'sign-in',
-               sign_out: 'sign-out',
-               password: 'secret',
-               confirmation: 'verification',
-               unlock: 'unblock',
-               registration: 'sign-up',
-               sign_up: 'join'
-             }
-
   namespace :api, defaults: {format: 'json'} do
     devise_for :users, path: 'sessions',
                path_names: { sign_in: 'sign-in', sign_out: 'sign-out', registration: 'sign-up' }
@@ -53,6 +31,4 @@ Budgets::Application.routes.draw do
 
     get '/admin/users' => 'admin#users'
   end
-
-  get '*all' => 'welcome#index'
 end
