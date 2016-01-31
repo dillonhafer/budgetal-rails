@@ -1,4 +1,6 @@
 Budgets::Application.routes.draw do
+  root to: 'application#index'
+
   namespace :api, defaults: {format: 'json'} do
     devise_for :users, path: 'sessions',
                path_names: { sign_in: 'sign-in', sign_out: 'sign-out', registration: 'sign-up' }
