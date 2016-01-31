@@ -72,7 +72,7 @@ end
 
 desc "Deploys the App."
 task deploy: :environment do
-  before_mina :'frontend:build'
+  # before_mina :'frontend:build'
 
   deploy do
     invoke :'maintenance:on'
@@ -91,7 +91,7 @@ task deploy: :environment do
       invoke :'deploy:cleanup'
     end
   end
-  after_mina :'frontend:sync'
+  # after_mina :'frontend:sync'
 end
 
 namespace :frontend do
