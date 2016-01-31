@@ -2,7 +2,6 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
-require 'mina/hooks'
 
 set :repository, 'https://github.com/dillonhafer/budgetal.git'
 
@@ -14,7 +13,7 @@ when 'beta'
   set :rails_env, 'beta'
 else
   ENV['to'] = 'production'
-  set :domain, 'www.budgetal.com'
+  set :domain, 'api.budgetal.com'
   set :deploy_to, '/var/www/budgetal-production'
   set :branch, 'master'
   set :rails_env, 'production'
@@ -72,8 +71,6 @@ end
 
 desc "Deploys the App."
 task deploy: :environment do
-  # before_mina :'frontend:build'
-
   deploy do
     invoke :'maintenance:on'
     invoke :'check_revision'
@@ -91,52 +88,6 @@ task deploy: :environment do
       invoke :'deploy:cleanup'
     end
   end
-  # after_mina :'frontend:sync'
-end
-
-namespace :frontend do
-  desc "Synchronize new assets"
-  task :sync do
-    if !Dir.glob('public/assets/main-*').empty?
-      puts "\e[32m----->\e[0m Synchronizing assets"
-      `rsync -r --exclude main.css --exclude main.js public/assets/ #{user}@#{domain}:#{deploy_to}/shared/public/assets/`
-      `rm -f public/assets/main-* public/assets/manifest`
-    else
-      puts "\e[32m----->\e[0m Skipping asset synchronizing"
-    end
-  end
-
-  desc "Make sure no existing assets exist"
-  task :clean do
-    `rm -f public/assets/manifest`
-    `rm -f public/assets/main-*`
-  end
-
-  desc "Compile Webpack assets"
-  task build: :clean do
-    if asset_build_required
-      puts "\e[32m----->\e[0m Building assets"
-      sha = Digest::SHA1.hexdigest(Time.now.to_s)
-      `NODE_ENV=#{ENV['to']} npm run build`
-      `mv public/assets/main-{replace-with-hash,#{sha}}.js`
-      `mv public/assets/main-{replace-with-hash,#{sha}}.css`
-      `echo #{sha} > public/assets/manifest`
-    else
-      puts "\e[32m----->\e[0m Skipping asset building"
-    end
-  end
-end
-
-def asset_build_required
-  check_for_deployed_changes('app/frontend')
-end
-
-def deployed_head
-  `ssh #{user}@#{domain} 'cd #{deploy_to}/scm && git rev-parse HEAD'`.chomp
-end
-
-def check_for_deployed_changes(path)
-  !`git diff --name-only HEAD #{deployed_head} -- #{path}`.empty?
 end
 
 namespace :logs do
