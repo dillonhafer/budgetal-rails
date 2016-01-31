@@ -17,6 +17,5 @@ group :development, :test do
   gem 'pry'
   gem 'puma'
   gem 'rspec-rails', '~> 3.0'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
 end
