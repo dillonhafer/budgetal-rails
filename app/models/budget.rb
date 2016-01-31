@@ -18,7 +18,7 @@ class Budget < ActiveRecord::Base
     less_than_or_equal_to: 2200,
     greater_than_or_equal_to: 2013
 
-  scope :ordered, -> { order('year desc, month desc') }
+  scope :ordered, -> { order(year: :desc, month: :desc) }
 
   def total_expenses
     budget_item_expenses.sum(:amount).to_f
