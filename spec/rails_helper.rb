@@ -5,7 +5,6 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'database_cleaner'
-require 'support/hide_seed'
 
 ActiveRecord::Migration.maintain_test_schema!
 
