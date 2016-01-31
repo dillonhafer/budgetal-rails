@@ -1,6 +1,7 @@
 class AuthenticatedController < ApplicationController
   before_filter :authenticate_user_from_token
-  respond_to :html, :json
+  helper_method :current_user
+  respond_to :json
 
   protected
 
@@ -16,4 +17,8 @@ class AuthenticatedController < ApplicationController
       render json: {success: false, message: 'You must sign in or up before continuing'}, status: 401 and return
     end
   end
+
+  private
+
+  attr_reader :current_user
 end
