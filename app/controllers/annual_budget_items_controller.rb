@@ -1,4 +1,4 @@
-class Api::AnnualBudgetItemsController < AuthenticatedController
+class AnnualBudgetItemsController < AuthenticatedController
   def create
     budget_item = current_user.annual_budgets
                               .find(params[:annual_budget_item][:annual_budget_id])

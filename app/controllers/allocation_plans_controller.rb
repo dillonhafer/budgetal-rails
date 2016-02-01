@@ -1,4 +1,4 @@
-class Api::AllocationPlansController < AuthenticatedController
+class AllocationPlansController < AuthenticatedController
   helper_method :budget, :allocation_plan
 
   def show

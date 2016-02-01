@@ -1,4 +1,4 @@
-class Api::UsersController < AuthenticatedController
+class UsersController < AuthenticatedController
   before_action :check_current_password, except: [:past_expenses]
 
   def past_expenses

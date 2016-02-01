@@ -1,4 +1,4 @@
-class Api::AdminController < AuthenticatedController
+class AdminController < AuthenticatedController
   def users
     if current_user.admin?
       render json: User.order(:last_name, :first_name), methods: [:current_sign_in_at, :current_sign_in_ip, :sign_in_count]

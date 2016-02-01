@@ -1,4 +1,4 @@
-class Api::RegistrationsController < Api::ApiController
+class RegistrationsController < Devise::SessionsController
   respond_to :json
 
   def create

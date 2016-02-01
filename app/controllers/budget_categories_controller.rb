@@ -1,4 +1,4 @@
-class Api::BudgetCategoriesController < AuthenticatedController
+class BudgetCategoriesController < AuthenticatedController
   helper_method :budget_category, :budget, :message, :imported_items
   respond_to :json
 

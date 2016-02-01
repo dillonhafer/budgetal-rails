@@ -1,4 +1,4 @@
-class Api::AllocationPlanBudgetItemsController < AuthenticatedController
+class AllocationPlanBudgetItemsController < AuthenticatedController
   def create
     if item.save
       render json: item
