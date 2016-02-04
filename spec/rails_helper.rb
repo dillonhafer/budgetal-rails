@@ -30,4 +30,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  Capybara.default_host = "http://localhost"
+  Capybara.server_port = 3388
+  Capybara.app_host = "http://localhost:3388"
 end
