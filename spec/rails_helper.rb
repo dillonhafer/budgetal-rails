@@ -6,6 +6,17 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'database_cleaner'
 
+Selenium::WebDriver::Chrome::Service.executable_path = ENV.fetch('CHROME_DRIVER', '/usr/local/bin/chromedriver')
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome, switches: %w[—-test-type --no-sandbox])
+end
+
+Capybara.default_host = "http://localhost"
+Capybara.server_port = 3388
+Capybara.app_host = "http://localhost:3388"
+Capybara.javascript_driver = ENV.fetch('selenium', 'chrome').to_sym
+Capybara.default_max_wait_time = 5
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
@@ -30,8 +41,4 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-
-  Capybara.default_host = "http://localhost"
-  Capybara.server_port = 3388
-  Capybara.app_host = "http://localhost:3388"
 end
