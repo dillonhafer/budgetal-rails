@@ -1,0 +1,58 @@
+@mixin transition($type: "color"){
+  transition: $type 0.25s ease-in-out; -moz-transition: $type 0.25s ease-in-out; -webkit-transition: $type 0.25s ease-in-out; -o-transition: $type 0.25s ease-in-out;
+}
+
+@mixin font-size($size,$i: "") {
+  font-size: #{$size}px#{$i}; font-size: #{($size/10)}rem#{$i};
+}
+
+@mixin grayscale {
+  -webkit-filter: grayscale(1);
+  filter: url(/filters.svg#grayscale);
+  filter: gray;
+}
+
+@mixin shadow($color: #000) {box-shadow: 0 1px 2px rgba($color,0.2); -moz-box-shadow: 0 1px 2px rgba($color,0.2); -webkit-box-shadow: 0 1px 2px rgba($color,0.2);}
+@mixin shadow-big($color: #000) {box-shadow: 0 1px 4px rgba($color,0.3); -moz-box-shadow: 0 1px 4px rgba($color,0.3); -webkit-box-shadow: 0 2px 4px rgba($color,0.3);}
+@mixin shadow-custom($x,$y,$spread,$color,$opacity){box-shadow: $x $y $spread rgba($color,$opacity); -moz-box-shadow: $x $y $spread rgba($color,$opacity); -webkit-box-shadow: $x $y $spread rgba($color,$opacity);}
+@mixin background-gradient($from,$to) {
+  background-color: $from;
+  background-image: linear-gradient(top, $from, $to);
+  background-image: -moz-linear-gradient(top, $from, $to);
+  background-image: -webkit-linear-gradient(top, $from, $to);
+  background-image: -o-linear-gradient(top, $from, $to);
+  background-image: -ms-linear-gradient(top, $from, $to);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='$to', EndColorStr='$from');
+}
+
+@mixin vendor($name, $argument) {
+  -webkit-#{$name}: #{$argument};
+  -ms-#{$name}: #{$argument};
+  -moz-#{$name}: #{$argument};
+  -o-#{$name}: #{$argument};
+  #{$name}: #{$argument};
+}
+
+@mixin opacity($decimal:1){
+    $percent: $decimal * 100;
+    @include vendor(opacity, $decimal);
+    filter:alpha(opacity= $percent );
+    -ms-filter:"alpha(opacity=$percent)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=$decimal);
+}
+
+@mixin rotate($deg){
+  transform: rotate($deg);
+  -webkit-transform: rotate($deg);
+  -ms-transform: rotate($deg);
+  -moz-transform: rotate($deg);
+  -o-transform: rotate($deg);
+}
+
+@mixin category-background() {
+  height: 30px;
+  background-image: url(../../assets/images/categories.png);
+  background-repeat: no-repeat;
+  background-size: 30px;
+}

@@ -1,0 +1,97 @@
+.icon-bar {
+  width: 100%;
+  font-size: 0;
+  display: inline-block;
+  background: #333333;
+
+  &.six-up.vertical .item, &.six-up.small-vertical .item {
+    width: auto;
+  }
+
+  & > * {
+    text-align: center;
+    font-size: 1rem;
+    width: 25%;
+    margin: 0 auto;
+    display: block;
+    padding: 1.25rem;
+    float: left;
+
+    label {
+      color: white;
+      cursor: pointer;
+    }
+
+    i {
+      font-size: 1.875rem;
+      vertical-align: middle;
+    }
+  }
+
+
+  &.label-right > * i, &.label-right > * img {
+    margin: 0px 0.6825rem 0px 0px;
+  }
+
+  &.vertical, &.small-vertical {
+    height: 100%;
+    width: auto;
+
+    .item {
+      width: auto;
+      margin: auto;
+      float: none;
+    }
+  }
+
+  &.vertical.label-right>*:not(.header) {
+    text-align: left;
+  }
+
+  &.label-right > * label {
+    display: inline-block;
+  }
+
+  & > .item.active {
+    background: #272727;
+  }
+
+  & > :hover {
+    background: #222;
+  }
+
+  & >.item.header {
+    padding: 10px 0px 10px !important;
+    border-bottom: 1px solid #444;
+  }
+
+  &.vertical {
+    border-bottom: 1px solid #444;
+
+    &.six-up {
+      width: 100%;
+    }
+  }
+
+  & > a:focus {
+    background: #222;
+    outline: none;
+  }
+
+  & .item:not(.header) label {
+    padding-left: 40px;
+    @include category-background;
+  }
+}
+.sidebar-charity label        { background-position: 0px 0px;    }
+.sidebar-saving label         { background-position: 0px -30px;  }
+.sidebar-housing label        { background-position: 0px -60px;  }
+.sidebar-utilities label      { background-position: 0px -90px;  }
+.sidebar-food label           { background-position: 0px -120px; }
+.sidebar-clothing label       { background-position: 0px -150px; }
+.sidebar-transportation label { background-position: 0px -180px; }
+.sidebar-medical-health label { background-position: 0px -210px; }
+.sidebar-insurance label      { background-position: 0px -240px; }
+.sidebar-personal label       { background-position: 0px -270px; }
+.sidebar-recreation label     { background-position: 0px -300px; }
+.sidebar-debts label          { background-position: 0px -330px; }
