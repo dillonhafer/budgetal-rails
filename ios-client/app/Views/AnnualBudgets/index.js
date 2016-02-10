@@ -15,7 +15,7 @@ var {
   View
 } = React;
 
-var { Icon, } = require('react-native-icons');
+var Icon = require('react-native-vector-icons/FontAwesome');
 var DataRepo = require('../../Data/AnnualBudgetRepository');
 var BudgetForm = require('./form');
 var styles = require('./styles');
@@ -137,13 +137,10 @@ var AnnualBudgets = React.createClass({
               style={[styles.rightYear]}
               underlayColor='transparent'
               onPress={yearFunction}>
-              <Icon name='fontawesome|chevron-right'
-                size={24}
-                color={color}
-                style={styles.icon} />
+              <Icon name="chevron-right" size={24} color={color} style={styles.icon} />
             </TouchableHighlight>);
   },
-  previousYearButton: function() {
+  previousYearButton() {
     var shouldDisplay = this.state.year > 2015;
     var yearFunction = shouldDisplay ? this.previousYear : null;
     var color = shouldDisplay ? 'gray' : 'transparent';
@@ -151,10 +148,7 @@ var AnnualBudgets = React.createClass({
               style={[styles.leftYear]}
               underlayColor='transparent'
               onPress={yearFunction}>
-              <Icon name='fontawesome|chevron-left'
-                size={24}
-                color={color}
-                style={styles.icon} />
+              <Icon name="chevron-left" size={24} color={color} style={styles.icon} />
             </TouchableHighlight>);
   },
   render: function() {
