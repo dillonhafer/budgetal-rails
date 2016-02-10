@@ -16,7 +16,11 @@ export default {
 
   humanUA(userAgent) {
     let ua = parser(userAgent);
-    return `${ua.browser.name} ${ua.browser.major} on ${ua.os.name}`;
+    let text = `${ua.browser.name} ${ua.browser.major} on ${ua.os.name}`
+    if (ua.ua.includes('Budgetal')) {
+      text = 'Budgetal App on iOS';
+    }
+    return text;
   },
 
   title(string) {
