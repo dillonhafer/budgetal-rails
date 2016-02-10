@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var {
+  AppState,
   Image,
   Navigator,
   View,
@@ -46,9 +47,10 @@ var Budgetal = React.createClass({
   setServer: async function() {
     try {
       let api_url = await UserDefaults.stringForKey('api_server_preference');
-      if (api_url !== null) {
-        setApiUrl(api_url);
+      if (api_url === null) {
+        api_url = 'https://api.budgetal.com';
       }
+      setApiUrl(api_url);
     } catch (err) {
       window.alert({title: 'Error', message: err});
     }
@@ -63,6 +65,15 @@ var Budgetal = React.createClass({
   componentDidMount() {
     this.setServer();
     this.initialRoute();
+    AppState.addEventListener('change', this._handleAppStateChange);
+  },
+  componentWillUnmount: function() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  },
+  _handleAppStateChange: function(currentAppState) {
+    if (currentAppState === 'active') {
+      this.setServer();
+    }
   },
   enableGestures: function() {
     this.setState({gesturesAreDisabled: false});
