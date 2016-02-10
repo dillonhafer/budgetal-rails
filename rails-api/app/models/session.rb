@@ -12,6 +12,6 @@ class Session < ActiveRecord::Base
   end
 
   def self.expire(time: Time.now)
-    update_all(expired_at: time)
+    active.update_all(expired_at: time)
   end
 end
