@@ -11,9 +11,9 @@ var {
   View
 } = React;
 
-var Api = require('../../Utils/ApiUtil');
 var styles = require("./styles");
-var DataRepo = require('../../Data/UserRepository');
+import {AsyncStorage} from 'react-native';
+const USER_KEY = '@BudgetalUserKey:user';
 
 var MyAccount = React.createClass({
   getInitialState: function() {
@@ -23,11 +23,13 @@ var MyAccount = React.createClass({
   },
   componentDidMount: function() {
     var self = this
-    DataRepo.user().then(function(user) {
-      var full_name = `${user.first_name} ${user.last_name||''}`
-      user.full_name = full_name.trim()
-      self.setState({user: user})
-    })
+    this.getCurrentUser();
+  },
+  async getCurrentUser() {
+    let user = await AsyncStorage.getItem(USER_KEY);
+    if (user !== null) {
+      this.setState({user: JSON.parse(user)});
+    }
   },
   render: function() {
     var user = this.state.user
@@ -36,6 +38,7 @@ var MyAccount = React.createClass({
         <Text style={styles.instructions}>
           Hello {user.first_name}!
         </Text>
+        <Image style={styles.base64} source={{uri: user.avatar}} />
         <Text style={styles.instructions}>
           {user.email}
         </Text>

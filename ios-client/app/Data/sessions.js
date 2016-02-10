@@ -1,6 +1,6 @@
-import {getRequest, postRequest, deleteRequest} from '../Utils/api';
+import {getRequest, postRequest, deleteRequest, clearSession} from '../Utils/api';
 
-export default {
+module.exports = {
   signIn(data) {
     return postRequest('/sessions/sign-in', data);
   },
@@ -13,7 +13,7 @@ export default {
   allSessions() {
     return getRequest('/sessions');
   },
-  endSession(session) {
-    return deleteRequest(`/sessions/sign-out?authentication_key=${session.authentication_key}`);
+  endSession() {
+    return clearSession();
   }
 }

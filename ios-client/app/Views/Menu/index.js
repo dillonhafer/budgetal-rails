@@ -2,8 +2,6 @@
 
 var React = require('react-native');
 var MenuButton = require('../MenuButton');
-var CookieManager = require('react-native-cookies');
-var Api = require('../../Utils/ApiUtil');
 var window = require('../../Utils/window');
 var {
   Image,
@@ -13,7 +11,9 @@ var {
   View
 } = React;
 
-var styles = StyleSheet.create({
+import {endSession} from '../../Data/sessions';
+
+const styles = StyleSheet.create({
   menu: {
     flex: 1,
     paddingTop: 40,
@@ -28,30 +28,22 @@ var styles = StyleSheet.create({
 });
 
 var Menu = React.createClass({
-  closeMenu: function(e) {
-    this.context.menuActions.close();
-    if (this.props.onPress) {
-      this.props.onPress(e);
-    }
-  },
   changeRoute: function(name) {
     var route = AppRoutes[name];
     this.props.updateRoute(route);
-    this.closeMenu();
+    this.props.closeMenu();
   },
   annualBudgets: function() {
     var route = AppRoutes.annualBudgets;
     route.nextButton = this.annualNextButton();
     this.props.updateRoute(route);
-    this.closeMenu();
+    this.props.closeMenu();
   },
   signOut: function() {
-    var self = this;
-    Api.signOut().then(() => {
-      CookieManager.clearAll((err, res) => {});
-      self.closeMenu();
+    endSession().then(() => {
+      this.props.closeMenu();
+      this.props.signOut();
       window.alert({title: 'Signed Out', message: 'Thanks for using Budgetal!'});
-      self.props.signOut();
     });
   },
   newAnnualBudget: function() {
@@ -59,21 +51,12 @@ var Menu = React.createClass({
     route.leftCorner = this.cancelButton()
     route.data = {annual_budget_id: this.props.annualBudgetId};
     this.props.pushRouteBack(route);
-    this.closeMenu();
+    this.props.closeMenu();
   },
   cancelButton: function() {
     return (
       <TouchableOpacity onPress={this.props.popRoute}>
         <Text style={styles.cancelButton}>Cancel</Text>
-      </TouchableOpacity>
-    );
-  },
-  backButton: function() {
-    return (
-      <TouchableOpacity onPress={this.props.popRoute}>
-        <View style={styles.navBarLeftButton}>
-          <Image style={styles.back} source={image.left} />
-        </View>
       </TouchableOpacity>
     );
   },
@@ -97,10 +80,6 @@ var Menu = React.createClass({
     );
   }
 });
-
-Menu.contextTypes = {
-  menuActions: React.PropTypes.object.isRequired
-};
 
 module.exports = Menu;
 

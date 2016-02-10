@@ -54,8 +54,8 @@ module.exports = StyleSheet.create({
     width: 280,
     height: 100,
     marginLeft: 20,
-    marginBottom: 10,
-    marginTop: 40
+    marginTop: 40,
+    resizeMode: 'contain'
   },
 });
 

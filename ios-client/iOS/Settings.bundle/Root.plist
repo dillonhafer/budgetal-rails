@@ -20,7 +20,7 @@
 			<key>Key</key>
 			<string>api_server_preference</string>
 			<key>DefaultValue</key>
-			<string>https://www.budgetal.com</string>
+			<string>https://api.budgetal.com</string>
 			<key>IsSecure</key>
 			<false/>
 			<key>KeyboardType</key>

@@ -7,8 +7,9 @@ var {
 
 const AUTH_KEY   = '@BudgetalAuthKey:key';
 const AUTH_TOKEN = '@BudgetalAuthToken:key';
+const USER_KEY   = '@BudgetalUserKey:user';
 
-export default {
+let Api = {
   getRequest(path) {
     return request('GET', path)
   },
@@ -23,11 +24,33 @@ export default {
   },
   patchRequest(path, body) {
     return request('PATCH', path, body);
+  },
+  saveTokens(key,token,user) {
+    return _saveTokens(key,token,user);
+  },
+  clearSession() {
+    return _clearSession();
   }
-}
+};
 
 function requestOk(r) {
   return r.ok || r.status === 422;
+}
+
+async function _clearSession() {
+  let authenticationKey = await AsyncStorage.getItem(AUTH_KEY);
+  return request('DELETE', `/sessions/sign-out?authentication_key=${authenticationKey}`)
+    .then(() => {
+      return clearAsyncStorage();
+    });
+}
+
+async function clearAsyncStorage() {
+  return AsyncStorage.multiRemove([AUTH_KEY, AUTH_TOKEN, USER_KEY]);
+}
+
+async function _saveTokens(auth_key, auth_token, user) {
+  return AsyncStorage.multiSet([[AUTH_KEY, auth_key], [AUTH_TOKEN, auth_token], [USER_KEY, user]]);
 }
 
 async function request(method, path, body) {
@@ -43,9 +66,8 @@ async function request(method, path, body) {
   try {
     var auth_tokens = await AsyncStorage.multiGet([AUTH_KEY, AUTH_TOKEN]);
     if (auth_tokens !== null) {
-      debugger
-      headers['X-AUTHENTICATION-KEY']   = auth_tokens['key'];
-      headers['X-AUTHENTICATION-TOKEN'] = auth_tokens['token'];
+      headers['X-AUTHENTICATION-KEY']   = auth_tokens[0][1];
+      headers['X-AUTHENTICATION-TOKEN'] = auth_tokens[1][1];
     } else {
       window.alert({title: 'nnoo', message: "You must sign in 9"})
     }
@@ -59,7 +81,7 @@ async function request(method, path, body) {
 
   return fetch(path, req).then((r) => {
     if (r.status === 401) {
-      AsyncStorage.multiRemove([AUTH_KEY, AUTH_TOKEN]);
+      clearAsyncStorage()
       let json = r.json();
       return json.then(Promise.reject.bind(Promise));
     } else if (requestOk(r)) {
@@ -69,6 +91,14 @@ async function request(method, path, body) {
     }
   })
   .catch((r) => {
-    window.alert({title: 'maint', message: "We are performing maintenance right now. We will be done shortly."})
+    if (r.message === "You must sign in or up before continuing") {
+      window.alert({title: 'Sign In', message: r.message});
+      throw('unauthorized')
+    } else {
+      window.alert({title: 'maint', message: "We are performing maintenance right now. We will be done shortly."})
+      throw('maintenance')
+    }
   })
 }
+
+module.exports = Api;

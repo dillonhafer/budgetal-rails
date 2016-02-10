@@ -11,9 +11,11 @@ var {
 } = React;
 
 var DatePickerWithAccessory = require('../../Utils/DatePickerWithAccessory');
-var BudgetRepo = require('../../Data/BudgetRepository');
 var BudgetCategory = require('./BudgetCategory');
-var { Icon, } = require('react-native-icons');
+import {findCategory} from '../../Data/budget_category';
+
+var Icon = require('react-native-vector-icons/FontAwesome');
+
 var styles = require("./styles");
 var h = require('../../Utils/ViewHelpers');
 
@@ -46,9 +48,13 @@ var CashFlowPlans = React.createClass({
   componentDidMount: function() {
     this._updateList()
   },
-  _updateList: function() {
-    BudgetRepo.find(this.datePieces())
-      .done(this.updateBudget)
+  _updateList: async function() {
+    try {
+      let budget_category = await findCategory(this.datePieces());
+      this.updateBudget(budget_category)
+    } catch(error) {
+      this.props.navigator.props.signOut()
+    }
   },
   onDateChange: function(date) {
     this.setState({budgetDate: date});
@@ -77,10 +83,7 @@ var CashFlowPlans = React.createClass({
               style={[styles.rightYear]}
               underlayColor='transparent'
               onPress={this.nextMonth}>
-              <Icon name='fontawesome|chevron-right'
-                size={24}
-                color={'gray'}
-                style={styles.icon} />
+              <Icon name="chevron-right" size={24} color="gray" />
             </TouchableHighlight>);
   },
   previousYearButton: function() {
@@ -88,10 +91,7 @@ var CashFlowPlans = React.createClass({
               style={[styles.leftYear]}
               underlayColor='transparent'
               onPress={this.previousMonth}>
-              <Icon name='fontawesome|chevron-left'
-                size={24}
-                color={'gray'}
-                style={styles.icon} />
+              <Icon name="chevron-left" size={24} color="gray" style={styles.icon} />
             </TouchableHighlight>);
   },
   backButton: function() {
@@ -109,14 +109,14 @@ var CashFlowPlans = React.createClass({
       component: BudgetCategory,
       showMenu: false,
       leftCorner: this.backButton(),
-      data: {budget_category: budgetCategory, date: date}
+      data: {budget_category: budgetCategory, date: this.datePieces()}
     });
   },
   _renderRow: function(budgetCategory: string, sectionID: number, rowID: number) {
     let imageSource = h.categoryIcon(budgetCategory.name);
     let budgetDate = this.state.budgetDate;
     return (
-      <TouchableHighlight onPress={()=>this._pressRow(budgetCategory, budgetDate)} underlayColor='#6699ff'>
+      <TouchableHighlight key={rowID} onPress={()=>this._pressRow(budgetCategory, budgetDate)} underlayColor='#6699ff'>
         <View>
           <View style={styles.row}>
             <View style={styles.column}>
@@ -140,10 +140,14 @@ var CashFlowPlans = React.createClass({
               </View>
             </View>
           </View>
-          <View style={styles.separator} />
         </View>
       </TouchableHighlight>
     );
+  },
+  separator(sectionID, rowID) {
+    if (parseInt(rowID) < 11) {
+      return <View key={rowID} style={styles.separator} />
+    }
   },
   render: function() {
     return (
@@ -159,6 +163,7 @@ var CashFlowPlans = React.createClass({
         <ListView style={styles.list}
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.dataSource}
+                  renderSeparator={this.separator}
                   renderRow={this._renderRow} />
 
         <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}

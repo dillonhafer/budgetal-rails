@@ -11,11 +11,10 @@ var {
   View
 } = React;
 
-var Api = require('../../Utils/ApiUtil');
-var {signIn} = require('../../Data/sessions');
+import {saveTokens} from '../../Utils/api';
+import {signIn} from '../../Data/sessions';
 
 var styles = require("./styles");
-var CookieManager = require('react-native-cookies');
 var MenuIcon = require('../MenuIcon');
 var window = require('../../Utils/window');
 
@@ -23,17 +22,11 @@ var SignIn = React.createClass({
   getInitialState: function() {
     return ({email: 'dh@dillonhafer.com', password: 'password', animating: false});
   },
-  componentDidMount: function() {
-    this.checkSignedIn();
-  },
-  checkSignedIn: function() {
-    var self = this
-    CookieManager.getAll((cookies, res) => {
-      if (cookies.signed_in) {
-        self.props.enableGestures();
-        self.props.navigator.props.updateRoute(AppRoutes.cashFlowPlans);
-      }
-    });
+  sigenedIn(json) {
+    let key   = json.session.authentication_key;
+    let token = json.session.authentication_token;
+    let user  = JSON.stringify(json.user);
+    return saveTokens(key, token, user);
   },
   missingCredentials: function() {
     return (this.state.email.length && this.state.password.length) ? false : true;
@@ -49,21 +42,22 @@ var SignIn = React.createClass({
     this.refs.password.blur();
   },
   buttonClicked: function() {
-    var self = this
-    var checkSignedIn = this.checkSignedIn;
     if (this.missingCredentials()) {
-      var message = "Please enter your email and password";
-      window.alert({title: 'Missing Credentials', message});
+      window.alert({title: 'Missing Credentials', message: "Please enter your email and password"});
     } else {
-      self.blurInputs();
-      self.showActivity();
-      // Api.signIn(this.state.email, this.state.password)
-      signIn({email: this.state.email, password: this.state.password})
-        .then(function(json) {
-          debugger
-          self.hideActivity();
+      this.blurInputs();
+      this.showActivity();
+      let user = {email: this.state.email, password: this.state.password};
+      signIn({user: user})
+        .then(json => {
+          this.hideActivity();
           if (json.success) {
-            checkSignedIn();
+            this.sigenedIn(json)
+            .then(() => {
+              this.props.enableGestures();
+              this.props.navigator.props.updateRoute(AppRoutes.cashFlowPlans);
+              window.alert({title: 'Welcome Back', message: 'You are now signed in.'})
+            })
           } else {
             window.alert({title: 'Invalid Credentials', message: json.message});
           }

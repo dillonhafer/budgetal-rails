@@ -13,6 +13,7 @@ var {
 var styles = require('./styles');
 var BudgetCategoriesRepo = require('../../../Data/BudgetCategoriesRepository');
 var BudgetItem = require('./BudgetItem');
+import {findCategory} from '../../../Data/budget_category';
 var h = require('../../../Utils/ViewHelpers');
 
 var BudgetCategory = React.createClass({
@@ -40,12 +41,20 @@ var BudgetCategory = React.createClass({
   },
   componentDidMount: function() {
     let routeData = this.props.route.data;
-    var data = {id: routeData.budget_category.id}
+    let data = {
+      id: routeData.budget_category.id,
+      year: routeData.date.year,
+      month: routeData.date.month
+    };
     this._updateList(data)
   },
-  _updateList: function(data) {
-    BudgetCategoriesRepo.find(data)
-      .done(this.updateBudgetItems)
+  _updateList: async function(data) {
+    try {
+      let budget_category = await findCategory(data);
+      this.updateBudgetItems(budget_category)
+    } catch(error) {
+      this.props.navigator.props.signOut()
+    }
   },
   backButton: function() {
     return (

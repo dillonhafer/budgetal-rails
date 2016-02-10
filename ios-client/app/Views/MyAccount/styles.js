@@ -16,6 +16,14 @@ module.exports = StyleSheet.create({
     marginBottom: 5,
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
+  },
+  base64: {
+    borderRadius: 75,
+    height: 150,
+    width: 150,
+    borderColor: '#69F',
+    borderWidth: 3,
+    resizeMode: 'contain'
   }
 });
 

@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react-native');
-var UserDefaults = require('react-native-userdefaults-ios');
 var {
   Image,
   Navigator,
@@ -12,6 +11,7 @@ var {
 global.AppRoutes = require('../Utils/AppRoutes');
 global._ = require('lodash-node');
 global.images = require('../../components/app_images');
+global.baseApi = 'https://api.budgetal.com';
 
 var Menu = require('../Views/Menu');
 var MenuIcon = require('../Views/MenuIcon');
@@ -19,34 +19,46 @@ var NavigationBar = require('react-native-navbar');
 var SideMenu = require('react-native-side-menu');
 var styles = require('../../styles');
 
+import {AsyncStorage} from 'react-native';
+const USER_KEY = '@BudgetalUserKey:user';
+
 let statusBar = {
   style: 'light-content',
   hidden: false,
   showAnimation: 'fade'
-}
+};
+
+let defaultNavBar = <View style={styles.navBar}><NavigationBar statusBar={statusBar} style={styles.header} /></View>;
 
 var Budgetal = React.createClass({
   getInitialState: function() {
     return ({
       loggedIn: false,
-      baseApi: 'https://www.budgetal.com',
       gesturesAreDisabled: true,
+      isOpen: false,
       routes: [AppRoutes.signIn],
-      navBars: [this.defaultNavBar()]
+      navBars: [defaultNavBar]
     });
   },
   _setServer() {
-    var self = this;
-    UserDefaults.stringForKey('api_server_preference')
-     .then(api => {
-       if (api !== null) {
-         self.setState({baseApi: api})
-       }
-       global.baseApi = this.state.baseApi
-     })
+    // UserDefaults.stringForKey('api_server_preference')
+    //  .then(api => {
+    //    if (api !== null) {
+    //      self.setState({baseApi: api})
+    //    }
+    //    global.baseApi = this.state.baseApi
+    //  })
+  },
+  initialRoute: async function() {
+    let user = await AsyncStorage.getItem(USER_KEY);
+    if (user !== null) {
+      this.enableGestures();
+      this.updateRoute(AppRoutes.cashFlowPlans);
+    }
   },
   componentDidMount() {
     this._setServer();
+    this.initialRoute();
   },
   enableGestures: function() {
     this.setState({gesturesAreDisabled: false});
@@ -65,20 +77,19 @@ var Budgetal = React.createClass({
     this.setState({navBars: navBars});
   },
   updateRoute: function(newRoute) {
-    var customTitle = newRoute.customTitle ? newRoute.customTitle : this.customTitle(newRoute.title);
-    var title = <Text style={styles.navBarTitle}>{newRoute.title}</Text>;
-    var left = newRoute.left ? newRoute.left : <MenuIcon />;
-    var navBar = <NavigationBar title={title}
+    let title  = <Text style={styles.navBarTitle}>{newRoute.title}</Text>;
+    let left   = newRoute.left ? newRoute.left : <MenuIcon openMenu={this.openMenu} />;
+    let next   = newRoute.nextButton ? newRoute.nextButton : '';
+    let navBar = <NavigationBar title={title}
                                 statusBar={statusBar}
                                 titleColor='#FFF'
                                 style={styles.header}
                                 leftButton={left}
-                                customNext={this.nextButton(newRoute)}
+                                customNext={next}
                                 hidePrev={!newRoute.showMenu}
                                 route={newRoute}
                                 data={newRoute.data}
-                                navigator={navigator}
-                                customTitle={customTitle} />;
+                                navigator={navigator} />;
 
     navBar = <View style={styles.navBar}>{navBar}</View>;
     this.replaceNavBar(navBar)
@@ -89,20 +100,20 @@ var Budgetal = React.createClass({
     this.refs.navigator.pop();
   },
   pushRouteBack: function(newRoute) {
-    var customTitle = newRoute.customTitle ? newRoute.customTitle : this.customTitle(newRoute.title)
-    var title = <Text style={styles.navBarTitle}>{newRoute.title}</Text>;
-    var navBar = <NavigationBar title={title}
+    let title = <Text style={styles.navBarTitle}>{newRoute.title}</Text>;
+    let left   = newRoute.left ? newRoute.left : <MenuIcon openMenu={this.openMenu} />;
+    let next = newRoute.nextButton ? newRoute.nextButton : '';
+    let navBar = <NavigationBar title={title}
                                 statusBar={statusBar}
                                 tintColor='green'
                                 titleColor='#FFF'
                                 style={styles.header}
-                                leftButton={this.prevButton(newRoute)}
-                                customNext={this.nextButton(newRoute)}
+                                leftButton={left}
+                                customNext={next}
                                 hidePrev={!newRoute.showMenu}
                                 route={newRoute}
                                 data={newRoute.data}
-                                navigator={navigator}
-                                customTitle={customTitle} />;
+                                navigator={navigator} />;
     navBar = <View style={styles.navBar}>{navBar}</View>;
     this.pushNavBar(navBar);
     this.refs.navigator.push(newRoute)
@@ -114,7 +125,7 @@ var Budgetal = React.createClass({
     if (route.leftCorner) {
       return route.leftCorner;
     } else if (route.showMenu) {
-      return <MenuIcon />
+      return <MenuIcon openMenu={this.openMenu} />
     } else {
       return '';
     }
@@ -123,18 +134,8 @@ var Budgetal = React.createClass({
     return route.nextButton ? route.nextButton : '';
   },
   signOut: function() {
-    this.setState({gesturesAreDisabled: true});
-    this.updateRoute(AppRoutes.signIn);
-  },
-  customTitle: function(title) {
-    if (title === 'Budgetal') {
-      return <Image source={images.logo} />
-    }
-  },
-  defaultNavBar: function(navbar) {
-    return (
-      <View style={styles.navBar}><NavigationBar statusBar={statusBar} style={styles.header} /></View>
-    );
+    this.setState({gesturesAreDisabled: true, navBars: [defaultNavBar]});
+    this.refs.navigator.resetTo(AppRoutes.signIn);
   },
   renderScene: function(route, navigator) {
     var Component = route.component;
@@ -147,15 +148,24 @@ var Budgetal = React.createClass({
   updateAnnualBudgetId: function(id) {
     this.setState({annualBudgetId: id})
   },
+  closeMenu() {
+    this.setState({isOpen: false});
+  },
+  openMenu() {
+    this.setState({isOpen: true});
+  },
   render: function() {
-    if (this.state.baseApi !== '') {
+    if (baseApi !== '') {
     return (
       <SideMenu openMenuOffset={280}
+                isOpen={this.state.isOpen}
                 disableGestures={this.state.gesturesAreDisabled}
+                bounceBackOnOverdraw={true}
                 touchToClose={true}
                 edgeHitWidth={400}
                 menu={
                   <Menu updateRoute={this.updateRoute}
+                        closeMenu={this.closeMenu}
                         annualBudgetId={this.state.annualBudgetId}
                         pushRouteBack={this.pushRouteBack}
                         popRoute={this.popRoute}
@@ -164,6 +174,7 @@ var Budgetal = React.createClass({
                 }>
         <Navigator ref='navigator'
                    style={styles.navigator}
+                   signOut={this.signOut}
                    popRoute={this.popRoute}
                    pushRouteBack={this.pushRouteBack}
                    updateRoute={this.updateRoute}
@@ -180,7 +191,12 @@ var Budgetal = React.createClass({
       </SideMenu>
     )
     } else {
-      return <View style={styles.navigator}><Text>No API in settings</Text></View>
+      return (
+        <View style={[styles.navigator, {paddingTop: 100, alignItems: 'center'}]}>
+          <Image style={styles.logo} source={require('image!logo')} />
+          <Text style={{color: 'white', fontSize: 18, textAlign: 'center'}}>No API found in settings</Text>
+        </View>
+      )
     }
   }
 });

@@ -38,5 +38,12 @@ module.exports = StyleSheet.create({
   },
   back: {
     color: '#fff'
+  },
+  logo: {
+    width: 280,
+    height: 100,
+    marginLeft: 20,
+    marginTop: 40,
+    resizeMode: 'contain'
   }
 });
