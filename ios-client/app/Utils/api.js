@@ -5,9 +5,10 @@ var {
   AsyncStorage
 } = React;
 
-const AUTH_KEY   = '@BudgetalAuthKey:key';
-const AUTH_TOKEN = '@BudgetalAuthToken:key';
-const USER_KEY   = '@BudgetalUserKey:user';
+const AUTH_KEY    = '@BudgetalAuthKey:key';
+const AUTH_TOKEN  = '@BudgetalAuthToken:key';
+const USER_KEY    = '@BudgetalUserKey:user';
+const API_URL_KEY = '@BudgetalAPIURL:url';
 
 let Api = {
   getRequest(path) {
@@ -30,11 +31,18 @@ let Api = {
   },
   clearSession() {
     return _clearSession();
+  },
+  setApiUrl(url) {
+    return _setApiUrl(url);
   }
 };
 
 function requestOk(r) {
   return r.ok || r.status === 422;
+}
+
+async function _setApiUrl(url) {
+  return AsyncStorage.setItem(API_URL_KEY, url);
 }
 
 async function _clearSession() {
@@ -54,9 +62,8 @@ async function _saveTokens(auth_key, auth_token, user) {
 }
 
 async function request(method, path, body) {
-  const API_URL = 'http://localhost:3000';
-  var path = API_URL + path;
-  var headers = {
+  let fullPath = '';
+  let headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'X-AUTHENTICATION-KEY': '',
@@ -64,10 +71,11 @@ async function request(method, path, body) {
   };
 
   try {
-    var auth_tokens = await AsyncStorage.multiGet([AUTH_KEY, AUTH_TOKEN]);
+    var auth_tokens = await AsyncStorage.multiGet([AUTH_KEY, AUTH_TOKEN, API_URL_KEY]);
     if (auth_tokens !== null) {
       headers['X-AUTHENTICATION-KEY']   = auth_tokens[0][1];
       headers['X-AUTHENTICATION-TOKEN'] = auth_tokens[1][1];
+      fullPath = auth_tokens[2][1] + path;
     } else {
       window.alert({title: 'nnoo', message: "You must sign in 9"})
     }
@@ -79,7 +87,7 @@ async function request(method, path, body) {
   if (method !== 'GET')
     req.body = JSON.stringify(body);
 
-  return fetch(path, req).then((r) => {
+  return fetch(fullPath, req).then((r) => {
     if (r.status === 401) {
       clearAsyncStorage()
       let json = r.json();
