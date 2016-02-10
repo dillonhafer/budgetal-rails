@@ -85,7 +85,7 @@ var AnnualBudgets = React.createClass({
       title: `Edit ${h.capitalize(budgetItem.name)}`,
       component: BudgetForm,
       showMenu: false,
-      leftCorner: this.backButton(),
+      left: this.backButton(),
       data: budgetItem
     });
   },

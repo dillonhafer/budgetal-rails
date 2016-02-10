@@ -121,15 +121,6 @@ var Budgetal = React.createClass({
   pushRoute: function(newRoute) {
     this.refs.navigator.push(newRoute);
   },
-  prevButton: function(route) {
-    if (route.leftCorner) {
-      return route.leftCorner;
-    } else if (route.showMenu) {
-      return <MenuIcon openMenu={this.openMenu} />
-    } else {
-      return '';
-    }
-  },
   nextButton: function(route) {
     return route.nextButton ? route.nextButton : '';
   },

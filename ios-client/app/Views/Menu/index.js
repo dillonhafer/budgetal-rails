@@ -48,7 +48,7 @@ var Menu = React.createClass({
   },
   newAnnualBudget: function() {
     var route = AppRoutes.newAnnualBudgetItem;
-    route.leftCorner = this.cancelButton()
+    route.left = this.cancelButton()
     route.data = {annual_budget_id: this.props.annualBudgetId};
     this.props.pushRouteBack(route);
     this.props.closeMenu();

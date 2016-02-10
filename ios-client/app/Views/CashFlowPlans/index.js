@@ -108,7 +108,7 @@ var CashFlowPlans = React.createClass({
       title: budgetCategory.name,
       component: BudgetCategory,
       showMenu: false,
-      leftCorner: this.backButton(),
+      left: this.backButton(),
       data: {budget_category: budgetCategory, date: this.datePieces()}
     });
   },
@@ -146,7 +146,7 @@ var CashFlowPlans = React.createClass({
   },
   separator(sectionID, rowID) {
     if (parseInt(rowID) < 11) {
-      return <View key={rowID} style={styles.separator} />
+      return <View key={`separator-${rowID}`} style={styles.separator} />
     }
   },
   render: function() {

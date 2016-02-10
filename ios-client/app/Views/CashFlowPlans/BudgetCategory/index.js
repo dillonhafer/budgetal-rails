@@ -70,7 +70,7 @@ var BudgetCategory = React.createClass({
       title: budgetItem.name,
       component: BudgetItem,
       showMenu: false,
-      leftCorner: this.backButton(),
+      left: this.backButton(),
       data: budgetItem
     });
   },
