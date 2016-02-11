@@ -22,6 +22,14 @@ var BudgetItemExpense = React.createClass({
       budgetItemExpenses: ds.cloneWithRows([]),
     }
   },
+  header() {
+    return (
+      <View>
+        <Text style={styles.header}>Expenses</Text>
+        <View style={styles.separator} />
+      </View>
+    )
+  },
   addButton: function() {
     return (
       <View style={styles.addButtonContainer}>
@@ -84,6 +92,7 @@ var BudgetItemExpense = React.createClass({
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.budgetItemExpenses}
                   renderRow={this._renderRow}
+                  renderHeader={this.header}
                   renderFooter={this.addButton} />
       </View>
     )

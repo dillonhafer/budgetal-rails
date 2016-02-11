@@ -21,6 +21,13 @@ module.exports = StyleSheet.create({
     padding: 4,
     paddingTop: 8
   },
+  header: {
+    fontSize: 18,
+    color: '#555',
+    fontWeight: 'bold',
+    padding: 20,
+    textAlign: 'center'
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFF'
