@@ -101,6 +101,7 @@ var SignIn = React.createClass({
 
         <View style={styles.remember}>
           <Switch
+            onTintColor='#f6c86f'
             onValueChange={(value) => this.setState({rememberEmail: value})}
             style={styles.switch}
             value={this.state.rememberEmail} />
