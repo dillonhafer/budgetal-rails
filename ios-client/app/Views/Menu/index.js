@@ -70,8 +70,8 @@ var Menu = React.createClass({
   render: function() {
     return (
       <View style={styles.menu}>
-        <MenuButton image={images.cash} text='Cash Flow Plans' route={this.changeRoute.bind(this, 'cashFlowPlans')} />
-        <MenuButton image={images.list} text='Allocated Spending Plans' route={this.changeRoute.bind(this, 'allocatedSpendingPlans')} />
+        <MenuButton image={images.cash} text='Budgets' route={this.changeRoute.bind(this, 'cashFlowPlans')} />
+        <MenuButton image={images.list} text='Detailed Budgets' route={this.changeRoute.bind(this, 'allocatedSpendingPlans')} />
         <MenuButton image={images.calendar} text='Annual Budgets' route={this.annualBudgets} />
         <MenuButton image={images.statistics} text='Statistics (for geeks)' route={this.changeRoute.bind(this, 'statistics')} />
         <MenuButton image={images.account} text='My Account' route={this.changeRoute.bind(this, 'myAccount')} />

@@ -12,12 +12,12 @@ var Statistics = require('../Views/Statistics');
 var MyAccount = require('../Views/MyAccount');
 
 var cashFlowPlans = {
-  title: 'Cash Flow Plans',
+  title: 'Budgets',
   component: CashFlowPlans
 };
 
 var allocatedSpendingPlans = {
-  title: 'Allocated Spending Plans',
+  title: 'Detailed Budgets',
   component: AllocatedSpendingPlans
 };
 
