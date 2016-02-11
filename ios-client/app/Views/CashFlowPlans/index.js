@@ -30,6 +30,10 @@ const swipeoutBtns = [
     text: 'Delete',
     color: 'white',
     backgroundColor: '#f04124'
+  },
+  {
+    text: 'Cancel',
+    color: '#333'
   }
 ]
 
