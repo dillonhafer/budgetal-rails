@@ -20,7 +20,7 @@ var window = require('../../Utils/window');
 
 var SignIn = React.createClass({
   getInitialState: function() {
-    return ({email: 'dh@dillonhafer.com', password: 'password', animating: false});
+    return ({email: '', password: '', animating: false});
   },
   sigenedIn(json) {
     let key   = json.session.authentication_key;
