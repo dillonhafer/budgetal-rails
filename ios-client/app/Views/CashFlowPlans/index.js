@@ -19,6 +19,20 @@ var Icon = require('react-native-vector-icons/FontAwesome');
 var styles = require("./styles");
 var h = require('../../Utils/ViewHelpers');
 
+const Swipeout = require('react-native-swipeout');
+const swipeoutBtns = [
+  {
+    text: 'Edit',
+    color: 'white',
+    backgroundColor: '#69F'
+  },
+  {
+    text: 'Delete',
+    color: 'white',
+    backgroundColor: '#f04124'
+  }
+]
+
 var CashFlowPlans = React.createClass({
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -103,6 +117,9 @@ var CashFlowPlans = React.createClass({
       </TouchableOpacity>
     );
   },
+  preventScroll(e) {
+    return e;
+  },
   _pressRow: function(budgetCategory, date) {
     this.props.navigator.props.pushRouteBack({
       title: budgetCategory.name,
@@ -116,32 +133,34 @@ var CashFlowPlans = React.createClass({
     let imageSource = h.categoryIcon(budgetCategory.name);
     let budgetDate = this.state.budgetDate;
     return (
-      <TouchableHighlight key={rowID} onPress={()=>this._pressRow(budgetCategory, budgetDate)} underlayColor='#6699ff'>
-        <View>
-          <View style={styles.row}>
-            <View style={styles.column}>
-              <Image style={styles.logo} source={imageSource} />
-            </View>
-            <View style={styles.right}>
-              <View style={styles.paid}>
-                <Text style={styles.title}>
-                  {budgetCategory.name}
-                </Text>
+      <Swipeout right={swipeoutBtns} autoClose={true} scroll={this.preventScroll}>
+        <TouchableHighlight key={rowID} onPress={()=>this._pressRow(budgetCategory, budgetDate)} underlayColor='#6699ff'>
+          <View>
+            <View style={styles.row}>
+              <View style={styles.column}>
+                <Image style={styles.logo} source={imageSource} />
               </View>
-              <View style={styles.paid}>
-                <Text style={styles.subTitle}>
-                  Spent: {h.numberToCurrency(budgetCategory.amount_spent)}
-                </Text>
-              </View>
-              <View style={styles.paid}>
-                <Text style={styles.subTitle}>
-                  Remaining: {h.numberToCurrency(budgetCategory.amount_remaining)}
-                </Text>
+              <View style={styles.right}>
+                <View style={styles.paid}>
+                  <Text style={styles.title}>
+                    {budgetCategory.name}
+                  </Text>
+                </View>
+                <View style={styles.paid}>
+                  <Text style={styles.subTitle}>
+                    Spent: {h.numberToCurrency(budgetCategory.amount_spent)}
+                  </Text>
+                </View>
+                <View style={styles.paid}>
+                  <Text style={styles.subTitle}>
+                    Remaining: {h.numberToCurrency(budgetCategory.amount_remaining)}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </Swipeout>
     );
   },
   separator(sectionID, rowID) {
