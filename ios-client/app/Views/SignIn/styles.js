@@ -13,7 +13,8 @@ module.exports = StyleSheet.create({
     height: 40,
     width: 240,
     borderColor: 'white',
-    borderWidth: 1
+    borderWidth: 1,
+    marginLeft: 40,
   },
   buttonText: {
     textAlign: 'center',
@@ -22,7 +23,6 @@ module.exports = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#6699ff',
     paddingTop: 0,
   },
@@ -57,5 +57,19 @@ module.exports = StyleSheet.create({
     marginTop: 40,
     resizeMode: 'contain'
   },
+  remember: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 10
+  },
+  switch: {
+    marginRight: 10,
+    marginLeft: 40,
+  },
+  switchLable: {
+    color: 'white',
+    fontWeight: 'bold'
+  }
 });
 

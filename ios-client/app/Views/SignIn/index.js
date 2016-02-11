@@ -3,24 +3,43 @@
 var React = require('react-native');
 var {
   ActivityIndicatorIOS,
+  AsyncStorage,
   Image,
   LinkingIOS,
   Text,
   TextInput,
   TouchableHighlight,
+  Switch,
   View
 } = React;
 
 import {saveTokens} from '../../Utils/api';
 import {signIn} from '../../Data/sessions';
 
+const REMEMBER_EMAIL  = '@BudgetalRememberEmail:key';
+const REMEMBER_SWITCH = '@BudgetalRememberSwitch:key';
+
 var styles = require("./styles");
-var MenuIcon = require('../MenuIcon');
 var window = require('../../Utils/window');
 
 var SignIn = React.createClass({
   getInitialState: function() {
-    return ({email: '', password: '', animating: false});
+    return ({email: '', password: '', animating: false, rememberEmail: true});
+  },
+  componentDidMount() {
+    this.loadRemember();
+  },
+  loadRemember: async function() {
+    let rememberTokens = await AsyncStorage.multiGet([REMEMBER_EMAIL, REMEMBER_SWITCH]);
+    if (rememberTokens !== null) {
+      let email         = rememberTokens[0][1] || '';
+      let rememberEmail = rememberTokens[1][1] === 'true';
+      let newState = rememberEmail ? {email, rememberEmail} : {rememberEmail};
+      this.setState(newState);
+    }
+  },
+  saveRemember: async function() {
+    AsyncStorage.multiSet([[REMEMBER_EMAIL, String(this.state.email)], [REMEMBER_SWITCH, String(this.state.rememberEmail)]]);
   },
   sigenedIn(json) {
     let key   = json.session.authentication_key;
@@ -48,6 +67,7 @@ var SignIn = React.createClass({
       this.blurInputs();
       this.showActivity();
       let user = {email: this.state.email, password: this.state.password};
+      this.saveRemember();
       signIn({user: user})
         .then(json => {
           this.hideActivity();
@@ -70,6 +90,7 @@ var SignIn = React.createClass({
         <Image style={styles.logo} source={require('image!logo')} />
         <TextInput style={styles.inputs} keyboardType='email-address'
                    autoCorrect={false}
+                   autoCapitalize='none'
                    ref="email"
                    onChangeText={(email) => this.setState({email})}
                    placeholder='email@example.com'
@@ -78,6 +99,14 @@ var SignIn = React.createClass({
                    onChangeText={(password) => this.setState({password})}
                    value={this.state.password} />
 
+        <View style={styles.remember}>
+          <Switch
+            onValueChange={(value) => this.setState({rememberEmail: value})}
+            style={styles.switch}
+            value={this.state.rememberEmail} />
+          <Text style={styles.switchLable}>Remember Email</Text>
+        </View>
+
         <TouchableHighlight
           style={styles.button}
           underlayColor='#5582DB'
@@ -85,9 +114,6 @@ var SignIn = React.createClass({
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableHighlight>
 
-        <Text style={styles.instructions} onPress={()=> LinkingIOS.openURL(`${baseApi}/sessions/secret/new`)}>
-          Forgot password
-        </Text>
         <ActivityIndicatorIOS
           animating={this.state.animating}
           color='#fff'
