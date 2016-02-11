@@ -11,7 +11,6 @@ var {
 } = React;
 
 var styles = require('./styles');
-var BudgetCategoriesRepo = require('../../../Data/BudgetCategoriesRepository');
 var BudgetItem = require('./BudgetItem');
 import {findCategory} from '../../../Data/budget_category';
 var h = require('../../../Utils/ViewHelpers');

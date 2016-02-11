@@ -1,6 +1,5 @@
 'use strict';
 
-var Api = require('../Utils/ApiUtil');
 var AnnualBudgetRepo = {
   all: function(year) {
     var path = `/annual-budgets/${year}`;

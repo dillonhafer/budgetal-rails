@@ -12,7 +12,6 @@ var {
 global.AppRoutes = require('../Utils/AppRoutes');
 global._ = require('lodash-node');
 global.images = require('../../components/app_images');
-global.baseApi = 'https://api.budgetal.com';
 
 var UserDefaults = require('react-native-userdefaults-ios');
 var Menu = require('../Views/Menu');
@@ -161,7 +160,6 @@ var Budgetal = React.createClass({
     this.setState({isOpen: true});
   },
   render: function() {
-    if (baseApi !== '') {
     return (
       <SideMenu openMenuOffset={280}
                 isOpen={this.state.isOpen}
@@ -196,14 +194,6 @@ var Budgetal = React.createClass({
         </Navigator>
       </SideMenu>
     )
-    } else {
-      return (
-        <View style={[styles.navigator, {paddingTop: 100, alignItems: 'center'}]}>
-          <Image style={styles.logo} source={require('image!logo')} />
-          <Text style={{color: 'white', fontSize: 18, textAlign: 'center'}}>No API found in settings</Text>
-        </View>
-      )
-    }
   }
 });
 

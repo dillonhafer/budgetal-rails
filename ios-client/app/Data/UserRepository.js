@@ -1,6 +1,5 @@
 'use strict';
 
-var Api = require('../Utils/ApiUtil');
 var UserRepo = {
   user: function() {
     var path = '/my-account';
