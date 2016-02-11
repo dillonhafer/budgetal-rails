@@ -22,7 +22,6 @@ var DatePickerWithAccessory = React.createClass({
     this.setState({showDatePicker: nextProps.showDatePicker});
   },
   render() {
-    console.log('date:', this.props.date)
     return (
       <View style={this.state.showDatePicker ? styles.datePicker : styles.hidden}>
         <View style={styles.inputAccessory}>
