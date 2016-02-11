@@ -11,6 +11,23 @@ var {
 
 var styles = require("./styles");
 var h = require('../../../../Utils/ViewHelpers');
+const Swipeout = require('react-native-swipeout');
+const swipeoutBtns = [
+  {
+    text: 'Edit',
+    color: 'white',
+    backgroundColor: '#69F'
+  },
+  {
+    text: 'Delete',
+    color: 'white',
+    backgroundColor: '#f04124'
+  },
+  {
+    text: 'Cancel',
+    color: '#333'
+  }
+]
 
 var BudgetItemExpense = React.createClass({
   getInitialState: function() {
@@ -46,18 +63,9 @@ var BudgetItemExpense = React.createClass({
   componentDidMount: function() {
     this.updateBudgetItemExpenses(this.props.route.data)
   },
-  _pressRow: function(budgetCategory) {
-    // this.props.navigator.props.pushRouteBack({
-    //   title: budgetCategory.name,
-    //   component: BudgetCategory,
-    //   showMenu: false,
-    //   leftCorner: this.backButton(),
-    //   data: budgetCategory
-    // });
-  },
   _renderRow: function(expense: string, sectionID: number, rowID: number) {
     return (
-      <TouchableHighlight onPress={()=>this._pressRow(expense)} underlayColor='#6699ff'>
+      <Swipeout right={swipeoutBtns} autoClose={true} key={rowID}>
         <View>
           <View style={styles.row}>
             <View style={styles.column}>
@@ -82,7 +90,7 @@ var BudgetItemExpense = React.createClass({
           </View>
           <View style={styles.separator} />
         </View>
-      </TouchableHighlight>
+      </Swipeout>
     );
   },
   render: function() {
