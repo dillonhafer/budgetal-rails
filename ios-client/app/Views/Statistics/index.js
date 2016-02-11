@@ -14,7 +14,6 @@ var {
 var _ = require('lodash-node');
 var DatePickerWithAccessory = require('../../Utils/DatePickerWithAccessory');
 var StatisticsRepo = require('../../Data/StatisticsRepository');
-var { Icon, } = require('react-native-icons');
 var styles = require("./styles");
 var h = require('../../Utils/ViewHelpers');
 var StatsBar = require('./stats_bar')

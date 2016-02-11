@@ -11,7 +11,6 @@
     "query-string": "^2.4.0",
     "react-native": "^0.19.0",
     "react-native-cookies": "0.0.3",
-    "react-native-icons": "^0.6.3",
     "react-native-navbar": "^1.0.7",
     "react-native-router": "*",
     "react-native-side-menu": "^0.18.0",
