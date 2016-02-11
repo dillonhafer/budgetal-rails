@@ -95,7 +95,7 @@ module.exports = StyleSheet.create({
     fontWeight: 'bold',
     padding: 4
   },
-  yearModifier: {
+  header: {
     padding: 10,
     flexDirection: 'row',
     backgroundColor: '#EEE',
@@ -105,7 +105,7 @@ module.exports = StyleSheet.create({
     borderColor: '#FFF',
     borderBottomColor: '#DDD'
   },
-  centerYear: {
+  headerText: {
     fontWeight: 'bold',
     fontSize: 18,
     color: 'gray',

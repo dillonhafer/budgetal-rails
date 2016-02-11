@@ -69,13 +69,6 @@ module.exports = StyleSheet.create({
   text: {
     flexDirection: 'row'
   },
-  header: {
-    fontSize: 18,
-    color: '#555',
-    fontWeight: 'bold',
-    padding: 20,
-    textAlign: 'center'
-  },
   column: {
     justifyContent: 'center',
     alignItems: 'center'
@@ -95,5 +88,21 @@ module.exports = StyleSheet.create({
     color: '#555',
     fontWeight: 'bold',
     padding: 4
+  },
+  header: {
+    padding: 10,
+    flexDirection: 'row',
+    backgroundColor: '#EEE',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 0.5,
+    borderColor: '#FFF',
+    borderBottomColor: '#DDD'
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'gray',
+    marginTop: 4
   },
 });

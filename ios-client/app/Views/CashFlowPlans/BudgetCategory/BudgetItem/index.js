@@ -25,7 +25,7 @@ const swipeoutBtns = [
   },
   {
     text: 'Cancel',
-    color: '#333'
+    color: '#555'
   }
 ]
 
@@ -38,14 +38,6 @@ var BudgetItemExpense = React.createClass({
       },
       budgetItemExpenses: ds.cloneWithRows([]),
     }
-  },
-  header() {
-    return (
-      <View>
-        <Text style={styles.header}>Expenses</Text>
-        <View style={styles.separator} />
-      </View>
-    )
   },
   addButton: function() {
     return (
@@ -96,11 +88,14 @@ var BudgetItemExpense = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Expenses</Text>
+        </View>
+
         <ListView style={styles.list}
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.budgetItemExpenses}
                   renderRow={this._renderRow}
-                  renderHeader={this.header}
                   renderFooter={this.addButton} />
       </View>
     )
