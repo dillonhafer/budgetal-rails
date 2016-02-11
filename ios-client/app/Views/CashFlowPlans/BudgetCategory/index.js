@@ -14,6 +14,23 @@ var styles = require('./styles');
 var BudgetItem = require('./BudgetItem');
 import {findCategory} from '../../../Data/budget_category';
 var h = require('../../../Utils/ViewHelpers');
+const Swipeout = require('react-native-swipeout');
+const swipeoutBtns = [
+  {
+    text: 'Edit',
+    color: 'white',
+    backgroundColor: '#69F'
+  },
+  {
+    text: 'Delete',
+    color: 'white',
+    backgroundColor: '#f04124'
+  },
+  {
+    text: 'Cancel',
+    color: '#333'
+  }
+]
 
 var BudgetCategory = React.createClass({
   getInitialState: function() {
@@ -24,6 +41,14 @@ var BudgetCategory = React.createClass({
       },
       budgetItems: ds.cloneWithRows([]),
     }
+  },
+  header() {
+    return (
+      <View>
+        <Text style={styles.header}>Budget Items</Text>
+        <View style={styles.separator} />
+      </View>
+    )
   },
   addButton: function() {
     return (
@@ -75,32 +100,34 @@ var BudgetCategory = React.createClass({
   },
   _renderRow: function(budgetItem: string, sectionID: number, rowID: number) {
     return (
-      <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
-        <View>
-          <View style={styles.row}>
-            <View style={styles.column}>
-              <Text style={styles.title}>
-                {budgetItem.name}
-              </Text>
-            </View>
-            <View style={styles.right}>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Spent: </Text>
-                <Text style={styles.subTitle}>
-                  {h.numberToCurrency(budgetItem.amount_spent)}
+      <Swipeout right={swipeoutBtns} autoClose={true} key={rowID}>
+        <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
+          <View>
+            <View style={styles.row}>
+              <View style={styles.column}>
+                <Text style={styles.title}>
+                  {budgetItem.name}
                 </Text>
               </View>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
-                <Text style={styles.subTitle}>
-                  {h.numberToCurrency(budgetItem.amount_remaining)}
-                </Text>
+              <View style={styles.right}>
+                <View style={styles.paid}>
+                  <Text style={{fontWeight: 'bold'}}>Spent: </Text>
+                  <Text style={styles.subTitle}>
+                    {h.numberToCurrency(budgetItem.amount_spent)}
+                  </Text>
+                </View>
+                <View style={styles.paid}>
+                  <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
+                  <Text style={styles.subTitle}>
+                    {h.numberToCurrency(budgetItem.amount_remaining)}
+                  </Text>
+                </View>
               </View>
             </View>
+            <View style={styles.separator} />
           </View>
-          <View style={styles.separator} />
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </Swipeout>
     );
   },
   render: function() {
@@ -110,6 +137,7 @@ var BudgetCategory = React.createClass({
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.budgetItems}
                   renderRow={this._renderRow}
+                  renderHeader={this.header}
                   renderFooter={this.addButton} />
       </View>
     )

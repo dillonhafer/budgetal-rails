@@ -69,6 +69,13 @@ module.exports = StyleSheet.create({
   text: {
     flexDirection: 'row'
   },
+  header: {
+    fontSize: 18,
+    color: '#555',
+    fontWeight: 'bold',
+    padding: 20,
+    textAlign: 'center'
+  },
   column: {
     justifyContent: 'center',
     alignItems: 'center'
@@ -76,6 +83,7 @@ module.exports = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#CCC',
+    width: 400
   },
   logo: {
     height: 64,
