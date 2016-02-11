@@ -11,7 +11,7 @@ var {
 } = React;
 
 var styles = require('./styles');
-var BudgetItem = require('./BudgetItem');
+var BudgetItem = require('./expenses');
 import {findCategory} from '../../../Data/budget_category';
 var h = require('../../../Utils/ViewHelpers');
 const Swipeout = require('react-native-swipeout');

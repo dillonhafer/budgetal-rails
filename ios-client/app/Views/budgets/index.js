@@ -11,7 +11,7 @@ var {
 } = React;
 
 var DatePickerWithAccessory = require('../../Utils/DatePickerWithAccessory');
-var BudgetCategory = require('./BudgetCategory');
+var BudgetCategory = require('./budget-items');
 import {findCategory} from '../../Data/budget_category';
 
 var Icon = require('react-native-vector-icons/FontAwesome');
