@@ -1,6 +1,18 @@
 'use strict';
 
+import {alert} from './window';
+
 var ViewHelpers = {
+  showErrors(errors) {
+    let message = '';
+    _.keys(errors).map(field => {
+      errors[field].map(err => {
+        let niceField = _.startCase(field);
+        message += `${niceField} ${err}\n`;
+      })
+    })
+    alert({title: 'Errors', message});
+  },
   numberToCurrency: function(number, dollarSign) {
     dollarSign = (dollarSign === undefined) ? '$' : dollarSign
     number = (isNaN(parseFloat(number))) ? 0 : number
