@@ -69,6 +69,7 @@ module.exports = StyleSheet.create({
   },
   switchLable: {
     color: 'white',
+    fontSize: 13,
     fontWeight: 'bold'
   }
 });

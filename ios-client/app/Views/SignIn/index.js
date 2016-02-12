@@ -105,7 +105,7 @@ var SignIn = React.createClass({
             onValueChange={(value) => this.setState({rememberEmail: value})}
             style={styles.switch}
             value={this.state.rememberEmail} />
-          <Text style={styles.switchLable}>Remember Email</Text>
+          <Text style={styles.switchLable}>Remember Me</Text>
         </View>
 
         <TouchableHighlight
