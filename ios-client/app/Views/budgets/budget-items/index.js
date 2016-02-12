@@ -12,6 +12,7 @@ import {
 
 var styles = require('./styles');
 var BudgetItem = require('./expenses');
+var form = require('./form');
 
 import {alert, confirm}   from '../../../Utils/window';
 import {findCategory}     from '../../../Data/budget_category';
@@ -21,7 +22,7 @@ import Swipeout           from 'react-native-swipeout';
 
 var BudgetCategory = React.createClass({
   swipeoutBtns(item) {
-    const confirmText = `Are you sure you want to delete\n\n${item.name}?\n\nThis cannot be undone.`;
+    const confirmText = `Are you sure you want to delete\n\n${item.name}\n\nThis cannot be undone.`;
     return [
       {
         text: 'Edit',
@@ -51,30 +52,45 @@ var BudgetCategory = React.createClass({
         this.setState({budget_items, dataSource});
       }
     } catch (err) {
+      this.props.navigator.props.signOut();
     }
   },
-  getInitialState: function() {
+  getInitialState() {
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       budget_items: [],
       dataSource: ds.cloneWithRows([]),
     }
   },
-  addButton: function() {
+  addItem() {
+    this.props.navigator.props.pushRouteBack({
+      title: 'Add Item',
+      component: form,
+      showMenu: false,
+      left: this.backButton(),
+      data: {category_id: this.props.route.data.budget_category.id}
+    });
+  },
+  footerRow() {
+    let if_empty = <View />;
+    if (this.state.dataSource.getRowCount() === 0) {
+      if_empty = <Text style={styles.empty}>You haven't added any budget items yet</Text>;
+    }
     return (
       <View style={styles.addButtonContainer}>
-        <TouchableOpacity onPress={()=>console.log('f')}>
+        {if_empty}
+        <TouchableOpacity onPress={this.addItem}>
           <Text style={styles.addButton}>+ Add a budget item</Text>
         </TouchableOpacity>
       </View>
     )
   },
-  updateBudgetItems: function(json) {
+  updateBudgetItems(json) {
     var ds = this.state.dataSource;
     var budget_items = json.budget_category.budget_items;
     this.setState({budget_items, dataSource: ds.cloneWithRows(budget_items)});
   },
-  componentDidMount: function() {
+  componentDidMount() {
     let routeData = this.props.route.data;
     let data = {
       id: routeData.budget_category.id,
@@ -87,11 +103,11 @@ var BudgetCategory = React.createClass({
     try {
       let json = await findCategory(data);
       this.updateBudgetItems(json)
-    } catch(error) {
+    } catch (error) {
       this.props.navigator.props.signOut()
     }
   },
-  backButton: function() {
+  backButton() {
     return (
       <TouchableOpacity onPress={this.props.navigator.props.popRoute}>
         <View style={styles.navBarLeftButton}>
@@ -100,7 +116,7 @@ var BudgetCategory = React.createClass({
       </TouchableOpacity>
     );
   },
-  _pressRow: function(budgetItem) {
+  _pressRow(budgetItem) {
     this.props.navigator.props.pushRouteBack({
       title: budgetItem.name,
       component: BudgetItem,
@@ -109,7 +125,7 @@ var BudgetCategory = React.createClass({
       data: budgetItem
     });
   },
-  _renderRow: function(budgetItem: string, sectionID: number, rowID: number) {
+  _renderRow(budgetItem: object, sectionID: number, rowID: number) {
     return (
       <Swipeout right={this.swipeoutBtns(budgetItem)} autoClose={true} item={budgetItem} sectionID={sectionID} key={budgetItem.id}>
         <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
@@ -141,7 +157,7 @@ var BudgetCategory = React.createClass({
       </Swipeout>
     );
   },
-  render: function() {
+  render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -152,10 +168,10 @@ var BudgetCategory = React.createClass({
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.dataSource}
                   renderRow={this._renderRow}
-                  renderFooter={this.addButton} />
+                  renderFooter={this.footerRow} />
       </View>
-    )
+    );
   }
-})
+});
 
 module.exports = BudgetCategory;
