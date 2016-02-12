@@ -2,6 +2,7 @@ var React = require('react-native')
 
 var {
   AlertIOS,
+  Alert,
   LinkingIOS
 } = React
 
@@ -17,4 +18,13 @@ exports.link = function (url) {
       LinkingIOS.openURL(url)
     }
   })
+}
+
+exports.confirm = function(title, message, callback) {
+  Alert.alert(title, message,
+    [
+      {text: 'Cancel', style: 'cancel'},
+      {text: 'OK', onPress: callback},
+    ]
+  );
 }
