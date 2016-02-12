@@ -1,11 +1,11 @@
 import {postRequest, putRequest, deleteRequest, patchRequest} from '../Utils/api';
 
 module.exports = {
-  createItem(data) {
-    return postRequest('/budget-items', data);
+  createItem(budget_item) {
+    return postRequest('/budget-items', budget_item);
   },
-  updateItem(budget_item) {
-    return putRequest(`/budget-items/${budget_item.id}`, {budget_item});
+  updateItem(data) {
+    return putRequest(`/budget-items/${data.budget_item.id}`, data);
   },
   destroyItem(id) {
     return deleteRequest(`/budget-items/${id}`);
