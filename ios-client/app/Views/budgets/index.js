@@ -42,7 +42,7 @@ var CashFlowPlans = React.createClass({
     this.setState({showDatePicker: !status})
   },
   updateBudget: function(json) {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var ds = this.state.dataSource;
     this.setState({dataSource: ds.cloneWithRows(json.budget.budget_categories)});
   },
   componentDidMount: function() {

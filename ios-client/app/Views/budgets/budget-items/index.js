@@ -1,45 +1,63 @@
 'use strict';
 
 var React = require('react-native');
-var {
+import {
   Image,
   ListView,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View
-} = React;
+} from 'react-native';
 
 var styles = require('./styles');
 var BudgetItem = require('./expenses');
-import {findCategory} from '../../../Data/budget_category';
-var h = require('../../../Utils/ViewHelpers');
-const Swipeout = require('react-native-swipeout');
-const swipeoutBtns = [
-  {
-    text: 'Edit',
-    color: 'white',
-    backgroundColor: '#69F'
-  },
-  {
-    text: 'Delete',
-    color: 'white',
-    backgroundColor: '#f04124'
-  },
-  {
-    text: 'Cancel',
-    color: '#555'
-  }
-]
+
+import {alert, confirm}   from '../../../Utils/window';
+import {findCategory}     from '../../../Data/budget_category';
+import {destroyItem}      from '../../../Data/budget_item';
+import {numberToCurrency} from '../../../Utils/ViewHelpers';
+import Swipeout           from 'react-native-swipeout';
 
 var BudgetCategory = React.createClass({
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      budget_category: {
-        budget_items: []
+  swipeoutBtns(item) {
+    const confirmText = `Are you sure you want to delete\n\n${item.name}?\n\nThis cannot be undone.`;
+    return [
+      {
+        text: 'Edit',
+        color: 'white',
+        backgroundColor: '#69F',
+        onPress: () => { alert({title: 'edit', message: numberToCurrency(item.amount_spent)}) }
       },
-      budgetItems: ds.cloneWithRows([]),
+      {
+        text: 'Delete',
+        color: 'white',
+        backgroundColor: '#f04124',
+        onPress: () => {
+          confirm('Confirm Delete', confirmText, this.deleteItem.bind(this, item))
+        }
+      },
+      {text: 'Cancel', color: '#555'}
+    ];
+  },
+  deleteItem: async function(item) {
+    try {
+      let resp = await destroyItem(item.id);
+      if (resp.success) {
+        let budget_items = _.assign([], this.state.budget_items);
+        let index        = _.findIndex(budget_items, {'id': item.id});
+        budget_items.splice(index,1);
+        let dataSource = this.state.dataSource.cloneWithRows(budget_items);
+        this.setState({budget_items, dataSource});
+      }
+    } catch (err) {
+    }
+  },
+  getInitialState: function() {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return {
+      budget_items: [],
+      dataSource: ds.cloneWithRows([]),
     }
   },
   addButton: function() {
@@ -52,8 +70,9 @@ var BudgetCategory = React.createClass({
     )
   },
   updateBudgetItems: function(json) {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.setState({budgetItems: ds.cloneWithRows(json.budget_category.budget_items)});
+    var ds = this.state.dataSource;
+    var budget_items = json.budget_category.budget_items;
+    this.setState({budget_items, dataSource: ds.cloneWithRows(budget_items)});
   },
   componentDidMount: function() {
     let routeData = this.props.route.data;
@@ -66,8 +85,8 @@ var BudgetCategory = React.createClass({
   },
   _updateList: async function(data) {
     try {
-      let budget_category = await findCategory(data);
-      this.updateBudgetItems(budget_category)
+      let json = await findCategory(data);
+      this.updateBudgetItems(json)
     } catch(error) {
       this.props.navigator.props.signOut()
     }
@@ -92,7 +111,7 @@ var BudgetCategory = React.createClass({
   },
   _renderRow: function(budgetItem: string, sectionID: number, rowID: number) {
     return (
-      <Swipeout right={swipeoutBtns} autoClose={true} key={rowID}>
+      <Swipeout right={this.swipeoutBtns(budgetItem)} autoClose={true} item={budgetItem} sectionID={sectionID} key={budgetItem.id}>
         <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
           <View>
             <View style={styles.row}>
@@ -105,13 +124,13 @@ var BudgetCategory = React.createClass({
                 <View style={styles.paid}>
                   <Text style={{fontWeight: 'bold'}}>Spent: </Text>
                   <Text style={styles.subTitle}>
-                    {h.numberToCurrency(budgetItem.amount_spent)}
+                    {numberToCurrency(budgetItem.amount_spent)}
                   </Text>
                 </View>
                 <View style={styles.paid}>
                   <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
                   <Text style={styles.subTitle}>
-                    {h.numberToCurrency(budgetItem.amount_remaining)}
+                    {numberToCurrency(budgetItem.amount_remaining)}
                   </Text>
                 </View>
               </View>
@@ -131,7 +150,7 @@ var BudgetCategory = React.createClass({
 
         <ListView style={styles.list}
                   automaticallyAdjustContentInsets={false}
-                  dataSource={this.state.budgetItems}
+                  dataSource={this.state.dataSource}
                   renderRow={this._renderRow}
                   renderFooter={this.addButton} />
       </View>
