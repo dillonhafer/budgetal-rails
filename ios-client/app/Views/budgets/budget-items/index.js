@@ -28,7 +28,7 @@ var BudgetCategory = React.createClass({
         text: 'Edit',
         color: 'white',
         backgroundColor: '#69F',
-        onPress: () => { alert({title: 'edit', message: numberToCurrency(item.amount_spent)}) }
+        onPress: this.editItem.bind(this, item)
       },
       {
         text: 'Delete',
@@ -69,6 +69,15 @@ var BudgetCategory = React.createClass({
       showMenu: false,
       left: this.backButton(),
       data: {category_id: this.props.route.data.budget_category.id}
+    });
+  },
+  editItem(item) {
+    this.props.navigator.props.pushRouteBack({
+      title: `Edit ${item.name}`,
+      component: form,
+      showMenu: false,
+      left: this.backButton(),
+      data: item
     });
   },
   footerRow() {
