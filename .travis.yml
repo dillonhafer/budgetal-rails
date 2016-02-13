@@ -34,6 +34,8 @@ before_install:
   - sh -e /etc/init.d/xvfb start
   - wget https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
   - unzip -qq chromedriver_linux64.zip
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - dpkg -i google-chrome*.deb
   - nvm install 4.1
   - cd rails-api && bundle && bundle exec rake db:setup
   - cd ../react-webclient && npm install
