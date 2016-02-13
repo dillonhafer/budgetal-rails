@@ -39,11 +39,7 @@ feature 'Allocation Plans', js: true do
 
           click_on 'Save'
         end
-
         expect(page).to have_selector('.flash-box', text: 'Saved Plan')
-
-        visit root_path
-        click_on 'Detailed Budgets'
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update

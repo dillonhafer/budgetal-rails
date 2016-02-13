@@ -238,9 +238,10 @@ export default class AllocationPlans extends React.Component {
 
     strategy(this.props.params, data)
       .then((resp) => {
-        this.updatePlan(resp);
         if (!resp.errors) {
           this.planSaved(resp);
+        } else {
+          this.updatePlan(resp)
         }
       })
       .catch(this._fetchDataFail)
