@@ -16,7 +16,7 @@ services:
 script:
   - cd rails-api && bundle exec rake
   - cd ..
-  - cd react-webclient && npm run ci
+  - cd react-webclient && npm run test
 branches:
   only:
   - master
@@ -32,6 +32,3 @@ before_install:
   - cd rails-api && bundle && bundle exec rake db:setup
   - cd ../react-webclient && npm install
   - cd ..
-  - cp react-webclient/static/index.html rails-api/public
-  - cp react-webclient/static/*.css rails-api/public
-  - cp react-webclient/static/*.js rails-api/public
