@@ -8,8 +8,6 @@ Setup
 
 First make sure the [dependencies](#dependencies) are met. Then:
 
-**manually**
-
 ```bash
 $ git clone https://github.com/dillonhafer/budgetal
 $ cd budgetal/rails-api && bundle
@@ -42,7 +40,7 @@ $ brew install chromedriver
 *Linux*
 
 ```bash
-$ get https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
+$ wget https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
 $ unzip -qq chromedriver_linux64.zip
 ```
 
