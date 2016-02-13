@@ -5,6 +5,7 @@ rvm:
 cache:
   bundler: true
   directories:
+  - rails-api/vendor/bundle
   - react-webclient/node_modules
 env:
  - RAILS_DATABASE_USER=postgres
@@ -22,11 +23,15 @@ branches:
 before_install:
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
+  - export CHROME_DRIVER=$(pwd)/chromedriver
+  - export API_URL='http://localhost:3388'
   - sh -e /etc/init.d/xvfb start
   - wget https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
   - unzip -qq chromedriver_linux64.zip
-  - export CHROME_DRIVER=$(pwd)/chromedriver
   - nvm install 4.1
   - cd rails-api && bundle && bundle exec rake db:setup
   - cd ../react-webclient && npm install
   - cd ..
+  - cp react-webclient/static/index.html rails-api/public
+  - cp react-webclient/static/*.css rails-api/public
+  - cp react-webclient/static/*.js rails-api/public
