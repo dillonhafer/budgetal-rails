@@ -1,12 +1,12 @@
-bundler_args: --without development --path=rails-api/vendor/bundle
+bundler_args: --without development --path=~/.bundle
 sudo: false
 language: ruby
 rvm:
  - "2.3.0"
 cache:
-  skip_bundle_clean: true
+  bundle: true
   directories:
-  - rails-api/vendor/bundle
+  - ~/.bundle
   - react-webclient/node_modules
 env:
  - RAILS_DATABASE_USER=postgres
