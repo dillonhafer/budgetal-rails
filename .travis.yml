@@ -3,7 +3,7 @@ language: ruby
 rvm:
  - "2.3.0"
 cache:
-  bundler: true
+  skip_bundle_clean: true
   directories:
   - rails-api/vendor/bundle
   - react-webclient/node_modules
