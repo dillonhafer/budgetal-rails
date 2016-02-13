@@ -18,6 +18,11 @@ script:
   - cd rails-api && bundle exec rake
   - cd ..
   - cd react-webclient && npm run test
+  - npm run build
+  - cd ..
+  - cp -r react-webclient/static/* rails-api/public
+  - cp -r react-webclient/build/* rails-api/public
+  - cd rails-api && bundle exec rspec spec/features
 branches:
   only:
   - master
