@@ -56,6 +56,10 @@ function request(method, path, body) {
     }
   })
   .catch((r) => {
-    window.location = '/503';
+    if (r.message === "You must sign in or up before continuing") {
+      throw({message: r.message})
+    } else {
+      window.location = '/503';
+    }
   })
 }
