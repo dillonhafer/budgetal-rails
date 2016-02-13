@@ -1,0 +1,27 @@
+sudo: false
+language: ruby
+rvm:
+ - "2.3.0"
+cache:
+  bundler: true
+  directories:
+  - node_modules
+env:
+ - RAILS_DATABASE_USER=postgres
+addons:
+  postgresql: '9.4'
+services:
+  - postgresql
+script:
+  - cd rails-api && bundle exec rake
+  - cd react-webclient && npm run test
+branches:
+  only:
+  - master
+before_install:
+  - export DISPLAY=:99.0
+  - export CHROME_BIN=chromium-browser
+  - sh -e /etc/init.d/xvfb start
+  - cd rails-api && bundle && bundle exec rake db:setup
+  - cd ../react-webclient && npm install
+  - cd ..
