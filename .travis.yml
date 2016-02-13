@@ -1,5 +1,6 @@
+sudo: required
+dist: trusty
 bundler_args: --without development --path=~/.bundle
-sudo: true
 language: ruby
 rvm:
  - "2.3.0"
