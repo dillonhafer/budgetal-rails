@@ -206,7 +206,7 @@ export default class AllocationPlans extends React.Component {
     this.setState({showPlanForm: false, modalPlan: {}});
   }
 
-  updatePlan = (plan) => {
+  updateModalPlan = (plan) => {
     const modalPlan = _.assign({}, this.state.modalPlan, plan);
     this.setState({modalPlan});
   }
@@ -241,7 +241,7 @@ export default class AllocationPlans extends React.Component {
         if (!resp.errors) {
           this.planSaved(resp);
         } else {
-          this.updatePlan(resp)
+          this.updateModalPlan(resp)
         }
       })
       .catch(this._fetchDataFail)
@@ -273,7 +273,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   render() {
-    const planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updatePlan} />
+    const planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updateModalPlan} />
     const allocation_plan = this.state.allocation_plan;
     const notAllocated = this.notAllocated(allocation_plan)
     const fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
