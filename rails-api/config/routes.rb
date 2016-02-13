@@ -1,10 +1,11 @@
 Budgets::Application.routes.draw do
   root to: 'application#index'
 
-  devise_for :users, path: 'sessions', path_names: { registration: 'sign-up' }
+  devise_for :users, path: 'sessions'
 
   get    '/sessions'          => 'sessions#index'
   post   '/sessions/sign-in'  => 'sessions#create'
+  post   '/sessions/sign-up'  => 'registrations#create'
   delete '/sessions/sign-out' => 'sessions#destroy'
 
   resources :budgets, only: [:update]
