@@ -11,6 +11,14 @@ task :all_tests do
   end
 end
 
+desc "Run both test suites"
+task :features do
+  cmd = 'bundle exec rspec spec/features'
+  puts "\n----> Running: #{cmd}"
+  system(cmd)
+  raise "#{cmd} failed!" unless $?.exitstatus == 0
+end
+
 task :int do
   database      = 'budgetal_test_3388'
   budgetal_cmd  = File.directory?('/tmp/budgetal') ? 'cd /tmp/budgetal && git pull' : 'git clone https://github.com/dillonhafer/budgetal /tmp/budgetal'

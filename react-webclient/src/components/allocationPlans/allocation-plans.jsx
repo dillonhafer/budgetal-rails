@@ -52,20 +52,6 @@ export default class AllocationPlans extends React.Component {
     }
   }
 
-  confirmExpenseDelete = (expense, index) => {
-    if (!!expense.id) {
-      this.setState({
-        modal: {
-          hidden: false,
-          item: expense,
-          index: index,
-          delete: this.deleteExpense
-        }
-      });
-    } else {
-      this._expenseDeleted(expense.budget_item_id, index)
-    }
-  }
 
   cancelDelete = (e) => {
     if (e) { e.preventDefault() }
@@ -73,22 +59,22 @@ export default class AllocationPlans extends React.Component {
   }
 
   incrementMonth(date, number) {
-    var year     = date.getFullYear();
-    var month    = date.getMonth();
-    var newMonth = month + number;
+    const year     = date.getFullYear();
+    const month    = date.getMonth();
+    const newMonth = month + number;
     return new Date(year, newMonth);
   }
 
   changeMonth = (number) => {
-    var currentDate = new Date(this.state.budget.year, this.state.budget.month-1, 1);
-    var newDate = this.incrementMonth(currentDate, number);
-    var date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
+    const currentDate = new Date(this.state.budget.year, this.state.budget.month-1, 1);
+    const newDate = this.incrementMonth(currentDate, number);
+    const date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
     this.context.history.push(`/detailed-budgets/${date.year}/${date.month}`)
   }
 
   changeBudget = () => {
-    var year  = selectedValue('#budget_year');
-    var month = selectedValue('#budget_month');
+    const year  = selectedValue('#budget_year');
+    const month = selectedValue('#budget_month');
     this.context.history.push(`/detailed-budgets/${year}/${month}`)
   }
 
@@ -114,54 +100,53 @@ export default class AllocationPlans extends React.Component {
     this.context.history.replace('/');
   }
 
-  changeCategory = (id) => {
-    this._fetchBudget({
-      year: this.state.budget.year,
-      month: this.state.budget.month,
-      id: id
-    })
-  }
-
   _fetchBudget = (data) => {
     allPlans(data)
       .then(this._fetchDataDone)
       .catch(this._fetchDataFail)
   }
 
-  // Budget Item functions
+  updateBudgetItem = (index, group, updatedItem) => {
+    var allocation_plan = this.state.allocation_plan;
+    var group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
+    allocation_plan.item_groups[group_index].budget_items[index] = updatedItem;
+    this.setState({allocation_plan});
+  }
+
   saveBudgetItem = (item) => {
-    if (item.id == '') {
-      var data = {
+    let data, strategy;
+    if (item.id === '') {
+      data = {
         budget_item_id: item.budget_item.id,
         allocation_plan_id: this.state.allocation_plan.id,
         amount_budgeted: item.amount_budgeted
-      }
-      createItem(data)
-        .then((budget_item) => {
-          if (!!budget_item.errors) {
-            this._saveItemFail(item.budget_item, budget_item.errors);
-          } else {
-            this._budgetItemSaved(item.budget_item, budget_item);
-          }
-        })
-        .catch(this._fetchDataFail)
+      };
+      strategy = createItem;
     } else {
-      var data = {
+      data = {
         id: item.id,
         allocation_plan_budget_item: {
           amount_budgeted: item.amount_budgeted
         }
-      }
-      updateItem(data)
-        .then((budget_item) => {
-          if (!!budget_item.errors) {
-            this._saveItemFail(item.budget_item, budget_item.errors);
-          } else {
-            this._budgetItemSaved(item.budget_item, budget_item);
-          }
-        })
-        .catch(this._fetchDataFail)
+      };
+      strategy = updateItem;
     }
+
+    strategy(data)
+      .then((budget_item) => {
+        if (!!budget_item.errors) {
+          this._saveItemFail(item.budget_item, budget_item.errors);
+        } else {
+          this._budgetItemSaved(item.budget_item, budget_item);
+        }
+      })
+      .catch(this._fetchDataFail)
+  }
+
+  _budgetItemSaved = (originalItem, updatedItem) => {
+    var allocation_plan = this._updateBudgetItem(originalItem, updatedItem);
+    this.setState({allocation_plan});
+    showMessage(`Saved ${originalItem.name}`);
   }
 
   _updateBudgetItem = (budgetItem, updatedItem) => {
@@ -175,12 +160,6 @@ export default class AllocationPlans extends React.Component {
     return allocation_plan;
   }
 
-  _budgetItemSaved = (originalItem, updatedItem) => {
-    var allocation_plan = this._updateBudgetItem(originalItem, updatedItem);
-    this.setState({allocation_plan});
-    showMessage(`Saved ${originalItem.name}`);
-  }
-
   _saveItemFail = (originalItem, errors) => {
     var allocation_plan = this.state.allocation_plan;
     var groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: originalItem.budget_category_id});
@@ -190,161 +169,6 @@ export default class AllocationPlans extends React.Component {
     this.setState({allocation_plan});
   }
 
-  addBudgetItem = (e) => {
-    e.preventDefault()
-    var category = this.state.category
-    category.budget_items.push({category_id: category.id, amount_budgeted: 0.01})
-    this.setState({category: category})
-  }
-
-  updateBudgetItem = (index, group, updatedItem) => {
-    var allocation_plan = this.state.allocation_plan;
-    var group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
-    allocation_plan.item_groups[group_index].budget_items[index] = updatedItem;
-    this.setState({allocation_plan});
-  }
-
-  saveBudget = (budget) => {
-    var self = this;
-    updateBudget(budget)
-      .then((resp) => {
-        if (!!resp.errors) {
-          self._saveBudgetFail(budget, resp.errors);
-        } else {
-          self._budgetUpdated(resp.budget);
-        }
-      })
-      .catch(this._fetchDataFail)
-  }
-
-  _saveBudgetFail = (budget, errors) => {
-    budget.errors = errors;
-    this.setState({budget});
-  }
-
-  _budgetUpdated = (budget) => {
-    showMessage('Updated Budget');
-    this.setState({budget});
-  }
-
-  // Budget Item Expense functions
-  addExpense = (id) => {
-    var category = this.state.category
-    var budget_item = _.where(category.budget_items, {'id': id})[0]
-    budget_item.budget_item_expenses.push({budget_item_id: id, amount: 0.01, date: today()})
-    this.setState({category: category})
-  }
-
-  saveExpense = (expense) => {
-    var self = this;
-    if (expense.id === undefined) {
-      createExpense(expense)
-        .then((resp) => {
-          if (!!resp.errors) {
-            self._saveExpenseFail(expense.index, resp.errors);
-          } else {
-            self._expenseSaved(expense.index, resp);
-          }
-        })
-        .catch(this._fetchDataFail)
-    } else {
-      updateExpense(expense)
-        .then((resp) => {
-          if (!!resp.errors) {
-            self._saveExpenseFail(expense.index, resp.errors);
-          } else {
-            self._expenseSaved(expense.index, resp);
-          }
-        })
-        .catch(this._fetchDataFail)
-    }
-  }
-
-  _saveExpenseFail = (index, errors) => {
-    let category = this.state.category
-    let budget_item = _.where(category.budget_items, {'id': index.budget_item_id})[0]
-    _.where(budget_item.budget_item_expenses, {'index': index.index})[0].errors = errors
-    this.setState({category: category})
-  }
-
-  _expenseSaved = (index, expense) => {
-    let category = this.state.category
-    let budget = _.assign({}, this.state.budget, expense.budget)
-    var budget_item = _.where(category.budget_items, {'id': expense.budget_item_id})[0]
-
-    budget_item.budget_item_expenses[index] = expense
-    this.setState({category: category, budget: budget})
-    showMessage(`Saved ${expense.name}`)
-  }
-
-  deleteExpense = (e) => {
-    e.preventDefault();
-    var modal = this.state.modal;
-    if (modal.item.id !== undefined) {
-      destroyExpense(modal.item.id)
-        .then((resp) => {
-          if (resp.success) {
-            this._expenseDeleted(modal.item.budget_item_id, modal.index);
-          }
-        })
-        .catch(this._fetchDataFail)
-    }
-  }
-
-  _expenseDeleted = (budget_item_id, index) => {
-    let category = this.state.category
-    var budget_item = _.where(category.budget_items, {'id': budget_item_id})[0]
-    budget_item.budget_item_expenses.splice(index, 1)
-    if (this.state.modal.item.id !== undefined) {
-      showMessage("Deleted "+this.state.modal.item.name)
-    }
-    this.setState({category: category})
-    this.cancelDelete()
-  }
-
-  itemFunctions() {
-    return {
-      save: this.saveBudgetItem,
-      update: this.updateBudgetItem
-    }
-  }
-
-  expenseFunctions() {
-    return {
-      add: this.addExpense,
-      save: this.saveExpense,
-      update: this.updateExpense,
-      delete: this.confirmExpenseDelete
-    }
-  }
-
-  _import = (e) => {
-    e.preventDefault();
-    var self = this;
-    importCategory(this.state.category.id)
-      .then((resp) => {
-        self.importFinished(resp.imported, resp.message);
-      })
-      .catch(this._fetchDataFail)
-  }
-
-  importFinished = (imported_items, message) => {
-    var category = this.state.category
-    category.budget_items = category.budget_items.concat(imported_items)
-    this.setState({category: category})
-    showMessage(message)
-    this.cancelImport()
-  }
-
-  cancelImport = (e) => {
-    if (e) { e.preventDefault() }
-    this.setState({importHidden: true});
-  }
-
-  openImport = (e) => {
-    e.preventDefault()
-    this.setState({importHidden: false});
-  }
 
   nothing() {
     if (!this.state.allocation_plan.item_groups.length) {
@@ -383,14 +207,14 @@ export default class AllocationPlans extends React.Component {
   }
 
   updatePlan = (plan) => {
-    var modalPlan = _.assign({}, this.state.modalPlan, plan);
+    const modalPlan = _.assign({}, this.state.modalPlan, plan);
     this.setState({modalPlan});
   }
 
   planSaved = (plan) => {
-    var allocation_plan = _.assign({}, this.state.allocation_plan, plan);
-    var budget = this.state.budget;
-    var idx    = _.findIndex(budget.allocation_plans, {id: plan.id});
+    let allocation_plan = _.assign({}, this.state.allocation_plan, plan);
+    let budget = _.assign({}, this.state.budget);
+    let idx    = _.findIndex(budget.allocation_plans, {id: plan.id});
 
     if (idx == -1) {
       budget.allocation_plans.push(plan);
@@ -404,10 +228,10 @@ export default class AllocationPlans extends React.Component {
   }
 
   savePlan = (allocation_plan) => {
-    var data = {allocation_plan};
-    var strategy = createPlan;
+    let data = {allocation_plan};
+    let strategy = createPlan;
 
-    if (allocation_plan.id) {
+    if (allocation_plan.id !== undefined) {
       data.id  = allocation_plan.id;
       strategy = updatePlan;
     }
@@ -438,20 +262,20 @@ export default class AllocationPlans extends React.Component {
   }
 
   tabDate(plan) {
-    var dateString = 'No Date';
+    let dateString = 'No Date';
     if (plan.start_date && plan.end_date) {
-      var start = this.dateParts(plan.start_date);
-      var end   = this.dateParts(plan.end_date);
-      var dateString = `${start.month}/${start.day} - ${end.month}/${end.day}`
+      const start = this.dateParts(plan.start_date);
+      const end   = this.dateParts(plan.end_date);
+      dateString  = `${start.month}/${start.day} - ${end.month}/${end.day}`
     }
     return dateString;
   }
 
   render() {
-    var planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updatePlan} />
-    var allocation_plan = this.state.allocation_plan;
-    var notAllocated = this.notAllocated(allocation_plan)
-    var fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
+    const planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updatePlan} />
+    const allocation_plan = this.state.allocation_plan;
+    const notAllocated = this.notAllocated(allocation_plan)
+    const fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
     return (
       <div>
         <section>
@@ -462,7 +286,7 @@ export default class AllocationPlans extends React.Component {
               <dl className="tabs" data-tab>
                 {
                   this.state.budget.allocation_plans.map((plan, index) => {
-                    var ddClass = classNames({active: allocation_plan.id == plan.id})
+                    const ddClass = classNames({active: allocation_plan.id == plan.id})
                     return (
                       <dd key={index} className={ddClass}>
                         <a href="#" onClick={this.changePlan.bind(null, plan)}>{this.tabDate(plan)}</a>
