@@ -34,4 +34,8 @@ Budgets::Application.routes.draw do
   post '/change-password'     => 'users#change_password'
 
   get '/admin/users' => 'admin#users'
+
+  if Rails.env.test?
+    get '/*path' => 'application#index'
+  end
 end
