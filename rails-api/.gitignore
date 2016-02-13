@@ -6,6 +6,15 @@
 
 .env
 public/system
+public/*.html
+public/*.css
+public/*.js
+public/*.png
+public/*.svg
+public/*.ico
+public/*.json
+public/*.xml
+public/fonts
 
 # Ignore bundler config
 /.bundle
