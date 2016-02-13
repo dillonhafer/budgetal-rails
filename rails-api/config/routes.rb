@@ -36,6 +36,6 @@ Budgets::Application.routes.draw do
   get '/admin/users' => 'admin#users'
 
   if Rails.env.test?
-    get '/*path' => 'application#index'
+    get "/*path", to: proc {|env| [200, {}, [File.read(Rails.public_path.join('index.html'))]] }
   end
 end

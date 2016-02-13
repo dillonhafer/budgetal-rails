@@ -2,10 +2,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_action  :flash_to_headers
 
-  def index
-    render file: Rails.root.join('public', 'index.html')
-  end
-
   def flash_to_headers
     if request.xhr?
       #avoiding XSS injections via flash
