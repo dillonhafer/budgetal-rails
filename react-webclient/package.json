@@ -49,7 +49,6 @@
   "scripts": {
     "test": "karma start",
     "start": "webpack -w --config webpack.dev.config.js",
-    "ci": "webpack -p --config webpack.production.config.js && echo 'replace-with-hash' > public/assets/manifest",
     "server:hot": "webpack-dev-server --hot --inline --config webpack.hot-dev.config.js",
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "server:dev": "NODE_ENV=development node ./dev.server.js",
