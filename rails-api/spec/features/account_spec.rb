@@ -14,7 +14,7 @@ feature 'Account', js: true do
 
   context 'As a logged in user' do
     it 'I can visit account page' do
-      user = login_with
+      login
       visit root_path
       find('#js-user-greeting').click
       click_on 'Account Settings'

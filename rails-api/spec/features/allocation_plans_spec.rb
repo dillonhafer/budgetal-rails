@@ -5,7 +5,7 @@ feature 'Allocation Plans', js: true do
   context 'As a logged in user' do
     context 'Without any allocation plans' do
       it 'I can add/update a pay period' do
-        user = login_with
+        login
         visit root_path
         click_on 'Detailed Budgets'
 

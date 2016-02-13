@@ -5,7 +5,7 @@ feature 'Annual Budgets', :js do
   context 'As a logged in user' do
     context 'Without any annual budgets' do
       it 'I can add/edit/delete a budget item' do
-        login_with
+        login
         visit root_path
         find('[title="this is you!"]').click
         click_link "Annual Budgets"
