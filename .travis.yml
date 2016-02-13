@@ -38,7 +38,8 @@ before_install:
   - sudo apt-get -y update
   - sudo apt-get -y install chromium-browser
   - nvm install 4.1
+  - cd rails-api
   - gem install bundler --no-ri --no-rdoc
-  - cd rails-api && bundle --without development --path=~/.bundle && bundle exec rake db:setup
+  - bundle --without development --path=~/.bundle && bundle exec rake db:setup
   - cd ../react-webclient && npm install
   - cd ..
