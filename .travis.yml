@@ -14,6 +14,7 @@ services:
   - postgresql
 script:
   - cd rails-api && bundle exec rake
+  - cd ..
   - cd react-webclient && npm run ci
 branches:
   only:
