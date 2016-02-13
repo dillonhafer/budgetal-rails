@@ -124,9 +124,7 @@ export default class AllocationPlans extends React.Component {
 
   _fetchBudget = (data) => {
     allPlans(data)
-      .then((resp) => {
-        this._fetchDataDone(resp);
-      })
+      .then(this._fetchDataDone)
       .catch(this._fetchDataFail)
   }
 
