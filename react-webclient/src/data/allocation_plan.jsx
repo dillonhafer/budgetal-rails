@@ -12,5 +12,8 @@ export default {
   },
   updatePlan(date, data) {
     return putRequest(`/allocation-plans/${date.year}/${date.month}/${data.id}`, data);
+  },
+  deletePlan(id) {
+    return deleteRequest(`/allocation-plans/${id}`);
   }
 }
