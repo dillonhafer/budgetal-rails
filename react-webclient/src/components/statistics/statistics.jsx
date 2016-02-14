@@ -66,12 +66,12 @@ export default class Statistics extends React.Component {
   }
 
   componentDidMount() {
+    title(`${this.title()} | Statistics`);
     this._fetchBudget(this.props.params);
   }
 
   _fetchDataDone = (budget) => {
     this.setState({budget});
-    title(this.title());
   }
 
   _fetchDataFail = (e) => {

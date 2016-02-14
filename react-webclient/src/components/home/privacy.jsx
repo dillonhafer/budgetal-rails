@@ -1,8 +1,13 @@
 import React from 'react';
+import {title} from '../../utils/helpers';
 
 export default class Privacy extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    title('Privacy');
   }
 
   render() {

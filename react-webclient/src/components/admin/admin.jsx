@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import {users} from '../../data/admin';
+import {title} from '../../utils/helpers';
 
 export default class Admin extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Admin extends React.Component {
   }
 
   componentDidMount() {
+    title('Admin');
     this.fetchUsers();
   }
 

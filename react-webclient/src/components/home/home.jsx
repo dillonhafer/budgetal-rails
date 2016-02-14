@@ -3,10 +3,15 @@ import showcase from '../../assets/images/showcase-sm.png';
 import saving   from '../../assets/images/Saving.png';
 import charity  from '../../assets/images/Charity.png';
 import debts    from '../../assets/images/Debts.png';
+import {title} from '../../utils/helpers';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    title('');
   }
 
   render() {

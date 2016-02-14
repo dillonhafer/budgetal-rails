@@ -30,6 +30,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   componentDidMount() {
+    title(`${this.props.params.year} | Annual Budgets`);
     this._fetchBudget(this.props.params.year);
   }
 
@@ -121,7 +122,6 @@ export default class CashFlowPlans extends React.Component {
 
   _budgetFetched = (budget) => {
     this.setState({budget});
-    title(budget.year);
   }
 
   _budgetFetchFailed = (e) => {

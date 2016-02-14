@@ -24,7 +24,11 @@ export default {
   },
 
   title(string) {
-    document.title = `${string} | Budgetal`;
+    let title = 'Budgetal';
+    if (string.length) {
+      title = `${string} | Budgetal`;
+    }
+    document.title = title;
   },
 
   pluralize(count, singlular, plural) {
