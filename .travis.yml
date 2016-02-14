@@ -29,6 +29,7 @@ branches:
   - master
 before_install:
   - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - echo -e "$PUB_KEY" > ~/.ssh/id_rsa.pub
   - echo -e "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
   - export DISPLAY=:99.0
