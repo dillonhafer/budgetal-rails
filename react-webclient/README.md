@@ -12,7 +12,7 @@ First make sure the [dependencies](#dependencies) are met. Then:
 $ git clone https://github.com/dillonhafer/budgetal
 $ cd budgetal/budgetal-webclient
 $ npm install
-$ npm run server:dev
+$ npm run server
 $ open http://localhost:9999
 ```
 
