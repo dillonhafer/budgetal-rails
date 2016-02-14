@@ -2,9 +2,10 @@ import React from 'react';
 import CategoryList from './category-list';
 import classNames from 'classnames';
 import ItemForm from './item-form';
-import {allPlans, find, createPlan, updatePlan} from '../../data/allocation_plan';
+import {allPlans, find, createPlan, updatePlan, deletePlan} from '../../data/allocation_plan';
 import {createItem, updateItem} from '../../data/allocation_plan_budget_item';
 import {monthName, selectedValue, title, today, numberToCurrency, remainingClass} from '../../utils/helpers';
+import Confirm from '../../utils/confirm';
 import AllocationPlanForm from './allocation-plan-form';
 import Modal from '../../utils/modal';
 
@@ -23,7 +24,8 @@ export default class AllocationPlans extends React.Component {
     allocation_plan: {item_groups:[]},
     showPlanForm: false,
     modalPlan: {},
-    fixer: false
+    fixer: false,
+    hideDeleteModal: true
   }
 
   static contextTypes = {
@@ -48,11 +50,6 @@ export default class AllocationPlans extends React.Component {
     }
   }
 
-  cancelDelete = (e) => {
-    if (e) { e.preventDefault() }
-    this.setState({modal: {hidden: true, index: -1, item: {name: ''}, delete: function(){}}});
-  }
-
   incrementMonth(date, number) {
     const year     = date.getFullYear();
     const month    = date.getMonth();
@@ -71,11 +68,6 @@ export default class AllocationPlans extends React.Component {
     const year  = selectedValue('#budget_year');
     const month = selectedValue('#budget_month');
     this.context.history.push(`/detailed-budgets/${year}/${month}`)
-  }
-
-  showPlaForm = (e) => {
-    e.preventDefault();
-    this.setState({showPlanForm: true});
   }
 
   _fetchDataDone = (data) => {
@@ -98,7 +90,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   updateBudgetItem = (index, group, updatedItem) => {
-    let allocation_plan = _.assign({}, this.state.allocation_plan);
+    let allocation_plan = _.merge({}, this.state.allocation_plan);
     let group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
     allocation_plan.item_groups[group_index].budget_items[index] = updatedItem;
     this.setState({allocation_plan});
@@ -141,7 +133,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   _updateBudgetItem = (budgetItem, updatedItem) => {
-    let allocation_plan = _.assign({}, this.state.allocation_plan);
+    let allocation_plan = _.merge({}, this.state.allocation_plan);
     let groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: budgetItem.budget_category_id});
     let itemIndex       = _.findIndex(allocation_plan.item_groups[groupIndex].budget_items, {budget_item: {id: budgetItem.id}});
     let originalItem    = allocation_plan.item_groups[groupIndex].budget_items[itemIndex]
@@ -152,7 +144,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   _saveItemFail = (originalItem, errors) => {
-    let allocation_plan = _.assign({}, this.state.allocation_plan);
+    let allocation_plan = _.merge({}, this.state.allocation_plan);
     let groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: originalItem.budget_category_id});
     let itemIndex       = _.findIndex(allocation_plan.item_groups[groupIndex].budget_items, {budget_item: {id: originalItem.id}});
 
@@ -172,7 +164,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   editPlan = () => {
-    let modalPlan = _.assign({}, this.state.allocation_plan);
+    let modalPlan = _.merge({}, this.state.allocation_plan);
     this.setState({showPlanForm: true, modalPlan});
   }
 
@@ -194,13 +186,13 @@ export default class AllocationPlans extends React.Component {
   }
 
   updateModalPlan = (plan) => {
-    const modalPlan = _.assign({}, this.state.modalPlan, plan);
+    const modalPlan = _.merge({}, this.state.modalPlan, plan);
     this.setState({modalPlan});
   }
 
   planSaved = (plan) => {
-    let allocation_plan = _.assign({}, this.state.allocation_plan, plan);
-    let budget = _.assign({}, this.state.budget);
+    let allocation_plan = _.merge({}, this.state.allocation_plan, plan);
+    let budget = _.merge({}, this.state.budget);
     let idx    = _.findIndex(budget.allocation_plans, {id: plan.id});
 
     if (idx == -1) {
@@ -210,13 +202,13 @@ export default class AllocationPlans extends React.Component {
     }
 
     this.setState({budget, allocation_plan});
-    showMessage('Saved Plan');
+    showMessage('Saved Pay Period');
     this.cancelPlanModal();
   }
 
   savePlan = (e) => {
     e.preventDefault();
-    let data = {allocation_plan: _.assign({}, this.state.modalPlan)};
+    let data = {allocation_plan: _.merge({}, this.state.modalPlan)};
     let strategy = createPlan;
 
     if (data.allocation_plan.id !== undefined) {
@@ -233,6 +225,29 @@ export default class AllocationPlans extends React.Component {
         }
       })
       .catch(this._fetchDataFail)
+  }
+
+  deletePlan = () => {
+    const id = this.state.allocation_plan.id
+    deletePlan(id)
+      .then((resp) => {
+        if (resp.success) {
+          const modalPlan       = {};
+          const allocation_plan = {item_groups:[]};
+          let budget  = _.merge({}, this.state.budget);
+          let planIdx = _.findIndex(budget.allocation_plans, {id: id});
+          budget.allocation_plans.splice(planIdx,1);
+
+          this.setState({modalPlan, budget, allocation_plan})
+        }
+        showMessage(resp.message);
+        this.cancelDelete();
+      })
+      .catch(this._fetchDataFail)
+  }
+
+  cancelDelete = () => {
+    this.setState({hideDeleteModal: true});
   }
 
   notAllocated(allocation_plan) {
@@ -338,6 +353,9 @@ export default class AllocationPlans extends React.Component {
                         <h3>{this.tabDate(allocation_plan)}
                           <span className='right'>
                             <a href='#' onClick={this.editPlan}><i className='fi-pencil'></i></a>
+                            &nbsp;
+                            <Confirm name='Pay Period' hidden={this.state.hideDeleteModal} delete={this.deletePlan} cancel={this.cancelDelete} />
+                            <a href='#' onClick={()=>{this.setState({hideDeleteModal: false})}} className='alert-color'><i className='fi-trash'></i></a>
                           </span>
                         </h3>
                       </div>
