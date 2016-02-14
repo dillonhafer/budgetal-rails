@@ -30,6 +30,10 @@ export default class AllocationPlans extends React.Component {
     history: React.PropTypes.object.isRequired
   }
 
+  componentDidMount = () => {
+    this._fetchBudget(this.props.params);
+  }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
@@ -74,10 +78,6 @@ export default class AllocationPlans extends React.Component {
     this.setState({showPlanForm: true});
   }
 
-  componentDidMount = () => {
-    this._fetchBudget(this.props.params);
-  }
-
   _fetchDataDone = (data) => {
     this.setState({
       budget: data.budget,
@@ -98,8 +98,8 @@ export default class AllocationPlans extends React.Component {
   }
 
   updateBudgetItem = (index, group, updatedItem) => {
-    var allocation_plan = _.assign({}, this.state.allocation_plan);
-    var group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
+    let allocation_plan = _.assign({}, this.state.allocation_plan);
+    let group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
     allocation_plan.item_groups[group_index].budget_items[index] = updatedItem;
     this.setState({allocation_plan});
   }
@@ -161,16 +161,12 @@ export default class AllocationPlans extends React.Component {
   }
 
   nothing() {
-    if (!this.state.allocation_plan.item_groups.length) {
+    if (this.hidePlan()) {
       return (
-        <p className='text-center add-pay-period'>
-          <br />
-          <br />
-          <br />
-          You haven't added any pay periods yet.<br />
-          <br />
+        <div className='text-center add-pay-period-button'>
+          <p>You haven't added any pay periods yet.</p>
           <a href='#' onClick={this.addPlan} className='tiny success button radius add-pay-period'><i className='fi-plus'></i> New Pay Period</a>
-        </p>
+        </div>
       )
     }
   }
@@ -264,12 +260,15 @@ export default class AllocationPlans extends React.Component {
     return dateString;
   }
 
+  hidePlan() {
+    return !this.state.allocation_plan.id;
+  }
+
   render() {
     const planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updateModalPlan} />
     const allocation_plan = this.state.allocation_plan;
     const notAllocated = this.notAllocated(allocation_plan)
-    const fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
-    const editable = classNames('right', {'hide': !allocation_plan.id});
+    const fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer, 'hide': this.hidePlan()});
     return (
       <div>
         <section>
@@ -337,7 +336,7 @@ export default class AllocationPlans extends React.Component {
                     <div className={fixClasses}>
                       <div className='large-12 medium-12 columns header-row'>
                         <h3>{this.tabDate(allocation_plan)}
-                          <span className={editable}>
+                          <span className='right'>
                             <a href='#' onClick={this.editPlan}><i className='fi-pencil'></i></a>
                           </span>
                         </h3>
