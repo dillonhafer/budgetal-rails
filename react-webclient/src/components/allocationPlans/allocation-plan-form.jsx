@@ -24,15 +24,10 @@ export default class AllocationPlanForm extends React.Component {
     this.props.update(updatedPlan);
   }
 
-  save = (e) => {
-    e.preventDefault();
-    this.props.save();
-  }
-
   render() {
     var plan = this.props.plan;
     return (
-      <form onSubmit={this.save}>
+      <form onSubmit={this.props.save}>
         <div className='row'>
           <div className='large-5 columns start-date'>
             <label htmlFor='start_date'>Start Date</label>
