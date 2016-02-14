@@ -30,8 +30,8 @@ branches:
 before_install:
   - mkdir -p ~/.ssh && touch ~/.ssh/id_rsa.pub && touch ~/.ssh/id_rsa
   - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - echo -e "$PUB_KEY" > ~/.ssh/id_rsa.pub
-  - echo -e "$RSA_KEY" > ~/.ssh/id_rsa
+  - echo "$PUB_KEY" > ~/.ssh/id_rsa.pub
+  - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
