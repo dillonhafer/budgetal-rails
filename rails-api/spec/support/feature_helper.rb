@@ -21,7 +21,8 @@ module FeatureHelper
         first_name: '#{user.first_name}',
         last_name: '#{user.last_name}',
         email: '#{user.email}',
-        admin: '#{user.admin?}'
+        admin: '#{user.admin?}',
+        avatar: '#{user.data_avatar.remove("\n")}'
       };
 
       localStorage.setItem('session', JSON.stringify(session));
