@@ -28,6 +28,7 @@ branches:
   only:
   - master
 before_install:
+  - mkdir ~/.ssh
   - echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - echo -e "$PUB_KEY" > ~/.ssh/id_rsa.pub
   - echo -e "$RSA_KEY" > ~/.ssh/id_rsa
