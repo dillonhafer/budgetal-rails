@@ -21,4 +21,8 @@ class BudgetItem < ActiveRecord::Base
   def remaining_allocations
     amount_budgeted - amount_allocated
   end
+
+  def allocation_item_from(collection)
+    collection.detect {|item| item.budget_item_id == id} || OpenStruct.new(id: '', amount_budgeted: 0.00)
+  end
 end
