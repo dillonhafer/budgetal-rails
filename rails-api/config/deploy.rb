@@ -8,11 +8,13 @@ set :repository, 'https://github.com/dillonhafer/budgetal.git'
 case ENV['to']
 when 'beta'
   set :domain, 'beta.budgetal.com'
+  set :subdir, 'rails-api'
   set :deploy_to, '/var/www/budgetal-beta'
   set :branch, 'beta'
   set :rails_env, 'beta'
 else
   ENV['to'] = 'production'
+  set :subdir, 'rails-api'
   set :domain, 'api.budgetal.com'
   set :deploy_to, '/var/www/budgetal-production'
   set :branch, 'master'
@@ -75,6 +77,7 @@ task deploy: :environment do
     invoke :'maintenance:on'
     invoke :'check_revision'
     invoke :'git:clone'
+    invoke :'git:subdirectory'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
@@ -87,6 +90,18 @@ task deploy: :environment do
     to :clean do
       invoke :'deploy:cleanup'
     end
+  end
+end
+
+namespace :git do
+  desc "Deploy a project that is in a subdirectory"
+  task :subdirectory do
+    queue %{
+      echo "-----> Extracting subdirectory"
+      #{echo_cmd %[mv #{subdir}/* .]}
+      #{echo_cmd %[rm -rf #{subdir}]}
+      #{echo_cmd %[rm -rf os-client react-webclient README.md]}
+    }
   end
 end
 
