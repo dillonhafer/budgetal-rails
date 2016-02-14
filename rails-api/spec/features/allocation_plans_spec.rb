@@ -16,6 +16,11 @@ feature 'Allocation Plans', js: true do
         expect(page).to have_selector('.overlay')
         within('.overlay') do
           fill_in 'income', with: '300'
+          fill_in 'income', with: '300'
+          fill_in 'income', with: '300'
+          fill_in 'income', with: '300'
+          fill_in 'income', with: '300'
+          fill_in 'income', with: '300'
           expect(page).to have_field('income', with: '300')
 
           within('.start-date') do
