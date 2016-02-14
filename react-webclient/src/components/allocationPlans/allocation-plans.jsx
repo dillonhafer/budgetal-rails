@@ -15,22 +15,15 @@ export default class AllocationPlans extends React.Component {
   }
 
   state = {
-    showPlanForm: false,
     budget: {
       month: parseInt(this.props.params.month),
       year: parseInt(this.props.params.year),
       allocation_plans: []
     },
-    allocation_plan: {
-      id: 0,
-      start_date: today(),
-      end_date: today(),
-      tab_date: '-',
-      income: 0.00,
-      item_groups: []
-    },
-    fixer: false,
-    modalPlan: {}
+    allocation_plan: {item_groups:[]},
+    showPlanForm: false,
+    modalPlan: {},
+    fixer: false
   }
 
   static contextTypes = {
@@ -276,6 +269,7 @@ export default class AllocationPlans extends React.Component {
     const allocation_plan = this.state.allocation_plan;
     const notAllocated = this.notAllocated(allocation_plan)
     const fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer});
+    const editable = classNames('right', {'hide': !allocation_plan.id});
     return (
       <div>
         <section>
@@ -343,7 +337,7 @@ export default class AllocationPlans extends React.Component {
                     <div className={fixClasses}>
                       <div className='large-12 medium-12 columns header-row'>
                         <h3>{this.tabDate(allocation_plan)}
-                          <span className='right'>
+                          <span className={editable}>
                             <a href='#' onClick={this.editPlan}><i className='fi-pencil'></i></a>
                           </span>
                         </h3>
