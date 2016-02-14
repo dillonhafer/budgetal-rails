@@ -11,7 +11,6 @@ feature 'Allocation Plans', js: true do
 
         # I see that I have no pay periods
         expect(page).to have_content("You haven't added any pay periods yet.")
-        expect(page).to have_selector('.pay-period-income', text: '$0.00')
         click_on 'New Pay Period'
 
         expect(page).to have_selector('.overlay')
@@ -39,7 +38,7 @@ feature 'Allocation Plans', js: true do
 
           click_on 'Save'
         end
-        expect(page).to have_selector('.flash-box', text: 'Saved Plan')
+        expect(page).to have_selector('.flash-box', text: 'Saved Pay Period')
         expect(page).to have_selector('.pay-period-income', text: '$300.00')
 
         # Update
@@ -47,7 +46,7 @@ feature 'Allocation Plans', js: true do
         fill_in 'income', with: ''
         fill_in 'income', with: '400'
         click_on 'Save'
-        expect(page).to have_selector('.flash-box', text: 'Saved Plan')
+        expect(page).to have_selector('.flash-box', text: 'Saved Pay Period')
         expect(page).to have_selector('.pay-period-income', text: '$400.00')
       end
     end

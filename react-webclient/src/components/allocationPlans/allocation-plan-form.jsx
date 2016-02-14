@@ -15,7 +15,7 @@ export default class AllocationPlanForm extends React.Component {
   }
 
   update = (date_field, e) => {
-    let plan = _.assign({}, this.props.plan);
+    let plan = _.merge({}, this.props.plan);
     if (['start_date', 'end_date'].includes(date_field)) {
       let date = e;
       e = {target: {name: date_field, value: date}};
