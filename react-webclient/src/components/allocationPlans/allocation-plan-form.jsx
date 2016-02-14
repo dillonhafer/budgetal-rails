@@ -15,20 +15,18 @@ export default class AllocationPlanForm extends React.Component {
   }
 
   update = (plan, event) => {
-    var dateFields = ['start_date', 'end_date'];
-    if (dateFields.includes(plan)) {
+    let updatedPlan = _.assign({}, this.props.plan);
+    if (['start_date', 'end_date'].includes(plan)) {
       event = {target: {name: plan, value: event}};
-      plan  = this.props.plan;
     }
 
-    plan[event.target.name] = event.target.value;
-    var updatedPlan = _.assign({}, this.props.plan, plan)
+    updatedPlan[event.target.name] = event.target.value;
     this.props.update(updatedPlan);
   }
 
   save = (e) => {
     e.preventDefault();
-    this.props.save(this.props.plan);
+    this.props.save();
   }
 
   render() {

@@ -225,12 +225,12 @@ export default class AllocationPlans extends React.Component {
     this.cancelPlanModal();
   }
 
-  savePlan = (allocation_plan) => {
-    let data = {allocation_plan};
+  savePlan = () => {
+    let data = {allocation_plan: _.assign({}, this.state.modalPlan)};
     let strategy = createPlan;
 
-    if (allocation_plan.id !== undefined) {
-      data.id  = allocation_plan.id;
+    if (data.allocation_plan.id !== undefined) {
+      data.id  = data.allocation_plan.id;
       strategy = updatePlan;
     }
 
