@@ -88,6 +88,10 @@ a {
   &:hover:not(.button) {
     color: darken($primary-color, 15%);
   }
+
+  &:hover:not(.button).alert-color, &:hover:not(.button).red {
+    color: darken($alert-color, 15%);
+  }
 }
 
 .left {
@@ -161,7 +165,7 @@ small {
 .header-row {
   margin-top: 1rem;
 
-  h1, h2, h3, h4 {
+  & > h1, & > h2, & > h3, & > h4 {
     background: #f6f6f9;
     padding: 15px 20px;
     color: black !important;
