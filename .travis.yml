@@ -12,6 +12,7 @@ env:
  - RAILS_DATABASE_USER=postgres
 addons:
   postgresql: '9.4'
+  ssh_known_hosts: cache.budgetal.com
 services:
   - postgresql
 script:
