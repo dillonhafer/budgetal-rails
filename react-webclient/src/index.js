@@ -1,14 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-window.React = React;
-window.ReactDOM = ReactDOM;
-
 import {showMessage} from './utils/flash-box';
 import {userAuthenticated} from './utils/helpers';
-window.showMessage = showMessage;
-
-import './assets/stylesheets/app';
-
 import CashFlowPlans from './components/cashFlowPlans/cash_flow_plans';
 import AllocationPlans from './components/allocationPlans/allocation-plans';
 import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
@@ -22,7 +15,15 @@ import Home from './components/home/home';
 import Privacy from './components/home/privacy';
 import Admin from './components/admin/admin';
 import AccountSettings from './components/account-settings/account-settings';
+import './assets/stylesheets/app';
+import { render } from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router';
+import logo from './assets/images/logo.png';
 
+window.React = React;
+window.ReactDOM = ReactDOM;
+window.showMessage = showMessage;
 document.addEventListener('DOMContentLoaded', function() {
   var box = document.querySelector('.flash-box');
   if (box) {
@@ -31,11 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
    showMessage(message);
   }
 });
-
-import { render } from 'react-dom'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
-import logo from './assets/images/logo.png';
 
 class App extends React.Component {
   render() {
@@ -46,19 +42,16 @@ class App extends React.Component {
           component="div"
           transitionName="example"
           transitionEnterTimeout={200}
-          transitionLeaveTimeout={200} >
+          transitionLeaveTimeout={200}>
           {React.cloneElement(this.props.children, {
             key: this.props.location.pathname
           })}
         </ReactCSSTransitionGroup>
         <Footer />
       </div>
-    )
+    );
   }
 }
-
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-let history = createBrowserHistory();
 
 function requireAuth(nextState, replace) {
   if (!userAuthenticated()) {
@@ -67,6 +60,8 @@ function requireAuth(nextState, replace) {
   }
 }
 
+import createBrowserHistory from 'history/lib/createBrowserHistory';
+let history = createBrowserHistory();
 render((
   <Router history={history}>
     <Route path="/" component={App}>
@@ -82,4 +77,4 @@ render((
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>
-), document.getElementById('main'))
+), document.getElementById('main'));
