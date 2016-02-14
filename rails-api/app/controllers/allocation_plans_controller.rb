@@ -21,6 +21,14 @@ class AllocationPlansController < AuthenticatedController
     end
   end
 
+  def destroy
+    if allocation_plan.destroy
+      render json: { success: true }
+    else
+      render json: { success: false, message: "Could not delete allocation plan" }, status: 422
+    end
+  end
+
   private
 
   def allocation_plan

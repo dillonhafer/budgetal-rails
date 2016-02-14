@@ -23,7 +23,7 @@ Budgets::Application.routes.draw do
   resources :annual_budget_items, path: '/annual-budget-items', only: [:create, :update, :destroy]
 
   get '/allocation-plans/:id' => 'allocation_plans#show'
-  resources :allocation_plans, path: '/allocation-plans/:year/:month', only: [:index, :create, :update]
+  resources :allocation_plans, path: '/allocation-plans/:year/:month', only: [:index, :create, :update, :destroy]
   resources :allocation_plan_budget_items, path: '/allocation-plan-budget-items', only: [:create, :update]
 
   get '/monthly-statistics/:year/:month' => 'monthly_statistics#show'
