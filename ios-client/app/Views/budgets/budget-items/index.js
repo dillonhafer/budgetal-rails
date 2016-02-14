@@ -62,6 +62,14 @@ var BudgetCategory = React.createClass({
       dataSource: ds.cloneWithRows([]),
     }
   },
+  saveExpense(expense) {
+  },
+  deleteExpense(expense) {
+    let budget_items = _.assign({}, this.state.budget_items);
+    let item = _.find(budget_items, {id: expense.budget_item_id})
+    item.expenses = _.reject(item.expenses, {id: expense.id})
+    this.setState({budget_items});
+  },
   addItem() {
     this.props.navigator.props.pushRouteBack({
       title: 'Add Item',
@@ -100,6 +108,7 @@ var BudgetCategory = React.createClass({
     this.setState({budget_items, dataSource: ds.cloneWithRows(budget_items)});
   },
   componentDidMount() {
+    this.props.navigator.navigationContext.addListener('didfocus', this.focus);
     let routeData = this.props.route.data;
     let data = {
       id: routeData.budget_category.id,
@@ -107,6 +116,11 @@ var BudgetCategory = React.createClass({
       month: routeData.date.month
     };
     this._updateList(data)
+  },
+  focus(event) {
+  },
+  componentWillUnmount: function() {
+    // this.props.navigator.navigationContext.removeListener('didfocus', this.focus);
   },
   _updateList: async function(data) {
     try {
@@ -131,7 +145,7 @@ var BudgetCategory = React.createClass({
       component: BudgetItem,
       showMenu: false,
       left: this.backButton(),
-      data: budgetItem
+      props: {onDeleteExpense: this.deleteExpense, budgetItem}
     });
   },
   _renderRow(budgetItem: object, sectionID: number, rowID: number) {

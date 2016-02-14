@@ -81,7 +81,7 @@ var Budgetal = React.createClass({
     this.setState({navBars: [navBar]})
   },
   popNavBar: function() {
-    let navBars = this.state.navBars;
+    let navBars = _.assign([], this.state.navBars);
     navBars.shift();
     this.setState({navBars: navBars});
   },
@@ -110,7 +110,7 @@ var Budgetal = React.createClass({
     this.refs.navigator.replace(newRoute)
   },
   popRoute: function() {
-    this.popNavBar()
+    this.popNavBar();
     this.refs.navigator.pop();
   },
   pushRouteBack: function(newRoute) {
@@ -143,10 +143,12 @@ var Budgetal = React.createClass({
     this.refs.navigator.resetTo(AppRoutes.signIn);
   },
   renderScene: function(route, navigator) {
-    var Component = route.component;
+    const Component = route.component;
+    const props = route.props || {};
+
     return (
       <View style={styles.navigatorScene}>
-        <Component navigator={navigator} route={route} enableGestures={this.enableGestures} />
+        <Component {...props} navigator={navigator} route={route} enableGestures={this.enableGestures} />
       </View>
     );
   },
