@@ -44,12 +44,12 @@ before_install:
   - sudo apt-get -y install --only-upgrade chromium-browser
   - nvm install 4.1
   - cd rails-api
-  - rsync -e "ssh -i ~/.ssh/id_rsa" -az travis@cache.budgetal.com:.bundle/ ~/.bundle
+  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az travis@cache.budgetal.com:.bundle/ ~/.bundle
   - gem install bundler --no-ri --no-rdoc
-  - rsync -e "ssh -i ~/.ssh/id_rsa" -az ~/.bundle travis@cache.budgetal.com:
+  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az ~/.bundle travis@cache.budgetal.com:
   - bundle --without development --path=~/.bundle && bundle exec rake db:setup
   - cd ../react-webclient
-  - rsync -e "ssh -i ~/.ssh/id_rsa" -az travis@cache.budgetal.com:node_modules/ node_modules
+  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az travis@cache.budgetal.com:node_modules/ node_modules
   - cd ../react-webclient && npm install
-  - rsync -e "ssh -i ~/.ssh/id_rsa" -az node_modules travis@cache.budgetal.com:
+  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az node_modules travis@cache.budgetal.com:
   - cd ..
