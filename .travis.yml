@@ -36,8 +36,7 @@ before_install:
   - wget https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
   - unzip -qq chromedriver_linux64.zip
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo apt-get -y update
-  - sudo apt-get -y install chromium-browser
+  - sudo apt-get -y install --only-upgrade chromium-browser
   - nvm install 4.1
   - cd rails-api
   - rsync -az travis@cache.budgetal.com:.bundle/ ~/.bundle
