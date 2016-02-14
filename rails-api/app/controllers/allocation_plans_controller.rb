@@ -7,6 +7,7 @@ class AllocationPlansController < AuthenticatedController
 
   def create
     if allocation_plan.save
+      puts "CREATED #{'*'*80}"
       render allocation_plan
     else
       render json: { errors: allocation_plan.errors }, status: 422
