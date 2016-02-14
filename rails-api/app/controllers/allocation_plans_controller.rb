@@ -23,9 +23,9 @@ class AllocationPlansController < AuthenticatedController
 
   def destroy
     if allocation_plan.destroy
-      render json: { success: true }
+      render json: { success: true, message: 'Pay Period deleted' }
     else
-      render json: { success: false, message: "Could not delete allocation plan" }, status: 422
+      render json: { success: false, message: "Could not delete Pay Period" }, status: 422
     end
   end
 
