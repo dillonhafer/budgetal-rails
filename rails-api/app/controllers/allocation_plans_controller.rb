@@ -7,7 +7,7 @@ class AllocationPlansController < AuthenticatedController
 
   def create
     if allocation_plan.save
-      render json: allocation_plan
+      render allocation_plan
     else
       render json: { errors: allocation_plan.errors }, status: 422
     end
@@ -15,7 +15,7 @@ class AllocationPlansController < AuthenticatedController
 
   def update
     if allocation_plan.update_attributes(allocation_plan_params)
-      render json: allocation_plan
+      render allocation_plan
     else
       render json: { errors: allocation_plan.errors }, status: 422
     end

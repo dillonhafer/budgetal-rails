@@ -19,8 +19,7 @@ export default class AllocationPlans extends React.Component {
     budget: {
       month: parseInt(this.props.params.month),
       year: parseInt(this.props.params.year),
-      allocation_plans: [
-      ]
+      allocation_plans: []
     },
     allocation_plan: {
       id: 0,
@@ -51,7 +50,6 @@ export default class AllocationPlans extends React.Component {
       this.setState({fixer: false});
     }
   }
-
 
   cancelDelete = (e) => {
     if (e) { e.preventDefault() }
@@ -107,7 +105,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   updateBudgetItem = (index, group, updatedItem) => {
-    var allocation_plan = this.state.allocation_plan;
+    var allocation_plan = _.assign({}, this.state.allocation_plan);
     var group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
     allocation_plan.item_groups[group_index].budget_items[index] = updatedItem;
     this.setState({allocation_plan});
@@ -144,31 +142,30 @@ export default class AllocationPlans extends React.Component {
   }
 
   _budgetItemSaved = (originalItem, updatedItem) => {
-    var allocation_plan = this._updateBudgetItem(originalItem, updatedItem);
+    let allocation_plan = this._updateBudgetItem(originalItem, updatedItem);
     this.setState({allocation_plan});
     showMessage(`Saved ${originalItem.name}`);
   }
 
   _updateBudgetItem = (budgetItem, updatedItem) => {
-    var allocation_plan = this.state.allocation_plan;
-    var groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: budgetItem.budget_category_id});
-    var itemIndex       = _.findIndex(allocation_plan.item_groups[groupIndex].budget_items, {budget_item: {id: budgetItem.id}});
-    var originalItem    = allocation_plan.item_groups[groupIndex].budget_items[itemIndex]
+    let allocation_plan = _.assign({}, this.state.allocation_plan);
+    let groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: budgetItem.budget_category_id});
+    let itemIndex       = _.findIndex(allocation_plan.item_groups[groupIndex].budget_items, {budget_item: {id: budgetItem.id}});
+    let originalItem    = allocation_plan.item_groups[groupIndex].budget_items[itemIndex]
 
-    var newItem = _.merge({}, originalItem, updatedItem)
+    let newItem = _.merge({}, originalItem, updatedItem)
     allocation_plan.item_groups[groupIndex].budget_items[itemIndex] = newItem;
     return allocation_plan;
   }
 
   _saveItemFail = (originalItem, errors) => {
-    var allocation_plan = this.state.allocation_plan;
-    var groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: originalItem.budget_category_id});
-    var itemIndex       = _.findIndex(allocation_plan.item_groups[groupIndex].budget_items, {budget_item: {id: originalItem.id}});
+    let allocation_plan = _.assign({}, this.state.allocation_plan);
+    let groupIndex      = _.findIndex(allocation_plan.item_groups, {category_id: originalItem.budget_category_id});
+    let itemIndex       = _.findIndex(allocation_plan.item_groups[groupIndex].budget_items, {budget_item: {id: originalItem.id}});
 
     allocation_plan.item_groups[groupIndex].budget_items[itemIndex].errors = errors;
     this.setState({allocation_plan});
   }
-
 
   nothing() {
     if (!this.state.allocation_plan.item_groups.length) {
@@ -186,7 +183,8 @@ export default class AllocationPlans extends React.Component {
   }
 
   editPlan = () => {
-    this.setState({showPlanForm: true, modalPlan: this.state.allocation_plan});
+    let modalPlan = _.assign({}, this.state.allocation_plan);
+    this.setState({showPlanForm: true, modalPlan});
   }
 
   addPlan = () => {
@@ -239,19 +237,19 @@ export default class AllocationPlans extends React.Component {
     strategy(this.props.params, data)
       .then((resp) => {
         if (!resp.errors) {
-          this.planSaved(resp);
+          this.planSaved(resp.allocation_plan);
         } else {
-          this.updateModalPlan(resp)
+          this.updateModalPlan(resp.allocation_plan)
         }
       })
       .catch(this._fetchDataFail)
   }
 
   notAllocated(allocation_plan) {
-    var items = _.flatten(allocation_plan.item_groups.map((group) => {
+    let items = _.flatten(allocation_plan.item_groups.map((group) => {
                   return group.budget_items
                 }))
-    var allocated = _.reduce(items, function(total, item) {
+    let allocated = _.reduce(items, function(total, item) {
                          return total + parseFloat(item.amount_budgeted);
                        }, 0.00);
     return _.round((allocation_plan.income - allocated), 2);
