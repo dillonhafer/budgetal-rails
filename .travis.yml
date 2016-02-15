@@ -33,6 +33,8 @@ before_install:
   - echo "$PUB_KEY" > ~/.ssh/id_rsa.pub
   - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
+  - eval `ssh-agent -s`
+  - ssh-add ~/.ssh/id_rsa
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
   - export CHROME_DRIVER=$(pwd)/chromedriver
@@ -44,12 +46,12 @@ before_install:
   - sudo apt-get -y install --only-upgrade chromium-browser
   - nvm install 4.1
   - cd rails-api
-  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az travis@cache.budgetal.com:.bundle/ ~/.bundle
+  - rsync -az travis@cache.budgetal.com:.bundle/ ~/.bundle
   - gem install bundler --no-ri --no-rdoc
-  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az ~/.bundle travis@cache.budgetal.com:
+  - rsync -az ~/.bundle travis@cache.budgetal.com:
   - bundle --without development --path=~/.bundle && bundle exec rake db:setup
   - cd ../react-webclient
-  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az travis@cache.budgetal.com:node_modules/ node_modules
+  - rsync -az travis@cache.budgetal.com:node_modules/ node_modules
   - cd ../react-webclient && npm install
-  - rsync -e "ssh -i $HOME/.ssh/id_rsa" -az node_modules travis@cache.budgetal.com:
+  - rsync -az node_modules travis@cache.budgetal.com:
   - cd ..
