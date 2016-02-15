@@ -34,7 +34,9 @@ before_install:
   - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
   - eval `ssh-agent -s`
-  - ssh-add ~/.ssh/id_rsa
+  - sudo apt-get -y install sshpass
+  - export pass=""
+  - sshpass -p "$pass" ssh-add ~/.ssh/id_rsa
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
   - export CHROME_DRIVER=$(pwd)/chromedriver
