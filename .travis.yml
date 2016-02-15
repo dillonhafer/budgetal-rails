@@ -33,9 +33,9 @@ before_install:
   - echo "$PUB_KEY" > ~/.ssh/id_rsa.pub
   - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
-  - eval `ssh-agent -s`
-  - cat ~/.ssh/id_rsa.pub
-  - ssh-add
+  - eval "$(ssh-agent -s)" #start the ssh agent
+  - chmod 600 .travis/deploy_key.pem # this key should have push access
+  - ssh-add .travis/deploy_key.pem
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
   - export CHROME_DRIVER=$(pwd)/chromedriver
