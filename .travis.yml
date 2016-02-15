@@ -34,9 +34,8 @@ before_install:
   - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
   - eval `ssh-agent -s`
-  - wget http://launchpadlibrarian.net/83105323/sshpass_1.05-1_amd64.deb
-  - sudo dpkg -i sshpass_1.05-1_amd64.deb
-  - sshpass -p "$pass" ssh-add ~/.ssh/id_rsa
+  - wget https://gist.githubusercontent.com/yousong/108906ba4b971eef8046/raw/6ac74a776ec9d571d012d87ec2483cd5411c3536/spas.sh && chmod +x spas.sh
+  - pass='' echo "$pass" | ./spas.sh ssh-add ~/.ssh/id_rsa
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
   - export CHROME_DRIVER=$(pwd)/chromedriver
