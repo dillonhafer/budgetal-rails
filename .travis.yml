@@ -16,40 +16,40 @@ addons:
 services:
   - postgresql
 script:
-  - cd rails-api && bundle exec rake
-  - cd ..
-  - cd react-webclient && npm run test
-  - npm run build
-  - cd ..
-  - cp -r react-webclient/static/* rails-api/public
-  - cp -r react-webclient/build/* rails-api/public
-  - cd rails-api && bundle exec rspec spec/features
+  - cd rails-api && bundle exec rake # unit
+  - cd ../react-webclient && npm run test # JS
+  - npm run integration
+  - cd ../rails-api && bundle exec rspec spec/features # integration
 branches:
   only:
   - master
 before_install:
+  # setup ssh
   - mkdir -p ~/.ssh && touch ~/.ssh/id_rsa.pub && touch ~/.ssh/id_rsa
   - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
   - echo "$PUB_KEY" > ~/.ssh/id_rsa.pub
   - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
+  # Env vars
   - export DISPLAY=:99.0
   - export CHROME_BIN=chromium-browser
   - export CHROME_DRIVER=$(pwd)/chromedriver
   - export API_URL='http://localhost:3388'
+  # get chromedriver, xvfb, and npm
   - sh -e /etc/init.d/xvfb start
   - wget https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
   - unzip -qq chromedriver_linux64.zip
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo apt-get -y install --only-upgrade chromium-browser
   - nvm install 4.1
+  # install gems
   - cd rails-api
-  - rsync -az travis@cache.budgetal.com:.bundle/ ~/.bundle
+  - rsync -az travis@cache.budgetal.com:.bundle/ ~/.bundle # read cache
   - gem install bundler --no-ri --no-rdoc
-  - rsync -az ~/.bundle travis@cache.budgetal.com:
+  - rsync -az ~/.bundle travis@cache.budgetal.com: # update cache
   - bundle --without development --path=~/.bundle && bundle exec rake db:setup
+  # install npm
   - cd ../react-webclient
-  - rsync -az travis@cache.budgetal.com:node_modules/ node_modules
+  - rsync -az travis@cache.budgetal.com:node_modules/ node_modules # read cache
   - cd ../react-webclient && npm install
-  - rsync -az node_modules travis@cache.budgetal.com:
+  - rsync -az node_modules travis@cache.budgetal.com: # update cache
   - cd ..
