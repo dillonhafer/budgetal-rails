@@ -34,7 +34,7 @@ before_install:
   - echo "$RSA_KEY" > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa*
   - eval `ssh-agent -s`
-  - sudo apt-get install -y -qq sshpass
+  - sudo apt-get -y -qq install --only-upgrade sshpass
   - PASS=''
   - sshpass -p "$PASS" ssh-add
   - export DISPLAY=:99.0
