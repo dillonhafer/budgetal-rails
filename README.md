@@ -1,4 +1,4 @@
-Budgetal [![Budgetal](https://img.shields.io/travis/dillonhafer/budgetal/master.svg?style=flat-square)](https://travis-ci.org/dillonhafer/budgetal)
+Budgetal [![Codeship](https://img.shields.io/codeship/00c1fa10-b5c6-0133-b267-7a55e39a3182/master.svg?style=flat-square)](https://codeship.com/projects/134157)
 --------
 
 Budgetal is about helping you save money, plan for expenses, and chase away emergencies.
