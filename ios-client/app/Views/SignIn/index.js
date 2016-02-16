@@ -35,7 +35,9 @@ var SignIn = React.createClass({
       let email         = rememberTokens[0][1] || '';
       let rememberEmail = rememberTokens[1][1] === 'true';
       let newState = rememberEmail ? {email, rememberEmail} : {rememberEmail};
-      this.setState(newState);
+      if (this.isMounted()) {
+        this.setState(newState);
+      }
     }
   },
   saveRemember: async function() {
