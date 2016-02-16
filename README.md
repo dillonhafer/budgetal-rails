@@ -14,7 +14,7 @@ Budgetal is about helping you save money, plan for expenses, and chase away emer
 **Clients**
 
 1. [React](https://github.com/dillonhafer/budgetal/tree/master/react-webclient)
-2. [iOS](https://github.com/dillonhafer/budgetal/tree/master/ios-client)
+2. [iOS](https://github.com/dillonhafer/budgetal/tree/master/ios-client) *(WIP)*
 
 ## Credits
 
