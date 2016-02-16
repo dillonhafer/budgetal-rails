@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react-native');
-var {
+let React = require('react-native');
+let {
   ActivityIndicatorIOS,
   AsyncStorage,
   Image,
@@ -19,15 +19,20 @@ import {signIn} from '../../Data/sessions';
 const REMEMBER_EMAIL  = '@BudgetalRememberEmail:key';
 const REMEMBER_SWITCH = '@BudgetalRememberSwitch:key';
 
-var styles = require("./styles");
-var window = require('../../Utils/window');
+let styles = require("./styles");
+let window = require('../../Utils/window');
+let _isMounted = false;
 
-var SignIn = React.createClass({
+let SignIn = React.createClass({
   getInitialState: function() {
     return ({email: '', password: '', animating: false, rememberEmail: true});
   },
   componentDidMount() {
     this.loadRemember();
+    _isMounted = true;
+  },
+  componentWillUnmount() {
+    _isMounted = false;
   },
   loadRemember: async function() {
     let rememberTokens = await AsyncStorage.multiGet([REMEMBER_EMAIL, REMEMBER_SWITCH]);
@@ -35,7 +40,7 @@ var SignIn = React.createClass({
       let email         = rememberTokens[0][1] || '';
       let rememberEmail = rememberTokens[1][1] === 'true';
       let newState = rememberEmail ? {email, rememberEmail} : {rememberEmail};
-      if (this.isMounted()) {
+      if (_isMounted) {
         this.setState(newState);
       }
     }
