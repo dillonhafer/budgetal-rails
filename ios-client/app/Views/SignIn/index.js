@@ -67,7 +67,7 @@ let SignIn = React.createClass({
     this.refs.email.blur();
     this.refs.password.blur();
   },
-  buttonClicked: function() {
+  buttonClicked: async function() {
     if (this.missingCredentials()) {
       window.alert({title: 'Missing Credentials', message: "Please enter your email and password"});
     } else {

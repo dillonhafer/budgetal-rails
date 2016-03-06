@@ -94,7 +94,7 @@ var CashFlowPlans = React.createClass({
               <Icon name="chevron-left" size={24} color="gray" style={styles.icon} />
             </TouchableHighlight>);
   },
-  backButton: function() {
+  backButton() {
     return (
       <TouchableOpacity onPress={this.props.navigator.props.popRoute}>
         <View style={styles.navBarLeftButton}>
@@ -103,20 +103,31 @@ var CashFlowPlans = React.createClass({
       </TouchableOpacity>
     );
   },
-  _pressRow: function(budgetCategory, date) {
-    this.props.navigator.props.pushRouteBack({
-      title: budgetCategory.name,
-      component: BudgetCategory,
-      showMenu: false,
-      left: this.backButton(),
-      data: {budget_category: budgetCategory, date: this.datePieces()}
-    });
+  _pressRow: async function(budgetCategory) {
+    let data = this.datePieces();
+    data.id = budgetCategory.id;
+    try {
+      let resp = await findCategory(data);
+      if (resp !== null) {
+        this.setState({budget_category: resp.budget_category})
+        data.budget_category = this.state.budget_category;
+
+        this.props.navigator.props.pushRouteBack({
+          title: data.budget_category.name,
+          component: BudgetCategory,
+          showMenu: false,
+          left: this.backButton(),
+          data: data
+        });
+      }
+    } catch (err) {
+      this.props.navigator.props.signOut();
+    }
   },
   _renderRow: function(budgetCategory: string, sectionID: number, rowID: number) {
     let imageSource = h.categoryIcon(budgetCategory.name);
-    let budgetDate = this.state.budgetDate;
     return (
-      <TouchableHighlight key={rowID} onPress={()=>this._pressRow(budgetCategory, budgetDate)} underlayColor='#6699ff'>
+      <TouchableHighlight key={rowID} onPress={()=>this._pressRow(budgetCategory)} underlayColor='#6699ff'>
         <View>
           <View style={styles.row}>
             <View style={styles.column}>

@@ -112,8 +112,8 @@ var BudgetCategory = React.createClass({
     let routeData = this.props.route.data;
     let data = {
       id: routeData.budget_category.id,
-      year: routeData.date.year,
-      month: routeData.date.month
+      year: routeData.year,
+      month: routeData.month
     };
     this._updateList(data)
   },
