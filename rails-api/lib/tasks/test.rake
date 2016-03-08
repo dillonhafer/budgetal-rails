@@ -19,6 +19,14 @@ task :features do
   raise "#{cmd} failed!" unless $?.exitstatus == 0
 end
 
+desc "Run javascript tests"
+task :javascript do
+  cmd = 'cd ../react-webclient && npm run test'
+  puts "\n----> Running: #{cmd}"
+  system(cmd)
+  raise "#{cmd} failed!" unless $?.exitstatus == 0
+end
+
 task :int do
   database      = 'budgetal_test_3388'
   budgetal_cmd  = File.directory?('/tmp/budgetal') ? 'cd /tmp/budgetal && git pull' : 'git clone https://github.com/dillonhafer/budgetal /tmp/budgetal'

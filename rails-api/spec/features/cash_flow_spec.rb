@@ -51,7 +51,6 @@ feature 'Cash Flow Plans', js: true do
       find('a.item.header').click
       select 'February', from: 'budget_month'
       expect(page).to have_selector 'a', text: "February #{Date.today.year}"
-      find('a.item.header').click
 
       # I can view a different years budget
       find('a.item.header').click
