@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import Budgets from '../Views/budgets'
+import Budgets from '../Views/budgets/Budget'
 import { navigatePush, navigateReset } from '../actions'
 
 const mapStateToProps = (state) => {

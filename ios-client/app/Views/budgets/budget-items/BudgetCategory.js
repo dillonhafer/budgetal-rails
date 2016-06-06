@@ -106,7 +106,7 @@ class BudgetCategory extends Component {
   _pressRow(budgetItem) {
   }
 
-  _renderRow = (budgetItem: object, sectionID: number, rowID: number) => {
+  _renderBudgetItemRow = (budgetItem: object, sectionID: number, rowID: number) => {
     return (
       <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
         <View>
@@ -148,7 +148,7 @@ class BudgetCategory extends Component {
                   enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.dataSource}
-                  renderRow={this._renderRow}
+                  renderRow={this._renderBudgetItemRow}
                   renderFooter={this.footerRow} />
       </View>
     );
