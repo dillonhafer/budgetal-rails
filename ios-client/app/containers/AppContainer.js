@@ -94,8 +94,10 @@ class AppContainer extends React.Component {
         return <Hamburger openMenu={this._openMenu} />
       case 'SignIn':
         return null
+			case 'BudgetItemForm':
+				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
       default:
-	      return <BackButton onNavigate={props.onNavigate} />
+	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
     }
   }
 

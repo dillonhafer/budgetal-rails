@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {
+  Text,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native'
 
 const NavigationRootContainer = require('NavigationRootContainer');
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {WHITE} from '../constants/Colors';
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -17,16 +19,27 @@ const styles = StyleSheet.create({
   },
   icon: {
     textAlign: 'center',
-    color: '#ffffff',
+    color: WHITE,
     fontSize: 28,
   },
+  text: {
+    color: WHITE,
+  }
 });
 
 class BackButton extends Component {
+  buttonType(text) {
+    if (text) {
+      return <Text style={styles.text}>{text}</Text>
+    } else {
+      return <Icon name="angle-left" style={styles.icon} />
+    }
+  }
+
   render() {
     return (
       <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.onNavigate(NavigationRootContainer.getBackAction())}>
-        <Icon name="angle-left" style={styles.icon} />
+        {this.buttonType(this.props.text)}
       </TouchableOpacity>
     )
   }
