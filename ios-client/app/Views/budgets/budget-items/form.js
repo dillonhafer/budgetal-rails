@@ -1,46 +1,42 @@
-'use strict';
-
-let React = require('react-native');
-let {
+import React, {Component} from 'react'
+import {
   Text,
   TextInput,
   TouchableHighlight,
   View
-} = React;
+} from 'react-native'
 
 import styles from './styles';
 import {numberToCurrency, showErrors} from '../../../Utils/ViewHelpers';
 import {updateItem, createItem} from '../../../Data/budget_item';
 
-let BudgetItemForm = React.createClass({
-  getInitialState() {
-    return ({
-      budgetItem: {name: '', amount_budgeted: ''}
-    });
-  },
-  componentDidMount() {
-    if (this.props.route.data) {
-      let budgetItem = this.props.route.data;
-      this.setState({budgetItem});
-    }
-  },
-  saveItem: async function() {
+class BudgetItemForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      budgetItem: props.budgetItem
+    };
+  }
+
+  saveItem = async() => {
     this.refs.name.blur();
     this.refs.amount.blur();
-    let strategy = (this.state.budgetItem.id === undefined) ? createItem : updateItem;
-    let data = {budget_category_id: this.state.budgetItem.category_id, budget_item: this.state.budgetItem};
+    const budgetItem = this.state.budgetItem;
+    let strategy = (budgetItem.id === undefined) ? createItem : updateItem;
+    let data = {budget_category_id: budgetItem.budget_category_id, budget_item: budgetItem};
 
     try {
       let resp = await strategy(data);
       if (resp !== null && resp.errors === undefined) {
-        this.props.navigator.props.popRoute();
+        this.props.goBack();
       } else {
         showErrors(resp.errors);
       }
     } catch (err) {
-      this.props.navigator.props.signOut();
+      this.props.signOut();
     }
-  },
+  }
+
   render() {
     let b = this.state.budgetItem;
     return (
@@ -83,6 +79,6 @@ let BudgetItemForm = React.createClass({
       </View>
     )
   }
-})
+}
 
 module.exports = BudgetItemForm;

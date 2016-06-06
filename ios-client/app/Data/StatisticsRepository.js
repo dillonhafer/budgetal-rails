@@ -1,10 +1,7 @@
-'use strict';
+import {getRequest} from '../Utils/api';
 
-var StatisticsRepo = {
-  find: function(data) {
-    var path = `/monthly-statistics-budget/${data.year}/${data.month}`;
-    return Api.get(path).then((r) => r.json());
+module.exports = {
+  find(data) {
+    return getRequest(`/monthly-statistics-budget/${data.year}/${data.month}`);
   }
-};
-
-module.exports = StatisticsRepo;
+}

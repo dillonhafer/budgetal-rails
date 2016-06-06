@@ -1,24 +1,16 @@
-'use strict';
-
-var React = require('react-native');
-var { StyleSheet } = React;
+import {StyleSheet} from 'react-native'
 
 module.exports = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   back: {
     width: 32,
     height: 32,
     marginTop: -5,
     marginLeft: 5
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    marginTop: 4
-  },
+  },  
   instructions: {
     textAlign: 'left',
     marginBottom: 5,
@@ -59,11 +51,6 @@ module.exports = StyleSheet.create({
     height: 1,
     backgroundColor: '#CCC',
   },
-  rightYear: {
-    alignItems: 'flex-end'
-  },
-  leftYear: {
-  },
   logo: {
     height: 64,
     width: 64,
@@ -74,21 +61,5 @@ module.exports = StyleSheet.create({
     color: '#555',
     fontWeight: 'bold',
     padding: 4
-  },
-  yearModifier: {
-    padding: 10,
-    flexDirection: 'row',
-    backgroundColor: '#EEE',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderWidth: 0.5,
-    borderColor: '#FFF',
-    borderBottomColor: '#DDD'
-  },
-  centerYear: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: 'gray',
-    marginTop: 4
   },
 });

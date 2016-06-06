@@ -1,85 +1,40 @@
-'use strict';
+import React, {
+  Component,
+} from 'react';
 
-var React = require('react-native');
-var MenuButton = require('../MenuButton');
-var window = require('../../Utils/window');
-var {
-  Image,
+import {
+  Dimensions,
   StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} = React;
+  View,
+} from 'react-native';
 
-import {endSession} from '../../Data/sessions';
+import {MENU_BACKGROUND} from '../../constants/Colors';
+import AppImages from '../../../components/app_images';
+import MenuItem from './MenuItem';
+const {height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   menu: {
     flex: 1,
     paddingTop: 40,
-    backgroundColor: '#333333',
-    height: 900
+    backgroundColor: MENU_BACKGROUND,
+    height: height,
   },
-  cancelButton: {
-    color: '#FFF',
-    marginLeft: 10,
-    marginBottom: 8,
-  }
 });
 
-var Menu = React.createClass({
-  changeRoute: function(name) {
-    var route = AppRoutes[name];
-    this.props.updateRoute(route);
-    this.props.closeMenu();
-  },
-  annualBudgets: function() {
-    var route = AppRoutes.annualBudgets;
-    route.nextButton = this.annualNextButton();
-    this.props.updateRoute(route);
-    this.props.closeMenu();
-  },
-  signOut: function() {
-    endSession().then(() => {
-      this.props.closeMenu();
-      this.props.signOut();
-      window.alert({title: 'Signed Out', message: 'Thanks for using Budgetal!'});
-    });
-  },
-  newAnnualBudget: function() {
-    var route = AppRoutes.newAnnualBudgetItem;
-    route.left = this.cancelButton()
-    route.data = {annual_budget_id: this.props.annualBudgetId};
-    this.props.pushRouteBack(route);
-    this.props.closeMenu();
-  },
-  cancelButton: function() {
-    return (
-      <TouchableOpacity onPress={this.props.popRoute}>
-        <Text style={styles.cancelButton}>Cancel</Text>
-      </TouchableOpacity>
-    );
-  },
-  annualNextButton: function() {
-    return (
-      <TouchableOpacity onPress={this.newAnnualBudget}>
-        <Image style={{height: 18, width: 25, marginRight: 16, marginBottom: 8}} source={images.plus} />
-      </TouchableOpacity>
-    );
-  },
-  render: function() {
+class Menu extends Component {
+  render() {
     return (
       <View style={styles.menu}>
-        <MenuButton image={images.cash} text='Budgets' route={this.changeRoute.bind(this, 'cashFlowPlans')} />
-        <MenuButton image={images.list} text='Detailed Budgets' route={this.changeRoute.bind(this, 'allocatedSpendingPlans')} />
-        <MenuButton image={images.calendar} text='Annual Budgets' route={this.annualBudgets} />
-        <MenuButton image={images.statistics} text='Statistics (for geeks)' route={this.changeRoute.bind(this, 'statistics')} />
-        <MenuButton image={images.account} text='My Account' route={this.changeRoute.bind(this, 'myAccount')} />
-        <MenuButton image={images.sign_out} text='Sign Out' route={this.signOut} />
+        <MenuItem text="Budgets" image={AppImages.cash} onPress={this.props.budgets} />
+        <MenuItem text="Detailed Budgets" image={AppImages.list} onPress={this.props.detailedBudgets} />
+        <MenuItem text="Annual Budgets" image={AppImages.calendar} onPress={this.props.annualBudgets} />
+        <MenuItem text="Statistics (for geeks)" image={AppImages.statistics} onPress={this.props.statistics} />
+        <MenuItem text="My Account" image={AppImages.account} onPress={this.props.account} />
+        <MenuItem text="Sign Out" image={AppImages.sign_out} onPress={this.props.signOut} />
       </View>
     );
   }
-});
+};
 
 module.exports = Menu;
-

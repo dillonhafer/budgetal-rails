@@ -42,6 +42,12 @@ var MyAccount = React.createClass({
         <Text style={styles.instructions}>
           {user.email}
         </Text>
+        <Text
+          onPress={() => {
+            this.props.dispatch({ type: 'push', key: 'home' });
+          }}>
+          Tap to go back home.
+        </Text>
       </View>
     )
   }

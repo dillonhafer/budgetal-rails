@@ -1,6 +1,7 @@
 'use strict';
 
 import {alert} from './window';
+import AppImages from '../../components/app_images';
 
 var ViewHelpers = {
   showErrors(errors) {
@@ -44,9 +45,9 @@ var ViewHelpers = {
   },
   categoryIcon(categoryName) {
     if (categoryName == "Medical/Health")
-      return images.health;
+      return AppImages.health;
     else {
-      return images[categoryName.toLowerCase()];
+      return AppImages[categoryName.toLowerCase()];
     }
   }
 };

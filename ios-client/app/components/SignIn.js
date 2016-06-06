@@ -1,40 +1,51 @@
-'use strict';
-
-let React = require('react-native');
-let {
+import React, {Component} from 'react'
+import {
   ActivityIndicatorIOS,
   AsyncStorage,
   Image,
-  LinkingIOS,
+  StyleSheet,
   Text,
   TextInput,
   TouchableHighlight,
-  Switch,
-  View
-} = React;
+  View,
+} from 'react-native'
 
-import {saveTokens} from '../../Utils/api';
-import {signIn} from '../../Data/sessions';
+import {saveTokens, signedIn} from '../Utils/api';
+import {signIn} from '../Data/sessions';
+import {WHITE, BLUE} from '../constants/Colors';
 
 const REMEMBER_EMAIL  = '@BudgetalRememberEmail:key';
 const REMEMBER_SWITCH = '@BudgetalRememberSwitch:key';
-
-let styles = require("./styles");
-let window = require('../../Utils/window');
+const window = require('../Utils/window');
 let _isMounted = false;
 
-let SignIn = React.createClass({
-  getInitialState: function() {
-    return ({email: '', password: '', animating: false, rememberEmail: true});
-  },
+class SignIn extends Component {
+  constructor() {
+    super()
+    this.state = {
+      email: '',
+      password: '',
+      animating: false,
+      rememberEmail: true
+    }
+  }
+
   componentDidMount() {
-    this.loadRemember();
-    _isMounted = true;
-  },
+    signedIn().then(isSignedIn => {
+      if (isSignedIn) {
+        this.props.onSignIn();
+      } else {
+        this.loadRemember();
+        _isMounted = true;
+      }
+    })
+  }
+
   componentWillUnmount() {
     _isMounted = false;
-  },
-  loadRemember: async function() {
+  }
+
+  loadRemember = async () => {
     let rememberTokens = await AsyncStorage.multiGet([REMEMBER_EMAIL, REMEMBER_SWITCH]);
     if (rememberTokens !== null) {
       let email         = rememberTokens[0][1] || '';
@@ -44,54 +55,66 @@ let SignIn = React.createClass({
         this.setState(newState);
       }
     }
-  },
-  saveRemember: async function() {
+  }
+
+  saveRemember = async () => {
     AsyncStorage.multiSet([[REMEMBER_EMAIL, String(this.state.email)], [REMEMBER_SWITCH, String(this.state.rememberEmail)]]);
-  },
+  }
+
   sigenedIn(json) {
     let key   = json.session.authentication_key;
     let token = json.session.authentication_token;
     let user  = JSON.stringify(json.user);
     return saveTokens(key, token, user);
-  },
-  missingCredentials: function() {
+  }
+
+  missingCredentials() {
     return (this.state.email.length && this.state.password.length) ? false : true;
-  },
-  showActivity: function() {
+  }
+
+  showActivity() {
     this.setState({animating: true})
-  },
-  hideActivity: function() {
+  }
+
+  hideActivity() {
     this.setState({animating: false})
-  },
-  blurInputs: function() {
+  }
+
+  blurInputs() {
     this.refs.email.blur();
     this.refs.password.blur();
-  },
-  buttonClicked: async function() {
+  }
+
+  buttonClicked = async () => {
     if (this.missingCredentials()) {
       window.alert({title: 'Missing Credentials', message: "Please enter your email and password"});
-    } else {
-      this.blurInputs();
-      this.showActivity();
-      let user = {email: this.state.email, password: this.state.password};
-      this.saveRemember();
-      signIn({user: user})
-        .then(json => {
-          this.hideActivity();
-          if (json.success) {
-            this.sigenedIn(json)
-            .then(() => {
-              this.props.enableGestures();
-              this.props.navigator.props.updateRoute(AppRoutes.cashFlowPlans);
-              window.alert({title: 'Welcome Back', message: 'You are now signed in.'})
-            })
-          } else {
-            window.alert({title: 'Invalid Credentials', message: json.message});
-          }
-        });
+      return;
     }
-  },
-  render: function() {
+
+    this.blurInputs();
+    this.showActivity();
+    let user = {email: this.state.email, password: this.state.password};
+    this.saveRemember();
+    try {
+      let json = await signIn({user: user});
+      if (json != null) {
+        this.hideActivity();
+        if (json.success) {
+          this.sigenedIn(json)
+              .then(() => {
+                window.alert({title: 'Welcome Back', message: 'You are now signed in.'});
+                this.props.onSignIn();
+              })
+        } else {
+          window.alert({title: 'Invalid Credentials', message: json.message});
+        }
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <Image style={styles.logo} source={require('image!logo')} />
@@ -105,15 +128,6 @@ let SignIn = React.createClass({
         <TextInput placeholder='Password' ref="password" password={true} style={styles.inputs}
                    onChangeText={(password) => this.setState({password})}
                    value={this.state.password} />
-
-        <View style={styles.remember}>
-          <Switch
-            onTintColor='#f6c86f'
-            onValueChange={(value) => this.setState({rememberEmail: value})}
-            style={styles.switch}
-            value={this.state.rememberEmail} />
-          <Text style={styles.switchLable}>Remember Me</Text>
-        </View>
 
         <TouchableHighlight
           style={styles.button}
@@ -130,6 +144,50 @@ let SignIn = React.createClass({
       </View>
     );
   }
+}
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: BLUE,
+    borderRadius: 5,
+    marginBottom: 10,
+    padding: 10,
+    justifyContent: 'center',
+    height: 40,
+    width: 240,
+    borderColor: WHITE,
+    borderWidth: 1,
+    marginLeft: 40,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: WHITE,
+  },
+  container: {
+    flex: 1,
+    height: 568,
+    backgroundColor: BLUE,
+    paddingTop: 0,
+  },
+  inputs: {
+    marginLeft: 40,
+    marginRight: 40,
+    marginBottom: 10,
+    padding: 10,
+    height: 40,
+    borderColor: WHITE,
+    backgroundColor: WHITE,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  logo: {
+    width: 280,
+    height: 100,
+    marginLeft: 20,
+    marginTop: 40,
+    resizeMode: 'contain'
+  },
 });
 
 module.exports = SignIn;

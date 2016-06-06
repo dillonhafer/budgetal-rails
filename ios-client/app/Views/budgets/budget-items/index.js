@@ -1,6 +1,4 @@
-'use strict';
-
-var React = require('react-native');
+import React, {Component} from 'react'
 import {
   Image,
   ListView,
@@ -8,19 +6,28 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   View
-} from 'react-native';
+} from 'react-native'
 
-var styles = require('./styles');
-var BudgetItem = require('./expenses');
-var form = require('./form');
+const styles = require('./styles');
+// var form = require('./form');
 
 import {alert, confirm}   from '../../../Utils/window';
-import {findCategory}     from '../../../Data/budget_category';
-import {destroyItem}      from '../../../Data/budget_item';
+// import {findCategory}     from '../../../Data/budget_category';
+// import {destroyItem}      from '../../../Data/budget_item';
 import {numberToCurrency} from '../../../Utils/ViewHelpers';
-import Swipeout           from 'react-native-swipeout';
+// import Swipeout           from 'react-native-swipeout';
 
-var BudgetCategory = React.createClass({
+class BudgetCategory extends Component {
+  constructor(props) {
+    super(props);
+
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      budget_items: props.budgetCategory.budget_items,
+      dataSource: ds.cloneWithRows(props.budgetCategory.budget_items),
+    }
+  }
+
   swipeoutBtns(item) {
     const confirmText = `Are you sure you want to delete\n\n${item.name}\n\nThis cannot be undone.`;
     return [
@@ -40,8 +47,9 @@ var BudgetCategory = React.createClass({
       },
       {text: 'Cancel', color: '#555'}
     ];
-  },
-  deleteItem: async function(item) {
+  }
+
+  deleteItem = async(item) => {
     try {
       let resp = await destroyItem(item.id);
       if (resp.success) {
@@ -54,140 +62,88 @@ var BudgetCategory = React.createClass({
     } catch (err) {
       this.props.navigator.props.signOut();
     }
-  },
-  getInitialState() {
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      budget_items: [],
-      dataSource: ds.cloneWithRows([]),
-    }
-  },
-  saveExpense(expense) {
-  },
-  deleteExpense(expense) {
-    let budget_items = _.assign({}, this.state.budget_items);
-    let item = _.find(budget_items, {id: expense.budget_item_id})
-    item.expenses = _.reject(item.expenses, {id: expense.id})
-    this.setState({budget_items});
-  },
-  addItem() {
-    this.props.navigator.props.pushRouteBack({
-      title: 'Add Item',
-      component: form,
-      showMenu: false,
-      left: this.backButton(),
-      data: {category_id: this.props.route.data.budget_category.id}
-    });
-  },
-  editItem(item) {
-    this.props.navigator.props.pushRouteBack({
-      title: `Edit ${item.name}`,
-      component: form,
-      showMenu: false,
-      left: this.backButton(),
-      data: item
-    });
-  },
-  footerRow() {
-    let if_empty = <View />;
-    if (this.state.dataSource.getRowCount() === 0) {
-      if_empty = <Text style={styles.empty}>You haven't added any budget items yet</Text>;
-    }
+  }
+
+  _getEmptyMessage = () => {
+    const isEmpty = this.state.dataSource.getRowCount() === 0;
+    const emptyMessage = "You haven't added any budget items yet";
+    if (isEmpty)
+      return (
+        <Text style={styles.empty}>{emptyMessage}</Text>
+      )
+  }
+
+  footerRow = () => {
+    const budget_category_id = this.props.budgetCategory ? this.props.budgetCategory.id : 0;
+    let budgetItem = {budget_category_id};
     return (
       <View style={styles.addButtonContainer}>
-        {if_empty}
-        <TouchableOpacity onPress={this.addItem}>
+        {this._getEmptyMessage()}
+        <TouchableOpacity onPress={this.props.addBudgetItem.bind(this,budgetItem)}>
           <Text style={styles.addButton}>+ Add a budget item</Text>
         </TouchableOpacity>
       </View>
     )
-  },
+  }
+
   updateBudgetItems(json) {
     var ds = this.state.dataSource;
     var budget_items = json.budget_category.budget_items;
     this.setState({budget_items, dataSource: ds.cloneWithRows(budget_items)});
-  },
-  componentDidMount() {
-    this.props.navigator.navigationContext.addListener('didfocus', this.focus);
-    let routeData = this.props.route.data;
-    let data = {
-      id: routeData.budget_category.id,
-      year: routeData.year,
-      month: routeData.month
-    };
-    this._updateList(data)
-  },
-  focus(event) {
-  },
-  componentWillUnmount: function() {
-    // this.props.navigator.navigationContext.removeListener('didfocus', this.focus);
-  },
-  _updateList: async function(data) {
+  }
+
+  _updateList = async(data) => {
     try {
-      let json = await findCategory(data);
-      this.updateBudgetItems(json)
+      // let json = await findCategory(data);
+      // this.updateBudgetItems(json)
     } catch (error) {
-      this.props.navigator.props.signOut()
+      // this.props.signOut()
     }
-  },
-  backButton() {
-    return (
-      <TouchableOpacity onPress={this.props.navigator.props.popRoute}>
-        <View style={styles.navBarLeftButton}>
-          <Image style={styles.back} source={require('image!left_icon')} />
-        </View>
-      </TouchableOpacity>
-    );
-  },
+  }
+
   _pressRow(budgetItem) {
-    this.props.navigator.props.pushRouteBack({
-      title: budgetItem.name,
-      component: BudgetItem,
-      showMenu: false,
-      left: this.backButton(),
-      props: {onDeleteExpense: this.deleteExpense, budgetItem}
-    });
-  },
-  _renderRow(budgetItem: object, sectionID: number, rowID: number) {
+    this.props.editBudgetItem(budgetItem)
+  }
+
+  _renderRow = (budgetItem: object, sectionID: number, rowID: number) => {
     return (
-      <Swipeout right={this.swipeoutBtns(budgetItem)} autoClose={true} item={budgetItem} sectionID={sectionID} key={budgetItem.id}>
-        <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
-          <View>
-            <View style={styles.row}>
-              <View style={styles.column}>
-                <Text style={styles.title}>
-                  {budgetItem.name}
+      <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
+        <View>
+          <View style={styles.row}>
+            <View style={styles.column}>
+              <Text style={styles.title}>
+                {budgetItem.name}
+              </Text>
+            </View>
+            <View style={styles.right}>
+              <View style={styles.paid}>
+                <Text style={{fontWeight: 'bold'}}>Spent: </Text>
+                <Text style={styles.subTitle}>
+                  {numberToCurrency(budgetItem.amount_spent)}
                 </Text>
               </View>
-              <View style={styles.right}>
-                <View style={styles.paid}>
-                  <Text style={{fontWeight: 'bold'}}>Spent: </Text>
-                  <Text style={styles.subTitle}>
-                    {numberToCurrency(budgetItem.amount_spent)}
-                  </Text>
-                </View>
-                <View style={styles.paid}>
-                  <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
-                  <Text style={styles.subTitle}>
-                    {numberToCurrency(budgetItem.amount_remaining)}
-                  </Text>
-                </View>
+              <View style={styles.paid}>
+                <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
+                <Text style={styles.subTitle}>
+                  {numberToCurrency(budgetItem.amount_remaining)}
+                </Text>
               </View>
             </View>
-            <View style={styles.separator} />
           </View>
-        </TouchableHighlight>
-      </Swipeout>
+          <View style={styles.separator} />
+        </View>
+      </TouchableHighlight>
     );
-  },
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Budget Items</Text>
         </View>
-
         <ListView style={styles.list}
+                  enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
                   dataSource={this.state.dataSource}
                   renderRow={this._renderRow}
@@ -195,6 +151,6 @@ var BudgetCategory = React.createClass({
       </View>
     );
   }
-});
+}
 
 module.exports = BudgetCategory;

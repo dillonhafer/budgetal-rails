@@ -2,7 +2,8 @@ var React = require('react-native');
 var window = require('./window');
 
 var {
-  AsyncStorage
+  AsyncStorage,
+  StatusBar,
 } = React;
 
 const AUTH_KEY    = '@BudgetalAuthKey:key';
@@ -29,6 +30,9 @@ let Api = {
   saveTokens(key,token,user) {
     return _saveTokens(key,token,user);
   },
+  signedIn() {
+    return _signedIn();
+  },
   clearSession() {
     return _clearSession();
   },
@@ -39,6 +43,15 @@ let Api = {
 
 function requestOk(r) {
   return r.ok || r.status === 422;
+}
+
+async function _signedIn() {
+    try {
+      let resp = await AsyncStorage.getItem(AUTH_KEY);
+      return resp !== null;
+    } catch(e) {
+      console.log(e);
+    }
 }
 
 async function _setApiUrl(url) {
@@ -87,7 +100,9 @@ async function request(method, path, body) {
   if (method !== 'GET')
     req.body = JSON.stringify(body);
 
+  StatusBar.setNetworkActivityIndicatorVisible(true);
   return fetch(fullPath, req).then((r) => {
+    StatusBar.setNetworkActivityIndicatorVisible(false);
     if (r.status === 401) {
       clearAsyncStorage()
       let json = r.json();
@@ -99,6 +114,7 @@ async function request(method, path, body) {
     }
   })
   .catch((r) => {
+    StatusBar.setNetworkActivityIndicatorVisible(false);
     if (r.message === "You must sign in or up before continuing") {
       window.alert({title: 'Sign In', message: r.message});
       throw('unauthorized')

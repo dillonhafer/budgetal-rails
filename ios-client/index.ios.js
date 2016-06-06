@@ -1,11 +1,13 @@
-var React = require('react-native');
-var App = require('./app/containers/app');
-
-var {
-  AppRegistry,
+import React, {
   Component,
-  StatusBarIOS
-} = React;
-StatusBarIOS.setStyle('light-content', true);
+} from 'react';
 
+import {
+  AppRegistry,
+  StatusBar
+} from 'react-native';
+
+import App from './app/budgetal';
+
+StatusBar.setBarStyle('light-content', true);
 AppRegistry.registerComponent('Budgetal', () => App);
