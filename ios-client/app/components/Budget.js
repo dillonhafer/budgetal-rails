@@ -1,20 +1,67 @@
 import React, {Component} from 'react'
 import {
   Image,
+  ListView,
   StyleSheet,
   Text,
-  ListView,
+  TouchableHighlight,
   TouchableOpacity,
   View,
-  TouchableHighlight,
 } from 'react-native'
 
-import DatePickerWithAccessory from '../../Utils/DatePickerWithAccessory';
-import {findCategory} from '../../Data/budget_category';
-import {numberToCurrency, categoryIcon} from '../../Utils/ViewHelpers';
-import DateBar from '../../components/DateBar';
+import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
+import {findCategory} from '../Data/budget_category';
+import {numberToCurrency, categoryIcon} from '../Utils/ViewHelpers';
+import DateBar from './DateBar';
 
-var styles = require("./styles");
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF',
+  },
+  list: {
+    backgroundColor: '#FFF',
+    flex: 1
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: 0,
+    height: 110,
+    backgroundColor: '#FFF',
+  },
+  right: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    paddingRight: 14
+  },
+  paid: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  column: {
+    justifyContent: 'center'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#CCC',
+  },
+  logo: {
+    height: 64,
+    width: 64,
+    marginLeft: 20
+  },
+  title: {
+    fontSize: 18,
+    color: '#555',
+    fontWeight: 'bold',
+    padding: 4
+  },
+});
 
 class Budgets extends Component {
   constructor(props) {
