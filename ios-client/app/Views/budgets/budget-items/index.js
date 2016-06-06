@@ -9,13 +9,11 @@ import {
 } from 'react-native'
 
 const styles = require('./styles');
-// var form = require('./form');
-
-import {alert, confirm}   from '../../../Utils/window';
 // import {findCategory}     from '../../../Data/budget_category';
-// import {destroyItem}      from '../../../Data/budget_item';
+import {assign, findIndex} from 'lodash-node';
+import {alert, confirm}   from '../../../Utils/window';
+import {destroyItem}      from '../../../Data/budget_item';
 import {numberToCurrency} from '../../../Utils/ViewHelpers';
-// import Swipeout           from 'react-native-swipeout';
 
 class BudgetCategory extends Component {
   constructor(props) {
@@ -54,14 +52,14 @@ class BudgetCategory extends Component {
     try {
       let resp = await destroyItem(item.id);
       if (resp.success) {
-        let budget_items = _.assign([], this.state.budget_items);
-        let index        = _.findIndex(budget_items, {'id': item.id});
+        let budget_items = assign([], this.state.budget_items);
+        let index        = findIndex(budget_items, {'id': item.id});
         budget_items.splice(index,1);
         let dataSource = this.state.dataSource.cloneWithRows(budget_items);
         this.setState({budget_items, dataSource});
       }
     } catch (err) {
-      this.props.navigator.props.signOut();
+      this.props.signOut();
     }
   }
 
