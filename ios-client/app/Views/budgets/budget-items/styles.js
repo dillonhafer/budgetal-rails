@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var { StyleSheet } = React;
+import {BLUE, RED} from '../../../constants/Colors'
 
 module.exports = StyleSheet.create({
   addButtonContainer: {
@@ -30,6 +31,36 @@ module.exports = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFF'
+  },
+  crudContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    backgroundColor: '#FFF',
+  },
+  button: {
+    width: 100,
+    borderWidth: 2,
+    borderRadius: 4,
+    padding: 4,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  editButton: {
+    borderColor: BLUE,
+  },
+  editButtonText: {
+    color: BLUE,
+    textAlign: 'center',
+  },
+  deleteButton: {
+    borderColor: RED,
+  },
+  deleteButtonText: {
+    color: RED,
+    textAlign: 'center',
   },
   icon: {
     width: 24,

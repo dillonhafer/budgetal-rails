@@ -71,7 +71,6 @@ class BudgetItemForm extends Component {
         </View>
 
         <TouchableHighlight
-          style={styles.button}
           underlayColor='#EEE'
           onPress={this.saveItem}>
           <Text style={styles.saveButtonText}>Save</Text>

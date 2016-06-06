@@ -28,25 +28,26 @@ class BudgetCategory extends Component {
     }
   }
 
-  swipeoutBtns(item) {
+  crudButtons = (item) => {
     const confirmText = `Are you sure you want to delete\n\n${item.name}\n\nThis cannot be undone.`;
-    return [
-      {
-        text: 'Edit',
-        color: 'white',
-        backgroundColor: '#69F',
-        onPress: this.editItem.bind(this, item)
-      },
-      {
-        text: 'Delete',
-        color: 'white',
-        backgroundColor: '#f04124',
-        onPress: () => {
-          confirm('Confirm Delete', confirmText, this.deleteItem.bind(this, item))
-        }
-      },
-      {text: 'Cancel', color: '#555'}
-    ];
+    return (
+      <View style={styles.crudContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.editButton]}
+          onPress={this.props.editBudgetItem.bind(this,item)}
+          underlayColor='#EEE' >
+          <Text style={styles.editButtonText}>Edit</Text>
+        </TouchableOpacity>
+        <TouchableHighlight
+          style={[styles.button, styles.deleteButton]}
+          onPress={() => {
+            confirm('Confirm Delete', confirmText, this.deleteItem.bind(this, item))
+          }}
+          underlayColor='#EEE' >
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableHighlight>
+      </View>
+    )
   }
 
   deleteItem = async(item) => {
@@ -62,6 +63,9 @@ class BudgetCategory extends Component {
     } catch (err) {
       this.props.navigator.props.signOut();
     }
+  }
+
+  editItem = async(item) => {
   }
 
   _getEmptyMessage = () => {
@@ -102,7 +106,6 @@ class BudgetCategory extends Component {
   }
 
   _pressRow(budgetItem) {
-    this.props.editBudgetItem(budgetItem)
   }
 
   _renderRow = (budgetItem: object, sectionID: number, rowID: number) => {
@@ -130,6 +133,7 @@ class BudgetCategory extends Component {
               </View>
             </View>
           </View>
+          {this.crudButtons(budgetItem)}
           <View style={styles.separator} />
         </View>
       </TouchableHighlight>
