@@ -160,12 +160,13 @@ AppContainer.propTypes = {
 const styles = StyleSheet.create({
 	outerContainer: {
 		flex: 1,
+		backgroundColor: '#ffffff',
 	},
 	visibleNav: {
 		paddingTop: NavigationHeader.HEIGHT,
 	},
 	container: {
-		flex: 1
+		flex: 1,
 	},
   navTitle: {
     color: WHITE,
