@@ -1,14 +1,14 @@
-'use strict';
-
-var React = require('react-native');
-var {
+import React, {Component} from 'react'
+import {
   ListView,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View
-} = React;
+} from 'react-native'
+
+import {BLUE,RED,GRAY_BORDER,GRAY_BACKGROUND,GRAY_SEPARATOR,GRAY,WHITE,DARK_TITLE} from '../constants/Colors'
 
 const styles = StyleSheet.create({
   addButtonContainer: {
@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   addButton: {
-    color: '#69F',
+    color: BLUE,
     fontWeight: 'bold',
     fontSize: 15,
     textAlign: 'center',
     borderWidth: 2,
     borderRadius: 5,
-    borderColor: '#69F',
+    borderColor: BLUE,
     width: 180,
     padding: 4,
     paddingTop: 8
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF'
+    backgroundColor: WHITE
   },
   icon: {
     width: 24,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     textDecorationStyle: 'solid',
   },
   list: {
-    backgroundColor: '#FFF',
+    backgroundColor: WHITE,
     flex: 1
   },
   row: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 0,
     height: 110,
-    backgroundColor: '#FFF',
+    backgroundColor: WHITE,
   },
   right: {
     flex: 1,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 0.5,
-    borderColor: '#FFF',
+    borderColor: WHITE,
     borderBottomColor: '#DDD'
   },
   headerText: {
@@ -118,66 +118,98 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginTop: 4
   },
+
+  crudContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    backgroundColor: WHITE,
+  },
+  button: {
+    width: 100,
+    borderWidth: 2,
+    borderRadius: 4,
+    padding: 4,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  editButton: {
+    borderColor: BLUE,
+  },
+  editButtonText: {
+    color: BLUE,
+    textAlign: 'center',
+  },
+  deleteButton: {
+    borderColor: RED,
+  },
+  deleteButtonText: {
+    color: RED,
+    textAlign: 'center',
+  },
+
 });
 
-var h = require('../../../../Utils/ViewHelpers');
-const Swipeout = require('react-native-swipeout');
-import {alert, confirm}   from '../../../../Utils/window';
+var h = require('../Utils/ViewHelpers');
+import {alert, confirm}   from '../Utils/window';
 
-var BudgetItemExpense = React.createClass({
-  propTypes: {
-    onDeleteExpense: React.PropTypes.func.isRequired,
-    budgetItem: React.PropTypes.object.isRequired
-  },
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return {
-      budget_item: {
-        budget_item_expenses: []
-      },
-      budgetItemExpenses: ds.cloneWithRows([]),
-    }
-  },
-  swipeoutBtns(expense) {
-    const confirmText = `Are you sure you want to delete\n\n${expense.name}\n\nThis cannot be undone.`;
-    return [
-      {
-        text: 'Edit',
-        color: 'white',
-        backgroundColor: '#69F'
-      },
-      {
-        text: 'Delete',
-        color: 'white',
-        backgroundColor: '#f04124',
-        onPress: () => {
-          confirm('Confirm Delete', confirmText, this.props.onDeleteExpense.bind(this, expense))
-        }
-      },
-      {text: 'Cancel', color: '#555'}
-    ];
-  },
-  addButton: function() {
+class BudgetItem extends Component {
+  constructor(props) {
+    super(props)
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      budget_item: props.budgetItem,
+      budgetItemExpenses: ds.cloneWithRows(props.budgetItem.budget_item_expenses),
+    };
+  }
+
+  addButton = () => {
+    const budget_item_id = this.props.budgetItem ? this.props.budgetItem.id : 0;
+    let budgetItemExpense = {budget_item_id};
     return (
       <View style={styles.addButtonContainer}>
-        <TouchableOpacity onPress={()=>console.log('add expense')}>
+        <TouchableOpacity onPress={this.props.addBudgetItemExpense.bind(this,budgetItemExpense)}>
           <Text style={styles.addButton}>+ Add an expense</Text>
         </TouchableOpacity>
       </View>
     )
-  },
-  updateBudgetItemExpenses: function(budget_item) {
+  }
+
+  updateBudgetItemExpenses(budget_item) {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.setState({budgetItemExpenses: ds.cloneWithRows(budget_item.budget_item_expenses), budget_item: budget_item});
-  },
-  componentDidMount: function() {
-    console.log(this.props.budgetItem)
-    this.updateBudgetItemExpenses(this.props.budgetItem)
-  },
-  _renderRow: function(expense, sectionID, rowID) {
+  }
+
+  crudButtons = (expense) => {
+    const confirmText = `Are you sure you want to delete\n\n${expense.name}\n\nThis cannot be undone.`;
     return (
-      <Swipeout right={this.swipeoutBtns(expense)} autoClose={true} key={rowID}>
-        <View>
+      <View style={styles.crudContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.editButton]}
+          onPress={this.props.editBudgetItemExpense.bind(this,expense)}
+          underlayColor='#EEE' >
+          <Text style={styles.editButtonText}>Edit</Text>
+        </TouchableOpacity>
+        <TouchableHighlight
+          style={[styles.button, styles.deleteButton]}
+          onPress={() => {
+            confirm('Confirm Delete', confirmText, this.deleteBudgetItemExpense.bind(this, expense))
+          }}
+          underlayColor='#EEE' >
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+
+  deleteBudgetItemExpense = (expense) => {
+  }
+
+  _renderExpenseRow = (expense, sectionID, rowID) => {
+    return (
+        <View key={rowID}>
           <View style={styles.row}>
             <View style={styles.column}>
               <Text style={styles.title}>
@@ -199,16 +231,18 @@ var BudgetItemExpense = React.createClass({
               </View>
             </View>
           </View>
+          {this.crudButtons(expense)}
           <View style={styles.separator} />
         </View>
-      </Swipeout>
     );
-  },
+  }
+
   ds() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let ex = this.props.budgetItem.budget_item_expenses;
     return ds.cloneWithRows(ex);
-  },
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -217,13 +251,14 @@ var BudgetItemExpense = React.createClass({
         </View>
 
         <ListView style={styles.list}
+                  enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
-                  dataSource={this.ds()}
-                  renderRow={this._renderRow}
+                  dataSource={this.state.budgetItemExpenses}
+                  renderRow={this._renderExpenseRow}
                   renderFooter={this.addButton} />
       </View>
     )
   }
-})
+}
 
-module.exports = BudgetItemExpense;
+module.exports = BudgetItem;

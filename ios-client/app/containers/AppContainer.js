@@ -8,6 +8,8 @@ import SignInContainer from './SignInContainer';
 import BudgetsContainer from './BudgetsContainer';
 import BudgetCategoryContainer from './BudgetCategoryContainer';
 import BudgetItemFormContainer from './BudgetItemFormContainer';
+import BudgetItemContainer from './BudgetItemContainer';
+import BudgetItemExpenseFormContainer from './BudgetItemExpenseFormContainer';
 import MenuContainer from './MenuContainer';
 import Hamburger from '../components/Hamburger';
 import StatisticsContainer from './StatisticsContainer';
@@ -95,6 +97,7 @@ class AppContainer extends React.Component {
       case 'SignIn':
         return null
 			case 'BudgetItemForm':
+			case 'BudgetItemExpenseForm':
 				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
       default:
 	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
@@ -106,6 +109,7 @@ class AppContainer extends React.Component {
 			case 'SignIn':
 				return NavigationCard.CardStackStyleInterpolator.forVertical(props)
 			case 'BudgetItemForm':
+			case 'BudgetItemExpenseForm':
 				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
 			default:
 				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
@@ -130,7 +134,7 @@ class AppContainer extends React.Component {
   }
 
   _horizontalScene(key) {
-    const horizontalScenes = ['SignIn', 'BudgetItemForm'];
+    const horizontalScenes = ['SignIn', 'BudgetItemForm', 'BudgetItemExpenseForm'];
     return horizontalScenes.includes(key);
   }
 
@@ -146,8 +150,12 @@ class AppContainer extends React.Component {
 	      return <StatisticsContainer />
 			case 'BudgetCategory':
 				return <BudgetCategoryContainer budgetCategory={navigationState.budgetCategory} />
+			case 'BudgetItem':
+				return <BudgetItemContainer budgetItem={navigationState.budgetItem} />
 			case 'BudgetItemForm':
 				return <BudgetItemFormContainer budgetItem={navigationState.budgetItem} />
+			case 'BudgetItemExpenseForm':
+				return <BudgetItemExpenseFormContainer budgetItemExpense={navigationState.budgetItemExpense} />
 		}
 	}
 }

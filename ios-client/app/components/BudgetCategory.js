@@ -221,6 +221,7 @@ class BudgetCategory extends Component {
   }
 
   _pressRow(budgetItem) {
+    this.props.showBudgetItem(budgetItem)
   }
 
   _renderBudgetItemRow = (budgetItem: object, sectionID: number, rowID: number) => {

@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		editBudgetItem: (budgetItem) => {
 			dispatch(navigatePush({key: 'BudgetItemForm', title: `Edit ${budgetItem.name}`, budgetItem}))
+		},
+		showBudgetItem: (budgetItem) => {
+			dispatch(navigatePush({key: 'BudgetItem', title: budgetItem.name, budgetItem}))
 		}
 	}
 }
