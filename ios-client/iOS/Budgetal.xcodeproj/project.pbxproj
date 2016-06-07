@@ -31,6 +31,7 @@
 		5128A2B61C6ACC7D00887CFA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2AE1C6ACC7D00887CFA /* Zocial.ttf */; };
 		5128A2B81C6B044F00887CFA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2B71C6B044F00887CFA /* Settings.bundle */; };
 		5128A2C21C6C038200887CFA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5128A2BF1C6C036A00887CFA /* libRNUserDefaultsIOS.a */; };
+		51D4ADD01D067BEA00D3B3AE /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51D4ADD01D067BEA00D3B3AE /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
