@@ -18,9 +18,11 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   icon: {
-    textAlign: 'center',
+    textAlign: 'left',
     color: WHITE,
     fontSize: 28,
+    width: 28,
+    height: 28,
   },
   text: {
     color: WHITE,
