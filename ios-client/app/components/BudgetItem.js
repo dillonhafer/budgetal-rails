@@ -3,13 +3,123 @@
 var React = require('react-native');
 var {
   ListView,
+  StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View
 } = React;
 
-var styles = require("./styles");
+const styles = StyleSheet.create({
+  addButtonContainer: {
+    paddingTop: 35,
+    flex: 1,
+    alignItems: 'center'
+  },
+  addButton: {
+    color: '#69F',
+    fontWeight: 'bold',
+    fontSize: 15,
+    textAlign: 'center',
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: '#69F',
+    width: 180,
+    padding: 4,
+    paddingTop: 8
+  },
+  header: {
+    fontSize: 18,
+    color: '#555',
+    fontWeight: 'bold',
+    padding: 20,
+    textAlign: 'center'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF'
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    marginTop: 4
+  },
+  instructions: {
+    textAlign: 'left',
+    marginBottom: 5,
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+  },
+  list: {
+    backgroundColor: '#FFF',
+    flex: 1
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: 0,
+    height: 110,
+    backgroundColor: '#FFF',
+  },
+  right: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    width: 100,
+    paddingRight: 14
+  },
+  paid: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    flexDirection: 'row'
+  },
+  column: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#CCC',
+  },
+  rightYear: {
+    alignItems: 'flex-end'
+  },
+  leftYear: {
+    textAlign: 'left',
+  },
+  logo: {
+    height: 64,
+    width: 64,
+    marginLeft: 20
+  },
+  title: {
+    fontSize: 18,
+    color: '#555',
+    fontWeight: 'bold',
+    padding: 4
+  },
+  header: {
+    padding: 10,
+    flexDirection: 'row',
+    backgroundColor: '#EEE',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 0.5,
+    borderColor: '#FFF',
+    borderBottomColor: '#DDD'
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'gray',
+    marginTop: 4
+  },
+});
+
 var h = require('../../../../Utils/ViewHelpers');
 const Swipeout = require('react-native-swipeout');
 import {alert, confirm}   from '../../../../Utils/window';
