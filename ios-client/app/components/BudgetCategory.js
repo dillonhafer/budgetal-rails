@@ -2,18 +2,135 @@ import React, {Component} from 'react'
 import {
   Image,
   ListView,
+  StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View
 } from 'react-native'
 
-const styles = require('./styles');
+import {BLUE,RED,GRAY_BORDER,GRAY_BACKGROUND,GRAY_SEPARATOR,GRAY,WHITE,DARK_TITLE} from '../constants/Colors'
+const styles = StyleSheet.create({
+  addButtonContainer: {
+    paddingTop: 35,
+    flex: 1,
+    alignItems: 'center'
+  },
+  addButton: {
+    color: BLUE,
+    fontWeight: 'bold',
+    fontSize: 15,
+    textAlign: 'center',
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: BLUE,
+    width: 180,
+    padding: 4,
+    paddingTop: 8
+  },
+  container: {
+    flex: 1,
+    backgroundColor: WHITE,
+  },
+  crudContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    backgroundColor: WHITE,
+  },
+  button: {
+    width: 100,
+    borderWidth: 2,
+    borderRadius: 4,
+    padding: 4,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  editButton: {
+    borderColor: BLUE,
+  },
+  editButtonText: {
+    color: BLUE,
+    textAlign: 'center',
+  },
+  deleteButton: {
+    borderColor: RED,
+  },
+  deleteButtonText: {
+    color: RED,
+    textAlign: 'center',
+  },
+  list: {
+    backgroundColor: WHITE,
+    flex: 1
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: 0,
+    height: 110,
+    backgroundColor: WHITE,
+  },
+  right: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    width: 100,
+    paddingRight: 14
+  },
+  paid: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  column: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: GRAY_SEPARATOR,
+    width: 400
+  },
+  title: {
+    fontSize: 18,
+    color: DARK_TITLE,
+    fontWeight: 'bold',
+    padding: 4
+  },
+  header: {
+    padding: 10,
+    flexDirection: 'row',
+    backgroundColor: GRAY_BACKGROUND,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 0.5,
+    borderColor: WHITE,
+    borderBottomColor: GRAY_BORDER
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: GRAY,
+    marginTop: 4
+  },
+  empty: {
+    color: BLUE,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    width: 200,
+    paddingBottom: 30
+  },
+});
+
 // import {findCategory}     from '../../../Data/budget_category';
 import {assign, findIndex} from 'lodash-node';
-import {alert, confirm}   from '../../../Utils/window';
-import {destroyItem}      from '../../../Data/budget_item';
-import {numberToCurrency} from '../../../Utils/ViewHelpers';
+import {alert, confirm}   from '../Utils/window';
+import {destroyItem}      from '../Data/budget_item';
+import {numberToCurrency} from '../Utils/ViewHelpers';
 
 class BudgetCategory extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import BudgetCategory from '../Views/budgets/budget-items/BudgetCategory'
+import BudgetCategory from '../components/BudgetCategory'
 import { navigatePush, navigateReset } from '../actions'
 
 const mapStateToProps = (state) => {
