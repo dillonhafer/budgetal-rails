@@ -59,7 +59,6 @@ const initialBudgetState = {
 function budgetState(state = initialBudgetState, action) {
 	switch (action.type) {
 	case BUDGET_UPDATED:
-		console.log('budget saved', action.budget)
 		return {
 			...state,
 			budget: action.budget,
