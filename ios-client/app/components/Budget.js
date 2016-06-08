@@ -13,6 +13,7 @@ import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
 import {findCategory} from '../Data/budget_category';
 import {numberToCurrency, categoryIcon} from '../Utils/ViewHelpers';
 import DateBar from './DateBar';
+import {find} from 'lodash-node';
 
 const styles = StyleSheet.create({
   container: {
@@ -108,18 +109,9 @@ class Budgets extends Component {
     this._updateList(date)
   }
 
-  _pressRow = async (id) => {
-    let params = this.parseDatePieces(this.props.budgetDate);
-    params.id = id;
-
-    try {
-      let resp = await findCategory(params);
-      if (resp !== null) {
-        this.props.showBudgetCategory(resp.budget_category);
-      }
-    } catch (err) {
-      // this.props.signOut();
-    }
+  _pressRow = (id) => {
+    let budgetCategory = find(this.props.budgetCategories, {id});
+    this.props.showBudgetCategory(budgetCategory);
   }
 
   _renderRow = (budgetCategory: string, sectionID: number, rowID: number) => {
@@ -163,7 +155,7 @@ class Budgets extends Component {
   render() {
     let currentDate = this.props.budgetDate;
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let dataSource = ds.cloneWithRows(this.props.budget.budget_categories || [])
+    let dataSource = ds.cloneWithRows(this.props.budgetCategories)
     return (
       <View style={styles.container}>
         <DateBar date={currentDate}

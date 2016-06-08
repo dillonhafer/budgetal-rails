@@ -7,6 +7,8 @@ import { updateBudget, updateBudgetDate } from '../budgetActions'
 const mapStateToProps = (state) => {
 	return {
 		budget: state.budgetState.budget,
+		budgetCategories: state.budgetState.budgetCategories,
+		budgetItems: state.budgetState.budgetCategories,
 		budgetDate: state.budgetState.budgetDate
 	}
 }

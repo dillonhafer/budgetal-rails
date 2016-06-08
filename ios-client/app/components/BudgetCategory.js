@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// import {findCategory}     from '../../../Data/budget_category';
+import {findCategory}     from '../Data/budget_category';
 import {assign, findIndex} from 'lodash-node';
 import {alert, confirm}   from '../Utils/window';
 import {destroyItem}      from '../Data/budget_item';
@@ -138,8 +138,29 @@ class BudgetCategory extends Component {
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      budget_items: props.budgetCategory.budget_items,
-      dataSource: ds.cloneWithRows(props.budgetCategory.budget_items),
+      budget_items: [],
+      dataSource: ds.cloneWithRows([]),
+    }
+  }
+
+  componentDidMount() {
+    this._updateCategory();
+  }
+
+  _updateCategory = async() => {
+    console.log(this.props)
+    let params = {
+      year: this.props.budgetDate.getFullYear(),
+      month: this.props.budgetDate.getMonth()+1,
+      id: this.props.budgetCategory.id
+    }
+    try {
+      let resp = await findCategory(params);
+      if (resp !== null) {
+        this.props.updateCategory(resp.budget_category)
+      }
+    } catch (err) {
+      this.props.signOut();
     }
   }
 
@@ -184,7 +205,7 @@ class BudgetCategory extends Component {
   }
 
   _getEmptyMessage = () => {
-    const isEmpty = this.state.dataSource.getRowCount() === 0;
+    const isEmpty = this.props.budgetItems.length === 0;
     const emptyMessage = "You haven't added any budget items yet";
     if (isEmpty)
       return (
@@ -194,11 +215,11 @@ class BudgetCategory extends Component {
 
   footerRow = () => {
     const budget_category_id = this.props.budgetCategory ? this.props.budgetCategory.id : 0;
-    let budgetItem = {budget_category_id};
+    let newBudgetItem = {budget_category_id};
     return (
       <View style={styles.addButtonContainer}>
         {this._getEmptyMessage()}
-        <TouchableOpacity onPress={this.props.addBudgetItem.bind(this,budgetItem)}>
+        <TouchableOpacity onPress={this.props.addBudgetItem.bind(this,newBudgetItem)}>
           <Text style={styles.addButton}>+ Add a budget item</Text>
         </TouchableOpacity>
       </View>
@@ -257,6 +278,8 @@ class BudgetCategory extends Component {
   }
 
   render() {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let budgetItems = ds.cloneWithRows(this.props.budgetItems)
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -265,7 +288,7 @@ class BudgetCategory extends Component {
         <ListView style={styles.list}
                   enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
-                  dataSource={this.state.dataSource}
+                  dataSource={budgetItems}
                   renderRow={this._renderBudgetItemRow}
                   renderFooter={this.footerRow} />
       </View>

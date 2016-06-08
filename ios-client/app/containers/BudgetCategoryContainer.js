@@ -2,11 +2,17 @@ import { connect } from 'react-redux'
 
 import BudgetCategory from '../components/BudgetCategory'
 import { navigatePush, navigateReset } from '../actions'
+import { updateBudgetCategory } from '../budgetActions'
 
 const mapStateToProps = (state) => {
-	let budgetCategory = state.navigationState.children[state.navigationState.index].budgetCategory;
+	let idx = state.navigationState.index;
+	let navCategory = state.navigationState.children[idx].budgetCategory;
+	let budgetCategory = (state.budgetState.budgetCategory && navCategory && state.budgetState.budgetCategory.id === navCategory.id) ? state.budgetState.budgetCategory : navCategory;
+	let budgetDate = state.budgetState.budgetDate;
+	let budgetItems = state.budgetState.budgetItems;
+
 	return {
-		budgetCategory
+		budgetCategory, budgetItems, budgetDate
 	}
 }
 
@@ -22,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		showBudgetItem: (budgetItem) => {
 			dispatch(navigatePush({key: 'BudgetItem', title: budgetItem.name, budgetItem}))
+		},
+		updateCategory: (budgetCategory) => {
+			dispatch(updateBudgetCategory(budgetCategory))
 		}
 	}
 }
