@@ -2,6 +2,8 @@
 export const BUDGET_UPDATED = 'BUDGET_UPDATED'
 export const BUDGET_CATEGORY_UPDATED = 'BUDGET_CATEGORY_UPDATED'
 export const BUDGET_DATE_UPDATED = 'BUDGET_DATE_UPDATED'
+export const BUDGET_ITEM_UPDATED = 'BUDGET_ITEM_UPDATED'
+export const BUDGET_ITEM_ADDED = 'BUDGET_ITEM_ADDED'
 
 // *** Action Creators ***
 export function updateBudget(budget) {
@@ -17,6 +19,20 @@ export function updateBudgetCategory(budgetCategory) {
     type: BUDGET_CATEGORY_UPDATED,
     budgetCategory,
     budgetItems: budgetCategory.budget_items
+  }
+}
+
+export function updateBudgetItem(budgetItem) {
+  return {
+    type: BUDGET_ITEM_UPDATED,
+    budgetItem
+  }
+}
+
+export function addBudgetItem(budgetItem) {
+  return {
+    type: BUDGET_ITEM_ADDED,
+    budgetItem
   }
 }
 

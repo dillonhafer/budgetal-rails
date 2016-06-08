@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import * as NavigationStateUtils from 'NavigationStateUtils'
 
 import { NAV_PUSH, NAV_POP, NAV_JUMP_TO_KEY, NAV_JUMP_TO_INDEX, NAV_RESET, NAV_REPLACE_AT_INDEX } from './actions'
-import { BUDGET_UPDATED, BUDGET_DATE_UPDATED, BUDGET_CATEGORY_UPDATED } from './budgetActions'
+import { BUDGET_UPDATED, BUDGET_DATE_UPDATED, BUDGET_CATEGORY_UPDATED, BUDGET_ITEM_UPDATED, BUDGET_ITEM_ADDED } from './budgetActions'
 
 const initialNavState = {
 	key: 'MainNavigation',
@@ -77,6 +77,20 @@ function budgetState(state = initialBudgetState, action) {
 			...state,
 			budgetDate: action.budgetDate
 		}
+	case BUDGET_ITEM_ADDED:
+		return {
+			...state,
+			budgetItems: [...state.budgetItems, action.budgetItem]
+		}
+	case BUDGET_ITEM_UPDATED:
+		let budgetItems = state.budgetItems.map((item, i) => {
+      if (item.id === action.budgetItem.id) {
+        // Copy the object before mutating
+        return Object.assign({}, item, action.budgetItem)
+      }
+			return item
+    })
+		return {...state, budgetItems}
 	default:
 		return state
 	}

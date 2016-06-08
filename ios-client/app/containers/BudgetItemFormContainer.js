@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import BudgetItemForm from '../components/BudgetItemForm'
 import { navigatePop, navigatePush, navigateReset } from '../actions'
+import { updateBudgetItem, addBudgetItem } from '../budgetActions'
 
 const mapStateToProps = (state) => {
 	let budgetItem = state.navigationState.children[state.navigationState.index].budgetItem;
@@ -19,7 +20,13 @@ const mapDispatchToProps = (dispatch) => {
 		},
     goBack: () => {
       dispatch(navigatePop());
-    }
+    },
+		updateBudgetItem: (budgetItem) => {
+			dispatch(updateBudgetItem(budgetItem));
+		},
+		addBudgetItem: (budgetItem) => {
+			dispatch(addBudgetItem(budgetItem));
+		}
 	}
 }
 

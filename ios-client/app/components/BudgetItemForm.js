@@ -95,8 +95,13 @@ class BudgetItemForm extends Component {
     let data = {budget_category_id: budgetItem.budget_category_id, budget_item: budgetItem};
 
     try {
-      let resp = await strategy(data);
-      if (resp !== null && resp.errors === undefined) {
+      let budgetItem = await strategy(data);
+      if (budgetItem !== null && budgetItem.errors === undefined) {
+        if (strategy === createItem) {
+          this.props.addBudgetItem(budgetItem)
+        } else {
+          this.props.updateBudgetItem(budgetItem)
+        }
         this.props.goBack();
       } else {
         showErrors(resp.errors);
