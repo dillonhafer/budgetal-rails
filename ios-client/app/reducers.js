@@ -2,7 +2,9 @@ import { combineReducers } from 'redux'
 import * as NavigationStateUtils from 'NavigationStateUtils'
 
 import { NAV_PUSH, NAV_POP, NAV_JUMP_TO_KEY, NAV_JUMP_TO_INDEX, NAV_RESET, NAV_REPLACE_AT_INDEX } from './actions'
-import { BUDGET_UPDATED, BUDGET_DATE_UPDATED, BUDGET_CATEGORY_UPDATED, BUDGET_ITEM_UPDATED, BUDGET_ITEM_ADDED } from './budgetActions'
+import { BUDGET_UPDATED, BUDGET_DATE_UPDATED, BUDGET_CATEGORY_UPDATED, BUDGET_ITEM_UPDATED, BUDGET_ITEM_ADDED, BUDGET_ITEM_DELETED } from './budgetActions'
+
+import {findIndex} from 'lodash-node'
 
 const initialNavState = {
 	key: 'MainNavigation',
@@ -91,6 +93,15 @@ function budgetState(state = initialBudgetState, action) {
 			return item
     })
 		return {...state, budgetItems}
+	case BUDGET_ITEM_DELETED:
+		let deleteIdx = findIndex(state.budgetItems, {'id': action.budgetItem.id});
+		return {
+			...state,
+			budgetItems: [
+		    ...state.budgetItems.slice(0, deleteIdx),
+		    ...state.budgetItems.slice(deleteIdx + 1)
+			],
+		}
 	default:
 		return state
 	}

@@ -2,8 +2,10 @@
 export const BUDGET_UPDATED = 'BUDGET_UPDATED'
 export const BUDGET_CATEGORY_UPDATED = 'BUDGET_CATEGORY_UPDATED'
 export const BUDGET_DATE_UPDATED = 'BUDGET_DATE_UPDATED'
+
 export const BUDGET_ITEM_UPDATED = 'BUDGET_ITEM_UPDATED'
 export const BUDGET_ITEM_ADDED = 'BUDGET_ITEM_ADDED'
+export const BUDGET_ITEM_DELETED = 'BUDGET_ITEM_DELETED'
 
 // *** Action Creators ***
 export function updateBudget(budget) {
@@ -40,5 +42,12 @@ export function updateBudgetDate(date) {
   return {
     type: BUDGET_DATE_UPDATED,
     budgetDate: date,
+  }
+}
+
+export function deleteBudgetItem(budgetItem) {
+  return {
+    type: BUDGET_ITEM_DELETED,
+    budgetItem
   }
 }

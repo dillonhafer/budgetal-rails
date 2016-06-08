@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import BudgetCategory from '../components/BudgetCategory'
 import { navigatePush, navigateReset } from '../actions'
-import { updateBudgetCategory } from '../budgetActions'
+import { updateBudgetCategory, deleteBudgetItem } from '../budgetActions'
 
 const mapStateToProps = (state) => {
 	let idx = state.navigationState.index;
@@ -31,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		updateCategory: (budgetCategory) => {
 			dispatch(updateBudgetCategory(budgetCategory))
+		},
+		deleteBudgetItem: (budgetItem) => {
+			dispatch(deleteBudgetItem(budgetItem));
 		}
 	}
 }

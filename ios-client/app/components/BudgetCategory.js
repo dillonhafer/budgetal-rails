@@ -190,11 +190,7 @@ class BudgetCategory extends Component {
     try {
       let resp = await destroyItem(item.id);
       if (resp.success) {
-        let budget_items = assign([], this.state.budget_items);
-        let index        = findIndex(budget_items, {'id': item.id});
-        budget_items.splice(index,1);
-        let dataSource = this.state.dataSource.cloneWithRows(budget_items);
-        this.setState({budget_items, dataSource});
+        this.props.deleteBudgetItem(item);
       }
     } catch (err) {
       this.props.signOut();
