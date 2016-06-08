@@ -148,7 +148,6 @@ class BudgetCategory extends Component {
   }
 
   _updateCategory = async() => {
-    console.log(this.props)
     let params = {
       year: this.props.budgetDate.getFullYear(),
       month: this.props.budgetDate.getMonth()+1,
@@ -197,9 +196,6 @@ class BudgetCategory extends Component {
     }
   }
 
-  editItem = async(item) => {
-  }
-
   _getEmptyMessage = () => {
     const isEmpty = this.props.budgetItems.length === 0;
     const emptyMessage = "You haven't added any budget items yet";
@@ -220,21 +216,6 @@ class BudgetCategory extends Component {
         </TouchableOpacity>
       </View>
     )
-  }
-
-  updateBudgetItems(json) {
-    var ds = this.state.dataSource;
-    var budget_items = json.budget_category.budget_items;
-    this.setState({budget_items, dataSource: ds.cloneWithRows(budget_items)});
-  }
-
-  _updateList = async(data) => {
-    try {
-      // let json = await findCategory(data);
-      // this.updateBudgetItems(json)
-    } catch (error) {
-      // this.props.signOut()
-    }
   }
 
   _pressRow(budgetItem) {
