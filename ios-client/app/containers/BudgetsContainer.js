@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import Budgets from '../components/Budget'
 import { navigatePush, navigateReset } from '../actions'
-import { updateBudget } from '../budgetActions'
+import { updateBudget, updateBudgetDate } from '../budgetActions'
 
 const mapStateToProps = (state) => {
 	return {
@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		updateBudget: (budget) => {
 			dispatch(updateBudget(budget))
+		},
+		updateBudgetDate: (date) => {
+			dispatch(updateBudgetDate(date))
 		},
 	}
 }

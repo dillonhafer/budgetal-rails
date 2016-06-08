@@ -103,9 +103,9 @@ class Budgets extends Component {
     }
   }
 
-  onDateChange = (budgetDate) => {
-    // this.setState({budgetDate})
-    // this._updateList(budgetDate)
+  onDateChange = (date) => {
+    this.props.updateBudgetDate(date)
+    this._updateList(date)
   }
 
   _pressRow = async (id) => {
