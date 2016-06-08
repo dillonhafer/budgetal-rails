@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 });
 
 import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
-// import {updateItemExpense, createItemExpense} from '../Data/budget_item_expense';
+import {updateItemExpense, createItemExpense} from '../Data/budgetItemExpense';
 import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
 
 class BudgetItemExpenseForm extends Component {
@@ -108,22 +108,27 @@ class BudgetItemExpenseForm extends Component {
     };
   }
 
-  saveItem = async() => {
-    // this.blurInputs();
-    // const budgetItemExpense = this.state.budgetItemExpense;
-    // let strategy = (budgetItemExpense.id === 0) ? createItemExpense : updateItemExpense;
-    // let data = {budget_item_id: budgetItemExpense.budget_item_id, budget_item_expense: budgetItemExpense};
-    //
-    // try {
-    //   let resp = await strategy(data);
-    //   if (resp !== null && resp.errors === undefined) {
-    //     this.props.goBack();
-    //   } else {
-    //     showErrors(resp.errors);
-    //   }
-    // } catch (err) {
-    //   this.props.signOut();
-    // }
+  saveExpense = async() => {
+    this.blurInputs();
+    const budgetItemExpense = this.state.budgetItemExpense;
+    let strategy = (budgetItemExpense.id === undefined) ? createItemExpense : updateItemExpense;
+    let data = {budget_item_id: budgetItemExpense.budget_item_id, budget_item_expense: budgetItemExpense};
+
+    try {
+      let budgetItemExpense = await strategy(data);
+      if (budgetItemExpense !== null && budgetItemExpense.errors === undefined) {
+        if (strategy === createItemExpense) {
+          this.props.addBudgetItemExpense(budgetItemExpense)
+        } else {
+          this.props.updateBudgetItemExpense(budgetItemExpense)
+        }
+        this.props.goBack();
+      } else {
+        showErrors(resp.errors);
+      }
+    } catch (err) {
+      this.props.signOut();
+    }
   }
 
   onDatePickerDone = () => {
@@ -195,7 +200,7 @@ class BudgetItemExpenseForm extends Component {
 
         <TouchableHighlight
           underlayColor='#EEE'
-          onPress={this.saveItem}>
+          onPress={this.saveExpense}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableHighlight>
 

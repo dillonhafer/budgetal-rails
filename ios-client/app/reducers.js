@@ -2,7 +2,17 @@ import { combineReducers } from 'redux'
 import * as NavigationStateUtils from 'NavigationStateUtils'
 
 import { NAV_PUSH, NAV_POP, NAV_JUMP_TO_KEY, NAV_JUMP_TO_INDEX, NAV_RESET, NAV_REPLACE_AT_INDEX } from './actions'
-import { BUDGET_UPDATED, BUDGET_DATE_UPDATED, BUDGET_CATEGORY_UPDATED, BUDGET_ITEM_UPDATED, BUDGET_ITEM_ADDED, BUDGET_ITEM_DELETED } from './budgetActions'
+import {
+	BUDGET_UPDATED,
+	BUDGET_DATE_UPDATED,
+	BUDGET_CATEGORY_UPDATED,
+	BUDGET_ITEM_UPDATED,
+	BUDGET_ITEM_ADDED,
+	BUDGET_ITEM_DELETED,
+	BUDGET_ITEM_EXPENSE_ADDED,
+	BUDGET_ITEM_EXPENSE_UPDATED,
+	BUDGET_ITEM_EXPENSE_DELETED
+} from './budgetActions'
 
 import {findIndex} from 'lodash-node'
 
@@ -55,7 +65,7 @@ const initialBudgetState = {
 	},
 	budgetCategories: [],
 	budgetItems: [],
-	budgetItem_expenses: []
+	budgetItemExpenses: [],
 }
 
 function budgetState(state = initialBudgetState, action) {
@@ -73,6 +83,7 @@ function budgetState(state = initialBudgetState, action) {
 			...state,
 			budgetCategory: action.budgetCategory,
 			budgetItems: action.budgetItems,
+			budgetItemExpenses: action.budgetItemExpenses,
 		}
 	case BUDGET_DATE_UPDATED:
 		return {
@@ -100,6 +111,29 @@ function budgetState(state = initialBudgetState, action) {
 			budgetItems: [
 		    ...state.budgetItems.slice(0, deleteIdx),
 		    ...state.budgetItems.slice(deleteIdx + 1)
+			],
+		}
+	case BUDGET_ITEM_EXPENSE_ADDED:
+		return {
+			...state,
+			budgetItemExpenses: [...state.budgetItemExpenses, action.budgetItemExpense]
+		}
+	case BUDGET_ITEM_EXPENSE_UPDATED:
+		let budgetItemExpenses = state.budgetItemExpenses.map((expense, i) => {
+			if (expense.id === action.budgetItemExpense.id) {
+				// Copy the object before mutating
+				return Object.assign({}, expense, action.budgetItemExpense)
+			}
+			return expense
+		})
+		return {...state, budgetItemExpenses}
+	case BUDGET_ITEM_EXPENSE_DELETED:
+		let deleteExpenseIdx = findIndex(state.budgetItemExpenses, {'id': action.budgetItemExpense.id});
+		return {
+			...state,
+			budgetItemExpenses: [
+		    ...state.budgetItemExpenses.slice(0, deleteExpenseIdx),
+		    ...state.budgetItemExpenses.slice(deleteExpenseIdx + 1)
 			],
 		}
 	default:

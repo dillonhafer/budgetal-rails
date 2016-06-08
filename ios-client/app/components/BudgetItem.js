@@ -154,15 +154,11 @@ const styles = StyleSheet.create({
 
 var h = require('../Utils/ViewHelpers');
 import {alert, confirm}   from '../Utils/window';
+import {deleteItemExpense} from '../Data/budgetItemExpense'
 
 class BudgetItem extends Component {
   constructor(props) {
     super(props)
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      budget_item: props.budgetItem,
-      budgetItemExpenses: ds.cloneWithRows(props.budgetItem.budget_item_expenses),
-    };
   }
 
   addButton = () => {
@@ -175,11 +171,6 @@ class BudgetItem extends Component {
         </TouchableOpacity>
       </View>
     )
-  }
-
-  updateBudgetItemExpenses(budget_item) {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.setState({budgetItemExpenses: ds.cloneWithRows(budget_item.budget_item_expenses), budget_item: budget_item});
   }
 
   crudButtons = (expense) => {
@@ -195,7 +186,7 @@ class BudgetItem extends Component {
         <TouchableHighlight
           style={[styles.button, styles.deleteButton]}
           onPress={() => {
-            confirm('Confirm Delete', confirmText, this.deleteBudgetItemExpense.bind(this, expense))
+            confirm('Confirm Delete', confirmText, this.deleteExpense.bind(this, expense))
           }}
           underlayColor='#EEE' >
           <Text style={styles.deleteButtonText}>Delete</Text>
@@ -204,7 +195,15 @@ class BudgetItem extends Component {
     )
   }
 
-  deleteBudgetItemExpense = (expense) => {
+  deleteExpense = async(expense) => {
+    try {
+      let resp = await deleteItemExpense(expense.id);
+      if (resp.success) {
+        this.props.deleteBudgetItemExpense(expense);
+      }
+    } catch (err) {
+      this.props.signOut();
+    }
   }
 
   _renderExpenseRow = (expense, sectionID, rowID) => {
@@ -237,13 +236,10 @@ class BudgetItem extends Component {
     );
   }
 
-  ds() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let ex = this.props.budgetItem.budget_item_expenses;
-    return ds.cloneWithRows(ex);
-  }
-
   render() {
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let budgetItemExpenses = ds.cloneWithRows(this.props.budgetItemExpenses);
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -253,7 +249,7 @@ class BudgetItem extends Component {
         <ListView style={styles.list}
                   enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
-                  dataSource={this.state.budgetItemExpenses}
+                  dataSource={budgetItemExpenses}
                   renderRow={this._renderExpenseRow}
                   renderFooter={this.addButton} />
       </View>
