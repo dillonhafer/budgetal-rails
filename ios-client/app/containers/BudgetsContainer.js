@@ -2,9 +2,12 @@ import { connect } from 'react-redux'
 
 import Budgets from '../components/Budget'
 import { navigatePush, navigateReset } from '../actions'
+import { updateBudget } from '../budgetActions'
 
 const mapStateToProps = (state) => {
 	return {
+		budget: state.budgetState.budget,
+		budgetDate: state.budgetState.budgetDate
 	}
 }
 
@@ -16,7 +19,10 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		showBudgetCategory: (budgetCategory) => {
 			dispatch(navigatePush({key: 'BudgetCategory', title: budgetCategory.name, budgetCategory}))
-		}
+		},
+		updateBudget: (budget) => {
+			dispatch(updateBudget(budget))
+		},
 	}
 }
 

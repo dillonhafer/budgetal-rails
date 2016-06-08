@@ -66,14 +66,8 @@ const styles = StyleSheet.create({
 class Budgets extends Component {
   constructor(props) {
     super(props)
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      budgetDate: new Date(),
       showDatePicker: false,
-      budget_category: {
-        budget_categories: []
-      },
-      dataSource: ds.cloneWithRows([]),
     }
   }
 
@@ -95,28 +89,27 @@ class Budgets extends Component {
   }
 
   componentDidMount() {
-    this._updateList(new Date())
+    this._updateList(this.props.budgetDate)
   }
 
   _updateList = async (date) => {
     try {
       const params = this.parseDatePieces(date)
-      let budget_category = await findCategory(params);
-      if (budget_category !== null)
-        this.setState({budgetDate: date})
-        this.updateBudget(budget_category)
+      let resp = await findCategory(params);
+      if (resp !== null)
+        this.props.updateBudget(resp.budget, date)
     } catch(error) {
       this.props.signOut(error)
     }
   }
 
   onDateChange = (budgetDate) => {
-    this.setState({budgetDate})
-    this._updateList(budgetDate)
+    // this.setState({budgetDate})
+    // this._updateList(budgetDate)
   }
 
   _pressRow = async (id) => {
-    let params = this.parseDatePieces(this.state.budgetDate);
+    let params = this.parseDatePieces(this.props.budgetDate);
     params.id = id;
 
     try {
@@ -168,7 +161,9 @@ class Budgets extends Component {
   }
 
   render() {
-    let currentDate = this.state.budgetDate;
+    let currentDate = this.props.budgetDate;
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let dataSource = ds.cloneWithRows(this.props.budget.budget_categories || [])
     return (
       <View style={styles.container}>
         <DateBar date={currentDate}
@@ -178,7 +173,7 @@ class Budgets extends Component {
         <ListView style={styles.list}
                   enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
-                  dataSource={this.state.dataSource}
+                  dataSource={dataSource}
                   renderSeparator={this.separator}
                   renderRow={this._renderRow} />
 

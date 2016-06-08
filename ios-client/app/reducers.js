@@ -2,6 +2,8 @@ import { combineReducers } from 'redux'
 import * as NavigationStateUtils from 'NavigationStateUtils'
 
 import { NAV_PUSH, NAV_POP, NAV_JUMP_TO_KEY, NAV_JUMP_TO_INDEX, NAV_RESET, NAV_REPLACE_AT_INDEX } from './actions'
+import { BUDGET_UPDATED } from './budgetActions'
+
 const initialNavState = {
 	key: 'MainNavigation',
 	index: 0,
@@ -9,6 +11,7 @@ const initialNavState = {
 		{ key: 'SignIn', title: '' },
 	],
 }
+
 function navigationState(state = initialNavState, action) {
 	switch (action.type) {
 	case NAV_PUSH:
@@ -40,8 +43,38 @@ function navigationState(state = initialNavState, action) {
 	}
 }
 
+const initialBudgetState = {
+	key: 'Budget',
+	budgetDate: new Date(),
+	budget: {
+		year: new Date().getFullYear(),
+		month: new Date().getMonth()+2,
+		budget_categories: [],
+	},
+	budget_categories: [],
+	budget_items: [],
+	budget_item_expenses: []
+}
+
+function budgetState(state = initialBudgetState, action) {
+	switch (action.type) {
+	case BUDGET_UPDATED:
+		console.log('budget saved', action.budget)
+		return {
+			...state,
+			budget: action.budget,
+			budget_categories: action.budget.budget_categories,
+			budget_items: action.budget.budget_categories.budget_items,
+			budgetDate: action.budgetDate
+		}
+	default:
+		return state
+	}
+}
+
 const appReducers = combineReducers({
-	navigationState
+	navigationState,
+	budgetState
 })
 
 export default appReducers
