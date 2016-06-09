@@ -12,6 +12,7 @@ import BudgetItemContainer from './BudgetItemContainer';
 import BudgetItemExpenseFormContainer from './BudgetItemExpenseFormContainer';
 import MenuContainer from './MenuContainer';
 import Hamburger from '../components/Hamburger';
+import CategoryTitle from '../components/CategoryTitle';
 import StatisticsContainer from './StatisticsContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
@@ -79,10 +80,7 @@ class AppContainer extends Component {
 				  <NavigationHeader
 						{...props}
             style={this._headerStyles(navigationState)}
-						renderTitleComponent={props => {
-							const title = props.scene.navigationState.title
-							return <NavigationHeader.Title textStyle={styles.navTitle}>{title}</NavigationHeader.Title>
-						}}
+						renderTitleComponent={this._renderTitle}
             renderLeftComponent={this._renderLeftComponent}
 					/>
 				)}
@@ -105,6 +103,17 @@ class AppContainer extends Component {
 			/>
       </SideMenu>
 		)
+	}
+
+	_renderTitle(props) {
+		const title = props.scene.navigationState.title
+
+		switch (props.scene.navigationState.key) {
+			case 'BudgetCategory':
+				return <CategoryTitle title={title} />
+			default:
+				return <NavigationHeader.Title textStyle={styles.navTitle}>{title}</NavigationHeader.Title>
+		}
 	}
 
 	_disableGestures(navState) {
