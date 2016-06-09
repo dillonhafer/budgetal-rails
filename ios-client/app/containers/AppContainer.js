@@ -1,7 +1,7 @@
 'use strict'
 
-import React, {PropTypes} from 'react';
-import {NavigationExperimental, View, StyleSheet} from 'react-native';
+import React, {PropTypes,Component} from 'react';
+import {AppState,NavigationExperimental, View, StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 
 import SignInContainer from './SignInContainer';
@@ -14,6 +14,9 @@ import MenuContainer from './MenuContainer';
 import Hamburger from '../components/Hamburger';
 import StatisticsContainer from './StatisticsContainer';
 
+import UserDefaults from 'react-native-userdefaults-ios';
+
+import {setApiUrl} from '../Utils/api';
 import SideMenu from 'react-native-side-menu';
 import BackButton from '../components/BackButton';
 import { navigatePush, navigatePop } from '../actions';
@@ -26,7 +29,34 @@ const {
 	RootContainer: NavigationRootContainer,
 } = NavigationExperimental
 
-class AppContainer extends React.Component {
+class AppContainer extends Component {
+	setServer = async() => {
+    try {
+      let api_url = await UserDefaults.stringForKey('api_server_preference');
+      if (api_url === null) {
+        api_url = 'https://api.budgetal.com';
+      }
+      setApiUrl(api_url);
+    } catch (err) {
+      window.alert({title: 'Error', message: err});
+    }
+  }
+
+	componentDidMount() {
+    this.setServer();
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (currentAppState) => {
+    if (currentAppState === 'active') {
+      this.setServer();
+    }
+  }
+
 	render() {
 		let { navigationState, onNavigate } = this.props
 
