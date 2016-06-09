@@ -12,7 +12,6 @@ import {WHITE, GRAY_BACKGROUND, GRAY_BORDER, GRAY, CLEAR} from '../constants/Col
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     flexDirection: 'row',
     backgroundColor: GRAY_BACKGROUND,
     alignItems: 'center',
@@ -31,7 +30,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: GRAY,
     fontSize: 24,
+    width: 24,
+    height: 24,
   },
+  changeMonth: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 45,
+    width: 45,
+  }
 });
 
 class DateBar extends Component {
@@ -53,7 +60,7 @@ class DateBar extends Component {
 
   nextYearButton(date) {
     return (<TouchableHighlight
-              style={[styles.rightYear]}
+              style={styles.changeMonth}
               underlayColor='transparent'
               onPress={this._changeMonth.bind(this, date, 1)}>
               <Icon name="chevron-right" style={styles.icon} />
@@ -62,7 +69,7 @@ class DateBar extends Component {
 
   previousYearButton(date) {
     return (<TouchableHighlight
-              style={[styles.leftYear]}
+              style={styles.changeMonth}
               underlayColor='transparent'
               onPress={this._changeMonth.bind(this, date, -1)}>
               <Icon name="chevron-left" style={styles.icon} />
