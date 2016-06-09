@@ -8,10 +8,23 @@ import {
   View
 } from 'react-native'
 
+import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
+import {updateItemExpense, createItemExpense} from '../Data/budgetItemExpense';
+import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
+
+import {
+  BLUE,
+  WHITE,
+  GRAY_BORDER,
+  MENU_BACKGROUND,
+  FORM_GRAY,
+  FORM_BACKGROUND,
+} from '../constants/Colors'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF'
+    backgroundColor: WHITE
   },
   right: {
     flex: 1,
@@ -27,9 +40,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  paidSwitch: {
+  inputRow: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: WHITE,
     paddingLeft: 0,
     paddingRight: 10,
     paddingBottom: 0,
@@ -42,11 +55,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     marginBottom: 4,
-    color: '#333'
+    color: MENU_BACKGROUND
   },
   form: {
     paddingTop: 20,
-    backgroundColor: '#E4E4E4'
+    backgroundColor: FORM_BACKGROUND
   },
   dateField: {
     marginLeft: 0,
@@ -55,8 +68,8 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     padding: 0,
     height: 40,
-    borderColor: '#DDD',
-    backgroundColor: 'white',
+    borderColor: GRAY_BORDER,
+    backgroundColor: WHITE,
     borderWidth: 0,
     flex: 1,
     justifyContent: 'center',
@@ -65,46 +78,45 @@ const styles = StyleSheet.create({
   date: {
     textAlign: 'right',
     fontSize: 16,
+    color: FORM_GRAY,
   },
   inputs: {
+    color: FORM_GRAY,
     marginLeft: 0,
     marginRight: 0,
     marginTop: 0,
     marginBottom: 0,
     padding: 0,
     height: 40,
-    borderColor: '#DDD',
-    backgroundColor: 'white',
+    borderColor: GRAY_BORDER,
+    backgroundColor: WHITE,
     textAlign: 'right',
     borderWidth: 0,
   },
+  saveButton: {
+    marginTop: 40,
+  },
   saveButtonText: {
     textAlign: 'center',
-    backgroundColor: 'white',
-    color: '#6699FF',
-    marginTop: 40,
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: 10,
+    backgroundColor: WHITE,
+    color: BLUE,
+    margin: 0,
     padding: 10,
     justifyContent: 'center',
+    alignItems: 'center',
     height: 40,
-    borderColor: '#DDD',
+    borderColor: GRAY_BORDER,
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
 });
-
-import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
-import {updateItemExpense, createItemExpense} from '../Data/budgetItemExpense';
-import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
 
 class BudgetItemExpenseForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
       showDatePicker: false,
-      budgetItemExpense: props.budgetItemExpense
+      budgetItemExpense: Object.assign({}, props.budgetItemExpense)
     };
   }
 
@@ -137,7 +149,7 @@ class BudgetItemExpenseForm extends Component {
 
   onDateChange = (date) => {
     var b = this.state.budgetItemExpense;
-    this.setState({budgetItemExpense: Object.assign(b, {date})});
+    this.setState({budgetItemExpense: Object.assign({}, b, {date})});
   }
 
   blurInputs = () => {
@@ -150,13 +162,21 @@ class BudgetItemExpenseForm extends Component {
     this.setState({showDatePicker: !this.state.showDatePicker});
   }
 
+  formattedDate(date) {
+    if (date) {
+      let [year,month,day] = date.split('-');
+      return new Date(year, month-1, day,1,1,1,1);
+    }
+    return new Date()
+  }
+
   render() {
     let b = this.state.budgetItemExpense;
-    b.date = new Date(`${b.date} (CDT)`)
+    let date = this.formattedDate(b.date);
     return (
       <View style={[styles.container, styles.form]}>
         <Text style={styles.label}>Budget Item Expense</Text>
-        <View style={styles.paidSwitch}>
+        <View style={styles.inputRow}>
           <View style={styles.column}>
             <Text style={styles.label}>Name</Text>
           </View>
@@ -170,7 +190,7 @@ class BudgetItemExpenseForm extends Component {
           </View>
         </View>
 
-        <View style={styles.paidSwitch}>
+        <View style={styles.inputRow}>
           <View style={styles.column}>
             <Text style={styles.label}>Amount</Text>
           </View>
@@ -184,7 +204,7 @@ class BudgetItemExpenseForm extends Component {
           </View>
         </View>
 
-        <View style={styles.paidSwitch}>
+        <View style={styles.inputRow}>
           <View style={styles.column}>
             <Text style={styles.label}>Date</Text>
           </View>
@@ -193,20 +213,21 @@ class BudgetItemExpenseForm extends Component {
               style={styles.dateField}
               underlayColor='#f6f6f6'
               onPress={this.pickDate}>
-              <Text style={styles.date}>{b.date.toDateString()}</Text>
+              <Text style={styles.date}>{date.toDateString()}</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         <TouchableHighlight
-          underlayColor='#EEE'
+          style={styles.saveButton}
+          underlayColor={BLUE}
           onPress={this.saveExpense}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableHighlight>
 
         <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
                                  onDone={this.onDatePickerDone}
-                                 date={b.date}
+                                 date={date}
                                  onDateChange={this.onDateChange} />
       </View>
     )
