@@ -13,8 +13,9 @@ import {BLUE,RED,GRAY_BORDER,GRAY_BACKGROUND,GRAY_SEPARATOR,GRAY,WHITE,DARK_TITL
 const styles = StyleSheet.create({
   addButtonContainer: {
     paddingTop: 35,
+    paddingBottom: 35,
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   addButton: {
     color: BLUE,
