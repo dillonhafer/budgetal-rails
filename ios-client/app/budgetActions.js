@@ -18,7 +18,7 @@ export const BUDGET_ITEM_EXPENSE_DELETED = 'BUDGET_ITEM_EXPENSE_DELETED'
 export function updateBudget(budget) {
   return {
     type: BUDGET_UPDATED,
-    budgetDate: new Date([budget.year, budget.month,1].join('-')),
+    budgetDate: new Date(budget.year, budget.month,1,1,1,1,1),
     budget,
   }
 }

@@ -60,7 +60,7 @@ const initialBudgetState = {
 	budgetDate: new Date(),
 	budget: {
 		year: new Date().getFullYear(),
-		month: new Date().getMonth()+2,
+		month: new Date().getMonth()+1,
 		budget_categories: [],
 	},
 	budgetCategories: [],
