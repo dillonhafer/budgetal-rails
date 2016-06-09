@@ -114,9 +114,15 @@ const styles = StyleSheet.create({
 class BudgetItemExpenseForm extends Component {
   constructor(props) {
     super(props)
+    const initialExpense = Object.assign(
+      {},
+      props.budgetItemExpense,
+      {date: this.formattedDate(props.budgetItemExpense.date)}
+    )
+
     this.state = {
       showDatePicker: false,
-      budgetItemExpense: Object.assign({}, props.budgetItemExpense)
+      budgetItemExpense: initialExpense
     };
   }
 
@@ -165,7 +171,7 @@ class BudgetItemExpenseForm extends Component {
   formattedDate(date) {
     if (!date)
       return new Date()
-      
+
     if (typeof date === 'string') {
       let [year,month,day] = date.split('-');
       return new Date(year, month-1, day,1,1,1,1);
@@ -176,7 +182,6 @@ class BudgetItemExpenseForm extends Component {
 
   render() {
     let b = this.state.budgetItemExpense;
-    let date = this.formattedDate(b.date);
     return (
       <View style={[styles.container, styles.form]}>
         <Text style={styles.label}>Budget Item Expense</Text>
@@ -217,7 +222,7 @@ class BudgetItemExpenseForm extends Component {
               style={styles.dateField}
               underlayColor='#f6f6f6'
               onPress={this.pickDate}>
-              <Text style={styles.date}>{date.toDateString()}</Text>
+              <Text style={styles.date}>{b.date.toDateString()}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -231,7 +236,7 @@ class BudgetItemExpenseForm extends Component {
 
         <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
                                  onDone={this.onDatePickerDone}
-                                 date={date}
+                                 date={b.date}
                                  onDateChange={this.onDateChange} />
       </View>
     )
