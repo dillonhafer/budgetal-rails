@@ -163,11 +163,15 @@ class BudgetItemExpenseForm extends Component {
   }
 
   formattedDate(date) {
-    if (date) {
+    if (!date)
+      return new Date()
+      
+    if (typeof date === 'string') {
       let [year,month,day] = date.split('-');
       return new Date(year, month-1, day,1,1,1,1);
     }
-    return new Date()
+
+    return date
   }
 
   render() {
