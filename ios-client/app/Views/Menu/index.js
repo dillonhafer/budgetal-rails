@@ -11,11 +11,12 @@ import {
 import {MENU_BACKGROUND} from '../../constants/Colors';
 import AppImages from '../../../components/app_images';
 import MenuItem from './MenuItem';
-const {height} = Dimensions.get('window');
+const {width,height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   menu: {
     flex: 1,
+    width: width,
     paddingTop: 40,
     backgroundColor: MENU_BACKGROUND,
     height: height,
