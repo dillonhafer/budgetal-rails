@@ -163,6 +163,7 @@ class Budgets extends Component {
                  toggleDatePicker={this.toggleDatePicker} />
 
         <ListView style={styles.list}
+                  initialListSize={12}
                   scrollsToTop={this.props.scrollsToTop}
                   enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}

@@ -238,6 +238,7 @@ class BudgetItem extends Component {
         <ListView style={styles.list}
                   scrollsToTop={this.props.scrollsToTop}
                   enableEmptySections={true}
+                  initialListSize={this.props.budgetItemExpenses.length+1}
                   automaticallyAdjustContentInsets={false}
                   dataSource={budgetItemExpenses}
                   renderRow={this._renderExpenseRow}

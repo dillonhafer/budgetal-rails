@@ -265,6 +265,7 @@ class BudgetCategory extends Component {
         </View>
         <ListView style={styles.list}
                   enableEmptySections={true}
+                  initialListSize={this.props.budgetItems.length+1}
                   scrollsToTop={this.props.scrollsToTop}
                   automaticallyAdjustContentInsets={false}
                   dataSource={budgetItems}
