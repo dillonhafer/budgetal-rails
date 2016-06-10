@@ -8,6 +8,8 @@ import {
   View
 } from 'react-native'
 
+import {reduce,where} from 'lodash-node'
+
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   addButtonContainer: {
@@ -124,6 +126,18 @@ const styles = StyleSheet.create({
     width: 200,
     paddingBottom: 30
   },
+  red: {
+    color: '$red',
+  },
+  green: {
+    color: '$green',
+  },
+  blue: {
+    color: '$blue',
+  },
+  subTitle: {
+    fontWeight: 'bold'
+  }
 });
 
 import {findCategory}     from '../Data/budget_category';
@@ -222,7 +236,24 @@ class BudgetCategory extends Component {
     this.props.showBudgetItem(budgetItem)
   }
 
+  amountSpent = (item) => {
+    const expenses = where(this.props.budgetItemExpenses, {budget_item_id: item.id})
+    const spent = reduce(expenses, function(sum, n) {
+      return sum + parseFloat(n.amount);
+    }, 0);
+    return spent
+  }
+
   _renderBudgetItemRow = (budgetItem: object, sectionID: number, rowID: number) => {
+    const spent = this.amountSpent(budgetItem);
+    const remaining = parseFloat(budgetItem.amount_budgeted) - spent;
+    let remainingStyle = styles.red
+    if (remaining === 0) {
+      remainingStyle = styles.blue
+    } else if (remaining > 0) {
+      remainingStyle = styles.green
+    }
+
     return (
       <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
         <View>
@@ -234,15 +265,21 @@ class BudgetCategory extends Component {
             </View>
             <View style={styles.right}>
               <View style={styles.paid}>
+                <Text style={{fontWeight: 'bold'}}>Budgeted: </Text>
+                <Text style={styles.subTitle}>
+                  {numberToCurrency(budgetItem.amount_budgeted)}
+                </Text>
+              </View>
+              <View style={styles.paid}>
                 <Text style={{fontWeight: 'bold'}}>Spent: </Text>
                 <Text style={styles.subTitle}>
-                  {numberToCurrency(budgetItem.amount_spent)}
+                  {numberToCurrency(spent)}
                 </Text>
               </View>
               <View style={styles.paid}>
                 <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
-                <Text style={styles.subTitle}>
-                  {numberToCurrency(budgetItem.amount_remaining)}
+                <Text style={[styles.subTitle, remainingStyle]}>
+                  {numberToCurrency(remaining)}
                 </Text>
               </View>
             </View>

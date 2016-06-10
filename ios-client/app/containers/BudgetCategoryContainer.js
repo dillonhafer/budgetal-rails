@@ -10,9 +10,10 @@ const mapStateToProps = (state) => {
 	let budgetCategory = (state.budgetState.budgetCategory && navCategory && state.budgetState.budgetCategory.id === navCategory.id) ? state.budgetState.budgetCategory : navCategory;
 	let budgetDate = state.budgetState.budgetDate;
 	let budgetItems = state.budgetState.budgetItems;
+	let budgetItemExpenses = state.budgetState.budgetItemExpenses;
 
 	return {
-		budgetCategory, budgetItems, budgetDate,
+		budgetCategory, budgetItems, budgetDate, budgetItemExpenses,
 		scrollsToTop: state.navigationState.index === 1
 	}
 }
