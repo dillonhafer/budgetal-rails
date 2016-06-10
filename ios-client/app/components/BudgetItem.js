@@ -196,7 +196,7 @@ class BudgetItem extends Component {
   }
 
   separator(sectionID, rowID) {
-    return <View key={`expense-${rowID}`} style={styles.separator} />
+    return <View key={`expense-${sectionID}-${rowID}`} style={styles.separator} />
   }
 
   renderSectionHeader(sectionData: string, sectionID: string) {
