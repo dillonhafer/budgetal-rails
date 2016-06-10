@@ -265,6 +265,7 @@ class BudgetCategory extends Component {
         </View>
         <ListView style={styles.list}
                   enableEmptySections={true}
+                  scrollsToTop={this.props.scrollsToTop}
                   automaticallyAdjustContentInsets={false}
                   dataSource={budgetItems}
                   renderRow={this._renderBudgetItemRow}

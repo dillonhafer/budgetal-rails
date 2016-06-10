@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
 	const budgetItemExpenses = where(state.budgetState.budgetItemExpenses, {budget_item_id: id});
 	return {
 		budgetItem,
-		budgetItemExpenses
+		budgetItemExpenses,
+		scrollsToTop: state.navigationState.index === 2
 	}
 }
 

@@ -9,7 +9,8 @@ const mapStateToProps = (state) => {
 		budget: state.budgetState.budget,
 		budgetCategories: state.budgetState.budgetCategories,
 		budgetItems: state.budgetState.budgetCategories,
-		budgetDate: state.budgetState.budgetDate
+		budgetDate: state.budgetState.budgetDate,
+		scrollsToTop: state.navigationState.index === 0
 	}
 }
 

@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
 	let budgetItems = state.budgetState.budgetItems;
 
 	return {
-		budgetCategory, budgetItems, budgetDate
+		budgetCategory, budgetItems, budgetDate,
+		scrollsToTop: state.navigationState.index === 1
 	}
 }
 

@@ -229,7 +229,6 @@ class BudgetItem extends Component {
 
     const dataBlob = groupBy(this.props.budgetItemExpenses, 'date')
     const budgetItemExpenses = ds.cloneWithRowsAndSections(dataBlob);
-
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -237,6 +236,7 @@ class BudgetItem extends Component {
         </View>
 
         <ListView style={styles.list}
+                  scrollsToTop={this.props.scrollsToTop}
                   enableEmptySections={true}
                   automaticallyAdjustContentInsets={false}
                   dataSource={budgetItemExpenses}
