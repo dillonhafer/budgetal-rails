@@ -8,7 +8,11 @@ import {
   View
 } from 'react-native'
 
+import {groupBy} from 'lodash-node'
 import {BLUE,RED,GRAY_BORDER,GRAY_BACKGROUND,GRAY_SEPARATOR,GRAY,WHITE,DARK_TITLE} from '../constants/Colors'
+import {numberToCurrency} from '../Utils/ViewHelpers'
+import {confirm}   from '../Utils/window';
+import {deleteItemExpense} from '../Data/budgetItemExpense'
 
 const styles = StyleSheet.create({
   addButtonContainer: {
@@ -31,7 +35,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 18,
-    color: '#555',
+    color: DARK_TITLE,
     fontWeight: 'bold',
     padding: 20,
     textAlign: 'center'
@@ -40,86 +44,51 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE
   },
-  icon: {
-    width: 24,
-    height: 24,
-    marginTop: 4
-  },
-  instructions: {
-    textAlign: 'left',
-    marginBottom: 5,
-    textDecorationLine: 'underline',
-    textDecorationStyle: 'solid',
-  },
   list: {
     backgroundColor: WHITE,
     flex: 1
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 10,
-    marginTop: 0,
-    height: 110,
-    backgroundColor: WHITE,
-  },
-  right: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    width: 100,
-    paddingRight: 14
-  },
-  paid: {
-    flexDirection: 'row',
+  expenseRow: {
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 15,
   },
-  text: {
-    flexDirection: 'row'
+  title: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: DARK_TITLE,
+    fontWeight: 'bold',
+    padding: 8
   },
-  column: {
-    justifyContent: 'center',
-    alignItems: 'center'
+  amount: {
+    padding: 8,
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: GRAY,
   },
   separator: {
     height: 1,
-    backgroundColor: '#CCC',
-  },
-  rightYear: {
-    alignItems: 'flex-end'
-  },
-  leftYear: {
-    textAlign: 'left',
-  },
-  logo: {
-    height: 64,
-    width: 64,
-    marginLeft: 20
-  },
-  title: {
-    fontSize: 18,
-    color: '#555',
-    fontWeight: 'bold',
-    padding: 4
+    backgroundColor: GRAY_SEPARATOR,
   },
   header: {
     padding: 10,
     flexDirection: 'row',
-    backgroundColor: '#EEE',
+    backgroundColor: GRAY_BACKGROUND,
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 0.5,
     borderColor: WHITE,
-    borderBottomColor: '#DDD'
+    borderBottomColor: GRAY_BORDER
   },
   headerText: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: 'gray',
+    color: GRAY,
     marginTop: 4
   },
-
   crudContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -150,12 +119,20 @@ const styles = StyleSheet.create({
     color: RED,
     textAlign: 'center',
   },
-
+  section: {
+    backgroundColor: GRAY_BACKGROUND,
+    padding: 5,
+    paddingLeft: 10,
+    borderBottomWidth: 0.5,
+    borderBottomColor: GRAY_BORDER,
+    borderTopWidth: 0.5,
+    borderTopColor: GRAY_BORDER,
+  },
+  sectionTitle: {
+    color: GRAY,
+    fontWeight: '900',
+  }
 });
-
-var h = require('../Utils/ViewHelpers');
-import {alert, confirm}   from '../Utils/window';
-import {deleteItemExpense} from '../Data/budgetItemExpense'
 
 class BudgetItem extends Component {
   constructor(props) {
@@ -164,7 +141,7 @@ class BudgetItem extends Component {
 
   addButton = () => {
     const budget_item_id = this.props.budgetItem ? this.props.budgetItem.id : 0;
-    let budgetItemExpense = {budget_item_id};
+    const budgetItemExpense = {budget_item_id};
     return (
       <View style={styles.addButtonContainer}>
         <TouchableOpacity onPress={this.props.addBudgetItemExpense.bind(this,budgetItemExpense)}>
@@ -198,7 +175,7 @@ class BudgetItem extends Component {
 
   deleteExpense = async(expense) => {
     try {
-      let resp = await deleteItemExpense(expense.id);
+      const resp = await deleteItemExpense(expense.id);
       if (resp.success) {
         this.props.deleteBudgetItemExpense(expense);
       }
@@ -209,37 +186,49 @@ class BudgetItem extends Component {
 
   _renderExpenseRow = (expense, sectionID, rowID) => {
     return (
-        <View key={rowID}>
-          <View style={styles.row}>
-            <View style={styles.column}>
-              <Text style={styles.title}>
-                {expense.name}
-              </Text>
-            </View>
-            <View style={styles.right}>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Date: </Text>
-                <Text style={styles.subTitle}>
-                  {expense.date}
-                </Text>
-              </View>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Spent: </Text>
-                <Text style={styles.subTitle}>
-                  {h.numberToCurrency(expense.amount)}
-                </Text>
-              </View>
-            </View>
-          </View>
-          {this.crudButtons(expense)}
-          <View style={styles.separator} />
+      <View key={rowID}>
+        <View style={styles.expenseRow}>
+          <Text style={styles.title}>{expense.name}</Text>
+          <Text style={styles.amount}>{numberToCurrency(expense.amount)}</Text>
         </View>
+        {this.crudButtons(expense)}
+      </View>
     );
   }
 
+  separator(sectionID, rowID) {
+    return <View key={`expense-${rowID}`} style={styles.separator} />
+  }
+
+  renderSectionHeader(sectionData: string, sectionID: string) {
+    return (
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>
+          {sectionData.name}
+        </Text>
+      </View>
+    );
+  }
+
+  getSectionData(data, sectionId) {
+    const [y,m,d] = sectionId.split('-');
+    return {name: new Date(y,m-1,d,1,1,1,1).toDateString()};
+  }
+
+  getRowData(data, sectionId, rowId) {
+    return data[sectionId][rowId];
+  }
+
   render() {
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let budgetItemExpenses = ds.cloneWithRows(this.props.budgetItemExpenses);
+    const ds = new ListView.DataSource({
+      getRowData: this.getRowData,
+      getSectionHeaderData: this.getSectionData,
+      rowHasChanged: (row1, row2) => row1 !== row2,
+      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+    });
+
+    const dataBlob = groupBy(this.props.budgetItemExpenses, 'date')
+    const budgetItemExpenses = ds.cloneWithRowsAndSections(dataBlob);
 
     return (
       <View style={styles.container}>
@@ -252,7 +241,9 @@ class BudgetItem extends Component {
                   automaticallyAdjustContentInsets={false}
                   dataSource={budgetItemExpenses}
                   renderRow={this._renderExpenseRow}
-                  renderFooter={this.addButton} />
+                  renderSectionHeader={this.renderSectionHeader}
+                  renderFooter={this.addButton}
+                  renderSeparator={this.separator} />
       </View>
     )
   }
