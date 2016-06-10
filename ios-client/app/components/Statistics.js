@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {
-  StyleSheet,
   Text,
   View
 } from 'react-native'
@@ -10,12 +9,12 @@ import StatisticsRepo from '../Data/StatisticsRepository';
 import DateBar from './DateBar';
 import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
 import StatsBar from './StatsBar';
-import {WHITE} from '../constants/Colors';
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: WHITE,
+    backgroundColor: '$backgroundColor',
   },
 });
 

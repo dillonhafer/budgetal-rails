@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -12,19 +11,11 @@ import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
 import {updateItemExpense, createItemExpense} from '../Data/budgetItemExpense';
 import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
 
-import {
-  BLUE,
-  WHITE,
-  GRAY_BORDER,
-  MENU_BACKGROUND,
-  FORM_GRAY,
-  FORM_BACKGROUND,
-} from '../constants/Colors'
-
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: WHITE
+    backgroundColor: '$white'
   },
   right: {
     flex: 1,
@@ -42,7 +33,7 @@ const styles = StyleSheet.create({
   },
   inputRow: {
     flexDirection: 'row',
-    backgroundColor: WHITE,
+    backgroundColor: '$white',
     paddingLeft: 0,
     paddingRight: 10,
     paddingBottom: 0,
@@ -55,11 +46,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     marginBottom: 4,
-    color: MENU_BACKGROUND
+    color: '$menuBackground'
   },
   form: {
     paddingTop: 20,
-    backgroundColor: FORM_BACKGROUND
+    backgroundColor: '$formBackground'
   },
   dateField: {
     marginLeft: 0,
@@ -68,8 +59,8 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     padding: 0,
     height: 40,
-    borderColor: GRAY_BORDER,
-    backgroundColor: WHITE,
+    borderColor: '$grayBorder',
+    backgroundColor: '$white',
     borderWidth: 0,
     flex: 1,
     justifyContent: 'center',
@@ -78,18 +69,18 @@ const styles = StyleSheet.create({
   date: {
     textAlign: 'right',
     fontSize: 16,
-    color: FORM_GRAY,
+    color: '$formGray',
   },
   inputs: {
-    color: FORM_GRAY,
+    color: '$formGray',
     marginLeft: 0,
     marginRight: 0,
     marginTop: 0,
     marginBottom: 0,
     padding: 0,
     height: 40,
-    borderColor: GRAY_BORDER,
-    backgroundColor: WHITE,
+    borderColor: '$grayBorder',
+    backgroundColor: '$white',
     textAlign: 'right',
     borderWidth: 0,
   },
@@ -98,14 +89,14 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     textAlign: 'center',
-    backgroundColor: WHITE,
-    color: BLUE,
+    backgroundColor: '$white',
+    color: '$blue',
     margin: 0,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     height: 40,
-    borderColor: GRAY_BORDER,
+    borderColor: '$grayBorder',
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
@@ -229,7 +220,7 @@ class BudgetItemExpenseForm extends Component {
 
         <TouchableHighlight
           style={styles.saveButton}
-          underlayColor={BLUE}
+          underlayColor='#6699ff'
           onPress={this.saveExpense}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableHighlight>

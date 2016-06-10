@@ -1,7 +1,8 @@
 'use strict'
 
 import React, {PropTypes,Component} from 'react';
-import {AppState,NavigationExperimental, View, StyleSheet} from 'react-native';
+import {AppState,NavigationExperimental, View} from 'react-native';
+import StyleSheet from '../components/StyleSheet';
 import { connect } from 'react-redux';
 
 import SignInContainer from './SignInContainer';
@@ -21,7 +22,6 @@ import {setApiUrl} from '../Utils/api';
 import SideMenu from 'react-native-side-menu';
 import BackButton from '../components/BackButton';
 import { navigatePush, navigatePop } from '../actions';
-import {WHITE, BLUE, CLEAR} from '../constants/Colors';
 
 const {
 	AnimatedView: NavigationAnimatedView,
@@ -207,7 +207,7 @@ AppContainer.propTypes = {
 const styles = StyleSheet.create({
 	outerContainer: {
 		flex: 1,
-		backgroundColor: '#ffffff',
+		backgroundColor: '$backgroundColor',
 	},
 	visibleNav: {
 		paddingTop: NavigationHeader.HEIGHT,
@@ -216,15 +216,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
   navTitle: {
-    color: WHITE,
+    color: '$white',
   },
   hiddenNav: {
-    backgroundColor: CLEAR,
+    backgroundColor: '$clear',
     borderBottomWidth: 0,
   },
   navHeader: {
-    backgroundColor: BLUE,
-    borderBottomColor: BLUE,
+    backgroundColor: '$blue',
+    borderBottomColor: '$blue',
   },
 })
 
