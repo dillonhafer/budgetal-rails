@@ -2,14 +2,13 @@ import React, {Component} from 'react'
 import {
   Image,
   ListView,
-  StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View
 } from 'react-native'
 
-import {BLUE,RED,GRAY_BORDER,GRAY_BACKGROUND,GRAY_SEPARATOR,GRAY,WHITE,DARK_TITLE} from '../constants/Colors'
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   addButtonContainer: {
     paddingTop: 35,
@@ -18,20 +17,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addButton: {
-    color: BLUE,
+    color: '$blue',
     fontWeight: 'bold',
     fontSize: 15,
     textAlign: 'center',
     borderWidth: 2,
     borderRadius: 5,
-    borderColor: BLUE,
+    borderColor: '$blue',
     width: 180,
     padding: 4,
     paddingTop: 8
   },
   container: {
     flex: 1,
-    backgroundColor: WHITE,
+    backgroundColor: '$backgroundColor',
   },
   crudContainer: {
     flex: 1,
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 10,
-    backgroundColor: WHITE,
+    backgroundColor: '$backgroundColor',
   },
   button: {
     width: 100,
@@ -50,21 +49,21 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   editButton: {
-    borderColor: BLUE,
+    borderColor: '$blue',
   },
   editButtonText: {
-    color: BLUE,
+    color: '$blue',
     textAlign: 'center',
   },
   deleteButton: {
-    borderColor: RED,
+    borderColor: '$red',
   },
   deleteButtonText: {
-    color: RED,
+    color: '$red',
     textAlign: 'center',
   },
   list: {
-    backgroundColor: WHITE,
+    backgroundColor: '$backgroundColor',
     flex: 1
   },
   row: {
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 0,
     height: 110,
-    backgroundColor: WHITE,
+    backgroundColor: '$backgroundColor',
   },
   right: {
     flex: 1,
@@ -93,33 +92,33 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: GRAY_SEPARATOR,
+    backgroundColor: '$graySeparator',
     width: 400
   },
   title: {
     fontSize: 18,
-    color: DARK_TITLE,
+    color: '$darkTitle',
     fontWeight: 'bold',
     padding: 4
   },
   header: {
     padding: 10,
     flexDirection: 'row',
-    backgroundColor: GRAY_BACKGROUND,
+    backgroundColor: '$grayBackground',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 0.5,
-    borderColor: WHITE,
-    borderBottomColor: GRAY_BORDER
+    borderColor: '$backgroundColor',
+    borderBottomColor: '$grayBorder'
   },
   headerText: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: GRAY,
+    color: '$gray',
     marginTop: 4
   },
   empty: {
-    color: BLUE,
+    color: '$blue',
     fontWeight: 'bold',
     textAlign: 'center',
     width: 200,

@@ -4,11 +4,10 @@ import React, {
 
 import {
   Dimensions,
-  StyleSheet,
   View,
 } from 'react-native';
 
-import {MENU_BACKGROUND} from '../../constants/Colors';
+import StyleSheet from '../../components/StyleSheet';
 import AppImages from '../../../components/app_images';
 import MenuItem from './MenuItem';
 const {width,height} = Dimensions.get('window');
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width,
     paddingTop: 40,
-    backgroundColor: MENU_BACKGROUND,
+    backgroundColor: '$menuBackground',
     height: height,
   },
 });

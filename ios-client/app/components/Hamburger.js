@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Image, Text, TouchableOpacity, View, StyleSheet} from 'react-native'
+import {Image, Text, TouchableOpacity, View} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Hamburger extends Component {
@@ -14,6 +14,7 @@ class Hamburger extends Component {
   }
 }
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flex: 1,

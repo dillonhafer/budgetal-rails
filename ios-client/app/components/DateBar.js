@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {
-  StyleSheet,
   Text,
   TouchableHighlight,
   View
@@ -8,27 +7,27 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {monthName} from '../Utils/ViewHelpers';
-import {WHITE, GRAY_BACKGROUND, GRAY_BORDER, GRAY, CLEAR} from '../constants/Colors';
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: GRAY_BACKGROUND,
+    backgroundColor: '$grayBackground',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 0.5,
-    borderColor: WHITE,
-    borderBottomColor: GRAY_BORDER
+    borderColor: '$white',
+    borderBottomColor: '$grayBorder'
   },
   centerYear: {
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 18,
-    color: GRAY,
+    color: '$gray',
   },
   icon: {
     textAlign: 'center',
-    color: GRAY,
+    color: '$gray',
     fontSize: 24,
     width: 24,
     height: 24,
@@ -81,7 +80,7 @@ class DateBar extends Component {
     return (
       <View style={styles.container}>
         {this.previousYearButton(date)}
-        <TouchableHighlight underlayColor={CLEAR} onPress={this.props.toggleDatePicker}>
+        <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
           <Text style={styles.centerYear}>{this.menuDate(date)}</Text>
         </TouchableHighlight>
         {this.nextYearButton(date)}

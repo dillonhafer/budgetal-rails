@@ -3,7 +3,6 @@ import {
   ActivityIndicatorIOS,
   AsyncStorage,
   Image,
-  StyleSheet,
   Text,
   TextInput,
   TouchableHighlight,
@@ -12,7 +11,6 @@ import {
 
 import {saveTokens, signedIn} from '../Utils/api';
 import {signIn} from '../Data/sessions';
-import {WHITE, BLUE} from '../constants/Colors';
 
 const REMEMBER_EMAIL  = '@BudgetalRememberEmail:key';
 const REMEMBER_SWITCH = '@BudgetalRememberSwitch:key';
@@ -146,28 +144,29 @@ class SignIn extends Component {
   }
 }
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: BLUE,
+    backgroundColor: '$blue',
     borderRadius: 5,
     marginBottom: 10,
     padding: 10,
     justifyContent: 'center',
     height: 40,
     width: 240,
-    borderColor: WHITE,
+    borderColor: '$backgroundColor',
     borderWidth: 1,
     marginLeft: 40,
   },
   buttonText: {
     textAlign: 'center',
     fontWeight: 'bold',
-    color: WHITE,
+    color: '$backgroundColor',
   },
   container: {
     flex: 1,
     height: 568,
-    backgroundColor: BLUE,
+    backgroundColor: '$blue',
     paddingTop: 0,
   },
   inputs: {
@@ -176,8 +175,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     height: 40,
-    borderColor: WHITE,
-    backgroundColor: WHITE,
+    borderColor: '$backgroundColor',
+    backgroundColor: '$backgroundColor',
     borderWidth: 1,
     borderRadius: 5,
   },

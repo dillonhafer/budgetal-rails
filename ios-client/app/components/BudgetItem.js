@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {
   ListView,
-  StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
@@ -9,11 +8,11 @@ import {
 } from 'react-native'
 
 import {groupBy} from 'lodash-node'
-import {BLUE,RED,GRAY_BORDER,GRAY_BACKGROUND,GRAY_SEPARATOR,GRAY,WHITE,DARK_TITLE} from '../constants/Colors'
 import {numberToCurrency} from '../Utils/ViewHelpers'
 import {confirm}   from '../Utils/window';
 import {deleteItemExpense} from '../Data/budgetItemExpense'
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   addButtonContainer: {
     paddingTop: 35,
@@ -22,30 +21,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addButton: {
-    color: BLUE,
+    color: '$blue',
     fontWeight: 'bold',
     fontSize: 15,
     textAlign: 'center',
     borderWidth: 2,
     borderRadius: 5,
-    borderColor: BLUE,
+    borderColor: '$blue',
     width: 180,
     padding: 4,
     paddingTop: 8
   },
   header: {
     fontSize: 18,
-    color: DARK_TITLE,
+    color: '$darkTitle',
     fontWeight: 'bold',
     padding: 20,
     textAlign: 'center'
   },
   container: {
     flex: 1,
-    backgroundColor: WHITE
+    backgroundColor: '$white'
   },
   list: {
-    backgroundColor: WHITE,
+    backgroundColor: '$white',
     flex: 1
   },
   expenseRow: {
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 18,
-    color: DARK_TITLE,
+    color: '$darkTitle',
     fontWeight: 'bold',
     padding: 8
   },
@@ -67,26 +66,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: GRAY,
+    color: '$gray',
   },
   separator: {
     height: 1,
-    backgroundColor: GRAY_SEPARATOR,
+    backgroundColor: '$graySeparator',
   },
   header: {
     padding: 10,
     flexDirection: 'row',
-    backgroundColor: GRAY_BACKGROUND,
+    backgroundColor: '$grayBackground',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 0.5,
-    borderColor: WHITE,
-    borderBottomColor: GRAY_BORDER
+    borderColor: '$white',
+    borderBottomColor: '$grayBorder'
   },
   headerText: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: GRAY,
+    color: '$gray',
     marginTop: 4
   },
   crudContainer: {
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 10,
-    backgroundColor: WHITE,
+    backgroundColor: '$white',
   },
   button: {
     width: 100,
@@ -106,30 +105,30 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   editButton: {
-    borderColor: BLUE,
+    borderColor: '$blue',
   },
   editButtonText: {
-    color: BLUE,
+    color: '$blue',
     textAlign: 'center',
   },
   deleteButton: {
-    borderColor: RED,
+    borderColor: '$red',
   },
   deleteButtonText: {
-    color: RED,
+    color: '$red',
     textAlign: 'center',
   },
   section: {
-    backgroundColor: GRAY_BACKGROUND,
+    backgroundColor: '$grayBackground',
     padding: 5,
     paddingLeft: 10,
     borderBottomWidth: 0.5,
-    borderBottomColor: GRAY_BORDER,
+    borderBottomColor: '$grayBorder',
     borderTopWidth: 0.5,
-    borderTopColor: GRAY_BORDER,
+    borderTopColor: '$grayBorder',
   },
   sectionTitle: {
-    color: GRAY,
+    color: '$gray',
     fontWeight: '900',
   }
 });

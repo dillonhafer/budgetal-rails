@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {
   Image,
   ListView,
-  StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
@@ -14,14 +13,15 @@ import {findCategory} from '../Data/budget_category';
 import {numberToCurrency, categoryIcon} from '../Utils/ViewHelpers';
 import DateBar from './DateBar';
 import {find} from 'lodash-node';
+import StyleSheet from './StyleSheet';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '$backgroundColor',
   },
   list: {
-    backgroundColor: '#FFF',
+    backgroundColor: '$backgroundColor',
     flex: 1
   },
   row: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 0,
     height: 110,
-    backgroundColor: '#FFF',
+    backgroundColor: '$backgroundColor',
   },
   right: {
     flex: 1,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#CCC',
+    backgroundColor: '$graySeparator',
   },
   logo: {
     height: 64,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: '#555',
+    color: '$darkTitle',
     fontWeight: 'bold',
     padding: 4
   },

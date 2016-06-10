@@ -1,15 +1,14 @@
 import React, {Component} from 'react'
 import {
   Image,
-  StyleSheet,
   Text,
   View
 } from 'react-native'
 
 import {categoryIcon} from '../Utils/ViewHelpers';
 import {monthName} from '../Utils/ViewHelpers';
-import {WHITE} from '../constants/Colors';
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
     width: 24,
   },
   navTitle: {
-    color: WHITE,
+    color: '$white',
     fontWeight: '500',
     textAlign: 'center',
     fontSize: 18,

@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF'
+    backgroundColor: '$backgroundColor'
   },
   right: {
     flex: 1,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   paidSwitch: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '$backgroundColor',
     paddingLeft: 0,
     paddingRight: 10,
     paddingBottom: 0,
@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     marginBottom: 4,
-    color: '#333'
+    color: '$menuBackground'
   },
   form: {
     paddingTop: 20,
-    backgroundColor: '#E4E4E4'
+    backgroundColor: '$formBackground'
   },
   inputs: {
     marginLeft: 0,
@@ -54,15 +54,15 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     padding: 0,
     height: 40,
-    borderColor: '#DDD',
-    backgroundColor: 'white',
+    borderColor: '$grayBorder',
+    backgroundColor: '$backgroundColor',
     textAlign: 'right',
     borderWidth: 0,
   },
   saveButtonText: {
     textAlign: 'center',
-    backgroundColor: 'white',
-    color: '#6699FF',
+    backgroundColor: '$backgroundColor',
+    color: '$blue',
     marginTop: 40,
     marginLeft: 0,
     marginRight: 0,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     height: 40,
-    borderColor: '#DDD',
+    borderColor: '$grayBorder',
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },

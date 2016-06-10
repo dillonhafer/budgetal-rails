@@ -5,14 +5,12 @@ import React, {
 import {
   Dimensions,
   Image,
-  StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native';
 
-import {MENU_BACKGROUND,GRAY_BORDER,WHITE,MENU_BACKGROUND_DARK} from '../../constants/Colors';
-
+import StyleSheet from '../../components/StyleSheet';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -21,11 +19,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   separator: {
-    borderBottomColor: GRAY_BORDER,
+    borderBottomColor: '$grayBorder',
     borderBottomWidth: 0.5,
   },
   text: {
-    color: WHITE,
+    color: '$white',
     fontSize: 16,
   },
   image: {
@@ -45,7 +43,7 @@ class MenuItem extends Component {
   render() {
     return (
       <View>
-        <TouchableHighlight underlayColor={MENU_BACKGROUND_DARK} onPress={this.props.onPress}>
+        <TouchableHighlight underlayColor={'#222222'} onPress={this.props.onPress}>
           <View style={styles.container}>
             <Image source={this.props.image} style={styles.image} />
             <Text style={styles.text}>{this.props.text}</Text>
