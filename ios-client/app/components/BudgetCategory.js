@@ -211,11 +211,17 @@ class BudgetCategory extends Component {
   }
 
   _getEmptyMessage = () => {
+    const isDebts = (this.props.budgetCategory && this.props.budgetCategory.name === 'Debts')
     const isEmpty = this.props.budgetItems.length === 0;
-    const emptyMessage = "You haven't added any budget items yet";
+    let emptyMessage = "You haven't added any budget items yet";
+    if (isDebts)
+      emptyMessage += ", that's a good thing 😉";
+
     if (isEmpty)
       return (
-        <Text style={styles.empty}>{emptyMessage}</Text>
+        <View>
+          <Text style={styles.empty}>{emptyMessage}</Text>
+        </View>
       )
   }
 
