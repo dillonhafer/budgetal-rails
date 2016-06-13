@@ -8,6 +8,10 @@
   background: $primary-color;
   margin-bottom: 0;
 
+  &.expanded {
+    height: auto;
+  }
+
   .title-area {
     position: relative;
     margin: 0;

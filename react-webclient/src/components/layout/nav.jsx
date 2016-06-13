@@ -8,6 +8,9 @@ import SignInLink from '../sessions/sign-in-link';
 export default class Nav extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      menuOpen: false
+    }
   }
 
   static contextTypes = {
@@ -81,15 +84,21 @@ export default class Nav extends React.Component {
     }
   }
 
+  toggleMenu = () => {
+    this.setState({menuOpen: !this.state.menuOpen})
+  }
+
   render() {
     var signedIn = userAuthenticated();
+    const navClasses = (this.state.menuOpen) ? 'top-bar expanded' : 'top-bar';
+
     return (
-      <nav className="top-bar" data-topbar>
+      <nav className={navClasses} data-topbar>
         <ul className="title-area">
           <li className="name">
             <h1><Link to='/'><img src={logo} style={{width: '200px'}}/></Link></h1>
           </li>
-          <li className="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+          <li className="toggle-topbar menu-icon"><a href="#" onClick={this.toggleMenu}><span></span></a></li>
         </ul>
         <section className="top-bar-section">
           <ul className="left">
