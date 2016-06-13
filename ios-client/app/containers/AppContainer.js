@@ -95,7 +95,7 @@ class AppContainer extends Component {
 						style={this._cardStyles(props)}
 						// By default a user can swipe back to pop from the stack. Disable this for modals.
 						// Just like for style interpolators, returning undefined lets NavigationCard override it.
-						panHandlers={this._swipeBackScene(props.scene.navigationState.key) ? null : undefined}
+						panHandlers={this._swipeBackScene(props.scene.navigationState.key) ? undefined : null}
 						renderScene={this._renderScene}
 						key={props.scene.navigationState.key}
 					/>
@@ -117,8 +117,9 @@ class AppContainer extends Component {
 	}
 
 	_disableGestures(navState) {
+		const disabledScenes = ['SignIn', 'BudgetCategory', 'BudgetItem', 'BudgetItemForm','BudgetItemExpenseForm']
 		let child = navState.children[navState.index]
-		return child && child.key === 'SignIn';
+		return child && disabledScenes.includes(child.key);
 	}
 
 	_openMenu = () => {
@@ -168,8 +169,8 @@ class AppContainer extends Component {
   }
 
   _swipeBackScene(key) {
-    const backScenes = [];
-    return backScenes.includes(key);
+    const backScenes = ['BudgetCategory', 'BudgetItem'];
+    return key && backScenes.includes(key);
   }
 
   _horizontalScene(key) {
