@@ -1,15 +1,17 @@
 import React, {Component} from 'react'
 import {
+  LayoutAnimation,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native'
 
 import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
 import {updateItemExpense, createItemExpense} from '../Data/budgetItemExpense';
 import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
+import FormInput from './FormInput';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
@@ -71,19 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '$formGray',
   },
-  inputs: {
-    color: '$formGray',
-    marginLeft: 0,
-    marginRight: 0,
-    marginTop: 0,
-    marginBottom: 0,
-    padding: 0,
-    height: 40,
-    borderColor: '$grayBorder',
-    backgroundColor: '$white',
-    textAlign: 'right',
-    borderWidth: 0,
-  },
   saveButton: {
     marginTop: 40,
   },
@@ -100,6 +89,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
+  error: {
+    color: '$red',
+  }
 });
 
 class BudgetItemExpenseForm extends Component {
@@ -118,7 +110,6 @@ class BudgetItemExpenseForm extends Component {
   }
 
   saveExpense = async() => {
-    this.blurInputs();
     const budgetItemExpense = this.state.budgetItemExpense;
     let strategy = (budgetItemExpense.id === undefined) ? createItemExpense : updateItemExpense;
     let data = {budget_item_id: budgetItemExpense.budget_item_id, budget_item_expense: budgetItemExpense};
@@ -149,13 +140,7 @@ class BudgetItemExpenseForm extends Component {
     this.setState({budgetItemExpense: Object.assign({}, b, {date})});
   }
 
-  blurInputs = () => {
-    this.refs.name.blur();
-    this.refs.amount.blur();
-  }
-
   pickDate = () => {
-    this.blurInputs();
     this.setState({showDatePicker: !this.state.showDatePicker});
   }
 
@@ -171,38 +156,54 @@ class BudgetItemExpenseForm extends Component {
     return date
   }
 
+  _saveButton(valid) {
+    LayoutAnimation.easeInEaseOut();
+    if (valid) {
+      return (
+        <TouchableHighlight
+          style={styles.saveButton}
+          underlayColor={'#6699ff'}
+          onPress={this.saveExpense}>
+          <Text style={styles.saveButtonText}>Save</Text>
+        </TouchableHighlight>
+      )
+    }
+  }
+
+  updateAmount = (amount) => {
+    this.setState({budgetItemExpense: Object.assign({}, this.state.budgetItemExpense, {amount})})
+  }
+
+  _validForm(item) {
+    return (item.amount && item.amount.length) && (item.name && item.name.length)
+  }
+
   render() {
     let b = this.state.budgetItemExpense;
+    const validForm = this._validForm(b);
     return (
       <View style={[styles.container, styles.form]}>
         <Text style={styles.label}>Budget Item Expense</Text>
-        <View style={styles.inputRow}>
-          <View style={styles.column}>
-            <Text style={styles.label}>Name</Text>
-          </View>
-          <View style={styles.right}>
-            <TextInput style={styles.inputs} placeholder='(Life Insurrance)'
-                       autoCapitalize='words'
-                       ref='name'
-                       onFocus={this.inputFocus}
-                       onChangeText={(name)=> this.setState({budgetItemExpense: Object.assign({}, b, {name})})}
-                       defaultValue={b.name} />
-          </View>
-        </View>
 
-        <View style={styles.inputRow}>
-          <View style={styles.column}>
-            <Text style={styles.label}>Amount</Text>
-          </View>
-          <View style={styles.right}>
-            <TextInput style={styles.inputs} placeholder='($42.00)'
-                       keyboardType='decimal-pad'
-                       ref="amount"
-                       onFocus={this.inputFocus}
-                       onChangeText={(amount)=> this.setState({budgetItemExpense: Object.assign({}, b, {amount})})}
-                       defaultValue={b.amount} />
-          </View>
-        </View>
+        <FormInput placeholder='(Life Insurrance)'
+                   required={true}
+                   format='any'
+                   autoCapitalize='words'
+                   value={b.name}
+                   onChangeText={(name)=> this.setState({budgetItemExpense: Object.assign({}, b, {name})})}
+                   label='Name'
+                   defaultValue={b.name} />
+
+        <FormInput placeholder='($42.00)'
+                   required={true}
+                   format='number'
+                   ref='amount'
+                   keyboardType='numeric'
+                   autoCapitalize='words'
+                   value={b.amount}
+                   onChangeText={this.updateAmount}
+                   label='Amount'
+                   defaultValue={b.amount} />
 
         <View style={styles.inputRow}>
           <View style={styles.column}>
@@ -218,12 +219,7 @@ class BudgetItemExpenseForm extends Component {
           </View>
         </View>
 
-        <TouchableHighlight
-          style={styles.saveButton}
-          underlayColor='#6699ff'
-          onPress={this.saveExpense}>
-          <Text style={styles.saveButtonText}>Save</Text>
-        </TouchableHighlight>
+        {this._saveButton(validForm)}
 
         <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
                                  onDone={this.onDatePickerDone}
