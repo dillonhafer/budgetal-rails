@@ -5,7 +5,6 @@ import {
 } from 'react-native'
 import StyleSheet from './StyleSheet';
 
-const NavigationRootContainer = require('NavigationRootContainer');
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
@@ -39,7 +38,7 @@ class BackButton extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.onNavigate(NavigationRootContainer.getBackAction())}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => this.props.onNavigate({type: 'BackAction'})}>
         {this.buttonType(this.props.text)}
       </TouchableOpacity>
     )

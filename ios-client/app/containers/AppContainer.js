@@ -26,9 +26,8 @@ import { navigatePush, navigatePop } from '../actions';
 const {
 	AnimatedView: NavigationAnimatedView,
 	Card: NavigationCard,
-	Header: NavigationHeader,
-	RootContainer: NavigationRootContainer,
-} = NavigationExperimental
+	Header: NavigationHeader
+	} = NavigationExperimental
 
 class AppContainer extends Component {
 	setServer = async() => {
@@ -62,7 +61,7 @@ class AppContainer extends Component {
 		let { navigationState, onNavigate } = this.props
 
 		return (
-      // Note that we are not using a NavigationRootContainer here because Redux is handling
+      // Note that we are not using a 'BackAction' handling
       // the reduction of our state for us. Instead, we grab the navigationState we have in
       // our Redux store and pass it directly to the <NavigationAnimatedView />.
       <SideMenu openMenuOffset={265}
@@ -238,7 +237,7 @@ export default connect(
 			// Two types of actions are likely to be passed, both representing "back"
 			// style actions. Check if a type has been indicated, and try to match it.
 			if (action.type && (
-				action.type === NavigationRootContainer.getBackAction().type ||
+				action.type === 'BackAction' ||
 				action.type === NavigationCard.CardStackPanResponder.Actions.BACK.type)
 			) {
 				dispatch(navigatePop())
