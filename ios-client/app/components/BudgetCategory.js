@@ -269,32 +269,30 @@ class BudgetCategory extends Component {
 
     return (
       <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
-        <View>
-          <View style={styles.row}>
-            <View style={styles.itemTitle}>
-              <Text style={styles.title} numberOfLines={1}>
-                {budgetItem.name}
+        <View style={styles.row}>
+          <View style={styles.itemTitle}>
+            <Text style={styles.title} numberOfLines={1}>
+              {budgetItem.name}
+            </Text>
+          </View>
+          <View style={styles.numbersContainer}>
+            <View style={styles.paid}>
+              <Text style={{fontWeight: 'bold'}}>Budgeted: </Text>
+              <Text style={styles.subTitle}>
+                {numberToCurrency(budgetItem.amount_budgeted)}
               </Text>
             </View>
-            <View style={styles.numbersContainer}>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Budgeted: </Text>
-                <Text style={styles.subTitle}>
-                  {numberToCurrency(budgetItem.amount_budgeted)}
-                </Text>
-              </View>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Spent: </Text>
-                <Text style={styles.subTitle}>
-                  {numberToCurrency(spent)}
-                </Text>
-              </View>
-              <View style={styles.paid}>
-                <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
-                <Text style={[styles.subTitle, remainingStyle]}>
-                  {numberToCurrency(remaining)}
-                </Text>
-              </View>
+            <View style={styles.paid}>
+              <Text style={{fontWeight: 'bold'}}>Spent: </Text>
+              <Text style={styles.subTitle}>
+                {numberToCurrency(spent)}
+              </Text>
+            </View>
+            <View style={styles.paid}>
+              <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
+              <Text style={[styles.subTitle, remainingStyle]}>
+                {numberToCurrency(remaining)}
+              </Text>
             </View>
           </View>
         </View>
