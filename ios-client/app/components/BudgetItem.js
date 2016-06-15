@@ -187,12 +187,12 @@ class BudgetItem extends Component {
 
   _renderExpenseRow = (expense, sectionID, rowID) => {
     return (
-      <View key={rowID}>
+      <TouchableHighlight key={`expense-row-${sectionID}-${rowID}`}>
         <View style={styles.expenseRow}>
           <Text style={styles.title}>{expense.name}</Text>
           <Text style={styles.amount}>{numberToCurrency(expense.amount)}</Text>
         </View>
-      </View>
+      </TouchableHighlight>
     );
   }
 
