@@ -215,13 +215,9 @@ class BudgetItem extends Component {
     return {name: new Date(y,m-1,d,1,1,1,1).toDateString()};
   }
 
-  getRowData(data, sectionId, rowId) {
-    return data[sectionId][rowId];
-  }
-
   render() {
     let ds = new SwipeableListViewDataSource({
-      getRowData: this.getRowData,
+      getRowData: (data, sId, rId) => data[sId][rId],
       getSectionHeaderData: this.getSectionData,
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,

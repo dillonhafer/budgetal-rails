@@ -300,16 +300,12 @@ class BudgetCategory extends Component {
   }
 
   separator(sectionID, rowID) {
-    return <View key={`expense-${sectionID}-${rowID}`} style={styles.separator} />
-  }
-
-  getRowData(data, sectionId, rowId) {
-    return data[sectionId][rowId];
+    return <View key={`item-${sectionID}-${rowID}`} style={styles.separator} />
   }
 
   render() {
     let ds = new SwipeableListViewDataSource({
-      getRowData: this.getRowData,
+      getRowData: (data, sId, rId) => data[sId][rId],
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
