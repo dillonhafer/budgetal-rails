@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {
+  Dimensions,
   Image,
   ListView,
   Text,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+const {width} = Dimensions.get('window')
 const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
 import SwipeableListView from 'SwipeableListView';
 
@@ -80,21 +82,22 @@ const styles = StyleSheet.create({
     height: 110,
     backgroundColor: '$backgroundColor',
   },
-  right: {
+  numbersContainer: {
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    width: 100,
-    paddingRight: 14
+    width: width / 2,
+    paddingRight: 14,
   },
   paid: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  column: {
+  itemTitle: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: width / 2,
   },
   separator: {
     height: 1,
@@ -268,12 +271,12 @@ class BudgetCategory extends Component {
       <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
         <View>
           <View style={styles.row}>
-            <View style={styles.column}>
-              <Text style={styles.title}>
+            <View style={styles.itemTitle}>
+              <Text style={styles.title} numberOfLines={1}>
                 {budgetItem.name}
               </Text>
             </View>
-            <View style={styles.right}>
+            <View style={styles.numbersContainer}>
               <View style={styles.paid}>
                 <Text style={{fontWeight: 'bold'}}>Budgeted: </Text>
                 <Text style={styles.subTitle}>
