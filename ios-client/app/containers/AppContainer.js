@@ -24,7 +24,7 @@ import BackButton from '../components/BackButton';
 import { navigatePush, navigatePop } from '../actions';
 
 const {
-	AnimatedView: NavigationAnimatedView,
+	Transitioner: NavigationTransitioner,
 	Card: NavigationCard,
 	Header: NavigationHeader
 	} = NavigationExperimental
@@ -71,7 +71,7 @@ class AppContainer extends Component {
 								disableGestures={this._disableGestures(navigationState)}
                 edgeHitWidth={400}
                 menu={<MenuContainer />}>
-			<NavigationAnimatedView
+			<NavigationTransitioner
 				navigationState={navigationState}
 				style={styles.outerContainer}
 				onNavigate={onNavigate}
