@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
+import SwipeableListView from 'SwipeableListView';
 
 import {groupBy} from 'lodash-node'
 import {numberToCurrency} from '../Utils/ViewHelpers'
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   expenseRow: {
+    backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -92,30 +95,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 10,
-    backgroundColor: '$white',
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+    backgroundColor: '$grayBackground',
   },
   button: {
+    height: 106,
     width: 100,
-    borderWidth: 2,
-    borderRadius: 4,
-    padding: 4,
-    marginLeft: 10,
-    marginRight: 10,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   editButton: {
-    borderColor: '$blue',
+    backgroundColor: '$blue',
   },
   editButtonText: {
-    color: '$blue',
+    color: '$white',
     textAlign: 'center',
   },
   deleteButton: {
-    borderColor: '$red',
+    backgroundColor: '$red',
   },
   deleteButtonText: {
-    color: '$red',
+    color: '$white',
     textAlign: 'center',
   },
   section: {
@@ -157,7 +159,7 @@ class BudgetItem extends Component {
         <TouchableOpacity
           style={[styles.button, styles.editButton]}
           onPress={this.props.editBudgetItemExpense.bind(this,expense)}
-          underlayColor='#EEE' >
+          underlayColor='blue' >
           <Text style={styles.editButtonText}>Edit</Text>
         </TouchableOpacity>
         <TouchableHighlight
@@ -165,7 +167,7 @@ class BudgetItem extends Component {
           onPress={() => {
             confirm('Confirm Delete', confirmText, this.deleteExpense.bind(this, expense))
           }}
-          underlayColor='#EEE' >
+          underlayColor='red' >
           <Text style={styles.deleteButtonText}>Delete</Text>
         </TouchableHighlight>
       </View>
@@ -190,7 +192,6 @@ class BudgetItem extends Component {
           <Text style={styles.title}>{expense.name}</Text>
           <Text style={styles.amount}>{numberToCurrency(expense.amount)}</Text>
         </View>
-        {this.crudButtons(expense)}
       </View>
     );
   }
@@ -219,13 +220,12 @@ class BudgetItem extends Component {
   }
 
   render() {
-    const ds = new ListView.DataSource({
+    let ds = new SwipeableListViewDataSource({
       getRowData: this.getRowData,
       getSectionHeaderData: this.getSectionData,
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
-
     const dataBlob = groupBy(this.props.budgetItemExpenses, 'date')
     const budgetItemExpenses = ds.cloneWithRowsAndSections(dataBlob);
     return (
@@ -234,7 +234,10 @@ class BudgetItem extends Component {
           <Text style={styles.headerText}>Expenses</Text>
         </View>
 
-        <ListView style={styles.list}
+        <SwipeableListView style={styles.list}
+                  bounceFirstRowOnMount={true}
+                  maxSwipeDistance={200}
+                  renderQuickActions={this.crudButtons}
                   scrollsToTop={this.props.scrollsToTop}
                   enableEmptySections={true}
                   initialListSize={this.props.budgetItemExpenses.length+1}

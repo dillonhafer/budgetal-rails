@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
+import SwipeableListView from 'SwipeableListView';
 
 import {reduce,where} from 'lodash-node'
 
@@ -38,30 +40,32 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 10,
-    backgroundColor: '$backgroundColor',
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+    backgroundColor: '$grayBackground',
   },
   button: {
+    height: 110,
     width: 100,
-    borderWidth: 2,
-    borderRadius: 4,
-    padding: 4,
-    marginLeft: 10,
-    marginRight: 10,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
   editButton: {
+    borderWidth: 1,
     borderColor: '$blue',
+    backgroundColor: '$blue',
   },
   editButtonText: {
-    color: '$blue',
+    color: '$white',
     textAlign: 'center',
   },
   deleteButton: {
-    borderColor: '$red',
+    backgroundColor: '$red',
   },
   deleteButtonText: {
-    color: '$red',
+    color: '$white',
     textAlign: 'center',
   },
   list: {
@@ -290,29 +294,46 @@ class BudgetCategory extends Component {
               </View>
             </View>
           </View>
-          {this.crudButtons(budgetItem)}
-          <View style={styles.separator} />
         </View>
       </TouchableHighlight>
     );
   }
 
+  separator(sectionID, rowID) {
+    return <View key={`expense-${sectionID}-${rowID}`} style={styles.separator} />
+  }
+
+  getRowData(data, sectionId, rowId) {
+    return data[sectionId][rowId];
+  }
+
   render() {
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let budgetItems = ds.cloneWithRows(this.props.budgetItems)
+    let ds = new SwipeableListViewDataSource({
+      getRowData: this.getRowData,
+      rowHasChanged: (row1, row2) => row1 !== row2,
+      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+    });
+
+    const dataBlob = {'budget_items': this.props.budgetItems};
+    const budgetItems = ds.cloneWithRowsAndSections(dataBlob);
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Budget Items</Text>
         </View>
-        <ListView style={styles.list}
+        <SwipeableListView style={styles.list}
+                  bounceFirstRowOnMount={true}
+                  maxSwipeDistance={200}
+                  renderQuickActions={this.crudButtons}
                   enableEmptySections={true}
                   initialListSize={this.props.budgetItems.length+1}
                   scrollsToTop={this.props.scrollsToTop}
                   automaticallyAdjustContentInsets={false}
                   dataSource={budgetItems}
                   renderRow={this._renderBudgetItemRow}
-                  renderFooter={this.footerRow} />
+                  renderFooter={this.footerRow}
+                  renderSeparator={this.separator} />
       </View>
     );
   }
