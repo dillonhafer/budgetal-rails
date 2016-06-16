@@ -15,6 +15,7 @@ import MenuContainer from './MenuContainer';
 import Hamburger from '../components/Hamburger';
 import CategoryTitle from '../components/CategoryTitle';
 import StatisticsContainer from './StatisticsContainer';
+import AnnualBudgetsContainer from './AnnualBudgetsContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -195,6 +196,8 @@ class AppContainer extends Component {
 				return <BudgetItemFormContainer budgetItem={navigationState.budgetItem} />
 			case 'BudgetItemExpenseForm':
 				return <BudgetItemExpenseFormContainer budgetItemExpense={navigationState.budgetItemExpense} />
+			case 'AnnualBudgets':
+	      return <AnnualBudgetsContainer />
 		}
 	}
 }
