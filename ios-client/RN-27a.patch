@@ -171,8 +171,10 @@ const SwipeableRow = React.createClass({
   },
 
   _handlePanResponderMove(event: Object, gestureState: Object): void {
-    this.props.onSwipeStart();
-    this.state.currentLeft.setValue(this._previousLeft + gestureState.dx);
+    if (gestureState.dx < 1) {
+      this.props.onSwipeStart();
+      this.state.currentLeft.setValue(this._previousLeft + gestureState.dx);
+    }
   },
 
   _onPanResponderTerminationRequest(event: Object, gestureState: Object): boolean {
