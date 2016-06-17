@@ -23,8 +23,8 @@ var ViewHelpers = {
     return string.charAt(0).toUpperCase() + string.slice(1);
   },
   dueDate: function(date) {
-    date = new Date(date)
-    return date.toLocaleDateString();
+    const [y,m,d] = date.split('-');
+    return new Date(y,m-1,d).toLocaleDateString();
   },
   monthName: function(index) {
     var months = {
