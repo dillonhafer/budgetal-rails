@@ -14,7 +14,7 @@ EStyleSheet.build({
   grayBorder: '#dddddd',
   clear: 'transparent',
   darkBlue: '#1377ab',
-  green: '#73dd4d',
+  green: '#8daa37',
   red: '#ff3b30',
   menuBackground: '#333333',
   menuBackground_dark: '#222222',

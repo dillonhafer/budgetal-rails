@@ -15,6 +15,8 @@ import MenuContainer from './MenuContainer';
 import Hamburger from '../components/Hamburger';
 import CategoryTitle from '../components/CategoryTitle';
 import StatisticsContainer from './StatisticsContainer';
+import AnnualBudgetsContainer from './AnnualBudgetsContainer';
+import AnnualBudgetItemFormContainer from './AnnualBudgetItemFormContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -137,6 +139,7 @@ class AppContainer extends Component {
         return null
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
+			case 'AnnualBudgetItemForm':
 				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
       default:
 	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
@@ -149,6 +152,7 @@ class AppContainer extends Component {
 				return NavigationCard.CardStackStyleInterpolator.forVertical(props)
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
+			case 'AnnualBudgetItemForm':
 				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
 			default:
 				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
@@ -173,7 +177,7 @@ class AppContainer extends Component {
   }
 
   _horizontalScene(key) {
-    const horizontalScenes = ['SignIn', 'BudgetItemForm', 'BudgetItemExpenseForm'];
+    const horizontalScenes = ['SignIn', 'BudgetItemForm', 'BudgetItemExpenseForm', 'AnnualBudgetItemForm'];
     return horizontalScenes.includes(key);
   }
 
@@ -195,6 +199,10 @@ class AppContainer extends Component {
 				return <BudgetItemFormContainer budgetItem={navigationState.budgetItem} />
 			case 'BudgetItemExpenseForm':
 				return <BudgetItemExpenseFormContainer budgetItemExpense={navigationState.budgetItemExpense} />
+			case 'AnnualBudgets':
+	      return <AnnualBudgetsContainer />
+			case 'AnnualBudgetItemForm':
+				return <AnnualBudgetItemFormContainer budgetItem={navigationState.budgetItem} />
 		}
 	}
 }

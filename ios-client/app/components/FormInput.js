@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {
+  Switch,
   Text,
   TextInput,
   TouchableOpacity,
@@ -47,8 +48,15 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: '$grayBorder',
     backgroundColor: '$white',
-    textAlign: 'right',
     borderWidth: 0,
+  },
+  textField: {
+    textAlign: 'right',
+  },
+  paidField: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   error: {
     color: '$red',
@@ -57,21 +65,53 @@ const styles = StyleSheet.create({
 
 class FormInput extends Component {
   validateRequired = (value='') => {
-    return value.trim().length
+    if (this.props.required) {
+      return value.trim().length
+    } else {
+      return true
+    }
   }
 
   format(format='', value='') {
     switch(format) {
+      case 'switch':
+        return value;
       case 'number':
-        return value.replace(/[^\d*\.\d{2}]/g, '')
+        return value.replace(/[^\d*\.\d{2}]/g, '');
       default:
-        return String(value)
+        return String(value);
     }
   }
 
   onChangeText = (value) => {
     const formattedValue = this.format(this.props.format, value);
     this.props.onChangeText(formattedValue);
+  }
+
+  textInput = () => {
+    return (
+      <TextInput {...this.props}
+               onChangeText={this.onChangeText}
+               selectionColor='#6699FF'
+               style={[styles.inputs, styles.textField]} />
+    );
+  }
+
+  switchInput = () => {
+    return (
+      <View style={[styles.inputs, styles.paidField]}>
+        <Switch {...this.props} onTintColor={'#6699ff'} />
+      </View>
+    )
+  }
+
+  _getInputType(type) {
+    switch (type) {
+      case 'switch':
+        return this.switchInput();
+      default:
+        return this.textInput();
+    }
   }
 
   render() {
@@ -84,10 +124,7 @@ class FormInput extends Component {
           <Text style={[styles.label,validStyles]}>{this.props.label}</Text>
         </View>
         <View style={styles.right}>
-          <TextInput {...this.props}
-                     onChangeText={this.onChangeText}
-                     selectionColor='#6699FF'
-                     style={styles.inputs} />
+          {this._getInputType(this.props.inputType)}
         </View>
       </View>
     )
