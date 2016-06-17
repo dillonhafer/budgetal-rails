@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import StyleSheet from './StyleSheet';
-import AppImages from '../../components/app_images';
+import AppImages from '../../images/AppImages';
 import MenuItem from './MenuItem';
 const {width,height} = Dimensions.get('window');
 
