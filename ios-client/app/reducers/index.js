@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 
-import navigationState from './reducers/Navigation'
-import annualBudgetState from './reducers/AnnualBudgets'
-import budgetState from './reducers/Budgets'
+import navigationState from './Navigation'
+import annualBudgetState from './AnnualBudgets'
+import budgetState from './Budgets'
 
 const appReducers = combineReducers({
 	navigationState,
