@@ -6,14 +6,38 @@ var {
   Image,
   LinkingIOS,
   Text,
+  StyleSheet,
   TextInput,
   TouchableHighlight,
   View
 } = React;
 
-var styles = require("./styles");
 import {AsyncStorage} from 'react-native';
 const USER_KEY = '@BudgetalUserKey:user';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingTop: 40,
+  },
+  instructions: {
+    textAlign: 'left',
+    color: '#333',
+    marginBottom: 5,
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+  },
+  base64: {
+    borderRadius: 75,
+    height: 150,
+    width: 150,
+    borderColor: '#69F',
+    borderWidth: 3,
+    resizeMode: 'contain'
+  }
+});
 
 var MyAccount = React.createClass({
   getInitialState: function() {
