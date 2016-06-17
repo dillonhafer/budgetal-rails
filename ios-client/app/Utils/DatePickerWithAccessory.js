@@ -3,8 +3,7 @@ import {
   DatePickerIOS,
   Dimensions,
   LayoutAnimation,
-  PickerIOS,
-  PickerItemIOS,
+  Picker,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -55,6 +54,10 @@ class DatePickerWithAccessory extends Component {
     return years;
   }
 
+  _getPickerItems(years) {
+    return years.map((year) => (<Picker.Item key={year} value={year} label={year} />))
+  }
+
   _renderYear = () => {
     const years = this._getYears(this.props.beginningYear, this.props.endingYear);
 
@@ -65,13 +68,11 @@ class DatePickerWithAccessory extends Component {
             <Text style={styles.doneText}>Done</Text>
           </TouchableHighlight>
         </View>
-        <PickerIOS selectedValue={String(this.props.year)}
+        <Picker selectedValue={String(this.props.year)}
                    itemStyle={{textAlign: 'center'}}
                    onValueChange={this.props.onDateChange}>
-          {years.map((year) => (
-            <PickerItemIOS key={year} value={year} label={year} />
-          ))}
-        </PickerIOS>
+          {this._getPickerItems(years)}
+        </Picker>
       </View>
     );
   }
@@ -79,9 +80,10 @@ class DatePickerWithAccessory extends Component {
   render() {
     switch (this.props.type) {
       case 'year':
-        return this._renderYear()
+        return this._renderYear();
+        break;
       default:
-        return this._renderDate()
+        return this._renderDate();
     }
   }
 }
