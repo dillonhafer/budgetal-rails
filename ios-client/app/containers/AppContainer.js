@@ -29,7 +29,7 @@ const {
 	Transitioner: NavigationTransitioner,
 	Card: NavigationCard,
 	Header: NavigationHeader
-	} = NavigationExperimental
+} = NavigationExperimental
 
 class AppContainer extends Component {
 	setServer = async() => {
