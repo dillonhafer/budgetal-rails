@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {PropTypes,Component} from 'react';
-import {AppState,NavigationExperimental, View} from 'react-native';
+import {AppState,NavigationExperimental,Text, View} from 'react-native';
 import StyleSheet from '../components/StyleSheet';
 import { connect } from 'react-redux';
 
@@ -13,7 +13,7 @@ import BudgetItemContainer from './BudgetItemContainer';
 import BudgetItemExpenseFormContainer from './BudgetItemExpenseFormContainer';
 import MenuContainer from './MenuContainer';
 import Hamburger from '../components/Hamburger';
-import CategoryTitle from '../components/CategoryTitle';
+import NavigationTitle from '../components/NavigationTitle';
 import StatisticsContainer from './StatisticsContainer';
 import AnnualBudgetsContainer from './AnnualBudgetsContainer';
 import AnnualBudgetItemFormContainer from './AnnualBudgetItemFormContainer';
@@ -108,13 +108,8 @@ class AppContainer extends Component {
 
 	_renderTitle(props) {
 		const title = props.scene.navigationState.title
-
-		switch (props.scene.navigationState.key) {
-			case 'BudgetCategory':
-				return <CategoryTitle title={title} />
-			default:
-				return <NavigationHeader.Title textStyle={styles.navTitle}>{title}</NavigationHeader.Title>
-		}
+		const isIcon = props.scene.navigationState.key === 'BudgetCategory'
+		return <NavigationTitle title={title} categoryIcon={isIcon} />
 	}
 
 	_disableGestures(navState) {

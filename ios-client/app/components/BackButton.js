@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 15,
+    width: 60,
   },
   icon: {
     textAlign: 'left',
