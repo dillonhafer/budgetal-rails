@@ -163,13 +163,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  paidLabel: {
+    backgroundColor: '$green',
+    right: 10,
+    position: 'absolute',
+    color: 'white',
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontWeight: 'bold'
+  },
 });
 
 import {all} from '../Data/AnnualBudgets';
 import {assign, findIndex} from 'lodash-node';
 import {alert, confirm}   from '../Utils/window';
 import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
-import {destroyItem}      from '../Data/budget_item';
+import {deleteItem} from '../Data/AnnualBudgets';
 import {capitalize, numberToCurrency, dueDate} from '../Utils/ViewHelpers';
 
 class AnnualBudget extends Component {
@@ -219,7 +229,7 @@ class AnnualBudget extends Component {
 
   deleteItem = async(item) => {
     try {
-      let resp = await destroyItem(item.id);
+      let resp = await deleteItem(item.id);
       if (resp.success) {
         this.props.deleteBudgetItem(item);
       }
@@ -233,8 +243,9 @@ class AnnualBudget extends Component {
   }
 
   footerRow = () => {
-    const annual_budget_id = this.props.annualBudget ? this.props.annualBudget.id : 0;
+    const annual_budget_id = this.props.budget ? this.props.budget.id : 0;
     const newBudgetItem = {annual_budget_id};
+
     return (
       <View style={styles.addButtonContainer}>
         {this._getEmptyMessage()}
@@ -257,7 +268,7 @@ class AnnualBudget extends Component {
               {numberToCurrency(budgetItem.amount)} on {dueDate(budgetItem.due_date)}
             </Text>
             <Text style={styles.amountMonth}>
-              {numberToCurrency(budgetItem.amount / 12)}/month
+              {numberToCurrency((budgetItem.amount / 12).toFixed())}/month
             </Text>
           </View>
           <View style={styles.right}>
@@ -295,30 +306,6 @@ class AnnualBudget extends Component {
     this._updateBudget(year)
   }
 
-  nextYearButton() {
-    var shouldDisplay = this.state.year < (new Date).getFullYear()+2;
-    var yearFunction = shouldDisplay ? this.nextYear : null;
-    var color = shouldDisplay ? 'gray' : 'transparent';
-    return (<TouchableHighlight
-              style={[styles.rightYear]}
-              underlayColor='transparent'
-              onPress={yearFunction}>
-              <Icon name="chevron-right" size={24} color={color} style={styles.icon} />
-            </TouchableHighlight>);
-  }
-
-  previousYearButton() {
-    var shouldDisplay = this.state.year > 2015;
-    var yearFunction = shouldDisplay ? this.previousYear : null;
-    var color = shouldDisplay ? 'gray' : 'transparent';
-    return (<TouchableHighlight
-              style={[styles.leftYear]}
-              underlayColor='transparent'
-              onPress={yearFunction}>
-              <Icon name="chevron-left" size={24} color={color} style={styles.icon} />
-            </TouchableHighlight>);
-  }
-
   render() {
     let ds = new SwipeableListViewDataSource({
       getRowData: (data, sId, rId) => data[sId][rId],
@@ -347,6 +334,7 @@ class AnnualBudget extends Component {
                   renderRow={this._renderRow}
                   renderFooter={this.footerRow}
                   renderSeparator={this.separator} />
+
         <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
                                  onDone={this.toggleDatePicker}
                                  type='year'

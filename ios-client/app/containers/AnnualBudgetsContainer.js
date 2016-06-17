@@ -2,14 +2,15 @@ import { connect } from 'react-redux'
 
 import AnnualBudget from '../components/AnnualBudget'
 import { navigatePush } from '../actions'
-import { updateBudget, updateBudgetYear, updateAnnualBudgetItem, deleteAnnualBudgetItem } from '../annualBudgetActions'
+import { updateBudget, updateBudgetYear, deleteAnnualBudgetItem } from '../annualBudgetActions'
 
 const mapStateToProps = (state) => {
 	let year = state.annualBudgetState.year;
+	let budget = state.annualBudgetState.budget;
 	let budgetItems = state.annualBudgetState.budgetItems;
 
 	return {
-		budgetItems, year,
+		budget, budgetItems, year,
 		scrollsToTop: state.navigationState.index === 0
 	}
 }
@@ -19,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     signOut: (r) => {
 		},
 		addBudgetItem: (budgetItem) => {
-			dispatch(navigatePush({key: 'AnnualBudgetItemForm', title: 'New Annual Budget Item', budgetItem}))
+			dispatch(navigatePush({key: 'AnnualBudgetItemForm', title: 'New Budget Item', budgetItem}))
 		},
 		editBudgetItem: (budgetItem) => {
 			dispatch(navigatePush({key: 'AnnualBudgetItemForm', title: `Edit ${budgetItem.name}`, budgetItem}))
