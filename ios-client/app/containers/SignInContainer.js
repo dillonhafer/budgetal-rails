@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onSignIn: () => {
-			dispatch(navigateReset([{key: 'AnnualBudgets', title: 'Annual Budgets'}],0))
+			dispatch(navigateReset([{key: 'Budgets', title: 'Budgets'}],0))
 		}
 	}
 }
