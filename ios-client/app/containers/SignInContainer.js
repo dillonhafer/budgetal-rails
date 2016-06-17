@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import SignIn from '../components/SignIn'
-import { navigateReset, navigatePush } from '../actions'
+import { navigateReset, navigatePush } from '../actions/Navigation'
 
 
 const mapStateToProps = (state) => {

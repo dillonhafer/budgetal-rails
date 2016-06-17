@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import BudgetItem from '../components/BudgetItem'
-import { navigatePush, navigateReset } from '../actions'
-import { deleteBudgetItemExpense } from '../budgetActions'
+import { navigatePush, navigateReset } from '../actions/Navigation'
+import { deleteBudgetItemExpense } from '../actions/Budgets'
 import {find, where} from 'lodash-node'
 
 const mapStateToProps = (state) => {

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import BudgetCategory from '../components/BudgetCategory'
-import { navigatePush, navigateReset } from '../actions'
-import { updateBudgetCategory, deleteBudgetItem } from '../budgetActions'
+import { navigatePush, navigateReset } from '../actions/Navigation'
+import { updateBudgetCategory, deleteBudgetItem } from '../actions/Budgets'
 
 const mapStateToProps = (state) => {
 	let idx = state.navigationState.index;

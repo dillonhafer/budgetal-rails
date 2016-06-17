@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import AnnualBudgetItemForm from '../components/AnnualBudgetItemForm'
-import { navigatePop, navigatePush } from '../actions'
+import { navigatePop, navigatePush } from '../actions/Navigation'
 import { updateBudgetItem, addBudgetItem } from '../actions/AnnualBudgets'
 
 const mapStateToProps = (state) => {

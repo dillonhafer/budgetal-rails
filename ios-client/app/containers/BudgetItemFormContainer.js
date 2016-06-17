@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import BudgetItemForm from '../components/BudgetItemForm'
-import { navigatePop, navigatePush, navigateReset } from '../actions'
-import { updateBudgetItem, addBudgetItem } from '../budgetActions'
+import { navigatePop, navigatePush, navigateReset } from '../actions/Navigation'
+import { updateBudgetItem, addBudgetItem } from '../actions/Budgets'
 
 const mapStateToProps = (state) => {
 	let budgetItem = state.navigationState.children[state.navigationState.index].budgetItem;

@@ -23,7 +23,7 @@ import UserDefaults from 'react-native-userdefaults-ios';
 import {setApiUrl} from '../Utils/api';
 import SideMenu from 'react-native-side-menu';
 import BackButton from '../components/BackButton';
-import { navigatePush, navigatePop } from '../actions';
+import { navigatePush, navigatePop } from '../actions/Navigation';
 
 const {
 	Transitioner: NavigationTransitioner,
