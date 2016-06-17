@@ -9,7 +9,7 @@ import AppContainer from './containers/AppContainer'
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
 
-export default class App extends Component {
+export default class Budgetal extends Component {
 	render() {
 		return (
 			<Provider store={store}>

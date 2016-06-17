@@ -7,7 +7,7 @@ import {
   StatusBar
 } from 'react-native';
 
-import App from './app/budgetal';
+import Budgetal from './app/budgetal';
 
 StatusBar.setBarStyle('light-content', true);
-AppRegistry.registerComponent('Budgetal', () => App);
+AppRegistry.registerComponent('Budgetal', () => Budgetal);

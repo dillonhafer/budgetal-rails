@@ -1,7 +1,7 @@
 'use strict';
 
 import {alert} from './window';
-import AppImages from '../../images/AppImages';
+import AppImages from '../images/AppImages';
 
 var ViewHelpers = {
   showErrors(errors) {
