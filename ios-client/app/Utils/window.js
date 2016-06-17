@@ -1,10 +1,8 @@
-var React = require('react-native')
-
-var {
+import {
   AlertIOS,
   Alert,
   LinkingIOS
-} = React
+} from 'react-native'
 
 exports.alert = function (content) {
   AlertIOS.alert(content.title, content.message)
