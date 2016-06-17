@@ -1,10 +1,5 @@
 class AnnualBudgetsController < AuthenticatedController
-  def show
-    respond_to do |f|
-      f.html
-      f.json { respond_with annual_budget, include: :annual_budget_items }
-    end
-  end
+  helper_method :annual_budget
 
   private
 
