@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 
-import StyleSheet from '../../components/StyleSheet';
+import StyleSheet from './StyleSheet';
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import Menu from '../Views/Menu'
+import Menu from '../components/Menu'
 import { navigateReset, navigatePush } from '../actions/Navigation'
 import {endSession} from '../Data/sessions';
 import {alert} from '../Utils/window';
