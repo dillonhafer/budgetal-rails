@@ -5,6 +5,7 @@ import {
   ANNUAL_BUDGET_ITEM_UPDATED,
   ANNUAL_BUDGET_ITEM_DELETED,
 } from './annualBudgetActions'
+import {findIndex} from 'lodash-node'
 
 const initialAnnualBudgetState = {
 	key: 'AnnualBudgets',

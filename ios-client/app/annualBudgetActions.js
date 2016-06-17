@@ -38,7 +38,7 @@ export function updateBudgetItem(budgetItem) {
   }
 }
 
-export function deleteBudgetItem(budgetItem) {
+export function deleteAnnualBudgetItem(budgetItem) {
   return {
     type: ANNUAL_BUDGET_ITEM_DELETED,
     budgetItem
