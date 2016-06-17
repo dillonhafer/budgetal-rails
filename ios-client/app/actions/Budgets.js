@@ -1,22 +1,20 @@
+import {
+  BUDGET_UPDATED,
+  BUDGET_CATEGORY_UPDATED,
+  BUDGET_DATE_UPDATED,
+  BUDGET_ITEM_ADDED,
+  BUDGET_ITEM_UPDATED,
+  BUDGET_ITEM_DELETED,
+  BUDGET_ITEM_EXPENSE_ADDED,
+  BUDGET_ITEM_EXPENSE_UPDATED,
+  BUDGET_ITEM_EXPENSE_DELETED,
+} from '../constants/ActionTypes'
 import {flatten, map} from 'lodash-node'
 
-// *** Action Types ***
-export const BUDGET_UPDATED = 'BUDGET_UPDATED'
-export const BUDGET_CATEGORY_UPDATED = 'BUDGET_CATEGORY_UPDATED'
-export const BUDGET_DATE_UPDATED = 'BUDGET_DATE_UPDATED'
-export const BUDGET_ITEM_ADDED = 'BUDGET_ITEM_ADDED'
-export const BUDGET_ITEM_UPDATED = 'BUDGET_ITEM_UPDATED'
-export const BUDGET_ITEM_DELETED = 'BUDGET_ITEM_DELETED'
-export const BUDGET_ITEM_EXPENSE_ADDED = 'BUDGET_ITEM_EXPENSE_ADDED'
-export const BUDGET_ITEM_EXPENSE_UPDATED = 'BUDGET_ITEM_EXPENSE_UPDATED'
-export const BUDGET_ITEM_EXPENSE_DELETED = 'BUDGET_ITEM_EXPENSE_DELETED'
-
-
-// *** Action Creators ***
 export function updateBudget(budget) {
   return {
     type: BUDGET_UPDATED,
-    budgetDate: new Date(budget.year, budget.month-1,1,12,1,1,1),
+    budgetDate: new Date(budget.year, budget.month-1,1),
     budget,
   }
 }
@@ -58,7 +56,6 @@ export function deleteBudgetItem(budgetItem) {
     budgetItem
   }
 }
-
 
 // Expenses
 export function addBudgetItemExpense(budgetItemExpense) {
