@@ -4,7 +4,8 @@ import {
   ANNUAL_BUDGET_ITEM_ADDED,
   ANNUAL_BUDGET_ITEM_UPDATED,
   ANNUAL_BUDGET_ITEM_DELETED,
-} from './annualBudgetActions'
+} from '../constants/ActionTypes'
+
 import {findIndex} from 'lodash-node'
 
 const initialAnnualBudgetState = {

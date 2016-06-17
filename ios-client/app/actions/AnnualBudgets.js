@@ -1,13 +1,13 @@
+import {
+  ANNUAL_BUDGET_UPDATED,
+  ANNUAL_BUDGET_DATE_UPDATED,
+  ANNUAL_BUDGET_ITEM_ADDED,
+  ANNUAL_BUDGET_ITEM_UPDATED,
+  ANNUAL_BUDGET_ITEM_DELETED,
+} from '../constants/ActionTypes'
+
 import {flatten, map} from 'lodash-node'
 
-// *** Action Types ***
-export const ANNUAL_BUDGET_UPDATED = 'ANNUAL_BUDGET_UPDATED'
-export const ANNUAL_BUDGET_DATE_UPDATED = 'ANNUAL_BUDGET_DATE_UPDATED'
-export const ANNUAL_BUDGET_ITEM_ADDED = 'ANNUAL_BUDGET_ITEM_ADDED'
-export const ANNUAL_BUDGET_ITEM_UPDATED = 'ANNUAL_BUDGET_ITEM_UPDATED'
-export const ANNUAL_BUDGET_ITEM_DELETED = 'ANNUAL_BUDGET_ITEM_DELETED'
-
-// *** Action Creators ***
 export function updateBudget(budget) {
   return {
     type: ANNUAL_BUDGET_UPDATED,
@@ -23,7 +23,6 @@ export function updateBudgetYear(year) {
   }
 }
 
-// Items
 export function addBudgetItem(budgetItem) {
   return {
     type: ANNUAL_BUDGET_ITEM_ADDED,

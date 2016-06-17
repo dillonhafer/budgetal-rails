@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import AnnualBudgetItemForm from '../components/AnnualBudgetItemForm'
 import { navigatePop, navigatePush } from '../actions'
-import { updateBudgetItem, addBudgetItem } from '../annualBudgetActions'
+import { updateBudgetItem, addBudgetItem } from '../actions/AnnualBudgets'
 
 const mapStateToProps = (state) => {
 	let budgetItem = state.navigationState.children[state.navigationState.index].budgetItem;

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import AnnualBudget from '../components/AnnualBudget'
 import { navigatePush } from '../actions'
-import { updateBudget, updateBudgetYear, deleteAnnualBudgetItem } from '../annualBudgetActions'
+import { updateBudget, updateBudgetYear, deleteAnnualBudgetItem } from '../actions/AnnualBudgets'
 
 const mapStateToProps = (state) => {
 	let year = state.annualBudgetState.year;
