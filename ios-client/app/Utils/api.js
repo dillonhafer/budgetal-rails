@@ -1,15 +1,15 @@
-var React = require('react-native');
-var window = require('./window');
-
-var {
+import {
   AsyncStorage,
   StatusBar,
-} = React;
+} from 'react-native'
+import {alert} from './window';
 
-const AUTH_KEY    = '@BudgetalAuthKey:key';
-const AUTH_TOKEN  = '@BudgetalAuthToken:key';
-const USER_KEY    = '@BudgetalUserKey:user';
-const API_URL_KEY = '@BudgetalAPIURL:url';
+import {
+  AUTH_KEY,
+  AUTH_TOKEN,
+  USER_KEY,
+  API_URL_KEY,
+} from '../constants/StorageKeys'
 
 let Api = {
   getRequest(path) {
@@ -90,10 +90,10 @@ async function request(method, path, body) {
       headers['X-AUTHENTICATION-TOKEN'] = auth_tokens[1][1];
       fullPath = auth_tokens[2][1] + path;
     } else {
-      window.alert({title: 'nnoo', message: "You must sign in 9"})
+      alert({title: 'nnoo', message: "You must sign in 9"})
     }
   } catch (error) {
-    window.alert({title: 'no', message: "somthing went very wrong 9"})
+    alert({title: 'no', message: "somthing went very wrong 9"})
   }
 
   var req = {method, headers};
@@ -116,10 +116,10 @@ async function request(method, path, body) {
   .catch((r) => {
     StatusBar.setNetworkActivityIndicatorVisible(false);
     if (r.message === "You must sign in or up before continuing") {
-      window.alert({title: 'Sign In', message: r.message});
+      alert({title: 'Sign In', message: r.message});
       throw('unauthorized')
     } else {
-      window.alert({title: 'maint', message: "We are performing maintenance right now. We will be done shortly."})
+      alert({title: 'maint', message: "We are performing maintenance right now. We will be done shortly."})
       throw('maintenance')
     }
   })

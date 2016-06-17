@@ -11,9 +11,7 @@ import {
 
 import {saveTokens, signedIn} from '../Utils/api';
 import {signIn} from '../Data/sessions';
-
-const REMEMBER_EMAIL  = '@BudgetalRememberEmail:key';
-const REMEMBER_SWITCH = '@BudgetalRememberSwitch:key';
+import {REMEMBER_EMAIL, REMEMBER_SWITCH} from '../constants/StorageKeys'
 const window = require('../Utils/window');
 let _isMounted = false;
 
