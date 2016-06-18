@@ -15,6 +15,13 @@ import SwipeableListView from 'SwipeableListView';
 import DateBar from './DateBar';
 import {reduce,where} from 'lodash-node'
 
+import {all} from '../data/AnnualBudgets';
+import {assign, findIndex} from 'lodash-node';
+import {alert, confirm}   from '../utils/window';
+import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
+import {deleteItem} from '../data/AnnualBudgets';
+import {numberToCurrency, dueDate} from '../utils/ViewHelpers';
+
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   addButtonContainer: {
@@ -175,13 +182,6 @@ const styles = StyleSheet.create({
   },
 });
 
-import {all} from '../data/AnnualBudgets';
-import {assign, findIndex} from 'lodash-node';
-import {alert, confirm}   from '../utils/window';
-import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
-import {deleteItem} from '../data/AnnualBudgets';
-import {capitalize, numberToCurrency, dueDate} from '../utils/ViewHelpers';
-
 class AnnualBudget extends Component {
   constructor(props) {
     super(props);
@@ -262,7 +262,7 @@ class AnnualBudget extends Component {
         <View style={styles.row}>
           <View style={styles.itemInfo}>
             <Text style={styles.title}>
-              {capitalize(budgetItem.name)}
+              {budgetItem.name}
             </Text>
             <Text style={styles.amount}>
               {numberToCurrency(budgetItem.amount)} on {dueDate(budgetItem.due_date)}

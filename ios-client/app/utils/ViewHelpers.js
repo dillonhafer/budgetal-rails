@@ -2,13 +2,14 @@
 
 import {alert} from './window';
 import AppImages from '../images/AppImages';
+import {keys,startCase} from 'lodash-node'
 
 var ViewHelpers = {
   showErrors(errors) {
     let message = '';
-    _.keys(errors).map(field => {
+    keys(errors).map(field => {
       errors[field].map(err => {
-        let niceField = _.startCase(field);
+        const niceField = startCase(field);
         message += `${niceField} ${err}\n`;
       })
     })
@@ -18,9 +19,6 @@ var ViewHelpers = {
     dollarSign = (dollarSign === undefined) ? '$' : dollarSign
     number = (isNaN(parseFloat(number))) ? 0 : number
     return dollarSign + parseFloat(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-  },
-  capitalize: function(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   },
   dueDate: function(date) {
     const [y,m,d] = date.split('-');
