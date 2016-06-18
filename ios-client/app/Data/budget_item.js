@@ -1,4 +1,4 @@
-import {postRequest, putRequest, deleteRequest, patchRequest} from '../Utils/api';
+import {postRequest, putRequest, deleteRequest, patchRequest} from './API';
 
 module.exports = {
   createItem(budget_item) {

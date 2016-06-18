@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
   }
 });
 
-import {findCategory}     from '../Data/budget_category';
+import {findCategory}     from '../data/budget_category';
 import {assign, findIndex} from 'lodash-node';
-import {alert, confirm}   from '../Utils/window';
-import {destroyItem}      from '../Data/budget_item';
-import {numberToCurrency} from '../Utils/ViewHelpers';
+import {alert, confirm}   from '../utils/window';
+import {destroyItem}      from '../data/budget_item';
+import {numberToCurrency} from '../utils/ViewHelpers';
 
 class BudgetCategory extends Component {
   constructor(props) {

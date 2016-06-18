@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
   },
 });
 
-import {all} from '../Data/AnnualBudgets';
+import {all} from '../data/AnnualBudgets';
 import {assign, findIndex} from 'lodash-node';
-import {alert, confirm}   from '../Utils/window';
-import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
-import {deleteItem} from '../Data/AnnualBudgets';
-import {capitalize, numberToCurrency, dueDate} from '../Utils/ViewHelpers';
+import {alert, confirm}   from '../utils/window';
+import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
+import {deleteItem} from '../data/AnnualBudgets';
+import {capitalize, numberToCurrency, dueDate} from '../utils/ViewHelpers';
 
 class AnnualBudget extends Component {
   constructor(props) {

@@ -6,8 +6,8 @@ import {
   View
 } from 'react-native'
 
-import {categoryIcon} from '../Utils/ViewHelpers';
-import {monthName} from '../Utils/ViewHelpers';
+import {categoryIcon} from '../utils/ViewHelpers';
+import {monthName} from '../utils/ViewHelpers';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({

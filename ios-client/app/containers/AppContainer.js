@@ -20,7 +20,7 @@ import AnnualBudgetItemFormContainer from './AnnualBudgetItemFormContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
-import {setApiUrl} from '../Utils/api';
+import {setApiUrl} from '../data/API';
 import SideMenu from 'react-native-side-menu';
 import BackButton from '../components/BackButton';
 import { navigatePush, navigatePop } from '../actions/Navigation';

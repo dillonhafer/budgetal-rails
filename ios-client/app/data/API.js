@@ -2,7 +2,7 @@ import {
   AsyncStorage,
   StatusBar,
 } from 'react-native'
-import {alert} from './window';
+import {alert} from '../utils/window';
 
 import {
   AUTH_KEY,

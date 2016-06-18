@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
   },
 });
 
-import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
-import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
-import {update, create} from '../Data/AnnualBudgets';
+import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
+import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
+import {update, create} from '../data/AnnualBudgets';
 
 class AnnualBudgetItemForm extends Component {
   constructor(props) {

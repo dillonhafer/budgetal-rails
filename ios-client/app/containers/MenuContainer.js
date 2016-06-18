@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 
 import Menu from '../components/Menu'
 import { navigateReset, navigatePush } from '../actions/Navigation'
-import {endSession} from '../Data/sessions';
-import {alert} from '../Utils/window';
+import {endSession} from '../data/sessions';
+import {alert} from '../utils/window';
 
 const mapStateToProps = (state) => {
 	return {

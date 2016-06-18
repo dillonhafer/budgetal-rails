@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {monthName} from '../Utils/ViewHelpers';
+import {monthName} from '../utils/ViewHelpers';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({

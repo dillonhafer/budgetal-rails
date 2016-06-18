@@ -10,9 +10,9 @@ const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
 import SwipeableListView from 'SwipeableListView';
 
 import {groupBy} from 'lodash-node'
-import {numberToCurrency} from '../Utils/ViewHelpers'
-import {confirm}   from '../Utils/window';
-import {deleteItemExpense} from '../Data/budgetItemExpense'
+import {numberToCurrency} from '../utils/ViewHelpers'
+import {confirm}   from '../utils/window';
+import {deleteItemExpense} from '../data/budgetItemExpense'
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({

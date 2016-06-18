@@ -8,9 +8,9 @@ import {
   View,
 } from 'react-native'
 
-import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
-import {findCategory} from '../Data/budget_category';
-import {numberToCurrency, categoryIcon} from '../Utils/ViewHelpers';
+import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
+import {findCategory} from '../data/budget_category';
+import {numberToCurrency, categoryIcon} from '../utils/ViewHelpers';
 import DateBar from './DateBar';
 import {find} from 'lodash-node';
 import StyleSheet from './StyleSheet';

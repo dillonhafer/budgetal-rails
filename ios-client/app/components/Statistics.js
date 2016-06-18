@@ -5,9 +5,9 @@ import {
 } from 'react-native'
 
 import {map} from 'lodash-node';
-import StatisticsRepo from '../Data/StatisticsRepository';
+import StatisticsRepo from '../data/StatisticsRepository';
 import DateBar from './DateBar';
-import DatePickerWithAccessory from '../Utils/DatePickerWithAccessory';
+import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 import StatsBar from './StatsBar';
 
 import StyleSheet from './StyleSheet'

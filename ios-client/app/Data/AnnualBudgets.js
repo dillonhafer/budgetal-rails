@@ -1,4 +1,4 @@
-import {getRequest, putRequest, postRequest, deleteRequest} from '../Utils/api';
+import {getRequest, putRequest, postRequest, deleteRequest} from './API';
 module.exports = {
   all(year) {
     return getRequest(`/annual-budgets/${year}`);

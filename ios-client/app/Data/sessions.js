@@ -1,4 +1,4 @@
-import {getRequest, postRequest, deleteRequest, clearSession} from '../Utils/api';
+import {getRequest, postRequest, deleteRequest, clearSession} from './API';
 
 module.exports = {
   signIn(data) {

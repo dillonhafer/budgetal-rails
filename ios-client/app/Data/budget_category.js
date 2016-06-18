@@ -1,4 +1,4 @@
-import {getRequest} from '../Utils/api';
+import {getRequest} from './API';
 
 module.exports = {
   findCategory(data) {

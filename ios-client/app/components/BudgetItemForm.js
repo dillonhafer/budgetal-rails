@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   }
 });
 
-import {numberToCurrency, showErrors} from '../Utils/ViewHelpers';
-import {updateItem, createItem} from '../Data/budget_item';
+import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
+import {updateItem, createItem} from '../data/budget_item';
 
 class BudgetItemForm extends Component {
   constructor(props) {

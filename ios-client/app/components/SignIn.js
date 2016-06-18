@@ -9,10 +9,10 @@ import {
   View,
 } from 'react-native'
 
-import {saveTokens, signedIn} from '../Utils/api';
-import {signIn} from '../Data/sessions';
+import {saveTokens, signedIn} from '../data/API';
+import {signIn} from '../data/sessions';
 import {REMEMBER_EMAIL, REMEMBER_SWITCH} from '../constants/StorageKeys'
-const window = require('../Utils/window');
+const window = require('../utils/window');
 let _isMounted = false;
 
 class SignIn extends Component {
