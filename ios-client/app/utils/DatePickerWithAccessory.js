@@ -4,14 +4,16 @@ import {
   Dimensions,
   LayoutAnimation,
   Picker,
-  StyleSheet,
   Text,
   TouchableHighlight,
   View
 } from 'react-native'
+import StyleSheet from '../components/StyleSheet'
 const {width} = Dimensions.get('window');
 
 import {range} from 'lodash-node'
+import {monthName} from './ViewHelpers'
+
 // Work around while waiting for RN to fix issue 4547 (stuck in review):
 // https://github.com/facebook/react-native/issues/4547
 DatePickerIOS.propTypes.date = PropTypes.any.isRequired
@@ -49,13 +51,9 @@ class DatePickerWithAccessory extends Component {
     return range(begin, end).map(n => String(n))
   }
 
-  _getPickerItems(years) {
-    return years.map((year) => (<Picker.Item key={year} value={year} label={year} />))
-  }
-
   _renderYear = () => {
     const years = this._getYears(this.props.beginningYear, this.props.endingYear);
-
+    const items = years.map((year) => (<Picker.Item key={year} value={year} label={year} />))
     return (
       <View style={this.state.showDatePicker ? styles.yearPicker : styles.hidden}>
         <View style={styles.inputAccessory}>
@@ -66,8 +64,47 @@ class DatePickerWithAccessory extends Component {
         <Picker selectedValue={String(this.props.year)}
                    itemStyle={{textAlign: 'center'}}
                    onValueChange={this.props.onDateChange}>
-          {this._getPickerItems(years)}
+          {items}
         </Picker>
+      </View>
+    );
+  }
+
+  _yearMonthChange(firstArg, first, second) {
+    const [year,month]  = firstArg === 'year' ? [second,first] : [first,second]
+    this.props.onValueChange(year, month)
+  }
+
+  _renderYearMonth = () => {
+    const years = this._getYears(this.props.beginningYear, this.props.endingYear);
+    const months = range(0,12).map((idx) => {return {value: String(idx+1), label: monthName(idx)}})
+
+    const yearItems  = years.map((year) => (<Picker.Item key={year} value={year} label={year} />))
+    const monthItems = months.map((month) => (<Picker.Item key={month.value} value={month.value} label={month.label} />))
+
+    return (
+      <View style={this.state.showDatePicker ? styles.yearPicker : styles.hidden}>
+        <View style={styles.inputAccessory}>
+          <TouchableHighlight underlayColor='transparent' onPress={this.props.onDone}>
+            <Text style={styles.doneText}>Done</Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.yearMonthContainer}>
+          <View style={styles.yearMonthPicker}>
+            <Picker selectedValue={String(this.props.month)}
+                       itemStyle={{textAlign: 'center'}}
+                       onValueChange={this._yearMonthChange.bind(this, 'month', this.props.year)}>
+              {monthItems}
+            </Picker>
+          </View>
+          <View style={styles.yearMonthPicker}>
+            <Picker selectedValue={String(this.props.year)}
+                       itemStyle={{textAlign: 'center'}}
+                       onValueChange={this._yearMonthChange.bind(this, 'year', this.props.month)}>
+              {yearItems}
+            </Picker>
+          </View>
+        </View>
       </View>
     );
   }
@@ -76,7 +113,8 @@ class DatePickerWithAccessory extends Component {
     switch (this.props.type) {
       case 'year':
         return this._renderYear();
-        break;
+      case 'year-month':
+        return this._renderYearMonth();
       default:
         return this._renderDate();
     }
@@ -91,7 +129,11 @@ const styles = StyleSheet.create({
   inputAccessory: {
     padding: 10,
     width: 400,
-    backgroundColor: '#f6f6f6'
+    backgroundColor: '#f6f6f6',
+    borderTopColor: '#e6e6e6',
+    borderTopWidth: 0.5,
+    borderBottomColor: '#e6e6e6',
+    borderBottomWidth: 0.5,
   },
   datePicker: {
     width: width,
@@ -99,7 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6e6e6',
     justifyContent: 'flex-end',
     bottom: 0,
-    position: 'absolute'
+    position: 'absolute',
   },
   yearPicker: {
     width: width,
@@ -110,7 +152,15 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   doneText: {
-    fontSize: 18
+    fontSize: 18,
+    color: '$blue'
+  },
+  yearMonthContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  yearMonthPicker: {
+    width: width/2,
   }
 });
 
