@@ -100,7 +100,7 @@ namespace :git do
       echo "-----> Extracting subdirectory"
       #{echo_cmd %[mv #{subdir}/* .]}
       #{echo_cmd %[rm -rf #{subdir}]}
-      #{echo_cmd %[rm -rf os-client react-webclient README.md]}
+      #{echo_cmd %[rm -rf ios-client react-webclient README.md]}
     }
   end
 end
