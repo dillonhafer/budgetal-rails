@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def create_session(user)
+    user.update_tracked_fields(request)
     user.sessions.create({
       authentication_token: SecureRandom.hex(16),
       ip: request.remote_ip,
