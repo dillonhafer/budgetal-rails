@@ -52,7 +52,7 @@ class DatePickerWithAccessory extends Component {
   }
 
   _renderYear = () => {
-    const years = this._getYears(this.props.beginningYear, this.props.endingYear);
+    const years = this._getYears(this.props.beginningYear, this.props.endingYear+1);
     const items = years.map((year) => (<Picker.Item key={year} value={year} label={year} />))
     return (
       <View style={this.state.showDatePicker ? styles.yearPicker : styles.hidden}>
@@ -76,7 +76,7 @@ class DatePickerWithAccessory extends Component {
   }
 
   _renderYearMonth = () => {
-    const years = this._getYears(this.props.beginningYear, this.props.endingYear);
+    const years = this._getYears(this.props.beginningYear, this.props.endingYear+1);
     const months = range(0,12).map((idx) => {return {value: String(idx+1), label: monthName(idx)}})
 
     const yearItems  = years.map((year) => (<Picker.Item key={year} value={year} label={year} />))

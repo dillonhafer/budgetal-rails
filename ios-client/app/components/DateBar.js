@@ -37,7 +37,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 45,
     width: 45,
-  }
+  },
+  disabled: {
+    opacity: 0.3
+  },
 });
 
 class DateBar extends Component {
@@ -45,63 +48,64 @@ class DateBar extends Component {
     super(props)
   }
 
-  menuDate(date) {
-    const month = monthName(date.getMonth());
-    const year = date.getFullYear();
-    return [month,year].join(' ');
+  menuDate(month,year) {
+    return [monthName(month-1),year].join(' ');
   }
 
-  _changeMonth = (date, amount) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const alteredDate = new Date(year, month + amount);
-    this.props.onDateChange(alteredDate);
+  _changeMonth = (month, year, amount) => {
+    this.props.onDateChange(year,month+amount);
   }
 
   _changeYear = (year, amount) => {
-    const alteredYear = year + amount;
-    this.props.onDateChange(alteredYear);
+    this.props.onDateChange(year+amount);
   }
 
-  nextButton(date, changeFunction) {
+  nextButton(onPress, enabled, ...args) {
+    const disabled = enabled ? {} : styles.disabled;
+    const press = enabled ? onPress : () => {};
     return (<TouchableHighlight
-              style={styles.changeMonth}
+              style={[styles.changeMonth,disabled]}
               underlayColor='transparent'
-              onPress={changeFunction.bind(this, date, 1)}>
+              onPress={press.bind(this, ...args, 1)}>
               <Icon name="chevron-right" style={styles.icon} />
             </TouchableHighlight>);
   }
 
-  previousButton(date, changeFunction) {
+  previousButton(onPress, enabled, ...args) {
+    const disabled = enabled ? {} : styles.disabled;
+    const press = enabled ? onPress : () => {};
     return (<TouchableHighlight
-              style={styles.changeMonth}
+              style={[styles.changeMonth,disabled]}
               underlayColor='transparent'
-              onPress={changeFunction.bind(this, date, -1)}>
+              onPress={press.bind(this, ...args, -1)}>
               <Icon name="chevron-left" style={styles.icon} />
             </TouchableHighlight>);
   }
 
-  _renderMonth = () => {
-    const date = this.props.date;
+  _renderMonthYear = () => {
+    const firstEnabled = [this.props.month,this.props.year].join() !== [1,this.props.beginningYear].join()
+    const lastEnabled  = [this.props.month,this.props.year].join() !== [12,this.props.endingYear].join()
     return (
       <View style={styles.container}>
-        {this.previousButton(date, this._changeMonth)}
+        {this.previousButton(this._changeMonth, firstEnabled, this.props.month, this.props.year)}
         <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
-          <Text style={styles.centerYear}>{this.menuDate(date)}</Text>
+          <Text style={styles.centerYear}>{this.menuDate(this.props.month, this.props.year)}</Text>
         </TouchableHighlight>
-        {this.nextButton(date, this._changeMonth)}
+        {this.nextButton(this._changeMonth, lastEnabled, this.props.month, this.props.year)}
       </View>
     )
   }
 
   _renderYear = () => {
+    const firstEnabled = this.props.year !== this.props.beginningYear
+    const lastEnabled  = this.props.year !== this.props.endingYear
     return (
       <View style={styles.container}>
-        {this.previousButton(this.props.year, this._changeYear)}
+        {this.previousButton(this._changeYear, firstEnabled, this.props.year)}
         <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
           <Text style={styles.centerYear}>{this.props.year}</Text>
         </TouchableHighlight>
-        {this.nextButton(this.props.year, this._changeYear)}
+        {this.nextButton(this._changeYear, lastEnabled, this.props.year)}
       </View>
     )
   }
@@ -111,7 +115,7 @@ class DateBar extends Component {
       case 'year':
         return this._renderYear()
       default:
-        return this._renderMonth()
+        return this._renderMonthYear()
     }
   }
 }

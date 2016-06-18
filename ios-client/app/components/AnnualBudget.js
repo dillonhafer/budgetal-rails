@@ -315,12 +315,18 @@ class AnnualBudget extends Component {
     const dataBlob = {'budget_items': this.props.budgetItems};
     const budgetItems = ds.cloneWithRowsAndSections(dataBlob);
 
+    const dateManagerProps = {
+      beginningYear: 2015,
+      endingYear: new Date().getFullYear()+2,
+      year: this.props.budget.year,
+    }
+
     return (
       <View style={styles.container}>
-        <DateBar year={this.props.year}
-                 type='year'
+        <DateBar type='year'
                  onDateChange={this._updateBudget}
-                 toggleDatePicker={this.toggleDatePicker} />
+                 toggleDatePicker={this.toggleDatePicker}
+                 {...dateManagerProps} />
 
         <SwipeableListView style={styles.list}
                   bounceFirstRowOnMount={true}
@@ -335,13 +341,11 @@ class AnnualBudget extends Component {
                   renderFooter={this.footerRow}
                   renderSeparator={this.separator} />
 
-        <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
+        <DatePickerWithAccessory type='year'
+                                 onDateChange={this.onYearChange}
+                                 showDatePicker={this.state.showDatePicker}
                                  onDone={this.toggleDatePicker}
-                                 type='year'
-                                 year={this.props.year}
-                                 beginningYear='2015'
-                                 endingYear='2018'
-                                 onDateChange={this.onYearChange} />
+                                 {...dateManagerProps} />
       </View>
     );
   }

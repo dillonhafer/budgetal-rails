@@ -28,10 +28,11 @@ export function updateBudgetCategory(budgetCategory) {
   }
 }
 
-export function updateBudgetDate(date) {
+export function updateBudgetDate(year,month) {
   return {
     type: BUDGET_DATE_UPDATED,
-    budgetDate: date,
+    year,
+    month,
   }
 }
 

@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
 		budget: state.budgetState.budget,
 		budgetCategories: state.budgetState.budgetCategories,
 		budgetItems: state.budgetState.budgetCategories,
-		budgetDate: state.budgetState.budgetDate,
 		scrollsToTop: state.navigationState.index === 0
 	}
 }
@@ -26,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
 		updateBudget: (budget) => {
 			dispatch(updateBudget(budget))
 		},
-		updateBudgetDate: (date) => {
-			dispatch(updateBudgetDate(date))
+		updateBudgetDate: (year,month) => {
+			dispatch(updateBudgetDate(year,month))
 		},
 	}
 }

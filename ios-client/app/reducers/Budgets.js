@@ -12,7 +12,6 @@ import {
 
 const initialBudgetState = {
 	key: 'Budget',
-	budgetDate: new Date(),
 	budget: {
 		year: new Date().getFullYear(),
 		month: new Date().getMonth()+1,
@@ -30,7 +29,6 @@ export default function budgetState(state = initialBudgetState, action) {
 			...state,
 			budget: action.budget,
 			budgetCategories: action.budget.budget_categories,
-			budgetDate: action.budgetDate
 		}
 
 	case BUDGET_CATEGORY_UPDATED:
@@ -43,7 +41,7 @@ export default function budgetState(state = initialBudgetState, action) {
 	case BUDGET_DATE_UPDATED:
 		return {
 			...state,
-			budgetDate: action.budgetDate
+      budget: Object.assign({}, state.budget, action)
 		}
 	case BUDGET_ITEM_ADDED:
 		return {

@@ -72,13 +72,6 @@ class Budgets extends Component {
     }
   }
 
-  parseDatePieces(date) {
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1
-    }
-  }
-
   toggleDatePicker = () => {
     var status = this.state.showDatePicker
     this.setState({showDatePicker: !status})
@@ -90,23 +83,22 @@ class Budgets extends Component {
   }
 
   componentDidMount() {
-    this._updateList(this.props.budgetDate)
+    this._updateList(this.props.budget.year,this.props.budget.month)
   }
 
-  _updateList = async (date) => {
+  _updateList = async (year,month) => {
     try {
-      const params = this.parseDatePieces(date)
-      let resp = await findCategory(params);
+      let resp = await findCategory({year,month});
       if (resp !== null)
-        this.props.updateBudget(resp.budget, date)
+        this.props.updateBudget(resp.budget)
     } catch(error) {
       this.props.signOut(error)
     }
   }
 
-  onDateChange = (date) => {
-    this.props.updateBudgetDate(date)
-    this._updateList(date)
+  onDateChange = (year, month) => {
+    this.props.updateBudgetDate(year,month)
+    this._updateList(year,month)
   }
 
   _pressRow = (id) => {
@@ -153,14 +145,20 @@ class Budgets extends Component {
   }
 
   render() {
-    let currentDate = this.props.budgetDate;
-    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    let dataSource = ds.cloneWithRows(this.props.budgetCategories)
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource = ds.cloneWithRows(this.props.budgetCategories)
+    const dateManagerProps = {
+      beginningYear: 2015,
+      endingYear: new Date().getFullYear()+2,
+      year: this.props.budget.year,
+      month: this.props.budget.month,
+    }
+
     return (
       <View style={styles.container}>
-        <DateBar date={currentDate}
-                 onDateChange={this._updateList}
-                 toggleDatePicker={this.toggleDatePicker} />
+        <DateBar onDateChange={this.onDateChange}
+                 toggleDatePicker={this.toggleDatePicker}
+                 {...dateManagerProps} />
 
         <ListView style={styles.list}
                   initialListSize={12}
@@ -172,9 +170,10 @@ class Budgets extends Component {
                   renderRow={this._renderRow} />
 
         <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
+                                 type='year-month'
                                  onDone={this.toggleDatePicker}
-                                 date={currentDate}
-                                 onDateChange={this.onDateChange} />
+                                 onValueChange={this.onDateChange}
+                                 {...dateManagerProps} />
       </View>
     )
   }
