@@ -1,19 +1,17 @@
-'use strict';
-
-var React = require('react-native');
-var {
+import React, {Component} from 'react'
+import {
   AlertIOS,
+  AsyncStorage,
   Image,
   LinkingIOS,
   Text,
-  StyleSheet,
   TextInput,
   TouchableHighlight,
   View
-} = React;
+} from 'react-native'
 
-import {AsyncStorage} from 'react-native';
-const USER_KEY = '@BudgetalUserKey:user';
+import StyleSheet from './StyleSheet'
+import {USER_KEY} from '../constants/StorageKeys'
 
 const styles = StyleSheet.create({
   container: {
@@ -39,23 +37,30 @@ const styles = StyleSheet.create({
   }
 });
 
-var MyAccount = React.createClass({
-  getInitialState: function() {
-    return {
-      user: {first_name: '', last_name: '', email: ''}
+class Account extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: {
+        first_name: '',
+        last_name: '',
+        email: ''
+      }
     }
-  },
-  componentDidMount: function() {
-    var self = this
+  }
+
+  componentDidMount() {
     this.getCurrentUser();
-  },
-  async getCurrentUser() {
+  }
+
+  getCurrentUser = async() => {
     let user = await AsyncStorage.getItem(USER_KEY);
     if (user !== null) {
       this.setState({user: JSON.parse(user)});
     }
-  },
-  render: function() {
+  }
+
+  render() {
     var user = this.state.user
     return (
       <View style={styles.container}>
@@ -66,15 +71,9 @@ var MyAccount = React.createClass({
         <Text style={styles.instructions}>
           {user.email}
         </Text>
-        <Text
-          onPress={() => {
-            this.props.dispatch({ type: 'push', key: 'home' });
-          }}>
-          Tap to go back home.
-        </Text>
       </View>
     )
   }
-})
+}
 
-module.exports = MyAccount;
+module.exports = Account;

@@ -17,6 +17,7 @@ import NavigationTitle from '../components/NavigationTitle';
 import StatisticsContainer from './StatisticsContainer';
 import AnnualBudgetsContainer from './AnnualBudgetsContainer';
 import AnnualBudgetItemFormContainer from './AnnualBudgetItemFormContainer';
+import AccountContainer from './AccountContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -128,7 +129,7 @@ class AppContainer extends Component {
       case 'DetailedBudgets':
       case 'AnnualBudgets':
 			case 'Statistics':
-      case 'MyAccount':
+      case 'Account':
         return <Hamburger openMenu={this._openMenu} />
       case 'SignIn':
         return null
@@ -198,6 +199,8 @@ class AppContainer extends Component {
 	      return <AnnualBudgetsContainer />
 			case 'AnnualBudgetItemForm':
 				return <AnnualBudgetItemFormContainer budgetItem={navigationState.budgetItem} />
+			case 'Account':
+				return <AccountContainer />
 		}
 	}
 }

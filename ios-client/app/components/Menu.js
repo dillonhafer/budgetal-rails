@@ -30,7 +30,7 @@ class Menu extends Component {
         <MenuItem text="Detailed Budgets" image={AppImages.list} onPress={this.props.detailedBudgets} />
         <MenuItem text="Annual Budgets" image={AppImages.calendar} onPress={this.props.annualBudgets} />
         <MenuItem text="Statistics (for geeks)" image={AppImages.statistics} onPress={this.props.statistics} />
-        <MenuItem text="My Account" image={AppImages.account} onPress={this.props.account} />
+        <MenuItem text="Account" image={AppImages.account} onPress={this.props.account} />
         <MenuItem text="Sign Out" image={AppImages.sign_out} onPress={this.props.signOut} />
       </View>
     );

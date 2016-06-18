@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
 		annualBudgets: () => {
 			dispatch(navigateReset([{key: 'AnnualBudgets', title: 'Annual Budgets'}],0))
 		},
+		account: () => {
+			dispatch(navigateReset([{key: 'Account', title: 'Account'}],0))
+		},
 		signOut: () => {
 			endSession().then(() => {
 				dispatch(navigateReset([{key: 'SignIn', title: ''}],0))
