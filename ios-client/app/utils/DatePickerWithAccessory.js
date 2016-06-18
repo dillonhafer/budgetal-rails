@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 const {width} = Dimensions.get('window');
 
+import {range} from 'lodash-node'
 // Work around while waiting for RN to fix issue 4547 (stuck in review):
 // https://github.com/facebook/react-native/issues/4547
 DatePickerIOS.propTypes.date = PropTypes.any.isRequired
@@ -45,13 +46,7 @@ class DatePickerWithAccessory extends Component {
   }
 
   _getYears(begin, end) {
-    let current = begin;
-    let years = [current];
-    while (current < end) {
-      current = String(parseInt(current) + 1);
-      years.push(current);
-    }
-    return years;
+    return range(begin, end).map(n => String(n))
   }
 
   _getPickerItems(years) {
