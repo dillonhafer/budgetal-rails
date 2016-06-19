@@ -1,40 +1,62 @@
 import React, {Component} from 'react'
 import {
-  AlertIOS,
   AsyncStorage,
   Image,
-  LinkingIOS,
   Text,
-  TextInput,
+  TouchableOpacity,
   TouchableHighlight,
   View
 } from 'react-native'
 
+import Sessions from './Sessions'
 import StyleSheet from './StyleSheet'
 import {USER_KEY} from '../constants/StorageKeys'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#fff',
-    paddingTop: 40,
+    backgroundColor: '$white',
   },
-  instructions: {
-    textAlign: 'left',
-    color: '#333',
-    marginBottom: 5,
-    textDecorationLine: 'underline',
-    textDecorationStyle: 'solid',
-  },
-  base64: {
-    borderRadius: 75,
-    height: 150,
-    width: 150,
+  avatar: {
+    borderRadius: 50,
+    height: 100,
+    width: 100,
     borderColor: '#69F',
-    borderWidth: 3,
-    resizeMode: 'contain'
-  }
+    borderWidth: 2,
+    resizeMode: 'contain',
+  },
+  nameContainer: {
+    width: 200,
+    marginLeft: 5,
+  },
+  infoContainer: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    padding: 5,
+  },
+  info: {
+    textAlign: 'left',
+    color: '$gray',
+    marginLeft: 4,
+    width: 170,
+    paddingTop: 2,
+    paddingBottom: 2,
+  },
+  icon: {
+    textAlign: 'center',
+    color: '$gray',
+    fontSize: 16,
+    width: 16,
+    height: 16,
+  },
 });
 
 class Account extends Component {
@@ -60,17 +82,42 @@ class Account extends Component {
     }
   }
 
+  _renderHeader = () => {
+    const user = this.state.user;
+    return (
+      <View style={styles.infoContainer}>
+        <TouchableOpacity onPress={()=>{}}>
+          <Image style={styles.avatar} source={{uri: user.avatar}} />
+        </TouchableOpacity>
+        <View style={styles.nameContainer}>
+          <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
+            <Icon name="user" style={styles.icon} />
+            <Text style={styles.info}>
+              {`${user.first_name} ${user.last_name}`}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
+            <Icon name="envelope" style={styles.icon} />
+            <Text style={styles.info} numberOfLines={1}>
+              {user.email}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
+            <Icon name="lock" style={styles.icon} />
+            <Text style={styles.info} numberOfLines={1}>
+              Change Password
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+
   render() {
     var user = this.state.user
     return (
       <View style={styles.container}>
-        <Text style={styles.instructions}>
-          Hello {user.first_name}!
-        </Text>
-        <Image style={styles.base64} source={{uri: user.avatar}} />
-        <Text style={styles.instructions}>
-          {user.email}
-        </Text>
+        <Sessions header={this._renderHeader} />
       </View>
     )
   }
