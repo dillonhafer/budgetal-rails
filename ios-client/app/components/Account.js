@@ -52,11 +52,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     textAlign: 'center',
+    alignSelf: 'center',
     color: '$gray',
     fontSize: 16,
     width: 16,
-    height: 16,
+    width: 16,
   },
+  envelope: {
+    fontSize: 14,
+  }
 });
 
 class Account extends Component {
@@ -97,13 +101,13 @@ class Account extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
-            <Icon name="envelope" style={styles.icon} />
+            <Icon name="envelope" style={[styles.icon, styles.envelope]} />
             <Text style={styles.info} numberOfLines={1}>
               {user.email}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
-            <Icon name="lock" style={styles.icon} />
+            <Icon name="unlock-alt" style={styles.icon} />
             <Text style={styles.info} numberOfLines={1}>
               Change Password
             </Text>
