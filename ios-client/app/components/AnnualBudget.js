@@ -318,7 +318,7 @@ class AnnualBudget extends Component {
     const dateManagerProps = {
       beginningYear: 2015,
       endingYear: new Date().getFullYear()+2,
-      year: this.props.budget.year,
+      year: this.props.year,
     }
 
     return (
