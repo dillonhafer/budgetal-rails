@@ -114,7 +114,16 @@ class AppContainer extends Component {
 	}
 
 	_disableGestures(navState) {
-		const disabledScenes = ['SignIn', 'BudgetCategory', 'Account', 'BudgetItem', 'BudgetItemForm','BudgetItemExpenseForm']
+		const disabledScenes = [
+			'SignIn',
+			'Account',
+			'BudgetCategory',
+			'BudgetItem',
+			'BudgetItemForm',
+			'BudgetItemExpenseForm',
+			'AnnualBudget',
+			'AnnualBudgetItemForm',
+		]
 		let child = navState.children[navState.index]
 		return child && disabledScenes.includes(child.key);
 	}
