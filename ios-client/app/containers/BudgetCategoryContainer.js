@@ -8,12 +8,12 @@ const mapStateToProps = (state) => {
 	let idx = state.navigationState.index;
 	let navCategory = state.navigationState.children[idx].budgetCategory;
 	let budgetCategory = (state.budgetState.budgetCategory && navCategory && state.budgetState.budgetCategory.id === navCategory.id) ? state.budgetState.budgetCategory : navCategory;
-	let budgetDate = state.budgetState.budgetDate;
+	let budget = state.budgetState.budget;
 	let budgetItems = state.budgetState.budgetItems;
 	let budgetItemExpenses = state.budgetState.budgetItemExpenses;
 
 	return {
-		budgetCategory, budgetItems, budgetDate, budgetItemExpenses,
+		budget, budgetCategory, budgetItems, budgetItemExpenses,
 		scrollsToTop: state.navigationState.index === 1
 	}
 }

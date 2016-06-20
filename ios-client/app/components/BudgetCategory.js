@@ -170,8 +170,8 @@ class BudgetCategory extends Component {
 
   _updateCategory = async() => {
     let params = {
-      year: this.props.budgetDate.getFullYear(),
-      month: this.props.budgetDate.getMonth()+1,
+      year: this.props.budget.year,
+      month: this.props.budget.month,
       id: this.props.budgetCategory.id
     }
     try {
