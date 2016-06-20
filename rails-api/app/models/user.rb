@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   validates_attachment :avatar,
     content_type: { content_type: /\Aimage\/.*\Z/ },
-    size: { in: 0..1.megabytes }
+    size: { in: 0..10.megabytes }
 
   after_create :send_welcome_email
 
