@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     overflow: 'hidden',
-    backgroundColor: '$grayBackground',
+    backgroundColor: '$white',
   },
   deleteButton: {
     height: 140,
