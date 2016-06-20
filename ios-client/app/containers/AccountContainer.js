@@ -2,16 +2,22 @@ import { connect } from 'react-redux'
 
 import Account from '../components/Account'
 import { navigatePop, navigatePush } from '../actions/Navigation'
-// import { updateBudgetItem, addBudgetItem } from '../actions/AnnualBudgets'
+import { updateSessions } from '../actions/Session'
 
 const mapStateToProps = (state) => {
-	return {}
+	const sessions = state.sessionState.sessions
+	return {
+		sessions
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-    signOut: (r) => {
+    endSession: (r) => {
 		},
+		updateSessions: (sessions) => {
+			dispatch(updateSessions(sessions));
+		}
 	}
 }
 

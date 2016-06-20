@@ -118,10 +118,9 @@ class Account extends Component {
   }
 
   render() {
-    var user = this.state.user
     return (
       <View style={styles.container}>
-        <Sessions header={this._renderHeader} />
+        <Sessions header={this._renderHeader} {...this.props} />
       </View>
     )
   }

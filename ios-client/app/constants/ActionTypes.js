@@ -26,3 +26,6 @@ export const NAV_JUMP_TO_KEY = 'NAV_JUMP_TO_KEY'
 export const NAV_JUMP_TO_INDEX = 'NAV_JUMP_TO_INDEX'
 export const NAV_RESET = 'NAV_RESET'
 export const NAV_REPLACE_AT_INDEX = 'NAV_REPLACE_AT_INDEX'
+
+// Sessions
+export const SESSION_UPDATED = 'SESSION_UPDATED'

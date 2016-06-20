@@ -12,7 +12,7 @@ import SwipeableListView from 'SwipeableListView';
 import {capitalize} from 'lodash-node'
 import {humanUA,sessionDate} from '../utils/ViewHelpers'
 import {confirm}   from '../utils/window';
-import {allSessions} from '../data/sessions'
+import {allSessions,signOut} from '../data/sessions'
 
 const {width} = Dimensions.get('window')
 
@@ -99,11 +99,7 @@ class Sessions extends Component {
     super(props)
 
     this.state = {
-      currentTime: (new Date).getTime(),
-      sessions: {
-        active: [{user_agent: 'Budgetal'}],
-        expired: [],
-      }
+      currentTime: (new Date).getTime()
     }
   }
 
@@ -115,7 +111,7 @@ class Sessions extends Component {
     try {
       let resp = await allSessions();
       if (resp) {
-        this.setState({sessions: resp.sessions})
+        this.props.updateSessions(resp.sessions)
       }
     } catch(err) {
       console.log(err)
@@ -131,7 +127,7 @@ class Sessions extends Component {
         <TouchableHighlight
           style={styles.deleteButton}
           onPress={() => {
-            confirm('End Session', confirmText, this.endSession.bind(this, session))
+            confirm('End Session', confirmText, this.signOut.bind(this, session))
           }}
           underlayColor='red' >
           <Text style={styles.deleteButtonText}>End Session</Text>
@@ -140,14 +136,14 @@ class Sessions extends Component {
     )
   }
 
-  endSession = async(session) => {
+  signOut = async(session) => {
     try {
-      // const resp = await deleteItemExpense(session.id);
-      // if (resp.success) {
-      //   this.props.deleteBudgetItemExpense(session);
-      // }
+      const resp = await signOut(session);
+      if (resp !== null && resp.sessions) {
+        this.props.updateSessions(resp.sessions);
+      }
     } catch (err) {
-      this.props.signOut();
+      this.props.endSession();
     }
   }
 
@@ -209,8 +205,8 @@ class Sessions extends Component {
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
-    const sessionsData = ds.cloneWithRowsAndSections(this.state.sessions);
-    const listSize = this.state.sessions.active.length + this.state.sessions.expired.length + 2
+    const sessionsData = ds.cloneWithRowsAndSections(this.props.sessions);
+    const listSize = this.props.sessions.active.length + this.props.sessions.expired.length + 2
     return (
       <View style={styles.container}>
         <SwipeableListView style={styles.list}
