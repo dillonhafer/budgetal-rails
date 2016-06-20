@@ -20,7 +20,7 @@ import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '$white'
+    backgroundColor: '$white',
   },
   list: {
     backgroundColor: '$white',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   section: {
     backgroundColor: '$grayBackground',
-    padding: 5,
+    padding: 8,
     paddingLeft: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: '$grayBorder',
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: '$gray',
     fontWeight: '900',
+    fontSize: 16,
   }
 });
 

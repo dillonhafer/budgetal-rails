@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   infoContainer: {
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
