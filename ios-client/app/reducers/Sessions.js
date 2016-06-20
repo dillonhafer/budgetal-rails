@@ -2,8 +2,6 @@ import {
   SESSION_UPDATED,
 } from '../constants/ActionTypes'
 
-import {findIndex} from 'lodash-node'
-
 const initialSessionState = {
 	key: 'Sessions',
 	sessions: {
