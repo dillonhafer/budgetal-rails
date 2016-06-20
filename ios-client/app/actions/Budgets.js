@@ -14,7 +14,6 @@ import {flatten, map} from 'lodash-node'
 export function updateBudget(budget) {
   return {
     type: BUDGET_UPDATED,
-    budgetDate: new Date(budget.year, budget.month-1,1),
     budget,
   }
 }
