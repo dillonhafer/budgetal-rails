@@ -1,1 +1,0 @@
-json.partial! allocation_plan
