@@ -220,3 +220,5 @@ sanitize() {
 }
 
 [[ $1 = --source-only ]] || main "$@"
+
+git branch -D gh-pages
