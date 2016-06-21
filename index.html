@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Budgetal API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #151515;
+  background-color: #ac4142;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #505050;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #d0d0d0;
+}
+.highlight .p, .highlight .pi {
+  color: #d0d0d0;
+}
+.highlight .gi {
+  color: #90a959;
+}
+.highlight .gd {
+  color: #ac4142;
+}
+.highlight .gh {
+  color: #6a9fb5;
+  background-color: #151515;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #aa759f;
+}
+.highlight .kc {
+  color: #d28445;
+}
+.highlight .kt {
+  color: #d28445;
+}
+.highlight .kd {
+  color: #d28445;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #90a959;
+}
+.highlight .sr {
+  color: #75b5aa;
+}
+.highlight .si {
+  color: #8f5536;
+}
+.highlight .se {
+  color: #8f5536;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #6a9fb5;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #90a959;
+}
+.highlight .ss {
+  color: #90a959;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://www.budgetal.com'>Budgetal.com</a></li>
+            <li><a href='https://github.com/dillonhafer/budgetal'>View on github</a></li>
+            <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p>Welcome to the Budgetal API! You can use our API to access Budgetal endpoints, which can get information on various budgets, budget items, and expenses in our database relating to an account.</p>
+
+<p>We have language examples in Shell and Javascript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+
+<h1 id="authentication">Authentication</h1>
+
+<blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
+curl <span class="s2">"https://api.budgetal.com"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"X-AUTHENTICATION-KEY: key"</span> <span class="se">\</span>
+  -H <span class="s2">"X-AUTHENTICATION-TOKEN: token"</span>
+</code></pre>
+<pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-AUTHENTICATION-KEY'</span><span class="p">:</span> <span class="s1">'key'</span><span class="p">,</span>
+  <span class="s1">'X-AUTHENTICATION-TOKEN'</span><span class="p">:</span> <span class="s1">'token'</span>
+<span class="p">};</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">resp</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.budgetal.com'</span><span class="p">,</span> <span class="p">{</span><span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span> <span class="nx">headers</span><span class="p">})</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">resp</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">key</code> and <code class="prettyprint">token</code> with your API key and token.</p>
+</blockquote>
+
+<p>Budgetal uses API keys and tokens to allow access to the API. You can register a new account by signing up at our <a href="https://www.budgetal.com">site</a>.</p>
+
+<p>Budgetal expects for the API key and token to be included in all API requests to the server in a header that looks like the following:</p>
+
+<p><code class="prettyprint">X-AUTHENTICATION-KEY: key</code></p>
+
+<p><code class="prettyprint">X-AUTHENTICATION-TOKEN: token</code></p>
+
+<p>You will receive these values by logging in a user. These values will need to be stored for later use.</p>
+
+<aside class="notice">
+You must replace <code>key</code> and <code>token</code> with your personal API key and token.
+</aside>
+
+          <h1 id="sessions">Sessions</h1>
+
+<h2 id="sign-in">Sign In</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.budgetal.com/sessions/sign-in"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+  -X POST -d <span class="s1">'{"user": {"email":"mail@example.org","password":"secret"}}'</span>
+</code></pre>
+<pre class="highlight javascript"><code><span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">user</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">email</span><span class="p">:</span> <span class="s1">'emily@example.org'</span><span class="p">,</span>
+    <span class="na">password</span><span class="p">:</span> <span class="s1">'secret'</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">params</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">method</span> <span class="o">=</span> <span class="s1">'POST'</span><span class="p">;</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">resp</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.budgetal.com/sessions/sign-in'</span><span class="p">,</span> <span class="p">{</span><span class="nx">method</span><span class="p">,</span> <span class="nx">headers</span><span class="p">,</span> <span class="nx">body</span><span class="p">})</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">resp</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"session"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"authentication_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26a2eb91-db0e-87eb-2755-0769ab492ea51"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"authentication_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a36b4b3e73083ac99c4094a19f314c50"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"user_agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"curl/7.43.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-21T19:01:12.749Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emily"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Skywalker"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"emily@example.org"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"admin"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"data:image/jpeg;base64,/QVBAAAACBi\n"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint signs in the user.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://api.budgetal.com/sessions/sign-in</code></p>
+
+<h3 id="post-parameters">POST Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>Yes</td>
+<td>Email address of the account to sign in.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Yes</td>
+<td>Password of the account to sign in.</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+Remember — nest all parameters under user. <code>{user: ...}</code>
+</aside>
+
+          <h1 id="errors">Errors</h1>
+
+<p>The Budgetal API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; Your request sucks</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; Your API key and token is wrong</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; The request is hidden for administrators only</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; The specified end point could not be found</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&rsquo;m a teapot</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Most likely bringing you updates. Please try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
