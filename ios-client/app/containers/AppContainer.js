@@ -18,6 +18,7 @@ import StatisticsContainer from './StatisticsContainer';
 import AnnualBudgetsContainer from './AnnualBudgetsContainer';
 import AnnualBudgetItemFormContainer from './AnnualBudgetItemFormContainer';
 import AccountContainer from './AccountContainer';
+import PhotoFormContainer from './PhotoFormContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -123,6 +124,7 @@ class AppContainer extends Component {
 			'BudgetItemExpenseForm',
 			'AnnualBudget',
 			'AnnualBudgetItemForm',
+			'PhotoForm',
 		]
 		let child = navState.children[navState.index]
 		return child && disabledScenes.includes(child.key);
@@ -145,6 +147,7 @@ class AppContainer extends Component {
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
 			case 'AnnualBudgetItemForm':
+			case 'PhotoForm':
 				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
       default:
 	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
@@ -158,6 +161,7 @@ class AppContainer extends Component {
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
 			case 'AnnualBudgetItemForm':
+			case 'PhotoForm':
 				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
 			default:
 				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
@@ -182,7 +186,13 @@ class AppContainer extends Component {
   }
 
   _horizontalScene(key) {
-    const horizontalScenes = ['SignIn', 'BudgetItemForm', 'BudgetItemExpenseForm', 'AnnualBudgetItemForm'];
+    const horizontalScenes = [
+			'SignIn',
+			'BudgetItemForm',
+			'BudgetItemExpenseForm',
+			'AnnualBudgetItemForm',
+			'PhotoForm'
+		];
     return horizontalScenes.includes(key);
   }
 
@@ -210,6 +220,8 @@ class AppContainer extends Component {
 				return <AnnualBudgetItemFormContainer budgetItem={navigationState.budgetItem} />
 			case 'Account':
 				return <AccountContainer />
+			case 'PhotoForm':
+				return <PhotoFormContainer />
 		}
 	}
 }

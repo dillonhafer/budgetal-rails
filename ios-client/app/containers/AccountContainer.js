@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
-
 import Account from '../components/Account'
 import { navigatePop, navigatePush } from '../actions/Navigation'
 import { updateSessions } from '../actions/Session'
+import { updateUser, StoreUser } from '../actions/Account'
 
 const mapStateToProps = (state) => {
-	const sessions = state.sessionState.sessions
+	const currentUser = state.accountState.currentUser;
+	const sessions = state.sessionState.sessions;
 	return {
-		sessions
+		currentUser, sessions
 	}
 }
 
@@ -17,6 +18,13 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		updateSessions: (sessions) => {
 			dispatch(updateSessions(sessions));
+		},
+		updatePhoto: (user) => {
+			dispatch(navigatePush({key: 'PhotoForm', title: 'Edit Profile', user}))
+		},
+		updateUser: (user) => {
+			StoreUser(user)
+			dispatch(updateUser(user))
 		}
 	}
 }

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {
-  AsyncStorage,
   Image,
   Text,
   TouchableOpacity,
@@ -10,8 +9,8 @@ import {
 
 import Sessions from './Sessions'
 import StyleSheet from './StyleSheet'
-import {USER_KEY} from '../constants/StorageKeys'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {accountInfo} from '../data/Users';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,13 +65,6 @@ const styles = StyleSheet.create({
 class Account extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      user: {
-        first_name: '',
-        last_name: '',
-        email: ''
-      }
-    }
   }
 
   componentDidMount() {
@@ -80,17 +72,17 @@ class Account extends Component {
   }
 
   getCurrentUser = async() => {
-    let user = await AsyncStorage.getItem(USER_KEY);
+    const user = await accountInfo();
     if (user !== null) {
-      this.setState({user: JSON.parse(user)});
+      this.props.updateUser(user)
     }
   }
 
   _renderHeader = () => {
-    const user = this.state.user;
+    const user = this.props.currentUser;
     return (
       <View style={styles.infoContainer}>
-        <TouchableOpacity onPress={()=>{}}>
+        <TouchableOpacity onPress={this.props.updatePhoto.bind(this,user)}>
           <Image style={styles.avatar} source={{uri: user.avatar}} />
         </TouchableOpacity>
         <View style={styles.nameContainer}>
