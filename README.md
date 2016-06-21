@@ -3,6 +3,10 @@ Budgetal [![Codeship](https://img.shields.io/codeship/00c1fa10-b5c6-0133-b267-7a
 
 Budgetal is about helping you save money, plan for expenses, and chase away emergencies.
 
+### API Documentation
+
+https://api.budgetal.com/docs
+
 ### Current Servers/Clients:
 
 *Each server/client folder has a README for setup instructions*
