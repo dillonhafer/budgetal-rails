@@ -34,6 +34,7 @@ configure :build do
   # out the following two lines has been known to help
   activate :minify_css
   activate :minify_javascript
+  set :site_url, "/docs"
   # activate :relative_assets
   # activate :asset_hash
   # activate :gzip
