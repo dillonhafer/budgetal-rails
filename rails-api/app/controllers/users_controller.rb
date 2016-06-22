@@ -43,7 +43,7 @@ class UsersController < AuthenticatedController
 
   def check_current_password
     unless current_user.valid_password?(params[:current_password])
-      render json: {success: false, errors: {current_password: 'is not correct'}}, status: 422 and return
+      render json: {success: false, errors: {current_password: ['is not correct']}}, status: 422 and return
     end
   end
 

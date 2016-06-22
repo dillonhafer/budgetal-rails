@@ -1,7 +1,7 @@
 import {getRequest, postRequest, deleteRequest, clearSession} from './API';
 
 module.exports = {
-  save(params) {
+  saveUser(params) {
     return postRequest('/update-account-info', params);
   },
   savePhoto(params) {

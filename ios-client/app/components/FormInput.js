@@ -72,6 +72,10 @@ class FormInput extends Component {
     }
   }
 
+  validatePassword = (value='') => {
+    return (value.length > 4)
+  }
+
   format(format='', value='') {
     switch(format) {
       case 'switch':
@@ -88,9 +92,10 @@ class FormInput extends Component {
     this.props.onChangeText(formattedValue);
   }
 
-  textInput = () => {
+  textInput = (props) => {
     return (
-      <TextInput {...this.props}
+      <TextInput {...props}
+               {...this.props}
                onChangeText={this.onChangeText}
                selectionColor='#6699FF'
                style={[styles.inputs, styles.textField]} />
@@ -109,6 +114,8 @@ class FormInput extends Component {
     switch (type) {
       case 'switch':
         return this.switchInput();
+      case 'password':
+        return this.textInput({secureTextEntry: true, keyboardAppearance: 'dark'});
       default:
         return this.textInput();
     }
@@ -116,7 +123,10 @@ class FormInput extends Component {
 
   render() {
     const formattedValue = this.format(this.props.format, this.props.value);
-    const validStyles = this.validateRequired(formattedValue) ? {} : styles.error;
+    let validStyles = this.validateRequired(formattedValue) ? {} : styles.error;
+    if (this.props.format === 'password') {
+      validStyles = this.validatePassword(formattedValue) ? validStyles : styles.error;
+    }
 
     return (
       <View style={styles.inputRow}>

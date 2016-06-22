@@ -86,17 +86,19 @@ class Account extends Component {
           <Image style={styles.avatar} source={{uri: user.avatar}} />
         </TouchableOpacity>
         <View style={styles.nameContainer}>
-          <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
-            <Icon name="user" style={styles.icon} />
-            <Text style={styles.info}>
-              {`${user.first_name} ${user.last_name}`}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
-            <Icon name="envelope" style={[styles.icon, styles.envelope]} />
-            <Text style={styles.info} numberOfLines={1}>
-              {user.email}
-            </Text>
+          <TouchableOpacity onPress={this.props.editAccountInfo}>
+            <View style={styles.infoRow}>
+              <Icon name="user" style={styles.icon} />
+              <Text style={styles.info} numberOfLines={1}>
+                {`${user.first_name} ${user.last_name}`}
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Icon name="envelope" style={[styles.icon, styles.envelope]} />
+              <Text style={styles.info} numberOfLines={1}>
+                {user.email}
+              </Text>
+            </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
             <Icon name="unlock-alt" style={styles.icon} />

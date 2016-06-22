@@ -19,6 +19,7 @@ import AnnualBudgetsContainer from './AnnualBudgetsContainer';
 import AnnualBudgetItemFormContainer from './AnnualBudgetItemFormContainer';
 import AccountContainer from './AccountContainer';
 import PhotoFormContainer from './PhotoFormContainer';
+import AccountInfoFormContainer from './AccountInfoFormContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -125,6 +126,7 @@ class AppContainer extends Component {
 			'AnnualBudget',
 			'AnnualBudgetItemForm',
 			'PhotoForm',
+			'AccountInfoForm',
 		]
 		let child = navState.children[navState.index]
 		return child && disabledScenes.includes(child.key);
@@ -148,6 +150,7 @@ class AppContainer extends Component {
 			case 'BudgetItemExpenseForm':
 			case 'AnnualBudgetItemForm':
 			case 'PhotoForm':
+			case 'AccountInfoForm':
 				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
       default:
 	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
@@ -162,6 +165,7 @@ class AppContainer extends Component {
 			case 'BudgetItemExpenseForm':
 			case 'AnnualBudgetItemForm':
 			case 'PhotoForm':
+			case 'AccountInfoForm':
 				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
 			default:
 				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
@@ -191,7 +195,8 @@ class AppContainer extends Component {
 			'BudgetItemForm',
 			'BudgetItemExpenseForm',
 			'AnnualBudgetItemForm',
-			'PhotoForm'
+			'PhotoForm',
+			'AccountInfoForm',
 		];
     return horizontalScenes.includes(key);
   }
@@ -222,6 +227,8 @@ class AppContainer extends Component {
 				return <AccountContainer />
 			case 'PhotoForm':
 				return <PhotoFormContainer />
+			case 'AccountInfoForm':
+				return <AccountInfoFormContainer />
 		}
 	}
 }

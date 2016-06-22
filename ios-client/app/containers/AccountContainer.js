@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
 		updatePhoto: (user) => {
 			dispatch(navigatePush({key: 'PhotoForm', title: 'Edit Profile', user}))
 		},
+    editAccountInfo: () => {
+      dispatch(navigatePush({key: 'AccountInfoForm', title: 'Account Info'}))
+    },
 		updateUser: (user) => {
 			StoreUser(user)
 			dispatch(updateUser(user))
