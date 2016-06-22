@@ -7,7 +7,10 @@ module.exports = {
   savePhoto(params) {
     return postRequest('/update-avatar', params);
   },
+  changePassword(params) {
+    return postRequest('/change-password', params);
+  },
   accountInfo() {
-    return getRequest('/account-info')
+    return getRequest('/account-info');
   },
 }

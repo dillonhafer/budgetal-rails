@@ -73,7 +73,11 @@ class FormInput extends Component {
   }
 
   validatePassword = (value='') => {
-    return (value.length > 4)
+    return value.length > 7;
+  }
+
+  confirmPassword = (confirmation, password) => {
+    return confirmation === password;
   }
 
   format(format='', value='') {
@@ -93,9 +97,11 @@ class FormInput extends Component {
   }
 
   textInput = (props) => {
+    let knownProps = Object.assign({}, this.props, {})
+    delete knownProps.password
     return (
-      <TextInput {...props}
-               {...this.props}
+      <TextInput {...knownProps}
+               {...props}
                onChangeText={this.onChangeText}
                selectionColor='#6699FF'
                style={[styles.inputs, styles.textField]} />
@@ -126,6 +132,10 @@ class FormInput extends Component {
     let validStyles = this.validateRequired(formattedValue) ? {} : styles.error;
     if (this.props.format === 'password') {
       validStyles = this.validatePassword(formattedValue) ? validStyles : styles.error;
+    }
+
+    if (this.props.format === 'password_confirmation') {
+      validStyles = this.confirmPassword(formattedValue, this.props.password) ? validStyles : styles.error;
     }
 
     return (

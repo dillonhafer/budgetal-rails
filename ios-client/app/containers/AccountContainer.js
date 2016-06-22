@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
     editAccountInfo: () => {
       dispatch(navigatePush({key: 'AccountInfoForm', title: 'Account Info'}))
     },
+    changePassword: () => {
+      dispatch(navigatePush({key: 'ChangePasswordForm', title: 'Change Password'}))
+    },
 		updateUser: (user) => {
 			StoreUser(user)
 			dispatch(updateUser(user))

@@ -100,7 +100,7 @@ class Account extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{}} style={styles.infoRow}>
+          <TouchableOpacity onPress={this.props.changePassword} style={styles.infoRow}>
             <Icon name="unlock-alt" style={styles.icon} />
             <Text style={styles.info} numberOfLines={1}>
               Change Password
