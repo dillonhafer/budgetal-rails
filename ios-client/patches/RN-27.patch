@@ -70,7 +70,7 @@ class SceneView extends React.Component<any, SceneViewProps, any> {
   static propTypes = {
     sceneRenderer: PropTypes.func.isRequired,
     sceneRendererProps:
-      PropTypes.shape(NavigationPropTypes.SceneRenderer).isRequired,
+      PropTypes.shape(NavigationPropTypes.SceneRendererProps).isRequired,
   };
 
   shouldComponentUpdate(nextProps: SceneViewProps, nextState: any): boolean {
