@@ -21,6 +21,8 @@ import AccountContainer from './AccountContainer';
 import PhotoFormContainer from './PhotoFormContainer';
 import AccountInfoFormContainer from './AccountInfoFormContainer';
 import ChangePasswordFormContainer from './ChangePasswordFormContainer';
+import BudgetInfoContainer from './BudgetInfoContainer';
+import BudgetInfoButtonContainer from './BudgetInfoButtonContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -87,6 +89,7 @@ class AppContainer extends Component {
             style={this._headerStyles(navigationState)}
 						renderTitleComponent={this._renderTitle}
             renderLeftComponent={this._renderLeftComponent}
+            renderRightComponent={this._renderRightComponent}
 					/>
 				)}
 				renderScene={props => (
@@ -129,6 +132,7 @@ class AppContainer extends Component {
 			'PhotoForm',
 			'AccountInfoForm',
 			'ChangePasswordForm',
+			'BudgetInfo',
 		]
 		let child = navState.children[navState.index]
 		return child && disabledScenes.includes(child.key);
@@ -137,6 +141,15 @@ class AppContainer extends Component {
 	_openMenu = () => {
 		this.refs.SideMenu.openMenu(true);
 	}
+
+  _renderRightComponent = (props) => {
+    switch (props.scene.navigationState.key) {
+      case 'Budgets':
+        return <BudgetInfoButtonContainer />
+      default:
+        return null
+    }
+  }
 
   _renderLeftComponent = (props) => {
     switch (props.scene.navigationState.key) {
@@ -155,6 +168,8 @@ class AppContainer extends Component {
 			case 'AccountInfoForm':
 			case 'ChangePasswordForm':
 				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
+      case 'BudgetInfo':
+        return <BackButton onNavigate={props.onNavigate} text='Done' />
       default:
 	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
     }
@@ -170,6 +185,7 @@ class AppContainer extends Component {
 			case 'PhotoForm':
 			case 'AccountInfoForm':
 			case 'ChangePasswordForm':
+			case 'BudgetInfo':
 				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
 			default:
 				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
@@ -202,6 +218,7 @@ class AppContainer extends Component {
 			'PhotoForm',
 			'AccountInfoForm',
 			'ChangePasswordForm',
+			'BudgetInfo',
 		];
     return horizontalScenes.includes(key);
   }
@@ -236,6 +253,8 @@ class AppContainer extends Component {
 				return <AccountInfoFormContainer />
 			case 'ChangePasswordForm':
 				return <ChangePasswordFormContainer />
+      case 'BudgetInfo':
+				return <BudgetInfoContainer />
 		}
 	}
 }
