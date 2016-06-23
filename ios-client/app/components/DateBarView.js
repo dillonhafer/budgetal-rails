@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native'
 
+import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {monthName} from '../utils/ViewHelpers';
 
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class DateBar extends Component {
+class DateBarView extends Component {
   constructor(props) {
     super(props)
   }
@@ -110,14 +111,33 @@ class DateBar extends Component {
     )
   }
 
-  render() {
-    switch (this.props.type) {
+  _getBar(type) {
+    switch (type) {
       case 'year':
-        return this._renderYear()
+        return this._renderYear();
       default:
-        return this._renderMonthYear()
+        return this._renderMonthYear();
     }
+  }
+
+  render() {
+    const bar = this._getBar(this.props.type);
+
+    return (
+      <View style={this.props.style}>
+        {bar}
+        {this.props.children}
+        <DatePickerWithAccessory showDatePicker={this.props.showDatePicker}
+                                 type={this.props.type}
+                                 onDone={this.props.toggleDatePicker}
+                                 onValueChange={this.props.onDateChange}
+                                 beginningYear={this.props.beginningYear}
+                                 endingYear={this.props.endingYear}
+                                 year={this.props.year}
+                                 month={this.props.month} />
+      </View>
+    )
   }
 }
 
-module.exports = DateBar;
+module.exports = DateBarView;

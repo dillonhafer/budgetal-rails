@@ -12,13 +12,12 @@ import {
 const {width} = Dimensions.get('window')
 const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
 import SwipeableListView from 'SwipeableListView';
-import DateBar from './DateBar';
+import DateBarView from './DateBarView';
 import {reduce,where} from 'lodash-node'
 
 import {all} from '../data/AnnualBudgets';
 import {assign, findIndex} from 'lodash-node';
 import {alert, confirm}   from '../utils/window';
-import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 import {deleteItem} from '../data/AnnualBudgets';
 import {numberToCurrency, dueDate} from '../utils/ViewHelpers';
 
@@ -315,18 +314,15 @@ class AnnualBudget extends Component {
     const dataBlob = {'budget_items': this.props.budgetItems};
     const budgetItems = ds.cloneWithRowsAndSections(dataBlob);
 
-    const dateManagerProps = {
-      beginningYear: 2015,
-      endingYear: new Date().getFullYear()+2,
-      year: this.props.year,
-    }
-
     return (
-      <View style={styles.container}>
-        <DateBar type='year'
-                 onDateChange={this._updateBudget}
-                 toggleDatePicker={this.toggleDatePicker}
-                 {...dateManagerProps} />
+      <DateBarView type='year'
+               style={styles.container}
+               onDateChange={this.onYearChange}
+               showDatePicker={this.state.showDatePicker}
+               beginningYear={2015}
+               endingYear={new Date().getFullYear()+2}
+               year={this.props.year}
+               toggleDatePicker={this.toggleDatePicker}>
 
         <SwipeableListView style={styles.list}
                   bounceFirstRowOnMount={true}
@@ -340,13 +336,7 @@ class AnnualBudget extends Component {
                   renderRow={this._renderRow}
                   renderFooter={this.footerRow}
                   renderSeparator={this.separator} />
-
-        <DatePickerWithAccessory type='year'
-                                 onDateChange={this.onYearChange}
-                                 showDatePicker={this.state.showDatePicker}
-                                 onDone={this.toggleDatePicker}
-                                 {...dateManagerProps} />
-      </View>
+        </DateBarView>
     );
   }
 }

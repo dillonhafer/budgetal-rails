@@ -8,10 +8,9 @@ import {
   View,
 } from 'react-native'
 
-import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 import {findCategory} from '../data/budget_category';
 import {numberToCurrency, categoryIcon} from '../utils/ViewHelpers';
-import DateBar from './DateBar';
+import DateBarView from './DateBarView';
 import {find} from 'lodash-node';
 import StyleSheet from './StyleSheet';
 
@@ -75,11 +74,6 @@ class Budgets extends Component {
   toggleDatePicker = () => {
     var status = this.state.showDatePicker
     this.setState({showDatePicker: !status})
-  }
-
-  updateBudget = (json) => {
-    var ds = this.state.dataSource;
-    this.setState({dataSource: ds.cloneWithRows(json.budget.budget_categories)});
   }
 
   componentDidMount() {
@@ -147,19 +141,17 @@ class Budgets extends Component {
   render() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const dataSource = ds.cloneWithRows(this.props.budgetCategories)
-    const dateManagerProps = {
-      beginningYear: 2015,
-      endingYear: new Date().getFullYear()+2,
-      year: this.props.budget.year,
-      month: this.props.budget.month,
-    }
 
     return (
-      <View style={styles.container}>
-        <DateBar onDateChange={this.onDateChange}
-                 toggleDatePicker={this.toggleDatePicker}
-                 {...dateManagerProps} />
-
+      <DateBarView onDateChange={this.onDateChange}
+               style={styles.container}
+               toggleDatePicker={this.toggleDatePicker}
+               showDatePicker={this.state.showDatePicker}
+               type='year-month'
+               beginningYear={2015}
+               endingYear={new Date().getFullYear()+2}
+               year={this.props.budget.year}
+               month={this.props.budget.month}>
         <ListView style={styles.list}
                   initialListSize={12}
                   scrollsToTop={this.props.scrollsToTop}
@@ -168,13 +160,7 @@ class Budgets extends Component {
                   dataSource={dataSource}
                   renderSeparator={this.separator}
                   renderRow={this._renderRow} />
-
-        <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
-                                 type='year-month'
-                                 onDone={this.toggleDatePicker}
-                                 onValueChange={this.onDateChange}
-                                 {...dateManagerProps} />
-      </View>
+      </DateBarView>
     )
   }
 }
