@@ -18,13 +18,13 @@ const styles = StyleSheet.create({
   icon: {
     textAlign: 'center',
     color: '$backButtonColor',
-    fontSize: 16,
+    fontSize: 20,
+    width: 20,
+    height: 20,
   },
   radius: {
     padding: 4,
     borderRadius: 25 /2,
-    width: 25,
-    height: 25,
     borderWidth: 1,
     borderColor: '$white',
     justifyContent: 'center',
@@ -36,9 +36,7 @@ class BudgetInfoButton extends Component {
   render() {
     return (
       <TouchableOpacity style={styles.buttonContainer} onPress={this.props.showBudgetInfo}>
-        <View style={styles.radius}>
-          <Icon name="info" style={styles.icon} />
-        </View>
+        <Icon name="pie-chart" style={styles.icon} />
       </TouchableOpacity>
     )
   }
