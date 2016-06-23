@@ -42,7 +42,6 @@ class Statistics extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.budget, '<= budget')
     this._updateList(this.props.budget.year,this.props.budget.month)
   }
 
@@ -82,7 +81,6 @@ class Statistics extends Component {
   }
 
   render() {
-    console.log('cats', this.props)
     return (
       <DateBarView onDateChange={this.onDateChange}
                style={styles.container}
