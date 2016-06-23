@@ -13,6 +13,7 @@ const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
 import SwipeableListView from 'SwipeableListView';
 
 import {reduce,where} from 'lodash-node'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
@@ -21,6 +22,26 @@ const styles = StyleSheet.create({
     paddingBottom: 35,
     flex: 1,
     alignItems: 'center',
+  },
+  emptyRow: {
+    alignItems: 'center',
+    paddingBottom: 45,
+  },
+  importButtonText: {
+    fontWeight: 'bold',
+    color: '$green',
+    marginLeft: 8,
+  },
+  importButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '$green',
+    borderRadius: 5,
+    width: 200,
+    padding: 8,
+    overflow: 'hidden',
   },
   addButton: {
     color: '$blue',
@@ -144,10 +165,16 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontWeight: 'bold'
-  }
+  },
+  icon: {
+    color: '$green',
+    fontSize: 16,
+    width: 16,
+    height: 16,
+  },
 });
 
-import {findCategory}     from '../data/budget_category';
+import {findCategory,importCategory}     from '../data/budget_category';
 import {assign, findIndex} from 'lodash-node';
 import {alert, confirm}   from '../utils/window';
 import {destroyItem}      from '../data/budget_item';
@@ -166,6 +193,19 @@ class BudgetCategory extends Component {
 
   componentDidMount() {
     this._updateCategory();
+  }
+
+  importBudgetItems = async() => {
+    try {
+      let resp = await importCategory(this.props.budgetCategory.id);
+      if (resp !== null) {
+        const budgetCategory = Object.assign({}, this.props.budgetCategory, {budget_items: resp.imported})
+        this.props.updateCategory(budgetCategory)
+        alert({title: 'Import Finished', message: resp.message})
+      }
+    } catch (err) {
+      this.props.signOut();
+    }
   }
 
   _updateCategory = async() => {
@@ -226,8 +266,12 @@ class BudgetCategory extends Component {
 
     if (isEmpty)
       return (
-        <View>
+        <View style={styles.emptyRow}>
           <Text style={styles.empty}>{emptyMessage}</Text>
+          <TouchableOpacity style={styles.importButton} onPress={this.importBudgetItems}>
+            <Icon name="copy" style={styles.icon} />
+            <Text style={styles.importButtonText}>Import Budget Items</Text>
+          </TouchableOpacity>
         </View>
       )
   }
