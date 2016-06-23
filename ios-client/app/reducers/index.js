@@ -5,6 +5,7 @@ import annualBudgetState from './AnnualBudgets'
 import budgetState from './Budgets'
 import sessionState from './Sessions'
 import accountState from './Account'
+import statisticsState from './Statistics'
 
 const appReducers = combineReducers({
 	navigationState,
@@ -12,6 +13,7 @@ const appReducers = combineReducers({
 	annualBudgetState,
 	sessionState,
 	accountState,
+  statisticsState,
 })
 
 export default appReducers

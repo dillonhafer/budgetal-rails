@@ -1,14 +1,26 @@
 import { connect } from 'react-redux'
 import Statistics from '../components/Statistics'
+import {updateStats, updateBudgetDate} from '../actions/Statistics'
 
 const mapStateToProps = (state) => {
+  const budget = state.statisticsState.budget;
+  const budgetCategories = state.statisticsState.budgetCategories;
 	return {
+    budget, budgetCategories
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-	}
+    endSession: (msg) => {
+    },
+    updateStats: (budget) => {
+      dispatch(updateStats(budget));
+    },
+    updateBudgetDate: (year,month) => {
+			dispatch(updateBudgetDate(year,month))
+		},
+ 	}
 }
 
 export default connect(
