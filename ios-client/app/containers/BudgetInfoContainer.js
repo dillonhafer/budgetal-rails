@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import BudgetInfo from '../components/BudgetInfo'
 import { updateBudget } from '../actions/Budgets'
+import { navigatePush } from '../actions/Navigation'
 
 const mapStateToProps = (state) => {
 	return {
@@ -16,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
 		updateBudget: (budget) => {
 			dispatch(updateBudget(budget))
 		},
+    editMonthlyIncome: () => {
+      dispatch(navigatePush({key: 'MonthlyIncomeForm', title: 'Edit Monthly Income'}))
+    }
 	}
 }
 

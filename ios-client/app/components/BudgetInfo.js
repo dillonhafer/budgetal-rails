@@ -160,7 +160,7 @@ class BudgetInfo extends Component {
                 </View>
               </View>
             </View>
-            <TouchableOpacity style={styles.editButton} onPress={()=>{}}>
+            <TouchableOpacity style={styles.editButton} onPress={this.props.editMonthlyIncome}>
               <Text>You have</Text>
               <Text style={styles.amount}>{numberToCurrency(this.props.budget.not_budgeted)}</Text>
               <Text>out of</Text>

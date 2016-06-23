@@ -10,6 +10,8 @@ Budgets::Application.routes.draw do
 
   resources :budgets, only: [:update]
   get '/budgets/:year/:month' => 'budgets#show'
+  put '/budgets/:year/:month' => 'budgets#update'
+
   get '/budget-categories/:id/import' => 'budget_categories#import'
   get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
   get '/budget-categories/:id' => 'budget_categories#show'

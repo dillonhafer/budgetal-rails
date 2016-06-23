@@ -2,32 +2,23 @@ class BudgetsController < AuthenticatedController
   helper_method :budget, :updated_budget
   respond_to :json, only: %w{show update}
 
-  def show
-    respond_with budget
-  end
-
   def update
-    if updated_budget.update_attributes(budget_params)
+    if budget.update({monthly_income: params[:monthly_income]})
       flash[:notice] = "Updated budget"
-      render :budget
+      render :show
     else
-      render json: { errors: updated_budget.errors}, status: 422
+      render json: { errors: budget.errors}, status: 422
     end
   end
 
   private
 
-  def updated_budget
-    @budget ||= current_user.budgets.find(params[:id])
-  end
-
   def budget
-    @budget ||= current_user.budgets
-                            .includes(:budget_categories, :budget_items, :budget_item_expenses)
-                            .find_by(year: params[:year], month: params[:month])
-  end
-
-  def budget_params
-    params.require(:budget).permit(:monthly_income)
+    budget_scope = current_user.budgets.includes(:budget_categories, :budget_items, :budget_item_expenses)
+    @budget ||= if params[:id]
+                  budget_scope.find(params[:id])
+                else
+                  budget_scope.find_by(year: params[:year], month: params[:month])
+                end
   end
 end
