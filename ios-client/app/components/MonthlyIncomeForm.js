@@ -101,7 +101,7 @@ class MonthlyIncomeForm extends Component {
     const validForm = this._validForm(b);
     return (
       <View style={styles.form}>
-        <Text style={styles.label}>Annual Budget Item</Text>
+        <Text style={styles.label}>Budget</Text>
 
         <FormInput placeholder='($4,000.00)'
                    required={true}
@@ -109,7 +109,7 @@ class MonthlyIncomeForm extends Component {
                    keyboardType='decimal-pad'
                    value={b.monthly_income}
                    onChangeText={(monthly_income) => this._updateField('monthly_income', monthly_income)}
-                   label='Budgeted'
+                   label='Monthly Income'
                    defaultValue={b.monthly_income} />
 
         {this._saveButton(validForm)}
