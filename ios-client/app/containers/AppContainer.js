@@ -124,7 +124,7 @@ class AppContainer extends Component {
 			'BudgetItem',
 			'BudgetItemForm',
 			'BudgetItemExpenseForm',
-			'AnnualBudget',
+			'AnnualBudgets',
 			'AnnualBudgetItemForm',
 			'PhotoForm',
 			'AccountInfoForm',
