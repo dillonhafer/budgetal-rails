@@ -9,6 +9,7 @@ Budgets::Application.routes.draw do
   delete '/sessions/sign-out' => 'sessions#destroy'
 
   resources :budgets, only: [:update]
+  get '/budgets/:year/:month' => 'budgets#show'
   get '/budget-categories/:id/import' => 'budget_categories#import'
   get '/budget-categories/:year/:month/:id' => 'budget_categories#show'
   get '/budget-categories/:id' => 'budget_categories#show'
