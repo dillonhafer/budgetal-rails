@@ -6,7 +6,7 @@ class Hamburger extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.openMenu}>
+        <TouchableOpacity onPress={this.props.openMenu} accessible={true} accessibilityLabel={'Menu'}>
           <Icon name="reorder" size={24} color="#ffffff" />
         </TouchableOpacity>
       </View>

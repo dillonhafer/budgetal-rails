@@ -43,7 +43,7 @@ class MenuItem extends Component {
   render() {
     return (
       <View>
-        <TouchableHighlight underlayColor={'#222222'} onPress={this.props.onPress}>
+        <TouchableHighlight underlayColor={'#222222'} onPress={this.props.onPress} accessible={true} accessibilityLabel={this.props.text}>
           <View style={styles.container}>
             <Image source={this.props.image} style={styles.image} />
             <Text style={styles.text}>{this.props.text}</Text>
