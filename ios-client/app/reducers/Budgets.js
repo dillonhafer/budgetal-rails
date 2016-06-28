@@ -10,6 +10,8 @@ import {
   BUDGET_ITEM_EXPENSE_DELETED,
 } from '../constants/ActionTypes'
 
+import {findIndex} from 'lodash-node';
+
 const initialBudgetState = {
 	key: 'Budget',
 	budget: {
