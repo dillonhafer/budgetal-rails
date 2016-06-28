@@ -53,8 +53,8 @@ class SignIn extends Component {
     }
   }
 
-  saveRemember = async () => {
-    AsyncStorage.multiSet([[REMEMBER_EMAIL, String(this.state.email)], [REMEMBER_SWITCH, String(this.state.rememberEmail)]]);
+  saveRemember = async (email) => {
+    AsyncStorage.multiSet([[REMEMBER_EMAIL, String(email)], [REMEMBER_SWITCH, String(this.state.rememberEmail)]]);
   }
 
   sigenedIn(json) {
@@ -64,8 +64,8 @@ class SignIn extends Component {
     return saveTokens(key, token, user);
   }
 
-  missingCredentials() {
-    return (this.state.email.length && this.state.password.length) ? false : true;
+  missingCredentials(email, password) {
+    return (email.length && password.length) ? false : true;
   }
 
   showActivity() {
@@ -82,17 +82,20 @@ class SignIn extends Component {
   }
 
   buttonClicked = async () => {
-    if (this.missingCredentials()) {
+    this.blurInputs();
+
+    let email = this.state.email;
+    let password = this.state.password;
+    if (!email.length && !password.length) {
       window.alert({title: 'Missing Credentials', message: "Please enter your email and password"});
       return;
     }
 
-    this.blurInputs();
     this.showActivity();
-    let user = {email: this.state.email, password: this.state.password};
-    this.saveRemember();
+    let user = {email,password};
+    this.saveRemember(email);
     try {
-      let json = await signIn({user: user});
+      let json = await signIn({user});
       if (json != null) {
         this.hideActivity();
         if (json.success) {
@@ -116,17 +119,26 @@ class SignIn extends Component {
         <Image style={styles.logo} source={require('image!logo')} />
         <TextInput style={styles.inputs} keyboardType='email-address'
                    autoCorrect={false}
+                   accessible={true}
+                   accessibilityLabel={'Email'}
                    autoCapitalize='none'
                    ref="email"
-                   onChangeText={(email) => this.setState({email})}
+                   onBlur={(e) => this.setState({email: e.nativeEvent.text})}
                    placeholder='email@example.com'
-                   value={this.state.email} />
-        <TextInput placeholder='Password' ref="password" password={true} style={styles.inputs}
+                   defaultValue={this.state.email} />
+        <TextInput placeholder='Password'
+                   ref="password"
+                   password={true}
+                   style={styles.inputs}
+                   accessible={true}
+                   accessibilityLabel={'Password'}
                    onChangeText={(password) => this.setState({password})}
-                   value={this.state.password} />
+                   defaultValue={this.state.password} />
 
         <TouchableHighlight
-          style={styles.button}
+          style={styles.button}          
+          accessible={true}
+          accessibilityLabel={'Sign In'}
           underlayColor='#5582DB'
           onPress={this.buttonClicked}>
           <Text style={styles.buttonText}>Sign In</Text>
