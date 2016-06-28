@@ -7,7 +7,7 @@ import {
 
 import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {monthName} from '../utils/ViewHelpers';
+import {monthName,monthStep} from '../utils/ViewHelpers';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
@@ -54,7 +54,8 @@ class DateBarView extends Component {
   }
 
   _changeMonth = (month, year, amount) => {
-    this.props.onDateChange(year,month+amount);
+    const newDate = monthStep(month,year,amount);
+    this.props.onDateChange(newDate.year,newDate.month);
   }
 
   _changeYear = (year, amount) => {

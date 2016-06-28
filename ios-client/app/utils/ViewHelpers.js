@@ -44,9 +44,9 @@ const ViewHelpers = {
   },
   categoryIcon(categoryName) {
     if (categoryName == "Medical/Health")
-      return AppImages.health;
+      return AppImages('health');
     else {
-      return AppImages[categoryName.toLowerCase()];
+      return AppImages(categoryName.toLowerCase());
     }
   },
   pluralize(count, singlular, plural) {
@@ -56,7 +56,7 @@ const ViewHelpers = {
 
     return `${count} ${word}`;
   },
-  fullSessionDate(date) {
+  _fullSessionDate(date) {
     let sessionDate = new Date(date);
     return `${sessionDate.toDateString()} at ${sessionDate.toLocaleTimeString()}`;
   },
@@ -66,7 +66,7 @@ const ViewHelpers = {
     if (secs < 3600) return `${ViewHelpers.pluralize(Math.floor(secs / 60), 'minute', 'minutes')} ago`;
     if (secs < 86400) return `${ViewHelpers.pluralize(Math.floor(secs / 3600), 'hour', 'hours')} ago`;
     if (secs < 604800) return `${ViewHelpers.pluralize(Math.floor(secs / 86400), 'day', 'days')} ago`;
-    return ViewHelpers.fullSessionDate(date);
+    return ViewHelpers._fullSessionDate(date);
   },
   humanUA(userAgent) {
     let ua = parser(userAgent);
@@ -76,6 +76,25 @@ const ViewHelpers = {
     }
     return text;
   },
+  monthStep(month, year, amount) {
+    let newYear, newMonth;
+
+    switch (month) {
+      case 1:
+        newMonth = amount > 0 ? 2 : 12;
+        newYear  = amount > 0 ? year : year + amount;
+        break;
+      case 12:
+        newMonth = amount > 0 ? 1 : 11;
+        newYear  = amount > 0 ? year + amount : year;
+        break;
+      default:
+        newMonth = month + amount;
+        newYear  = year;
+    }
+
+    return {year: newYear, month: newMonth}
+  }
 };
 
 module.exports = ViewHelpers;
