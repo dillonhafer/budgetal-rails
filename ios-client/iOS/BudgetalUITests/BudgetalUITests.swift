@@ -66,7 +66,9 @@ class BudgetalUITests: XCTestCase {
     }
     
     func testSignIn() {
+      let page = SignInPage()
       let user = User(email: "dh@dillonhafer.com", password: "password")
-      SignInPage().signInWith(user)
+
+      page.signInWith(user)
     }
 }
