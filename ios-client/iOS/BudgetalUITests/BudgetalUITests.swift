@@ -19,6 +19,7 @@ class BudgetalUITests: XCTestCase {
     
     override func tearDown() {
       super.tearDown()
+      SignInPage().signOut()
     }
     
     func testSignIn() {

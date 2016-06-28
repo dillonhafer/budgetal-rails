@@ -28,4 +28,11 @@ class SignInPage {
     app.otherElements["Sign In"].tap()
     app.alerts["Welcome Back"].collectionViews.buttons["OK"].tap()
   }
+
+  func signOut() {
+    let app = XCUIApplication()
+    app.otherElements["Menu"].tap()
+    app.otherElements["Sign Out"].tap()
+    app.alerts["Signed Out"].collectionViews.buttons["OK"].tap()
+  }
 }
