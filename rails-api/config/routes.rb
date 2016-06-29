@@ -41,6 +41,8 @@ Budgets::Application.routes.draw do
 
   get '/admin/users' => 'admin#users'
 
+  get "/teapot", to: proc {|env| [418, {}, ['{"isTeapot": true}']] }
+
   if Rails.env.test?
     get "/*path", to: proc {|env| [200, {}, [File.read(Rails.public_path.join('index.html'))]] }
   end
