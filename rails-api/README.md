@@ -1,4 +1,4 @@
-Rails API
+Rails API [![Codeship](https://img.shields.io/codeship/00c1fa10-b5c6-0133-b267-7a55e39a3182/master.svg?style=flat-square)](https://codeship.com/projects/134157)
 --------
 
 This is the JSON server written in Ruby
