@@ -14,6 +14,10 @@ test:
   <<: *defaults
   database: <%= ENV.fetch('RAILS_TEST_DATABASE', 'budgetal_test') %>
 
+mobile_integration:
+  <<: *defaults
+  database: <%= ENV.fetch('RAILS_MOBILE_INTEGRATION_DATABASE', 'budgetal_mobile_integration') %>
+
 staging:
   <<: *defaults
 

@@ -44,4 +44,10 @@ Budgets::Application.routes.draw do
   if Rails.env.test?
     get "/*path", to: proc {|env| [200, {}, [File.read(Rails.public_path.join('index.html'))]] }
   end
+
+  if Rails.env.mobile_integration?
+    get '/tests/setup'    => 'tests#setup'
+    get '/tests/teardown' => 'tests#teardown'
+    get '/tests/reset'    => 'tests#reset'
+  end
 end
