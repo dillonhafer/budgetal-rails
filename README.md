@@ -18,7 +18,7 @@ https://api.budgetal.com/docs
 **Clients**
 
 1. [React](https://github.com/dillonhafer/budgetal/tree/master/react-webclient)
-2. [iOS](https://github.com/dillonhafer/budgetal/tree/master/ios-client) *(WIP)*
+2. [React Native](https://github.com/dillonhafer/budgetal/tree/master/ios-client)
 
 ## Credits
 
