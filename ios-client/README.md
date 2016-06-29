@@ -1,7 +1,7 @@
 React Native Client
 --------
 
-This is the React Native client
+This is the React Native client for [Budgetal](https://github.com/dillonhafer/budgetal)
 
 Setup
 -----
