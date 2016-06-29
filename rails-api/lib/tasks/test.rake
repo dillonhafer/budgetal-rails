@@ -2,6 +2,18 @@ def test_commands
   ["bundle exec rspec spec --exclude-pattern 'spec/features/*'"]
 end
 
+desc "Clear all running servers"
+task :clear do
+  pids = []
+  Dir.glob('tmp/pids/*.pid') do |file|
+    pids << File.read(file).to_i
+  end
+
+  pids.each do |pid|
+    Process.kill("HUP", pid)
+  end
+end
+
 desc "Run both test suites"
 task :all_tests do
   test_commands.each do |cmd|
