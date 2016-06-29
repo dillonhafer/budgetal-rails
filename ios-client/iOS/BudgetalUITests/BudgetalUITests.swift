@@ -13,7 +13,9 @@ class SignInTest: XCTestCase {
       super.setUp()
       TestHelper().setup((self.invocation?.selector.description)!)
       continueAfterFailure = false
-      XCUIApplication().launch()
+      let app = XCUIApplication()
+      app.launchEnvironment = ["INTEGRATION_TEST_MODE": "TRUE"]
+      app.launch()
     }
 
     override func tearDown() {

@@ -10,7 +10,7 @@ import Foundation
 
 class TestHelper {
   private func request(type: String) {
-    let urlPath: String = "http://localhost:3000/tests/\(type)"
+    let urlPath: String = "http://localhost:3389/tests/\(type)"
     let url: NSURL = NSURL(string: urlPath)!
     let request1: NSURLRequest = NSURLRequest(URL: url)
     let response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil

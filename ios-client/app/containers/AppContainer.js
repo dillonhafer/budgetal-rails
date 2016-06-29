@@ -42,8 +42,8 @@ class AppContainer extends Component {
 	setServer = async() => {
     try {
       let api_url = await UserDefaults.stringForKey('api_server_preference');
-      if (api_url === null) {
-        api_url = 'https://api.budgetal.com';
+      if (this.props.testMode || api_url === null) {
+        api_url = this.props.defaultApiUrl;
       }
       setApiUrl(api_url);
     } catch (err) {
