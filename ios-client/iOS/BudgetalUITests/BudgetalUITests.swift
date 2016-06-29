@@ -8,24 +8,22 @@
 
 import XCTest
 
-class BudgetalUITests: XCTestCase {
+class SignInTest: XCTestCase {
     override func setUp() {
       super.setUp()
+      TestHelper().setup((self.invocation?.selector.description)!)
       continueAfterFailure = false
-      let app = XCUIApplication()
-      app.launchArguments = ["http://localhost:3388", "TESTING"]
-      app.launch()
+      XCUIApplication().launch()
     }
-    
+
     override func tearDown() {
+      SignInScene().signOut()
+      TestHelper().reset()
       super.tearDown()
-      SignInPage().signOut()
     }
     
     func testSignIn() {
-      let page = SignInPage()
       let user = User(email: "dh@dillonhafer.com", password: "password")
-
-      page.signInWith(user)
+      SignInScene().signInWith(user)
     }
 }

@@ -30,6 +30,7 @@
 		5128A2B61C6ACC7D00887CFA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2AE1C6ACC7D00887CFA /* Zocial.ttf */; };
 		5128A2B81C6B044F00887CFA /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2B71C6B044F00887CFA /* Settings.bundle */; };
 		5128A2C21C6C038200887CFA /* libRNUserDefaultsIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5128A2BF1C6C036A00887CFA /* libRNUserDefaultsIOS.a */; };
+		519877E31D23F86E005CA5BA /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519877E21D23F86E005CA5BA /* TestHelper.swift */; };
 		51AA1D981D22D2E500FBC4A5 /* BudgetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA1D971D22D2E500FBC4A5 /* BudgetalUITests.swift */; };
 		51AA1DA11D230ABD00FBC4A5 /* SignInScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA1DA01D230ABD00FBC4A5 /* SignInScene.swift */; };
 		51AA1DA31D230AFB00FBC4A5 /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA1DA21D230AFB00FBC4A5 /* TestExtensions.swift */; };
@@ -166,6 +167,7 @@
 		5128A2AE1C6ACC7D00887CFA /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		5128A2B71C6B044F00887CFA /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5128A2B91C6C036A00887CFA /* RNUserDefaultsIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUserDefaultsIOS.xcodeproj; path = "../node_modules/react-native-userdefaults-ios/RNUserDefaultsIOS.xcodeproj"; sourceTree = "<group>"; };
+		519877E21D23F86E005CA5BA /* TestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		51AA1D951D22D2E500FBC4A5 /* BudgetalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgetalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AA1D971D22D2E500FBC4A5 /* BudgetalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetalUITests.swift; sourceTree = "<group>"; };
 		51AA1D991D22D2E500FBC4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				51AA1D971D22D2E500FBC4A5 /* BudgetalUITests.swift */,
 				51AA1D991D22D2E500FBC4A5 /* Info.plist */,
 				51AA1DA21D230AFB00FBC4A5 /* TestExtensions.swift */,
+				519877E21D23F86E005CA5BA /* TestHelper.swift */,
 			);
 			path = BudgetalUITests;
 			sourceTree = "<group>";
@@ -674,6 +677,7 @@
 				51AA1DA11D230ABD00FBC4A5 /* SignInScene.swift in Sources */,
 				51AA1DA31D230AFB00FBC4A5 /* TestExtensions.swift in Sources */,
 				51AA1D981D22D2E500FBC4A5 /* BudgetalUITests.swift in Sources */,
+				519877E31D23F86E005CA5BA /* TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,17 +41,25 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "APP_PATH=&quot;$WORKSPACE_PATH/../../../../rails-api&quot;&#10;PREPARE=&quot;rake db:mobile_integration:prepare&quot;&#10;DAEMON=&quot;rails s -d -e=mobile_integration -P $APP_PATH/tmp/pids/mobile_integration.pid&quot;&#10;bash -l -c &quot;cd $APP_PATH &amp;&amp; $PREPARE &amp;&amp; $DAEMON&quot;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "PID_PATH=&quot;$WORKSPACE_PATH/../../../../rails-api/tmp/pids/mobile_integration.pid&quot;&#10;PID=&quot;$(cat $PID_PATH)&quot;&#10;bash -l -c &quot;kill $PID&quot;">
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "BudgetalTests.xctest"
-               BlueprintName = "BudgetalTests"
-               ReferencedContainer = "container:Budgetal.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
