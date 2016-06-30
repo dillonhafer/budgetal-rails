@@ -19,7 +19,6 @@ class SignInTest: XCTestCase {
     }
 
     override func tearDown() {
-      SignInScene().signOut()
       TestHelper().reset()
       super.tearDown()
     }
@@ -27,5 +26,7 @@ class SignInTest: XCTestCase {
     func testSignIn() {
       let user = User(email: "dh@dillonhafer.com", password: "password")
       SignInScene().signInWith(user)
+      XCTAssert(XCUIApplication().staticTexts["Budgets"].exists)
+      SignInScene().signOut()
     }
 }
