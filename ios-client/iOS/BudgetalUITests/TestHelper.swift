@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import XCTest
 
-class TestHelper {
+class TestHelper : XCTestCase {
   private func request(type: String) {
     let urlPath: String = "http://localhost:3389/tests/\(type)"
     let url: NSURL = NSURL(string: urlPath)!
@@ -30,6 +31,14 @@ class TestHelper {
     } catch let error as NSError {
       print(error.localizedDescription)
     }
+  }
+
+  func clickAlert(text:String, button:String = "OK") {
+    let alert = XCUIApplication().alerts[text]
+    let exists = NSPredicate(format: "exists == true")
+    expectationForPredicate(exists, evaluatedWithObject: alert, handler: nil)
+    waitForExpectationsWithTimeout(5, handler: nil)
+    alert.collectionViews.buttons[button].tap()
   }
 
   func setup(test: String) {

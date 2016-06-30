@@ -13,7 +13,7 @@ struct User {
   var password: String?
 }
 
-class SignInScene {
+class SignInScene : XCTestCase {
   func signInWith(user: User) {
     let app = XCUIApplication()
     let emailField = app.textFields["Email"]
@@ -26,14 +26,14 @@ class SignInScene {
     passwordField.typeText(user.password!)
 
     app.otherElements["Sign In"].tap()
-    app.alerts["Welcome Back"].collectionViews.buttons["OK"].tap()
+    TestHelper().clickAlert("Welcome Back")
   }
 
   func signOut() {
     let app = XCUIApplication()
     app.otherElements["Menu"].tap()
     app.otherElements["Sign Out"].tap()
-    sleep(1)
-    app.alerts["Signed Out"].collectionViews.buttons["OK"].tap()
+
+    TestHelper().clickAlert("Signed Out")
   }
 }
