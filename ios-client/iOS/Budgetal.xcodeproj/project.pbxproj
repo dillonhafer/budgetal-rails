@@ -36,6 +36,7 @@
 		51AA1D981D22D2E500FBC4A5 /* SignInTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA1D971D22D2E500FBC4A5 /* SignInTest.swift */; };
 		51AA1DA11D230ABD00FBC4A5 /* SignInScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA1DA01D230ABD00FBC4A5 /* SignInScene.swift */; };
 		51AA1DA31D230AFB00FBC4A5 /* TestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AA1DA21D230AFB00FBC4A5 /* TestExtensions.swift */; };
+		51F0FFAD1D26BAA1003C817E /* BudgetItemScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F0FFAC1D26BAA1003C817E /* BudgetItemScene.swift */; };
 		573CE97BFFED461381E7DEA3 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB59F71EFDF04892827653CB /* libRNImagePicker.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
@@ -176,6 +177,7 @@
 		51AA1D991D22D2E500FBC4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51AA1DA01D230ABD00FBC4A5 /* SignInScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInScene.swift; sourceTree = "<group>"; };
 		51AA1DA21D230AFB00FBC4A5 /* TestExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestExtensions.swift; sourceTree = "<group>"; };
+		51F0FFAC1D26BAA1003C817E /* BudgetItemScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetItemScene.swift; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		EB59F71EFDF04892827653CB /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				51AA1DA01D230ABD00FBC4A5 /* SignInScene.swift */,
+				51F0FFAC1D26BAA1003C817E /* BudgetItemScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5109D4131D25C97900F98F93 /* BudgetItemTest.swift in Sources */,
+				51F0FFAD1D26BAA1003C817E /* BudgetItemScene.swift in Sources */,
 				51AA1DA11D230ABD00FBC4A5 /* SignInScene.swift in Sources */,
 				51AA1DA31D230AFB00FBC4A5 /* TestExtensions.swift in Sources */,
 				5109D4151D2699D500F98F93 /* DSL.swift in Sources */,

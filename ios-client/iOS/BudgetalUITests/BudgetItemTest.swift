@@ -22,17 +22,16 @@ class BudgetItemTest: XCTestCase {
 
   func testAddBudgetItem() {
     let user = User(email: "dh@dillonhafer.com", password: "password")
+    let budgetItem = BudgetItem(name: "My Charity", budgeted: "200")
+
     SignInScene().signInWith(user)
 
     tap_on("Charity Category")
-    tap_on("Add Budget Item")
 
-    fill_in("Name", with: "My Charity")
-    fill_in("Budgeted", with: "200")
+    BudgetItemScene().addBudgetItem(budgetItem)
 
-    tap_on("Save")
     tap_on("Back Button")
-
+    
     SignInScene().signOut()
   }
 }
