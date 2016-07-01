@@ -20,6 +20,8 @@ class SignInScene : XCTestCase {
     tap_on("Sign In")
 
     accept_alert("Welcome Back")
+
+    XCTAssert(XCUIApplication().staticTexts["Budgets"].exists)
   }
 
   func signOut() {

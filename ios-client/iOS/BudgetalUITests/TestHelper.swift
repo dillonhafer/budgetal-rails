@@ -33,12 +33,11 @@ class TestHelper : XCTestCase {
     }
   }
 
-  func clickAlert(text:String, button:String = "OK") {
-    let alert = XCUIApplication().alerts[text]
-    let exists = NSPredicate(format: "exists == true")
-    expectationForPredicate(exists, evaluatedWithObject: alert, handler: nil)
-    waitForExpectationsWithTimeout(5, handler: nil)
-    alert.collectionViews.buttons[button].tap()
+  func launchInTestEnvironment() {
+    continueAfterFailure = false
+    let app = XCUIApplication()
+    app.launchEnvironment = ["INTEGRATION_TEST_MODE": "TRUE"]
+    app.launch()
   }
 
   func setup(test: String) {
