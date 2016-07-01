@@ -20,6 +20,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		5109D4131D25C97900F98F93 /* BudgetItemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109D4121D25C97900F98F93 /* BudgetItemTest.swift */; };
+		5109D4151D2699D500F98F93 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109D4141D2699D500F98F93 /* DSL.swift */; };
 		5128A2AF1C6ACC7D00887CFA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2A71C6ACC7D00887CFA /* Entypo.ttf */; };
 		5128A2B01C6ACC7D00887CFA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2A81C6ACC7D00887CFA /* EvilIcons.ttf */; };
 		5128A2B11C6ACC7D00887CFA /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5128A2A91C6ACC7D00887CFA /* FontAwesome.ttf */; };
@@ -157,6 +159,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Budgetal/main.m; sourceTree = "<group>"; };
 		141676B4834A4C2AA9E248BC /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		5109D4121D25C97900F98F93 /* BudgetItemTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BudgetItemTest.swift; sourceTree = "<group>"; };
+		5109D4141D2699D500F98F93 /* DSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSL.swift; sourceTree = "<group>"; };
 		5128A2A71C6ACC7D00887CFA /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		5128A2A81C6ACC7D00887CFA /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		5128A2A91C6ACC7D00887CFA /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
@@ -329,6 +333,8 @@
 				51AA1D991D22D2E500FBC4A5 /* Info.plist */,
 				51AA1DA21D230AFB00FBC4A5 /* TestExtensions.swift */,
 				519877E21D23F86E005CA5BA /* TestHelper.swift */,
+				5109D4121D25C97900F98F93 /* BudgetItemTest.swift */,
+				5109D4141D2699D500F98F93 /* DSL.swift */,
 			);
 			path = BudgetalUITests;
 			sourceTree = "<group>";
@@ -674,8 +680,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5109D4131D25C97900F98F93 /* BudgetItemTest.swift in Sources */,
 				51AA1DA11D230ABD00FBC4A5 /* SignInScene.swift in Sources */,
 				51AA1DA31D230AFB00FBC4A5 /* TestExtensions.swift in Sources */,
+				5109D4151D2699D500F98F93 /* DSL.swift in Sources */,
 				51AA1D981D22D2E500FBC4A5 /* SignInTest.swift in Sources */,
 				519877E31D23F86E005CA5BA /* TestHelper.swift in Sources */,
 			);

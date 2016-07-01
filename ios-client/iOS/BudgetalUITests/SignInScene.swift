@@ -15,25 +15,17 @@ struct User {
 
 class SignInScene : XCTestCase {
   func signInWith(user: User) {
-    let app = XCUIApplication()
-    let emailField = app.textFields["Email"]
-    let passwordField = app.secureTextFields["Password"]
+    fill_in("Email", with: user.email!)
+    fill_in("Password", with: user.password!, secure: true)
+    tap_on("Sign In")
 
-    emailField.clearAndEnterText("")
-    emailField.typeText(user.email!)
-
-    passwordField.tap()
-    passwordField.typeText(user.password!)
-
-    app.otherElements["Sign In"].tap()
-    TestHelper().clickAlert("Welcome Back")
+    accept_alert("Welcome Back")
   }
 
   func signOut() {
-    let app = XCUIApplication()
-    app.otherElements["Menu"].tap()
-    app.otherElements["Sign Out"].tap()
+    tap_on("Menu")
+    tap_on("Sign Out")
 
-    TestHelper().clickAlert("Signed Out")
+    accept_alert("Signed Out")
   }
 }

@@ -1,5 +1,5 @@
 class MobileIntegrationTest
-  ALLOWED_METHODS = %w(testSignIn)
+  ALLOWED_METHODS = %w(testSignIn testAddBudgetItem)
 
   def self.setup(test)
     if ALLOWED_METHODS.include? test
@@ -20,6 +20,10 @@ class MobileIntegrationTest
   private
 
   def setup_testSignIn
+    FactoryGirl.create(:user, email: 'dh@dillonhafer.com', password: 'password')
+  end
+
+  def setup_testAddBudgetItem
     FactoryGirl.create(:user, email: 'dh@dillonhafer.com', password: 'password')
   end
 end
