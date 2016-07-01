@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :annual_budgets, dependent: :destroy
   has_many :annual_budget_items, through: :annual_budgets
   has_many :budgets, dependent: :destroy

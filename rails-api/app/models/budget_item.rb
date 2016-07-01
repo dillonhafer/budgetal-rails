@@ -1,4 +1,4 @@
-class BudgetItem < ActiveRecord::Base
+class BudgetItem < ApplicationRecord
   belongs_to :budget_category
   has_many :budget_item_expenses, dependent: :destroy
   has_many :allocation_plan_budget_items, dependent: :destroy
