@@ -24,7 +24,7 @@ end
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
 task :environment do
-  invoke :'rvm:use[ruby-2.3.0@budgetal]'
+  invoke :'rvm:use[ruby-2.3.1@budgetal]'
   queue! %[source #{deploy_to}/shared/overrides.env]
 end
 
