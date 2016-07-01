@@ -21,6 +21,7 @@ $ rails server
 ```bash
 $ cd budgetal/ios-client
 $ npm install
+$ bundle install
 $ patches/./patch.sh
 $ react-native run-ios
 ```
@@ -28,4 +29,4 @@ $ react-native run-ios
 ### Testing
 
 1. Unit tests: `npm test`
-2. Integration Tests: `open iOS/Budgetal.xcodeproj` then press `⌘U`
+2. Integration Tests: `npm run test:ios`
