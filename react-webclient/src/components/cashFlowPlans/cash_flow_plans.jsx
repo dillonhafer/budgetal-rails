@@ -240,7 +240,7 @@ export default class CashFlowPlans extends React.Component {
         if (!!resp.errors) {
           this._saveBudgetFail(budget, resp.errors);
         } else {
-          this._budgetUpdated(resp.budget);
+          this._budgetUpdated(resp);
         }
       })
       .catch(this._fetchDataFail)
