@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'devise',    '~> 3.5'
+gem 'devise',    '~> 4.1'
 gem 'jbuilder',  '~> 2.4'
 gem 'paperclip', '~> 4.3'
 gem 'pg',        '~> 0.18'
