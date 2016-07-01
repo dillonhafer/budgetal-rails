@@ -23,7 +23,6 @@ class BudgetItemTest: XCTestCase {
   func testAddBudgetItem() {
     let user = User(email: "dh@dillonhafer.com", password: "password")
     SignInScene().signInWith(user)
-    XCTAssert(XCUIApplication().staticTexts["Budgets"].exists)
 
     tap_on("Charity Category")
     tap_on("Add Budget Item")
