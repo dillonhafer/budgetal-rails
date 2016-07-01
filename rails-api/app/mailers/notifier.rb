@@ -1,4 +1,4 @@
-class Notifier < ActionMailer::Base
+class Notifier < ApplicationMailer
   attr_reader :user
   helper_method :user
 
