@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'devise',    '~> 4.1'
-gem 'jbuilder',  '~> 2.4'
+gem 'jbuilder',  '~> 2.5'
 gem 'paperclip', '~> 5.0'
 gem 'pg',        '~> 0.18'
 gem 'rack-cors', '~> 0.4.0'

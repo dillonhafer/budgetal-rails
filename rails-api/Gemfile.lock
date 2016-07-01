@@ -197,7 +197,7 @@ DEPENDENCIES
   devise (~> 4.1)
   factory_girl_rails
   faker
-  jbuilder (~> 2.4)
+  jbuilder (~> 2.5)
   paperclip (~> 5.0)
   pg (~> 0.18)
   pry
