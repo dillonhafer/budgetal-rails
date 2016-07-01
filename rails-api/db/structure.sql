@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.0
--- Dumped by pg_dump version 9.5.0
+-- Dumped from database version 9.5.1
+-- Dumped by pg_dump version 9.5.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -179,6 +179,18 @@ CREATE SEQUENCE annual_budgets_id_seq
 --
 
 ALTER SEQUENCE annual_budgets_id_seq OWNED BY annual_budgets.id;
+
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
 
 
 --
@@ -490,6 +502,14 @@ ALTER TABLE ONLY annual_budgets
 
 
 --
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
 -- Name: budget_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -729,41 +749,6 @@ ALTER TABLE ONLY budgets
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20130309203554');
+INSERT INTO schema_migrations (version) VALUES ('20130309203554'), ('20130309203611'), ('20130309203620'), ('20130309203629'), ('20130312024021'), ('20130312033713'), ('20130313023406'), ('20130614194616'), ('20130908170524'), ('20140228021003'), ('20140228021734'), ('20140305123349'), ('20140306011622'), ('20150222232818'), ('20150222235043'), ('20151010144448'), ('20151221065100'), ('20160113144631'), ('20160127002618');
 
-INSERT INTO schema_migrations (version) VALUES ('20130309203611');
-
-INSERT INTO schema_migrations (version) VALUES ('20130309203620');
-
-INSERT INTO schema_migrations (version) VALUES ('20130309203629');
-
-INSERT INTO schema_migrations (version) VALUES ('20130312024021');
-
-INSERT INTO schema_migrations (version) VALUES ('20130312033713');
-
-INSERT INTO schema_migrations (version) VALUES ('20130313023406');
-
-INSERT INTO schema_migrations (version) VALUES ('20130614194616');
-
-INSERT INTO schema_migrations (version) VALUES ('20130908170524');
-
-INSERT INTO schema_migrations (version) VALUES ('20140228021003');
-
-INSERT INTO schema_migrations (version) VALUES ('20140228021734');
-
-INSERT INTO schema_migrations (version) VALUES ('20140305123349');
-
-INSERT INTO schema_migrations (version) VALUES ('20140306011622');
-
-INSERT INTO schema_migrations (version) VALUES ('20150222232818');
-
-INSERT INTO schema_migrations (version) VALUES ('20150222235043');
-
-INSERT INTO schema_migrations (version) VALUES ('20151010144448');
-
-INSERT INTO schema_migrations (version) VALUES ('20151221065100');
-
-INSERT INTO schema_migrations (version) VALUES ('20160113144631');
-
-INSERT INTO schema_migrations (version) VALUES ('20160127002618');
 
