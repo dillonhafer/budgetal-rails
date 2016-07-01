@@ -1,4 +1,4 @@
-class TestsController < ActionController::Base
+class TestsController < ActionController::API
   def setup
     MobileIntegrationTest.setup(params[:test])
     head :ok

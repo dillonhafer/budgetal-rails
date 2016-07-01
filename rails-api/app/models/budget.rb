@@ -1,4 +1,4 @@
-class Budget < ActiveRecord::Base
+class Budget < ApplicationRecord
   belongs_to :user
   has_many :budget_categories, dependent: :destroy
   has_many :budget_items, through: :budget_categories

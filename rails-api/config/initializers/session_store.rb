@@ -1,1 +1,1 @@
-Budgets::Application.config.middleware.delete ActionDispatch::Session::CookieStore
+Rails.application.config.middleware.delete ActionDispatch::Session::CookieStore

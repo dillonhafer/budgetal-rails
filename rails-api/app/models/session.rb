@@ -1,4 +1,4 @@
-class Session < ActiveRecord::Base
+class Session < ApplicationRecord
   self.primary_key = 'authentication_key'
 
   belongs_to :user

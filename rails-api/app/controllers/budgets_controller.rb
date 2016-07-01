@@ -3,8 +3,8 @@ class BudgetsController < AuthenticatedController
   respond_to :json, only: %w{show update}
 
   def update
-    if budget.update({monthly_income: params[:monthly_income]})
-      flash[:notice] = "Updated budget"
+    if budget.update monthly_income: monthly_income
+      response.headers['X-Flash-Messages'] = {notice: 'Updated budget'}.to_json
       render :show
     else
       render json: { errors: budget.errors}, status: 422
@@ -12,6 +12,10 @@ class BudgetsController < AuthenticatedController
   end
 
   private
+
+  def monthly_income
+    params.fetch(:monthly_income, params[:budget][:monthly_income])
+  end
 
   def budget
     budget_scope = current_user.budgets.includes(:budget_categories, :budget_items, :budget_item_expenses)

@@ -1,6 +1,5 @@
-class AllocationPlan < ActiveRecord::Base
+class AllocationPlan < ApplicationRecord
   belongs_to :budget
-  belongs_to :user
   has_many :allocation_plan_budget_items, dependent: :destroy
   validates_presence_of :income
 
