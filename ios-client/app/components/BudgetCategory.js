@@ -282,7 +282,10 @@ class BudgetCategory extends Component {
     return (
       <View style={styles.addButtonContainer}>
         {this._getEmptyMessage()}
-        <TouchableOpacity onPress={this.props.addBudgetItem.bind(this,newBudgetItem)}>
+        <TouchableOpacity
+          onPress={this.props.addBudgetItem.bind(this,newBudgetItem)}
+          accessible={true}
+          accessibilityLabel={`Add Budget Item`}>
           <Text style={styles.addButton}>+ Add a budget item</Text>
         </TouchableOpacity>
       </View>
@@ -312,7 +315,11 @@ class BudgetCategory extends Component {
     }
 
     return (
-      <TouchableHighlight onPress={()=>this._pressRow(budgetItem)} underlayColor='#6699ff'>
+      <TouchableHighlight
+        onPress={()=>this._pressRow(budgetItem)}
+        accessible={true}
+        accessibilityLabel={`${budgetItem.name}`}
+        underlayColor='#6699ff'>
         <View style={styles.row}>
           <View style={styles.itemTitle}>
             <Text style={styles.title} numberOfLines={1}>

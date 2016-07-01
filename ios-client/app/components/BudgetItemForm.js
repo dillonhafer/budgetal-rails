@@ -84,7 +84,9 @@ class BudgetItemForm extends Component {
         <TouchableHighlight
           style={styles.saveButton}
           underlayColor={'#6699ff'}
-          onPress={this.saveItem}>
+          onPress={this.saveItem}
+          accessible={true}
+          accessibilityLabel={`Save`}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableHighlight>
       )
@@ -103,6 +105,8 @@ class BudgetItemForm extends Component {
         <Text style={styles.label}>Budget Item</Text>
         <FormInput placeholder='(Life Insurrance)'
                    required={true}
+                   accessible={true}
+                   accessibilityLabel={`Name`}
                    format='any'
                    autoCapitalize='words'
                    value={b.name}
@@ -112,6 +116,8 @@ class BudgetItemForm extends Component {
 
         <FormInput placeholder='($42.00)'
                    required={true}
+                   accessible={true}
+                   accessibilityLabel={`Budgeted`}
                    format='number'
                    keyboardType='decimal-pad'
                    value={b.amount_budgeted}

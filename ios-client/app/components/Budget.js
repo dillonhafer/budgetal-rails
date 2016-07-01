@@ -103,7 +103,12 @@ class Budgets extends Component {
   _renderRow = (budgetCategory: string, sectionID: number, rowID: number) => {
     let imageSource = categoryIcon(budgetCategory.name);
     return (
-      <TouchableHighlight key={rowID} onPress={this._pressRow.bind(this,budgetCategory.id)} underlayColor='#6699ff'>
+      <TouchableHighlight
+        key={rowID}
+        onPress={this._pressRow.bind(this,budgetCategory.id)}
+        underlayColor='#6699ff'
+        accessible={true}
+        accessibilityLabel={`${budgetCategory.name} Category`}>
         <View>
           <View style={styles.row}>
             <View style={styles.column}>
