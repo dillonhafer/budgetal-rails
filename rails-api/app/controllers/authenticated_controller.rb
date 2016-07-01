@@ -1,5 +1,5 @@
 class AuthenticatedController < ApplicationController
-  before_filter :authenticate_user_from_token
+  before_action :authenticate_user_from_token
   helper_method :current_user
   respond_to :json
 
