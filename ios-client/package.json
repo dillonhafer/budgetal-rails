@@ -48,7 +48,6 @@
   "dependencies": {
     "lodash-node": "^3.10.1",
     "moment": "^2.10.6",
-    "query-string": "^2.4.0",
     "react": "^15.1.0",
     "react-native": "^0.27.2",
     "react-native-extended-stylesheet": "^0.3.0",
