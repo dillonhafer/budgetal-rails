@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {PropTypes,Component} from 'react';
-import {AppState,NavigationExperimental,Text, View} from 'react-native';
+import {AppState, NavigationExperimental, View} from 'react-native';
 import StyleSheet from '../components/StyleSheet';
 import { connect } from 'react-redux';
 
