@@ -136,7 +136,7 @@ class SignIn extends Component {
                    defaultValue={this.state.password} />
 
         <TouchableHighlight
-          style={styles.button}          
+          style={styles.button}
           accessible={true}
           accessibilityLabel={'Sign In'}
           underlayColor='#5582DB'
@@ -147,7 +147,7 @@ class SignIn extends Component {
         <ActivityIndicatorIOS
           animating={this.state.animating}
           color='#fff'
-          style={{height: 80}}
+          style={{height: 80, opacity: (this.state.animating ? 1 : 0)}}
           size="large" />
       </View>
     );
