@@ -3,7 +3,7 @@ require 'support/feature_helper'
 
 feature 'Account', js: true do
   context 'Without a logged in user' do
-    it 'gets redirected' do
+    scenario 'gets redirected' do
       sign_out
       visit '/account-settings'
       expect(page).to have_selector('.flash-box')
@@ -13,7 +13,7 @@ feature 'Account', js: true do
   end
 
   context 'As a logged in user' do
-    it 'I can visit account page' do
+    scenario 'I can visit account page' do
       login
       visit root_path
       find('#js-user-greeting').click
