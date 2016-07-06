@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/feature_helper'
 
 feature 'Sign in', js: true do
   let(:user) { FactoryGirl.create(:user) }
@@ -30,9 +31,4 @@ feature 'Sign in', js: true do
       expect(page).not_to have_selector 'a', text: "Hello, #{user.first_name}!"
     end
   end
-end
-
-def sign_out
-  visit '/'
-  page.execute_script "localStorage.clear()"
 end
