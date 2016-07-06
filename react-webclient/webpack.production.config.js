@@ -11,6 +11,10 @@ if (process.env.API_URL === undefined) {
   throw "You must set API_URL env var"
 }
 
+if (process.env.WEBPACK_HOSTNAME === undefined) {
+  throw "You must set WEBPACK_HOSTNAME env var. This is the hostname you will use in production."
+}
+
 var config = _.merge({}, baseConfig, {
   cache: false,
   output: {
@@ -49,7 +53,8 @@ var config = _.merge({}, baseConfig, {
         unix: buildDate.getTime(),
         string: buildDate.toString(),
         date: buildDate.toDateString()
-      }
+      },
+      hostname: process.env.WEBPACK_HOSTNAME
     }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify(process.env.API_URL)

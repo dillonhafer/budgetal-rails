@@ -48,7 +48,7 @@
   },
   "scripts": {
     "test": "karma start",
-    "integration": "API_URL=http://localhost:3388 npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
+    "integration": "API_URL=http://localhost:3388 WEBPACK_HOSTNAME=www.budgetal.com npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
     "start": "webpack -w --config webpack.dev.config.js",
     "s": "npm run server",
     "server": "NODE_ENV=development node ./dev.server.js",
