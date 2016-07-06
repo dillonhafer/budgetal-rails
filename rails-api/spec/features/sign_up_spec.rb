@@ -1,11 +1,20 @@
 require 'rails_helper'
 require 'support/feature_helper'
 require 'support/mailer_helper'
-RSpec.configure {|r| r.include MailerHelper}
+RSpec.configure {|c| c.include MailerHelper}
 
-feature 'Sign up', js: true do
+feature 'Sign up', :js do
   context 'As a visitor' do
-    it 'I can sign up for budgetal' do
+    let(:user) do
+      {
+        email: Faker::Internet.email,
+        first_name: Faker::Name.first_name,
+        last_name: Faker::Name.last_name,
+        password: 'Password1'
+      }
+    end
+
+    scenario 'I can sign up for budgetal' do
       sign_out
       visit root_path
       click_on 'Sign in / Sign up'
@@ -22,13 +31,4 @@ feature 'Sign up', js: true do
       expect(first_email.to).to eq([user[:email]])
     end
   end
-end
-
-def user
-  @user ||= {
-    email: Faker::Internet.email,
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    password: 'Password1'
-  }
 end
