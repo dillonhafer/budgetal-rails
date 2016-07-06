@@ -1,53 +1,46 @@
 require 'rails_helper'
 require 'support/feature_helper'
+require 'support/pages/annual_budgets'
 
 feature 'Annual Budgets', :js do
   context 'As a logged in user' do
     context 'Without any annual budgets' do
-      it 'I can add/edit/delete a budget item' do
-        login
+      let(:annual_budget) { FactoryGirl.create(:annual_budget, year: Date.today.year, user: user) }
+      let(:annual_budgets_page) { Pages::AnnualBudgets.new }
+      let!(:user) { login }
+
+      scenario 'I can add an annual budget item' do
         visit root_path
-        find('[title="this is you!"]').click
+        click_link "Annual Budgets"
+        expect(page).to have_content("You haven't added any budget items yet.")
+        click_on 'Add an Item'
+        annual_budgets_page.edit_form_with(name: "Insurrance", amount: "3.00")
+      end
+
+      scenario 'I can edit an annual budget item' do
+        item = FactoryGirl.create(:annual_budget_item, annual_budget: annual_budget, name: 'Amazon', amount: '80.00')
+        visit root_path
+        click_link "Annual Budgets"
+        expect(page).to have_field("amount", with: "80.00")
+        expect(page).to have_field("name", with: "Amazon")
+
+        annual_budgets_page.edit_form_with(name: "Amazon Prime", amount: "100.00")
+
+        expect(page).not_to have_field("amount", with: "80.00")
+        expect(page).not_to have_field("name", with: "Amazon")
+      end
+
+      scenario 'I can delete an annual budget item' do
+        item = FactoryGirl.create(:annual_budget_item, annual_budget: annual_budget, name: 'Insurance', amount: '80.00')
+        visit root_path
         click_link "Annual Budgets"
 
-        # I have no budget items
-        expect(page).to have_content("You haven't added any budget items yet.")
-
-        # Add the item
-        click_on 'Add an Item'
-        edit_form_with(name: 'Insurrance', amount: '3')
-        expect(page).to have_field('amount', with: '3.00')
-        expect(page).to have_content("Saved Insurrance")
-        expect(page).to have_field('name', with: 'Insurrance')
-
-        # Edit the item
-        edit_form_with(name: 'Gas', amount: '6')
-        expect(page).to have_field('amount', with: '6.00')
-        expect(page).to have_field('name', with: 'Gas')
-        expect(page).to have_content("Saved Gas")
-
-        expect(page).not_to have_field('amount', with: '3.00')
-        expect(page).not_to have_field('name', with: 'Insurrance')
-
-        # Delete the item
-        click_link 'Delete'
-        click_link "Delete Gas"
-        expect(page).to have_content("Deleted Gas")
+        click_link "Delete"
+        click_link "Delete Insurance"
+        expect(page).to have_content("Deleted Insurance")
         expect(page).to have_content("You haven't added any budget items yet.")
       end
     end
-  end
-
-  def edit_form_with(name:,amount:)
-    fill_in 'name', with: name
-    fill_in 'amount', with: amount
-    expect(page).to have_selector('.input-calendar')
-    find('.input-calendar').click
-    within('.input-calendar-wrapper') do
-      expect(page).to have_selector '.day.today.cell'
-      find('.day.today.cell').click()
-    end
-    click_on 'Save'
   end
 end
 
