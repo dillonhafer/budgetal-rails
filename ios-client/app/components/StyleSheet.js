@@ -20,7 +20,8 @@ EStyleSheet.build({
   menuBackground_dark: '#222222',
   darkTitle: '#555555',
   formGray: '#aaaaaa',
-  formBackground: '#e4e4e4',
+  formBackground: '#efeff4',
+  formLabel: '#6d6d72',
   rem: width / 32,
 });
 
