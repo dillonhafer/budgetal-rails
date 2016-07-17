@@ -1,48 +1,30 @@
 import React, {Component} from 'react'
 import {
   Image,
-  Dimensions,
   LayoutAnimation,
   Text,
   TouchableOpacity,
-  TouchableHighlight,
-  View
 } from 'react-native'
+
+import {
+  FormContainer,
+  FormInput,
+  FormLabel,
+  InputSeparator,
+  InputContainer,
+  InputButton,
+} from './form-components'
 
 import {showErrors} from '../utils/ViewHelpers';
 import {savePhoto} from '../data/Users';
 import ImagePicker from 'react-native-image-picker';
 
 import StyleSheet from './StyleSheet'
-const {width,height} = Dimensions.get('window');
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 13,
-    marginLeft: 10,
-    color: '$formLabel'
-  },
-  form: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '$formBackground'
-  },
   text: {
     color: '$blue',
     textAlign: 'center',
     marginTop: 4,
-  },
-  saveButtonText: {
-    textAlign: 'center',
-    backgroundColor: '$white',
-    color: '$blue',
-    margin: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    borderColor: '$grayBorder',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
   },
   avatar: {
     width: 150,
@@ -53,21 +35,10 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '$blue',
   },
-  imageContainer: {
-    margin: 20,
-    marginTop: 5,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '$white',
-    width: width,
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
 });
 
 const options = {
-  title: 'Change Profile Image', // specify null or empty string to remove the title
+  title: '', // specify null or empty string to remove the title
   cancelButtonTitle: 'Cancel',
   takePhotoButtonTitle: 'Take Photo...', // specify null or empty string to remove this button
   chooseFromLibraryButtonTitle: 'Choose from Library...', // specify null or empty string to remove this button
@@ -127,29 +98,18 @@ class PhotoForm extends Component {
     });
   }
 
-  saveButton = () => {
-    return (
-      <TouchableHighlight
-        style={styles.saveButton}
-        underlayColor={'#6699ff'}
-        onPress={this.savePhoto}>
-        <Text style={styles.saveButtonText}>Save</Text>
-      </TouchableHighlight>
-    )
-  }
-
   render() {
     return (
-      <View style={styles.form}>
-        <Text style={styles.label}>PROFILE PHOTO</Text>
-        <View style={styles.imageContainer}>
-          <TouchableOpacity onPress={this.choosePhoto}>
+      <FormContainer>
+        <FormLabel label='PROFILE PHOTO' />
+        <InputContainer>
+          <TouchableOpacity style={{padding: 10}} onPress={this.choosePhoto}>
             <Image style={styles.avatar} source={{uri: this.state.user.avatar}} />
             <Text style={styles.text}>Tap to change</Text>
           </TouchableOpacity>
-        </View>
-        {this.saveButton()}
-      </View>
+        </InputContainer>
+        <InputButton onPress={this.savePhoto} text='Save' />
+      </FormContainer>
     )
   }
 }
