@@ -1,14 +1,8 @@
 import React, {Component} from 'react'
-import {
-  LayoutAnimation,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import {LayoutAnimation,} from 'react-native'
 
 import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
 import {updateItemExpense, createItemExpense} from '../data/budgetItemExpense';
-import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 
 import {
   FormContainer,
@@ -18,55 +12,6 @@ import {
   InputContainer,
   InputButton,
 } from './form-components'
-
-import StyleSheet from './StyleSheet'
-const styles = StyleSheet.create({
-  right: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    width: 100,
-  },
-  column: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  inputRow: {
-    flexDirection: 'row',
-    backgroundColor: '$white',
-    paddingLeft: 0,
-    paddingBottom: 0,
-    paddingTop: 0,
-    alignItems: 'center',
-    marginTop: 1,
-    marginBottom: 0
-  },
-  dateLabel: {
-    fontSize: 16,
-    marginLeft: '5%',
-    marginBottom: 4,
-  },
-  dateField: {
-    marginLeft: 0,
-    marginRight: 0,
-    marginTop: 0,
-    marginBottom: 0,
-    padding: 0,
-    paddingRight: 14,
-    height: 40,
-    borderColor: '$grayBorder',
-    backgroundColor: '$white',
-    borderWidth: 0,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  date: {
-    textAlign: 'right',
-    fontSize: 16,
-    color: '$formGray',
-  },
-});
 
 class BudgetItemExpenseForm extends Component {
   constructor(props) {
@@ -78,7 +23,6 @@ class BudgetItemExpenseForm extends Component {
     )
 
     this.state = {
-      showDatePicker: false,
       budgetItemExpense: initialExpense
     };
   }
@@ -105,17 +49,9 @@ class BudgetItemExpenseForm extends Component {
     }
   }
 
-  onDatePickerDone = () => {
-    this.setState({showDatePicker: false});
-  }
-
   onDateChange = (date) => {
     var b = this.state.budgetItemExpense;
     this.setState({budgetItemExpense: Object.assign({}, b, {date})});
-  }
-
-  pickDate = () => {
-    this.setState({showDatePicker: !this.state.showDatePicker});
   }
 
   formattedDate(date) {
@@ -178,28 +114,13 @@ class BudgetItemExpenseForm extends Component {
 
           <InputSeparator />
 
-          <View style={styles.inputRow}>
-            <View style={styles.column}>
-              <Text style={styles.dateLabel}>Date</Text>
-            </View>
-            <View style={styles.right}>
-              <TouchableOpacity
-                style={styles.dateField}
-                underlayColor='#f6f6f6'
-                onPress={this.pickDate}>
-                <Text style={styles.date}>{b.date.toDateString()}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <FormInput inputType='date'
+                     label='Date'
+                     date={b.date}
+                     onDateChange={this.onDateChange} />
         </InputContainer>
 
-
         {this._saveButton(validForm)}
-
-        <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
-                                 onDone={this.onDatePickerDone}
-                                 date={b.date}
-                                 onDateChange={this.onDateChange} />
       </FormContainer>
     )
   }
