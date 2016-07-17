@@ -4,6 +4,8 @@ import {alert} from './window';
 import AppImages from '../images/AppImages';
 import {keys,startCase} from 'lodash-node'
 import parser from 'ua-parser-js';
+import { TextInput } from 'react-native';
+const { State: TextInputState } = TextInput;
 
 const ViewHelpers = {
   showErrors(errors) {
@@ -15,6 +17,9 @@ const ViewHelpers = {
       })
     })
     alert({title: 'Errors', message});
+  },
+  dismissKeyboard() {
+    TextInputState.blurTextInput(TextInputState.currentlyFocusedField());
   },
   numberToCurrency: function(number, dollarSign) {
     dollarSign = (dollarSign === undefined) ? '$' : dollarSign

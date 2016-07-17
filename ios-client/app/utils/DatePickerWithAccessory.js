@@ -129,16 +129,16 @@ const styles = StyleSheet.create({
   inputAccessory: {
     padding: 10,
     width: 400,
-    backgroundColor: '#f6f6f6',
-    borderTopColor: '#e6e6e6',
+    backgroundColor: '$formBackground',
+    borderTopColor: '$formBorder',
     borderTopWidth: 0.5,
-    borderBottomColor: '#e6e6e6',
+    borderBottomColor: '$formBorder',
     borderBottomWidth: 0.5,
   },
   datePicker: {
     width: width,
     flex: 1,
-    backgroundColor: '#e6e6e6',
+    backgroundColor: 'white',
     justifyContent: 'flex-end',
     bottom: 0,
     position: 'absolute',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   yearPicker: {
     width: width,
     flex: 1,
-    backgroundColor: '#e6e6e6',
+    backgroundColor: 'white',
     justifyContent: 'center',
     bottom: 0,
     position: 'absolute'

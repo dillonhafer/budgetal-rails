@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import {
+  DatePickerIOS,
+  LayoutAnimation,
   Switch,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native'
 
+import {dismissKeyboard} from '../utils/ViewHelpers'
 import StyleSheet from './StyleSheet'
 
 const styles = StyleSheet.create({
@@ -58,12 +61,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  dateField: {
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 0,
+    marginBottom: 0,
+    padding: 0,
+    height: 40,
+    borderColor: '$grayBorder',
+    backgroundColor: '$white',
+    borderWidth: 0,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  date: {
+    textAlign: 'right',
+    fontSize: 16,
+    color: '$formGray',
+  },
   error: {
     color: '$red',
   },
 });
 
 class FormInput extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      showDatePicker: false
+    }
+  }
+
+  pickDate = () => {
+    dismissKeyboard()
+    this.setState({showDatePicker: !this.state.showDatePicker})
+  }
+
   validateRequired = (value='') => {
     if (this.props.required) {
       return value.trim().length
@@ -116,12 +151,41 @@ class FormInput extends Component {
     )
   }
 
+  datePicker() {
+    LayoutAnimation.easeInEaseOut();
+
+    if (this.state.showDatePicker) {
+      return (
+        <View style={styles.picker}>
+          <DatePickerIOS date={this.props.date}
+                         mode='date'
+                         onDateChange={this.props.onDateChange} />
+        </View>
+      )
+    }
+  }
+
+  dateInput = () => {
+    return (
+      <View style={[styles.inputs, styles.dateField]}>
+        <TouchableOpacity
+          style={styles.dateField}
+          underlayColor='#f6f6f6'
+          onPress={this.pickDate}>
+          <Text style={styles.date}>{this.props.date.toDateString()}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   _getInputType(type) {
     switch (type) {
       case 'switch':
         return this.switchInput();
       case 'password':
         return this.textInput({secureTextEntry: true, keyboardAppearance: 'dark'});
+      case 'date':
+        return this.dateInput();
       default:
         return this.textInput();
     }
@@ -139,13 +203,16 @@ class FormInput extends Component {
     }
 
     return (
-      <View style={styles.inputRow}>
-        <View style={styles.column}>
-          <Text style={[styles.label,validStyles]}>{this.props.label}</Text>
+      <View>
+        <View style={styles.inputRow}>
+          <View style={styles.column}>
+            <Text style={[styles.label,validStyles]}>{this.props.label}</Text>
+          </View>
+          <View style={styles.right}>
+            {this._getInputType(this.props.inputType)}
+          </View>
         </View>
-        <View style={styles.right}>
-          {this._getInputType(this.props.inputType)}
-        </View>
+        {this.datePicker()}
       </View>
     )
   }
