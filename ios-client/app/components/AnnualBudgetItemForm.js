@@ -15,53 +15,7 @@ import {
   InputButton,
 } from './form-components'
 
-import StyleSheet from './StyleSheet'
-const styles = StyleSheet.create({
-  right: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    width: 100,
-    paddingRight: 14
-  },
-  dateLabel: {
-    fontSize: 16,
-    marginLeft: '5%',
-    marginBottom: 4,
-  },
-  dateField: {
-    marginLeft: 0,
-    marginRight: 0,
-    marginTop: 0,
-    marginBottom: 0,
-    padding: 0,
-    height: 40,
-    borderColor: '$grayBorder',
-    backgroundColor: '$white',
-    borderWidth: 0,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  date: {
-    textAlign: 'right',
-    fontSize: 16,
-    color: '$formGray',
-  },
-  inputRow: {
-    flexDirection: 'row',
-    backgroundColor: '$white',
-    paddingLeft: 0,
-    paddingBottom: 0,
-    paddingTop: 0,
-    alignItems: 'center',
-    marginTop: 1,
-    marginBottom: 0
-  },
-});
-
 import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
-import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
 import {update, create} from '../data/AnnualBudgets';
 
 class AnnualBudgetItemForm extends Component {
@@ -74,17 +28,8 @@ class AnnualBudgetItemForm extends Component {
     )
 
     this.state = {
-      showDatePicker: false,
       budgetItem: initialItem
     };
-  }
-
-  onDatePickerDone = () => {
-    this.setState({showDatePicker: false});
-  }
-
-  pickDate = () => {
-    this.setState({showDatePicker: !this.state.showDatePicker});
   }
 
   formattedDate(date) {
@@ -167,19 +112,10 @@ class AnnualBudgetItemForm extends Component {
 
            <InputSeparator />
 
-           <View style={styles.inputRow}>
-             <View style={styles.column}>
-               <Text style={styles.dateLabel}>Due Date</Text>
-             </View>
-             <View style={styles.right}>
-               <TouchableOpacity
-                 style={styles.dateField}
-                 underlayColor='#f6f6f6'
-                 onPress={this.pickDate}>
-                 <Text style={styles.date}>{b.due_date.toDateString()}</Text>
-               </TouchableOpacity>
-             </View>
-           </View>
+           <FormInput inputType='date'
+                      label='Due Date'
+                      date={b.due_date}
+                      onDateChange={(due_date) => this._updateField('due_date', due_date)} />
 
            <InputSeparator />
 
@@ -191,11 +127,6 @@ class AnnualBudgetItemForm extends Component {
         </InputContainer>
 
         {this._saveButton(validForm)}
-
-        <DatePickerWithAccessory showDatePicker={this.state.showDatePicker}
-                                 onDone={this.onDatePickerDone}
-                                 date={b.due_date}
-                                 onDateChange={(due_date) => this._updateField('due_date', due_date)} />
       </FormContainer>
     )
   }
