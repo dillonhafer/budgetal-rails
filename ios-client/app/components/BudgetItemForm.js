@@ -12,14 +12,6 @@ import {
   InputButton,
 } from './form-components'
 
-import StyleSheet from './StyleSheet'
-
-const styles = StyleSheet.create({
-  error: {
-    color: '$red',
-  }
-});
-
 import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
 import {updateItem, createItem} from '../data/budget_item';
 
