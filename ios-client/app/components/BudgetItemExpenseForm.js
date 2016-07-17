@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     width: 100,
-    paddingRight: 14
   },
   column: {
     justifyContent: 'center',
@@ -36,7 +35,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '$white',
     paddingLeft: 0,
-    paddingRight: 10,
     paddingBottom: 0,
     paddingTop: 0,
     alignItems: 'center',
@@ -45,7 +43,7 @@ const styles = StyleSheet.create({
   },
   dateLabel: {
     fontSize: 16,
-    marginLeft: 10,
+    marginLeft: '5%',
     marginBottom: 4,
   },
   dateField: {
@@ -54,6 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
     padding: 0,
+    paddingRight: 14,
     height: 40,
     borderColor: '$grayBorder',
     backgroundColor: '$white',
