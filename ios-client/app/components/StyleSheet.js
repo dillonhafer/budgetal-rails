@@ -23,6 +23,8 @@ EStyleSheet.build({
   formBackground: '#efeff4',
   formLabel: '#6d6d72',
   formBorder: '#c8c7cc',
+  inputAccessory: '#eff0f1',
+  inputAccessoryButton: '#007aff',
   rem: width / 32,
 });
 

@@ -128,12 +128,11 @@ const styles = StyleSheet.create({
   },
   inputAccessory: {
     padding: 10,
-    width: 400,
-    backgroundColor: '$formBackground',
+    width: width,
+    backgroundColor: '$inputAccessory',
     borderTopColor: '$formBorder',
     borderTopWidth: 0.5,
-    borderBottomColor: '$formBorder',
-    borderBottomWidth: 0.5,
+    alignSelf: 'flex-end',
   },
   datePicker: {
     width: width,
@@ -152,8 +151,9 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   doneText: {
-    fontSize: 18,
-    color: '$blue'
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '$inputAccessoryButton',
   },
   yearMonthContainer: {
     flex: 1,
