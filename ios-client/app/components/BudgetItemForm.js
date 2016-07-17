@@ -1,56 +1,20 @@
 import React, {Component} from 'react'
 import {
   LayoutAnimation,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  View
 } from 'react-native'
 
-import FormInput from './FormInput';
-import FormLabel from './FormLabel';
-import InputSeparator from './InputSeparator';
+import {
+  FormContainer,
+  FormInput,
+  FormLabel,
+  InputSeparator,
+  InputContainer,
+  InputButton,
+} from './form-components'
+
 import StyleSheet from './StyleSheet'
 
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 13,
-    marginLeft: 15,
-    marginBottom: 4,
-    color: '$formLabel'
-  },
-  form: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '$formBackground'
-  },
-  inputContainer: {
-    borderTopColor: '$formBorder',
-    borderTopWidth: 0.5,
-    borderBottomColor: '$formBorder',
-    borderBottomWidth: 0.5,
-    backgroundColor: '$white'
-  },
-  saveButton: {
-    marginTop: 40,
-    borderTopColor: '$formBorder',
-    borderTopWidth: 0.5,
-    borderBottomColor: '$formBorder',
-    borderBottomWidth: 0.5,
-  },
-  saveButtonText: {
-    textAlign: 'center',
-    backgroundColor: '$white',
-    color: '$blue',
-    margin: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    borderColor: '$grayBorder',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
   error: {
     color: '$red',
   }
@@ -94,14 +58,7 @@ class BudgetItemForm extends Component {
     LayoutAnimation.easeInEaseOut();
     if (valid) {
       return (
-        <TouchableHighlight
-          style={styles.saveButton}
-          underlayColor={'#6699ff'}
-          onPress={this.saveItem}
-          accessible={true}
-          accessibilityLabel={`Save`}>
-          <Text style={styles.saveButtonText}>Save</Text>
-        </TouchableHighlight>
+        <InputButton onPress={this.saveItem} text='Save' />
       )
     }
   }
@@ -114,9 +71,9 @@ class BudgetItemForm extends Component {
     let b = this.state.budgetItem;
     const validForm = this._validForm(b);
     return (
-      <View style={styles.form}>
+      <FormContainer>
         <FormLabel label='BUDGET ITEM' />
-        <View style={styles.inputContainer}>
+        <InputContainer>
           <FormInput placeholder='(Life Insurrance)'
                      required={true}
                      accessible={true}
@@ -138,10 +95,10 @@ class BudgetItemForm extends Component {
                      onChangeText={(amount_budgeted)=> this.setState({budgetItem: Object.assign({}, b, {amount_budgeted})})}
                      label='Budgeted'
                      defaultValue={b.amount_budgeted} />
-        </View>
+        </InputContainer>
 
         {this._saveButton(validForm)}
-      </View>
+      </FormContainer>
     )
   }
 }
