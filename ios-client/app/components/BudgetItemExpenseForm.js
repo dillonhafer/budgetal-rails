@@ -67,9 +67,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '$formGray',
   },
-  error: {
-    color: '$red',
-  }
 });
 
 class BudgetItemExpenseForm extends Component {
