@@ -1,48 +1,13 @@
 import React, {Component} from 'react'
+import {LayoutAnimation,} from 'react-native'
+
 import {
-  LayoutAnimation,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  View
-} from 'react-native'
-
-import FormInput from './FormInput';
-import StyleSheet from './StyleSheet'
-
-const styles = StyleSheet.create({
-  label: {
-    fontSize: 13,
-    marginLeft: 10,
-    marginBottom: 4,
-    color: '$formLabel'
-  },
-  form: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '$formBackground'
-  },
-  saveButton: {
-    marginTop: 40,
-  },
-  saveButtonText: {
-    textAlign: 'center',
-    backgroundColor: '$white',
-    color: '$blue',
-    margin: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    borderColor: '$grayBorder',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  error: {
-    color: '$red',
-  },
-});
+  FormContainer,
+  FormInput,
+  FormLabel,
+  InputContainer,
+  InputButton,
+} from './form-components'
 
 import {showErrors} from '../utils/ViewHelpers';
 import {update} from '../data/Budgets';
@@ -72,48 +37,34 @@ class MonthlyIncomeForm extends Component {
     }
   }
 
-  _saveButton(valid) {
+  _saveButton() {
     LayoutAnimation.easeInEaseOut();
-    if (valid) {
-      return (
-        <TouchableHighlight
-          style={styles.saveButton}
-          underlayColor={'#6699ff'}
-          onPress={this.updateIncome}>
-          <Text style={styles.saveButtonText}>Update Income</Text>
-        </TouchableHighlight>
-      )
-    }
+    return <InputButton onPress={this.updateIncome} text='Update Income' />
   }
 
-  _validForm(budget) {
-    return budget.monthly_income.length
-  }
-
-  _updateField = (name, value) => {
-    const original = this.state.budget;
-    const budget = Object.assign({}, original, {[name]: value})
-    this.setState({budget})
+  _updateIncome = (monthly_income) => {
+    const budget = Object.assign({}, this.state.budget, {monthly_income});
+    this.setState({budget});
   }
 
   render() {
-    let b = this.state.budget;
-    const validForm = this._validForm(b);
+    const validForm = !!this.state.budget.monthly_income.length;
     return (
-      <View style={styles.form}>
-        <Text style={styles.label}>BUDGET</Text>
+      <FormContainer>
+        <FormLabel label='BUDGET' />
+        <InputContainer>
+          <FormInput placeholder='($4,000.00)'
+                     required={true}
+                     format='number'
+                     keyboardType='decimal-pad'
+                     value={this.state.budget.monthly_income}
+                     onChangeText={(monthly_income) => this._updateIncome(monthly_income)}
+                     label='Monthly Income'
+                     defaultValue={this.state.budget.monthly_income} />
+        </InputContainer>
 
-        <FormInput placeholder='($4,000.00)'
-                   required={true}
-                   format='number'
-                   keyboardType='decimal-pad'
-                   value={b.monthly_income}
-                   onChangeText={(monthly_income) => this._updateField('monthly_income', monthly_income)}
-                   label='Monthly Income'
-                   defaultValue={b.monthly_income} />
-
-        {this._saveButton(validForm)}
-      </View>
+        {validForm ? this._saveButton() : null}
+      </FormContainer>
     )
   }
 }
