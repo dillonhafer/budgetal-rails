@@ -8,12 +8,14 @@ import {
 } from 'react-native'
 
 import FormInput from './FormInput';
+import FormLabel from './FormLabel';
+import InputSeparator from './InputSeparator';
 import StyleSheet from './StyleSheet'
 
 const styles = StyleSheet.create({
   label: {
     fontSize: 13,
-    marginLeft: 10,
+    marginLeft: 15,
     marginBottom: 4,
     color: '$formLabel'
   },
@@ -22,8 +24,19 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: '$formBackground'
   },
+  inputContainer: {
+    borderTopColor: '$formBorder',
+    borderTopWidth: 0.5,
+    borderBottomColor: '$formBorder',
+    borderBottomWidth: 0.5,
+    backgroundColor: '$white'
+  },
   saveButton: {
     marginTop: 40,
+    borderTopColor: '$formBorder',
+    borderTopWidth: 0.5,
+    borderBottomColor: '$formBorder',
+    borderBottomWidth: 0.5,
   },
   saveButtonText: {
     textAlign: 'center',
@@ -102,28 +115,30 @@ class BudgetItemForm extends Component {
     const validForm = this._validForm(b);
     return (
       <View style={styles.form}>
-        <Text style={styles.label}>BUDGET ITEM</Text>
-        <FormInput placeholder='(Life Insurrance)'
-                   required={true}
-                   accessible={true}
-                   accessibilityLabel={`Name`}
-                   format='any'
-                   autoCapitalize='words'
-                   value={b.name}
-                   onChangeText={(name)=> this.setState({budgetItem: Object.assign({}, b, {name})})}
-                   label='Name'
-                   defaultValue={b.name} />
-
-        <FormInput placeholder='($42.00)'
-                   required={true}
-                   accessible={true}
-                   accessibilityLabel={`Budgeted`}
-                   format='number'
-                   keyboardType='decimal-pad'
-                   value={b.amount_budgeted}
-                   onChangeText={(amount_budgeted)=> this.setState({budgetItem: Object.assign({}, b, {amount_budgeted})})}
-                   label='Budgeted'
-                   defaultValue={b.amount_budgeted} />
+        <FormLabel label='BUDGET ITEM' />
+        <View style={styles.inputContainer}>
+          <FormInput placeholder='(Life Insurrance)'
+                     required={true}
+                     accessible={true}
+                     accessibilityLabel={`Name`}
+                     format='any'
+                     autoCapitalize='words'
+                     value={b.name}
+                     onChangeText={(name)=> this.setState({budgetItem: Object.assign({}, b, {name})})}
+                     label='Name'
+                     defaultValue={b.name} />
+          <InputSeparator />
+          <FormInput placeholder='($42.00)'
+                     required={true}
+                     accessible={true}
+                     accessibilityLabel={`Budgeted`}
+                     format='number'
+                     keyboardType='decimal-pad'
+                     value={b.amount_budgeted}
+                     onChangeText={(amount_budgeted)=> this.setState({budgetItem: Object.assign({}, b, {amount_budgeted})})}
+                     label='Budgeted'
+                     defaultValue={b.amount_budgeted} />
+        </View>
 
         {this._saveButton(validForm)}
       </View>

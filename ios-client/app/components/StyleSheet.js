@@ -22,6 +22,7 @@ EStyleSheet.build({
   formGray: '#aaaaaa',
   formBackground: '#efeff4',
   formLabel: '#6d6d72',
+  formBorder: '#c8c7cc',
   rem: width / 32,
 });
 

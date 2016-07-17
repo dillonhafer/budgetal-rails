@@ -13,7 +13,7 @@ import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
-    backgroundColor: '$white',
+    backgroundColor: 'transparent',
     paddingLeft: 0,
     paddingRight: 10,
     paddingBottom: 0,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginLeft: 10,
+    marginLeft: '5%',
     marginBottom: 4,
     color: '$menuBackground'
   },
