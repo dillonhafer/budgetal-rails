@@ -2,53 +2,32 @@ import React, {Component} from 'react'
 import {
   LayoutAnimation,
   Text,
-  TextInput,
-  TouchableHighlight,
   TouchableOpacity,
   View
 } from 'react-native'
 
-import FormInput from './FormInput';
-import StyleSheet from './StyleSheet'
+import {
+  FormContainer,
+  FormInput,
+  FormLabel,
+  InputSeparator,
+  InputContainer,
+  InputButton,
+} from './form-components'
 
+import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 13,
-    marginLeft: 10,
-    marginBottom: 4,
-    color: '$formLabel'
-  },
-  form: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '$formBackground'
-  },
-  saveButton: {
-    marginTop: 40,
-  },
-  saveButtonText: {
-    textAlign: 'center',
-    backgroundColor: '$white',
-    color: '$blue',
-    margin: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    borderColor: '$grayBorder',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  error: {
-    color: '$red',
-  },
-  // DateStyles below
   right: {
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
     width: 100,
     paddingRight: 14
+  },
+  dateLabel: {
+    fontSize: 16,
+    marginLeft: '5%',
+    marginBottom: 4,
   },
   dateField: {
     marginLeft: 0,
@@ -73,7 +52,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '$white',
     paddingLeft: 0,
-    paddingRight: 10,
     paddingBottom: 0,
     paddingTop: 0,
     alignItems: 'center',
@@ -146,14 +124,7 @@ class AnnualBudgetItemForm extends Component {
   _saveButton(valid) {
     LayoutAnimation.easeInEaseOut();
     if (valid) {
-      return (
-        <TouchableHighlight
-          style={styles.saveButton}
-          underlayColor={'#6699ff'}
-          onPress={this.saveItem}>
-          <Text style={styles.saveButtonText}>Save</Text>
-        </TouchableHighlight>
-      )
+      return <InputButton onPress={this.saveItem} text='Save' />
     }
   }
 
@@ -171,45 +142,53 @@ class AnnualBudgetItemForm extends Component {
     let b = this.state.budgetItem;
     const validForm = this._validForm(b);
     return (
-      <View style={styles.form}>
-        <Text style={styles.label}>ANNUAL BUDGET ITEM</Text>
-        <FormInput placeholder='(Life Insurrance)'
-                   required={true}
-                   format='any'
-                   autoCapitalize='words'
-                   value={b.name}
-                   onChangeText={(name) => this._updateField('name', name)}
-                   label='Name'
-                   defaultValue={b.name} />
+      <FormContainer>
+        <FormLabel label='ANNUAL BUDGET ITEM' />
+        <InputContainer>
+          <FormInput placeholder='(Life Insurrance)'
+                     required={true}
+                     format='any'
+                     autoCapitalize='words'
+                     value={b.name}
+                     onChangeText={(name) => this._updateField('name', name)}
+                     label='Name'
+                     defaultValue={b.name} />
 
-        <FormInput placeholder='($400.00)'
-                   required={true}
-                   format='number'
-                   keyboardType='decimal-pad'
-                   value={b.amount}
-                   onChangeText={(amount) => this._updateField('amount', amount)}
-                   label='Budgeted'
-                   defaultValue={b.amount} />
+          <InputSeparator />
 
-         <View style={styles.inputRow}>
-           <View style={styles.column}>
-             <Text style={styles.label}>Due Date</Text>
+          <FormInput placeholder='($400.00)'
+                     required={true}
+                     format='number'
+                     keyboardType='decimal-pad'
+                     value={b.amount}
+                     onChangeText={(amount) => this._updateField('amount', amount)}
+                     label='Budgeted'
+                     defaultValue={b.amount} />
+
+           <InputSeparator />
+
+           <View style={styles.inputRow}>
+             <View style={styles.column}>
+               <Text style={styles.dateLabel}>Due Date</Text>
+             </View>
+             <View style={styles.right}>
+               <TouchableOpacity
+                 style={styles.dateField}
+                 underlayColor='#f6f6f6'
+                 onPress={this.pickDate}>
+                 <Text style={styles.date}>{b.due_date.toDateString()}</Text>
+               </TouchableOpacity>
+             </View>
            </View>
-           <View style={styles.right}>
-             <TouchableOpacity
-               style={styles.dateField}
-               underlayColor='#f6f6f6'
-               onPress={this.pickDate}>
-               <Text style={styles.date}>{b.due_date.toDateString()}</Text>
-             </TouchableOpacity>
-           </View>
-         </View>
 
-         <FormInput inputType='switch'
-                    format='switch'
-                    value={b.paid}
-                    onValueChange={(paid) => this._updateField('paid', paid)}
-                    label='Paid?' />
+           <InputSeparator />
+
+           <FormInput inputType='switch'
+                      format='switch'
+                      value={b.paid}
+                      onValueChange={(paid) => this._updateField('paid', paid)}
+                      label='Paid?' />
+        </InputContainer>
 
         {this._saveButton(validForm)}
 
@@ -217,7 +196,7 @@ class AnnualBudgetItemForm extends Component {
                                  onDone={this.onDatePickerDone}
                                  date={b.due_date}
                                  onDateChange={(due_date) => this._updateField('due_date', due_date)} />
-      </View>
+      </FormContainer>
     )
   }
 }
