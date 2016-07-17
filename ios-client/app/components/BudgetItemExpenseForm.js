@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import {
   LayoutAnimation,
   Text,
-  TextInput,
-  TouchableHighlight,
   TouchableOpacity,
   View
 } from 'react-native'
@@ -11,23 +9,24 @@ import {
 import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
 import {updateItemExpense, createItemExpense} from '../data/budgetItemExpense';
 import DatePickerWithAccessory from '../utils/DatePickerWithAccessory';
-import FormInput from './FormInput';
+
+import {
+  FormContainer,
+  FormInput,
+  FormLabel,
+  InputSeparator,
+  InputContainer,
+  InputButton,
+} from './form-components'
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '$white'
-  },
   right: {
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
     width: 100,
     paddingRight: 14
-  },
-  text: {
-    flexDirection: 'row'
   },
   column: {
     justifyContent: 'center',
@@ -44,20 +43,10 @@ const styles = StyleSheet.create({
     marginTop: 1,
     marginBottom: 0
   },
-  label: {
-    fontSize: 13,
-    marginLeft: 10,
-    marginBottom: 4,
-    color: '$formLabel'
-  },
   dateLabel: {
     fontSize: 16,
     marginLeft: 10,
     marginBottom: 4,
-  },
-  form: {
-    paddingTop: 20,
-    backgroundColor: '$formBackground'
   },
   dateField: {
     marginLeft: 0,
@@ -77,22 +66,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontSize: 16,
     color: '$formGray',
-  },
-  saveButton: {
-    marginTop: 40,
-  },
-  saveButtonText: {
-    textAlign: 'center',
-    backgroundColor: '$white',
-    color: '$blue',
-    margin: 0,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 40,
-    borderColor: '$grayBorder',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
   },
   error: {
     color: '$red',
@@ -165,12 +138,7 @@ class BudgetItemExpenseForm extends Component {
     LayoutAnimation.easeInEaseOut();
     if (valid) {
       return (
-        <TouchableHighlight
-          style={styles.saveButton}
-          underlayColor={'#6699ff'}
-          onPress={this.saveExpense}>
-          <Text style={styles.saveButtonText}>Save</Text>
-        </TouchableHighlight>
+        <InputButton onPress={this.saveExpense} text='Save' />
       )
     }
   }
@@ -187,42 +155,48 @@ class BudgetItemExpenseForm extends Component {
     let b = this.state.budgetItemExpense;
     const validForm = this._validForm(b);
     return (
-      <View style={[styles.container, styles.form]}>
-        <Text style={styles.label}>BUDGET ITEM EXPENSE</Text>
+      <FormContainer>
+        <FormLabel label='BUDGET ITEM EXPENSES' />
+        <InputContainer>
+          <FormInput placeholder='(Life Insurrance)'
+                     required={true}
+                     format='any'
+                     autoCapitalize='words'
+                     value={b.name}
+                     onChangeText={(name)=> this.setState({budgetItemExpense: Object.assign({}, b, {name})})}
+                     label='Name'
+                     defaultValue={b.name} />
 
-        <FormInput placeholder='(Life Insurrance)'
-                   required={true}
-                   format='any'
-                   autoCapitalize='words'
-                   value={b.name}
-                   onChangeText={(name)=> this.setState({budgetItemExpense: Object.assign({}, b, {name})})}
-                   label='Name'
-                   defaultValue={b.name} />
+          <InputSeparator />
 
-        <FormInput placeholder='($42.00)'
-                   required={true}
-                   format='number'
-                   ref='amount'
-                   keyboardType='numeric'
-                   autoCapitalize='words'
-                   value={b.amount}
-                   onChangeText={this.updateAmount}
-                   label='Amount'
-                   defaultValue={b.amount} />
+          <FormInput placeholder='($42.00)'
+                     required={true}
+                     format='number'
+                     ref='amount'
+                     keyboardType='numeric'
+                     autoCapitalize='words'
+                     value={b.amount}
+                     onChangeText={this.updateAmount}
+                     label='Amount'
+                     defaultValue={b.amount} />
 
-        <View style={styles.inputRow}>
-          <View style={styles.column}>
-            <Text style={styles.dateLabel}>Date</Text>
+          <InputSeparator />
+
+          <View style={styles.inputRow}>
+            <View style={styles.column}>
+              <Text style={styles.dateLabel}>Date</Text>
+            </View>
+            <View style={styles.right}>
+              <TouchableOpacity
+                style={styles.dateField}
+                underlayColor='#f6f6f6'
+                onPress={this.pickDate}>
+                <Text style={styles.date}>{b.date.toDateString()}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.right}>
-            <TouchableOpacity
-              style={styles.dateField}
-              underlayColor='#f6f6f6'
-              onPress={this.pickDate}>
-              <Text style={styles.date}>{b.date.toDateString()}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </InputContainer>
+
 
         {this._saveButton(validForm)}
 
@@ -230,7 +204,7 @@ class BudgetItemExpenseForm extends Component {
                                  onDone={this.onDatePickerDone}
                                  date={b.date}
                                  onDateChange={this.onDateChange} />
-      </View>
+      </FormContainer>
     )
   }
 }
