@@ -45,10 +45,15 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   label: {
+    fontSize: 13,
+    marginLeft: 10,
+    marginBottom: 4,
+    color: '$formLabel'
+  },
+  dateLabel: {
     fontSize: 16,
     marginLeft: 10,
     marginBottom: 4,
-    color: '$menuBackground'
   },
   form: {
     paddingTop: 20,
@@ -183,7 +188,7 @@ class BudgetItemExpenseForm extends Component {
     const validForm = this._validForm(b);
     return (
       <View style={[styles.container, styles.form]}>
-        <Text style={styles.label}>Budget Item Expense</Text>
+        <Text style={styles.label}>BUDGET ITEM EXPENSE</Text>
 
         <FormInput placeholder='(Life Insurrance)'
                    required={true}
@@ -207,7 +212,7 @@ class BudgetItemExpenseForm extends Component {
 
         <View style={styles.inputRow}>
           <View style={styles.column}>
-            <Text style={styles.label}>Date</Text>
+            <Text style={styles.dateLabel}>Date</Text>
           </View>
           <View style={styles.right}>
             <TouchableOpacity

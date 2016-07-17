@@ -18,9 +18,10 @@ import StyleSheet from './StyleSheet'
 const {width,height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
+    fontSize: 13,
     marginLeft: 10,
-    color: '$menuBackground'
+    marginBottom: 4,
+    color: '$formLabel'
   },
   form: {
     flex: 1,
@@ -110,7 +111,7 @@ class ChangePasswordForm extends Component {
   render() {
     return (
       <View style={styles.form}>
-        <Text style={styles.label}>Account Info</Text>
+        <Text style={styles.label}>ACCOUNT PASSWORD</Text>
         <FormInput placeholder='New Password'
                    required={true}
                    format='password'

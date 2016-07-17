@@ -17,9 +17,9 @@ import StyleSheet from './StyleSheet'
 const {width,height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
+    fontSize: 13,
     marginLeft: 10,
-    color: '$menuBackground'
+    color: '$formLabel'
   },
   form: {
     flex: 1,
@@ -141,7 +141,7 @@ class PhotoForm extends Component {
   render() {
     return (
       <View style={styles.form}>
-        <Text style={styles.label}>Profile Photo</Text>
+        <Text style={styles.label}>PROFILE PHOTO</Text>
         <View style={styles.imageContainer}>
           <TouchableOpacity onPress={this.choosePhoto}>
             <Image style={styles.avatar} source={{uri: this.state.user.avatar}} />

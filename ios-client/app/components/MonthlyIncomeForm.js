@@ -13,10 +13,10 @@ import StyleSheet from './StyleSheet'
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 16,
+    fontSize: 13,
     marginLeft: 10,
     marginBottom: 4,
-    color: '$menuBackground'
+    color: '$formLabel'
   },
   form: {
     flex: 1,
@@ -101,7 +101,7 @@ class MonthlyIncomeForm extends Component {
     const validForm = this._validForm(b);
     return (
       <View style={styles.form}>
-        <Text style={styles.label}>Budget</Text>
+        <Text style={styles.label}>BUDGET</Text>
 
         <FormInput placeholder='($4,000.00)'
                    required={true}
