@@ -13,7 +13,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onSignIn: () => {
 			dispatch(navigateReset([{key: 'Budgets', title: 'Budgets'}],0))
-		}
+		},
+    signUp: () => {
+      dispatch(navigatePush({key: 'SignUp', title: 'Sign Up'}))
+    }
 	}
 }
 

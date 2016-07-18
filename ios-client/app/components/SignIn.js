@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native'
 
@@ -144,6 +145,12 @@ class SignIn extends Component {
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableHighlight>
 
+        <TouchableOpacity onPress={this.props.signUp} style={styles.signUpButton}>
+          <Text style={{textAlign: 'center',color: 'white'}}>New to Budgetal?</Text>
+          <Text style={styles.signUpText}>Create an Account</Text>
+        </TouchableOpacity>
+
+
         <ActivityIndicatorIOS
           animating={this.state.animating}
           color='#fff'
@@ -197,6 +204,16 @@ const styles = StyleSheet.create({
     marginTop: 40,
     resizeMode: 'contain'
   },
+  signUpButton: {
+    marginTop: 40,
+  },
+  signUpText: {
+    color: 'white',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: 'white',
+  }
 });
 
 module.exports = SignIn;

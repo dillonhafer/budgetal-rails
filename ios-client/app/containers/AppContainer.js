@@ -6,6 +6,7 @@ import StyleSheet from '../components/StyleSheet';
 import { connect } from 'react-redux';
 
 import SignInContainer from './SignInContainer';
+import SignUpContainer from './SignUpContainer';
 import BudgetsContainer from './BudgetsContainer';
 import BudgetCategoryContainer from './BudgetCategoryContainer';
 import BudgetItemFormContainer from './BudgetItemFormContainer';
@@ -123,6 +124,7 @@ class AppContainer extends Component {
 	_disableGestures(navState) {
 		const disabledScenes = [
 			'SignIn',
+			'SignUp',
 			'Account',
 			'BudgetCategory',
 			'BudgetItem',
@@ -163,6 +165,7 @@ class AppContainer extends Component {
         return <Hamburger openMenu={this._openMenu} />
       case 'SignIn':
         return null
+			case 'SignUp':
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
 			case 'AnnualBudgetItemForm':
@@ -182,6 +185,7 @@ class AppContainer extends Component {
 		switch (props.scene.navigationState.key) {
 			case 'SignIn':
 				return NavigationCard.CardStackStyleInterpolator.forVertical(props)
+			case 'SignUp':
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
 			case 'AnnualBudgetItemForm':
@@ -216,6 +220,7 @@ class AppContainer extends Component {
   _horizontalScene(key) {
     const horizontalScenes = [
 			'SignIn',
+			'SignUp',
 			'BudgetItemForm',
 			'BudgetItemExpenseForm',
 			'AnnualBudgetItemForm',
@@ -234,6 +239,8 @@ class AppContainer extends Component {
 		switch(navigationState.key) {
 			case 'SignIn':
 				return <SignInContainer />
+			case 'SignUp':
+				return <SignUpContainer />
 	    case 'Budgets':
 	      return <BudgetsContainer />
 			case 'Statistics':
