@@ -34,6 +34,12 @@ module FeatureHelper
     visit '/'
     page.execute_script "localStorage.clear()"
   end
+
+  def assert_redirected
+    expect(page).to have_selector('.flash-box')
+    expect(page).not_to have_selector('a', text: 'Budgets')
+    expect(current_path).to eq('/')
+  end
 end
 
 RSpec.configure do |config|

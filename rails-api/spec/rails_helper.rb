@@ -11,9 +11,6 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, switches: %w[—-test-type --no-sandbox])
 end
 
-Capybara.default_host = "http://localhost"
-Capybara.server_port = 3388
-Capybara.app_host = "http://localhost:3388"
 Capybara.javascript_driver = ENV.fetch('selenium', 'chrome').to_sym
 Capybara.default_max_wait_time = 5
 
