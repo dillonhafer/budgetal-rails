@@ -13,4 +13,10 @@ class TestsController < ActionController::API
     MobileIntegrationTest.reset
     head :ok
   end
+
+  def emails
+    user = User.find_by_email(params[:email])
+    user.send :set_reset_password_token
+    render html: Devise::Mailer.reset_password_instructions(user, user.reset_password_token).to_s.html_safe
+  end
 end

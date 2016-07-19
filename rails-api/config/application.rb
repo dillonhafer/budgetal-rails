@@ -45,8 +45,12 @@ module Budgets
     # like if you have constraints or database-specific column types
     config.active_record.schema_format = :sql
 
-    # Enable the asset pipeline
+    # Disable the asset pipeline
     config.assets.enabled = false
+
+    config.to_prepare do
+        Devise::Mailer.layout "mailer" # email.haml or email.erb
+    end
 
     config.before_configuration do
       env_file = File.join(Rails.root, '.env')

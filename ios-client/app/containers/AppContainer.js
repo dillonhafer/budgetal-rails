@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {PropTypes,Component} from 'react';
-import {AppState, NavigationExperimental, View} from 'react-native';
+import {AppState, NavigationExperimental, View,Linking} from 'react-native';
 import StyleSheet from '../components/StyleSheet';
 import { connect } from 'react-redux';
 
@@ -25,6 +25,8 @@ import ChangePasswordFormContainer from './ChangePasswordFormContainer';
 import BudgetInfoContainer from './BudgetInfoContainer';
 import BudgetInfoButtonContainer from './BudgetInfoButtonContainer';
 import MonthlyIncomeFormContainer from './MonthlyIncomeFormContainer';
+import PasswordResetRequestContainer from './PasswordResetRequestContainer';
+import PasswordResetContainer from './PasswordResetContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -55,10 +57,22 @@ class AppContainer extends Component {
 	componentDidMount() {
     this.setServer();
     AppState.addEventListener('change', this._handleAppStateChange);
+    Linking.addEventListener('url', this._handleOpenURL);
+  }
+
+  _handleOpenURL = (event) => {
+    const url = new URL(event.url)
+    switch (url.pathname) {
+      case '//reset-password':
+        const password_reset_token = url.searchParams.get('reset_password_token');
+        this.props.dispatch(navigatePush({key: 'PasswordReset', title: 'Change Password', password_reset_token}))
+        break;
+    }
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
+    Linking.removeEventListener('url', this._handleOpenURL);
   }
 
   _handleAppStateChange = (currentAppState) => {
@@ -137,6 +151,8 @@ class AppContainer extends Component {
 			'ChangePasswordForm',
 			'BudgetInfo',
 			'MonthlyIncomeForm',
+			'PasswordResetRequest',
+			'PasswordReset',
 		]
 		let child = navState.children[navState.index]
 		return child && disabledScenes.includes(child.key);
@@ -173,6 +189,8 @@ class AppContainer extends Component {
 			case 'AccountInfoForm':
 			case 'ChangePasswordForm':
 			case 'MonthlyIncomeForm':
+			case 'PasswordResetRequest':
+			case 'PasswordReset':
 				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
       case 'BudgetInfo':
         return <BackButton onNavigate={props.onNavigate} text='Done' />
@@ -194,6 +212,8 @@ class AppContainer extends Component {
 			case 'ChangePasswordForm':
 			case 'BudgetInfo':
 			case 'MonthlyIncomeForm':
+			case 'PasswordResetRequest':
+			case 'PasswordReset':
 				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
 			default:
 				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
@@ -229,6 +249,8 @@ class AppContainer extends Component {
 			'ChangePasswordForm',
 			'BudgetInfo',
 			'MonthlyIncomeForm',
+			'PasswordResetRequest',
+			'PasswordReset',
 		];
     return horizontalScenes.includes(key);
   }
@@ -269,6 +291,10 @@ class AppContainer extends Component {
 				return <BudgetInfoContainer />
       case 'MonthlyIncomeForm':
 				return <MonthlyIncomeFormContainer />
+      case 'PasswordResetRequest':
+				return <PasswordResetRequestContainer />
+      case 'PasswordReset':
+				return <PasswordResetContainer />
 		}
 	}
 }
