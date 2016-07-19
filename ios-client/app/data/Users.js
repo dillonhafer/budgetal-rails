@@ -1,4 +1,4 @@
-import {getRequest, postRequest, deleteRequest, clearSession} from './API';
+import {getRequest, putRequest, postRequest, deleteRequest, clearSession} from './API';
 
 module.exports = {
   saveUser(params) {
@@ -12,5 +12,11 @@ module.exports = {
   },
   accountInfo() {
     return getRequest('/account-info');
+  },
+  resetPasswordRequest(params) {
+    return postRequest('/reset-password', params);
+  },
+  resetPassword(params) {
+    return putRequest('/reset-password', params);
   },
 }

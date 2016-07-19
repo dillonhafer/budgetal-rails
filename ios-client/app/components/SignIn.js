@@ -150,6 +150,9 @@ class SignIn extends Component {
           <Text style={styles.signUpText}>Create an Account</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={this.props.passwordResetRequest} style={styles.signUpButton}>
+          <Text style={styles.signUpText}>Forgot Password?</Text>
+        </TouchableOpacity>
 
         <ActivityIndicatorIOS
           animating={this.state.animating}

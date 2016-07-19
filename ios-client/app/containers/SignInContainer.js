@@ -16,7 +16,10 @@ const mapDispatchToProps = (dispatch) => {
 		},
     signUp: () => {
       dispatch(navigatePush({key: 'SignUp', title: 'Sign Up'}))
-    }
+    },
+    passwordResetRequest: () => {
+      dispatch(navigatePush({key: 'PasswordResetRequest', title: 'Reset Password'}))
+    },
 	}
 }
 

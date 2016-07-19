@@ -37,7 +37,7 @@ export default class Budgetal extends Component {
 
 		return (
 			<Provider store={store}>
-				<AppContainer defaultApiUrl={api} testMode={testMode} />
+				<AppContainer dispatch={store.dispatch} defaultApiUrl={api} testMode={testMode} />
 			</Provider>
 		)
 	}

@@ -18,6 +18,9 @@ const ViewHelpers = {
     })
     alert({title: 'Errors', message});
   },
+  validEmail(email) {
+    return !!email.trim().match(/\b[^@]+@[^@]+\B/)
+  },
   dismissKeyboard() {
     TextInputState.blurTextInput(TextInputState.currentlyFocusedField());
   },
