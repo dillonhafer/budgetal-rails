@@ -8,6 +8,15 @@ import {
   View,
 } from 'react-native'
 
+import {
+  FormContainer,
+  FormInput,
+  FormLabel,
+  InputContainer,
+  InputSeparator,
+  InputButton,
+} from './form-components'
+
 import {saveTokens, signedIn} from '../data/API';
 import {signUp} from '../data/sessions';
 import {REMEMBER_EMAIL, REMEMBER_SWITCH} from '../constants/StorageKeys'
@@ -98,66 +107,72 @@ class SignUp extends Component {
   render() {
     const disabledStyles = this.valid() ? {} : styles.disabledButton;
     return (
-      <View style={styles.container}>
-        <TextInput style={styles.inputs}
-                   autoCorrect={false}
-                   accessible={true}
-                   accessibilityLabel={'First Name'}
-                   autoCapitalize='words'
-                   ref="first_name"
-                   onChangeText={(first_name) => this.setState({first_name})}
-                   placeholder='First Name'
-                   defaultValue={this.state.first_name} />
+      <FormContainer>
+        <FormLabel label='SIGN UP' />
+        <InputContainer>
+          <FormInput placeholder='First Name'
+                     required={true}
+                     format='any'
+                     autoCorrect={false}
+                     autoCapitalize='words'
+                     value={this.state.first_name}
+                     onChangeText={(first_name) => this.setState({first_name})}
+                     label='First Name'
+                     returnKeyType='next'
+                     defaultValue={this.state.first_name} />
 
-        <TextInput style={styles.inputs}
-                   autoCorrect={false}
-                   accessible={true}
-                   accessibilityLabel={'Last Name'}
-                   autoCapitalize='words'
-                   ref="last_name"
-                   onChangeText={(last_name) => this.setState({last_name})}
-                   placeholder='Last Name'
-                   defaultValue={this.state.last_name} />
+          <InputSeparator />
 
-        <TextInput style={styles.inputs} keyboardType='email-address'
-                   autoCorrect={false}
-                   accessible={true}
-                   accessibilityLabel={'Email'}
-                   autoCapitalize='none'
-                   ref="email"
-                   onChangeText={(email) => this.setState({email})}
-                   placeholder='email@example.com'
-                   defaultValue={this.state.email} />
+          <FormInput placeholder='Last Name'
+                     required={true}
+                     format='any'
+                     autoCorrect={false}
+                     autoCapitalize='words'
+                     value={this.state.last_name}
+                     onChangeText={(last_name) => this.setState({last_name})}
+                     label='Last Name'
+                     returnKeyType='next'
+                     defaultValue={this.state.last_name} />
 
-        <TextInput placeholder='Password'
-                   ref="password"
-                   password={true}
-                   style={styles.inputs}
-                   accessible={true}
-                   accessibilityLabel={'Password'}
-                   onChangeText={(password) => this.setState({password})}
-                   defaultValue={this.state.password} />
+          <InputSeparator />
 
-        <TextInput placeholder='Password Confirmation'
-                   ref="password_confirmation"
-                   password={true}
-                   style={styles.inputs}
-                   accessible={true}
-                   accessibilityLabel={'Password Confirmation'}
-                   onChangeText={(password_confirmation) => this.setState({password_confirmation})}
-                   defaultValue={this.state.password_confirmation} />
+          <FormInput placeholder='email@example.com'
+                     required={true}
+                     format='email'
+                     keyboardType='email-address'
+                     value={this.state.email}
+                     onChangeText={(email) => this.setState({email})}
+                     label='Email'
+                     returnKeyType='next'
+                     defaultValue={this.state.email} />
 
-        <TouchableHighlight
-          style={[styles.button,disabledStyles]}
-          disabled={!this.valid()}
-          activeOpacity={1}
-          accessible={true}
-          accessibilityLabel={'Sign In'}
-          underlayColor='#5582DB'
-          onPress={this.signUp}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableHighlight>
-      </View>
+          <InputSeparator />
+
+          <FormInput placeholder='Password'
+                     required={true}
+                     format='password'
+                     inputType='password'
+                     value={this.state.password}
+                     onChangeText={(password) => this.setState({password})}
+                     label='New Password'
+                     returnKeyType='next' />
+
+          <InputSeparator />
+
+          <FormInput placeholder='Confirm Password'
+                     required={true}
+                     format='password_confirmation'
+                     inputType='password'
+                     password={this.state.password}
+                     value={this.state.password_confirmation}
+                     onChangeText={(password_confirmation) => this.setState({password_confirmation})}
+                     label='Confirm'
+                     returnKeyType='done' />
+
+        </InputContainer>
+
+        <InputButton onPress={this.signUp} text='Sign Up' disabled={!this.valid()} />
+      </FormContainer>
     );
   }
 }
