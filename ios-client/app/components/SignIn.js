@@ -145,20 +145,21 @@ class SignIn extends Component {
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableHighlight>
 
-        <TouchableOpacity onPress={this.props.signUp} style={styles.signUpButton}>
-          <Text style={{textAlign: 'center',color: 'white'}}>New to Budgetal?</Text>
-          <Text style={styles.signUpText}>Create an Account</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={this.props.passwordResetRequest} style={styles.signUpButton}>
-          <Text style={styles.signUpText}>Forgot Password?</Text>
-        </TouchableOpacity>
-
         <ActivityIndicatorIOS
           animating={this.state.animating}
           color='#fff'
           style={{height: 80, opacity: (this.state.animating ? 1 : 0)}}
           size="large" />
+
+        <View style={styles.helpContainer}>
+          <TouchableOpacity onPress={this.props.signUp} style={styles.signUpButton}>
+            <Text style={styles.signUpText}>Create an Account</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.props.passwordResetRequest} style={styles.signUpButton}>
+            <Text style={styles.signUpText}>Forgot Password?</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -209,6 +210,10 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     marginTop: 40,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   signUpText: {
     color: 'white',
@@ -216,6 +221,11 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textDecorationStyle: 'solid',
     textDecorationColor: 'white',
+  },
+  helpContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
   }
 });
 
