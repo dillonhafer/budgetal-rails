@@ -54,5 +54,6 @@ Rails.application.routes.draw do
     get '/tests/setup'    => 'tests#setup'
     get '/tests/teardown' => 'tests#teardown'
     get '/tests/reset'    => 'tests#reset'
+    get '/tests/emails'   => 'tests#emails'
   end
 end
