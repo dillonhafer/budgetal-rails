@@ -83,6 +83,9 @@ const styles = StyleSheet.create({
   error: {
     color: '$red',
   },
+  picker: {
+    alignItems: 'flex-end',
+  }
 });
 
 class FormInput extends Component {
