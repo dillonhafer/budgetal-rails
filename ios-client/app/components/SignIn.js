@@ -117,7 +117,7 @@ class SignIn extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.logo} source={require('image!logo')} />
+        <Image style={styles.logo} source={require('../images/logo.png')} />
         <TextInput style={styles.inputs} keyboardType='email-address'
                    autoCorrect={false}
                    accessible={true}
@@ -174,10 +174,10 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     height: 40,
-    width: 240,
+    marginLeft: 40,
+    marginRight: 40,
     borderColor: '$backgroundColor',
     borderWidth: 1,
-    marginLeft: 40,
   },
   buttonText: {
     textAlign: 'center',
@@ -202,11 +202,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   logo: {
-    width: 280,
     height: 100,
-    marginLeft: 20,
     marginTop: 40,
-    resizeMode: 'contain'
+    width: 300,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    resizeMode: 'contain',
   },
   signUpButton: {
     marginTop: 40,
