@@ -39,6 +39,9 @@ Rails.application.routes.draw do
   get '/account-info'         => 'users#account_info'
   post '/update-avatar'       => 'users#update_avatar'
 
+  post '/reset-password' => 'password_resets#create'
+  put '/reset-password' => 'password_resets#update'
+
   get '/admin/users' => 'admin#users'
 
   get "/teapot", to: proc {|env| [418, {}, ['{"isTeapot": true}']] }
