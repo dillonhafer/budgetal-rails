@@ -32,9 +32,12 @@ const styles = StyleSheet.create({
 
 class InputButton extends Component {
   render() {
+    const disabledStyles= this.props.disabled ? {opacity: 0.25} : {};
     return (
       <TouchableHighlight
-        style={styles.button}
+        style={[styles.button, disabledStyles]}
+        disabled={this.props.disabled}
+        activeOpacity={1}
         underlayColor={'#6699ff'}
         onPress={this.props.onPress}
         accessible={true}
