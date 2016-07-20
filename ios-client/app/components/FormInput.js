@@ -16,24 +16,22 @@ import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    backgroundColor: '$white',
     paddingLeft: 0,
     paddingBottom: 0,
     paddingTop: 0,
     alignItems: 'center',
-    marginTop: 1,
     marginBottom: 0
   },
   column: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   label: {
     fontSize: 16,
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom: 4,
-    color: '$menuBackground'
   },
   right: {
     flex: 1,
