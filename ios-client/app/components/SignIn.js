@@ -152,13 +152,16 @@ class SignIn extends Component {
           size="large" />
 
         <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={this.props.signUp} style={styles.signUpButton}>
+          <View style={styles.signUpButton}>
+            <TouchableOpacity onPress={this.props.signUp}>
             <Text style={styles.signUpText}>Create an Account</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={this.props.passwordResetRequest} style={styles.signUpButton}>
-            <Text style={styles.signUpText}>Forgot Password?</Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.signUpButton}>
+            <TouchableOpacity onPress={this.props.passwordResetRequest}>
+              <Text style={styles.signUpText}>Forgot Password?</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
