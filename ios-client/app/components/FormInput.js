@@ -10,6 +10,8 @@ import {
   View
 } from 'react-native'
 
+import PredictiveTextList from './PredictiveTextList'
+
 import {dismissKeyboard} from '../utils/ViewHelpers'
 import StyleSheet from './StyleSheet'
 
@@ -214,6 +216,7 @@ class FormInput extends Component {
           </View>
         </View>
         {this.datePicker()}
+        <PredictiveTextList source={this.props.predictiveSource} onPress={this.onChangeText} />
       </View>
     )
   }

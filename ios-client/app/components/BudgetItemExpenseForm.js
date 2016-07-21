@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {LayoutAnimation,} from 'react-native'
 
 import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
-import {updateItemExpense, createItemExpense} from '../data/budgetItemExpense';
+import {updateItemExpense, createItemExpense, predictExpenses} from '../data/budgetItemExpense';
 
 import {
   FormContainer,
@@ -23,7 +23,8 @@ class BudgetItemExpenseForm extends Component {
     )
 
     this.state = {
-      budgetItemExpense: initialExpense
+      budgetItemExpense: initialExpense,
+      pastExpenses: []
     };
   }
 
@@ -83,6 +84,32 @@ class BudgetItemExpenseForm extends Component {
     return (item.amount && item.amount.length) && (item.name && item.name.length)
   }
 
+  _predict = async(name) => {
+    try {
+      let pastExpenses = await predictExpenses(name);
+      if (pastExpenses !== null) {
+        this.setState({pastExpenses});
+      }
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  _updateExpenseName = (name) => {
+    this.setState({budgetItemExpense: Object.assign({}, this.state.budgetItemExpense, {name})});
+    if (name.length > 2 && !this.state.pastExpenses.includes(name)) {
+      this._predict(name);
+    } else {
+      this.clearPastExpenses()
+    }
+  }
+
+  clearPastExpenses = () => {
+    if (this.state.pastExpenses.length) {
+      this.setState({pastExpenses: []})
+    }
+  }
+
   render() {
     let b = this.state.budgetItemExpense;
     const validForm = this._validForm(b);
@@ -95,8 +122,10 @@ class BudgetItemExpenseForm extends Component {
                      format='any'
                      autoCapitalize='words'
                      value={b.name}
-                     onChangeText={(name)=> this.setState({budgetItemExpense: Object.assign({}, b, {name})})}
+                     onChangeText={this._updateExpenseName}
                      label='Name'
+                     onBlur={this.clearPastExpenses}
+                     predictiveSource={this.state.pastExpenses}
                      defaultValue={b.name} />
 
           <InputSeparator />

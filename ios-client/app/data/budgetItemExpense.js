@@ -1,4 +1,4 @@
-import {postRequest, putRequest, deleteRequest, patchRequest} from './API';
+import {getRequest, postRequest, putRequest, deleteRequest} from './API';
 
 module.exports = {
   createItemExpense(budget_item_expense) {
@@ -10,4 +10,7 @@ module.exports = {
   deleteItemExpense(id) {
     return deleteRequest(`/budget-item-expenses/${id}`);
   },
+  predictExpenses(name) {
+    return getRequest(`/past-expenses/${name}`);
+  }
 }
