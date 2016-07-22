@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   AsyncStorage,
   Image,
   Text,
@@ -115,6 +115,7 @@ class SignIn extends Component {
   }
 
   render() {
+    const disabledStyles = this.state.animating ? {opacity: 0.25} : {};
     return (
       <View style={styles.container}>
         <Image style={styles.logo} source={require('../images/logo.png')} />
@@ -137,15 +138,16 @@ class SignIn extends Component {
                    defaultValue={this.state.password} />
 
         <TouchableHighlight
-          style={styles.button}
+          style={[styles.button,disabledStyles]}
           accessible={true}
+          disabled={this.state.animating}
           accessibilityLabel={'Sign In'}
           underlayColor='#5582DB'
           onPress={this.buttonClicked}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableHighlight>
 
-        <ActivityIndicatorIOS
+        <ActivityIndicator
           animating={this.state.animating}
           color='#fff'
           style={{height: 80, opacity: (this.state.animating ? 1 : 0)}}

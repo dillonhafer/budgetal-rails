@@ -83,9 +83,6 @@ const styles = StyleSheet.create({
   error: {
     color: '$red',
   },
-  picker: {
-    alignItems: 'flex-end',
-  }
 });
 
 class FormInput extends Component {
@@ -159,11 +156,9 @@ class FormInput extends Component {
 
     if (this.state.showDatePicker) {
       return (
-        <View style={styles.picker}>
-          <DatePickerIOS date={this.props.date}
-                         mode='date'
-                         onDateChange={this.props.onDateChange} />
-        </View>
+        <DatePickerIOS date={this.props.date}
+                       mode='date'
+                       onDateChange={this.props.onDateChange} />
       )
     }
   }

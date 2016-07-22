@@ -6,7 +6,7 @@ import { updateBudgetCategory, deleteBudgetItem } from '../actions/Budgets'
 
 const mapStateToProps = (state) => {
 	let idx = state.navigationState.index;
-	let navCategory = state.navigationState.children[idx].budgetCategory;
+	let navCategory = state.navigationState.routes[idx].budgetCategory;
 	let budgetCategory = (state.budgetState.budgetCategory && navCategory && state.budgetState.budgetCategory.id === navCategory.id) ? state.budgetState.budgetCategory : navCategory;
 	let budget = state.budgetState.budget;
 	let budgetItems = state.budgetState.budgetItems;

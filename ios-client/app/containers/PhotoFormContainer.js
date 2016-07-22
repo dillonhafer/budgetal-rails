@@ -5,7 +5,7 @@ import { navigatePop, navigatePush, navigateReset } from '../actions/Navigation'
 import { updatePhoto, StoreUser } from '../actions/Account'
 
 const mapStateToProps = (state) => {
-	const user = state.navigationState.children[state.navigationState.index].user || {avatar: ''};
+	const user = state.navigationState.routes[state.navigationState.index].user || {avatar: ''};
 	return {
 		user
 	}

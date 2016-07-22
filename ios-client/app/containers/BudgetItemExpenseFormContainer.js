@@ -5,7 +5,7 @@ import { navigatePop, navigatePush, navigateReset } from '../actions/Navigation'
 import { updateBudgetItemExpense, addBudgetItemExpense } from '../actions/Budgets'
 
 const mapStateToProps = (state) => {
-	let budgetItemExpense = state.navigationState.children[state.navigationState.index].budgetItemExpense;
+	let budgetItemExpense = state.navigationState.routes[state.navigationState.index].budgetItemExpense;
 	return {
 		budgetItemExpense
 	}

@@ -6,7 +6,7 @@ import { deleteBudgetItemExpense } from '../actions/Budgets'
 import {find, where} from 'lodash-node'
 
 const mapStateToProps = (state) => {
-	const item = state.navigationState.children[state.navigationState.index].budgetItem;
+	const item = state.navigationState.routes[state.navigationState.index].budgetItem;
 	const id = item ? item.id : 0;
 	const budgetItem = find(state.budgetState.budgetItems, {id})
 	const budgetItemExpenses = where(state.budgetState.budgetItemExpenses, {budget_item_id: id});

@@ -4,7 +4,7 @@ import PasswordReset from '../components/PasswordReset'
 import { navigateReset } from '../actions/Navigation'
 
 const mapStateToProps = (state) => {
-  const password_reset_token = state.navigationState.children[state.navigationState.index].password_reset_token || '';
+  const password_reset_token = state.navigationState.routes[state.navigationState.index].password_reset_token || '';
 	return {password_reset_token}
 }
 

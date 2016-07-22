@@ -18,7 +18,7 @@ import {
 const initialNavState = {
 	key: 'MainNavigation',
 	index: 0,
-	children: [
+	routes: [
 		{ key: 'SignIn', title: '' },
 	],
 }
@@ -26,11 +26,11 @@ const initialNavState = {
 export default function navigationState(state = initialNavState, action) {
 	switch (action.type) {
 	case NAV_PUSH:
-		if (state.children[state.index].key === (action.state && action.state.key)) return state
+		if (state.routes[state.index].key === (action.state && action.state.key)) return state
 		return push(state, action.state)
 
 	case NAV_POP:
-		if (state.index === 0 || state.children.length === 1) return state
+		if (state.index === 0 || state.routes.length === 1) return state
 		return pop(state)
 
 	case NAV_JUMP_TO_KEY:
@@ -46,7 +46,7 @@ export default function navigationState(state = initialNavState, action) {
 		return {
 			...state,
 			index: action.index,
-			children: action.children
+			routes: action.routes
 		}
 	default:
 		return state

@@ -36,8 +36,8 @@ import BackButton from '../components/BackButton';
 import { navigatePush, navigatePop } from '../actions/Navigation';
 
 const {
-	Transitioner: NavigationTransitioner,
 	Card: NavigationCard,
+	CardStack: NavigationCardStack,
 	Header: NavigationHeader
 } = NavigationExperimental
 
@@ -82,12 +82,9 @@ class AppContainer extends Component {
   }
 
 	render() {
-		let { navigationState, onNavigate } = this.props
-
+		let { navigationState, onNavigateBack } = this.props;
+    let route = navigationState.routes[navigationState.index];
 		return (
-      // Note that we are not using a 'BackAction' handling
-      // the reduction of our state for us. Instead, we grab the navigationState we have in
-      // our Redux store and pass it directly to the <NavigationAnimatedView />.
       <SideMenu openMenuOffset={265}
 								ref='SideMenu'
                 bounceBackOnOverdraw={true}
@@ -95,43 +92,35 @@ class AppContainer extends Component {
 								disableGestures={this._disableGestures(navigationState)}
                 edgeHitWidth={400}
                 menu={<MenuContainer />}>
-			<NavigationTransitioner
-				navigationState={navigationState}
-				style={styles.outerContainer}
-				onNavigate={onNavigate}
-				renderOverlay={props => (
-				  <NavigationHeader
-						{...props}
-            style={this._headerStyles(navigationState)}
-						renderTitleComponent={this._renderTitle}
-            renderLeftComponent={this._renderLeftComponent}
-            renderRightComponent={this._renderRightComponent}
-					/>
-				)}
-				renderScene={props => (
-					// Again, we pass our navigationState from the Redux store to <NavigationCard />.
-					// Finally, we'll render out our scene based on navigationState in _renderScene().
-					<NavigationCard
-						{...props}
-						// Transition animations are determined by the StyleInterpolators. Here we manually
-						// override the default horizontal style interpolator that gets applied inside of
-						// NavigationCard for a vertical direction animation if we are showing a modal.
-						style={this._cardStyles(props)}
-						// By default a user can swipe back to pop from the stack. Disable this for modals.
-						// Just like for style interpolators, returning undefined lets NavigationCard override it.
-						panHandlers={this._swipeBackScene(props.scene.navigationState.key) ? undefined : null}
-						renderScene={this._renderScene}
-						key={props.scene.navigationState.key}
-					/>
-				)}
-			/>
+  			<NavigationCardStack
+  				navigationState={navigationState}
+          direction={this._cardDirection(route.key)}
+  				style={styles.outerContainer}
+          cardStyle={this._cardStyles(route.key)}
+  				onNavigateBack={this.props.onNavigateBack}
+  				renderOverlay={this._renderOverlay}
+  				renderScene={this._renderScene}
+  			/>
       </SideMenu>
 		)
 	}
 
+  _renderOverlay = (props) => {
+    return (
+      <NavigationHeader
+        {...props}
+        onNavigateBack={this.props.onNavigateBack}
+        style={this._headerStyles(props.navigationState)}
+        renderTitleComponent={this._renderTitle}
+        renderLeftComponent={this._renderLeftComponent}
+        renderRightComponent={this._renderRightComponent}
+      />
+    )
+  }
+
 	_renderTitle(props) {
-		const title = props.scene.navigationState.title
-		const isIcon = props.scene.navigationState.key === 'BudgetCategory'
+		const title = String(props.scene.route.title || '');
+		const isIcon = props.scene.route.key === 'BudgetCategory'
 		return <NavigationTitle title={title} categoryIcon={isIcon} />
 	}
 
@@ -154,7 +143,7 @@ class AppContainer extends Component {
 			'PasswordResetRequest',
 			'PasswordReset',
 		]
-		let child = navState.children[navState.index]
+		let child = navState.routes[navState.index]
 		return child && disabledScenes.includes(child.key);
 	}
 
@@ -163,7 +152,7 @@ class AppContainer extends Component {
 	}
 
   _renderRightComponent = (props) => {
-    switch (props.scene.navigationState.key) {
+    switch (props.scene.route.key) {
       case 'Budgets':
         return <BudgetInfoButtonContainer />
       default:
@@ -172,7 +161,7 @@ class AppContainer extends Component {
   }
 
   _renderLeftComponent = (props) => {
-    switch (props.scene.navigationState.key) {
+    switch (props.scene.route.key) {
       case 'Budgets':
       case 'DetailedBudgets':
       case 'AnnualBudgets':
@@ -191,18 +180,17 @@ class AppContainer extends Component {
 			case 'MonthlyIncomeForm':
 			case 'PasswordResetRequest':
 			case 'PasswordReset':
-				return <BackButton onNavigate={props.onNavigate} text='Cancel' />
+				return <BackButton onNavigateBack={props.onNavigateBack} text='Cancel' />
       case 'BudgetInfo':
-        return <BackButton onNavigate={props.onNavigate} text='Done' />
+        return <BackButton onNavigateBack={props.onNavigateBack} text='Done' />
       default:
-	      return <BackButton onNavigate={props.onNavigate} text={props.scene.navigationState.back} />
+	      return <BackButton onNavigateBack={props.onNavigateBack} />
     }
   }
 
-	_cardStyles(props) {
-		switch (props.scene.navigationState.key) {
+  _cardDirection(key) {
+    switch (key) {
 			case 'SignIn':
-				return NavigationCard.CardStackStyleInterpolator.forVertical(props)
 			case 'SignUp':
 			case 'BudgetItemForm':
 			case 'BudgetItemExpenseForm':
@@ -214,14 +202,23 @@ class AppContainer extends Component {
 			case 'MonthlyIncomeForm':
 			case 'PasswordResetRequest':
 			case 'PasswordReset':
-				return [NavigationCard.CardStackStyleInterpolator.forVertical(props),styles.visibleNav]
+        return 'vertical'
 			default:
-				return [NavigationCard.CardStackStyleInterpolator.forHorizontal(props),styles.visibleNav]
+				return 'horizontal'
+		}
+  }
+
+	_cardStyles(key) {
+		switch (key) {
+			case 'SignIn':
+				return {}
+			default:
+				return styles.visibleNav
 		}
 	}
 
   _headerStyles(navState) {
-		let child = navState.children[navState.index];
+		let child = navState.routes[navState.index];
 		let key = (child.key.length) ? child.key : '';
 
     switch (key) {
@@ -255,10 +252,10 @@ class AppContainer extends Component {
     return horizontalScenes.includes(key);
   }
 
-	_renderScene({scene}) {
-		const { navigationState } = scene
+	_renderScene(props) {
+		const { navigationState } = props
 
-		switch(navigationState.key) {
+		switch(props.scene.route.key) {
 			case 'SignIn':
 				return <SignInContainer />
 			case 'SignUp':
@@ -301,23 +298,16 @@ class AppContainer extends Component {
 
 AppContainer.propTypes = {
 	navigationState: PropTypes.object,
-	onNavigate: PropTypes.func.isRequired
+	onNavigateBack: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
 	outerContainer: {
-		flex: 1,
 		backgroundColor: '$backgroundColor',
 	},
 	visibleNav: {
-		paddingTop: NavigationHeader.HEIGHT,
+		marginTop: NavigationHeader.HEIGHT,
 	},
-	container: {
-		flex: 1,
-	},
-  navTitle: {
-    color: '$white',
-  },
   hiddenNav: {
     backgroundColor: '$clear',
     borderBottomWidth: 0,
@@ -333,19 +323,8 @@ export default connect(
 		navigationState: state.navigationState
 	}),
 	dispatch => ({
-		onNavigate: (action) => {
-			// Two types of actions are likely to be passed, both representing "back"
-			// style actions. Check if a type has been indicated, and try to match it.
-			if (action.type && (
-				action.type === 'BackAction' ||
-				action.type === NavigationCard.CardStackPanResponder.Actions.BACK.type)
-			) {
-				dispatch(navigatePop())
-			} else {
-				// Currently unused by NavigationExperimental (only passes back actions),
-				// but could potentially be used by custom components.
-				dispatch(navigatePush(action))
-			}
+		onNavigateBack: (action) => {
+  		dispatch(navigatePop())
 		}
 	})
 )(AppContainer)

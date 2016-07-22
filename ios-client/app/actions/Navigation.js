@@ -44,10 +44,10 @@ export function navigateReplaceAtIndex(index, newState) {
 	}
 }
 
-export function navigateReset(children, index) {
+export function navigateReset(routes, index) {
 	return {
 		type: NAV_RESET,
 		index,
-		children
+		routes
 	}
 }

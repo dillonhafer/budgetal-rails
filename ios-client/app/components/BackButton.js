@@ -42,7 +42,7 @@ class BackButton extends Component {
         style={styles.buttonContainer}
         accessible={true}
         accessibilityLabel={`Back Button`}
-        onPress={() => this.props.onNavigate({type: 'BackAction'})}>
+        onPress={this.props.onNavigateBack}>
         {this.buttonType(this.props.text)}
       </TouchableOpacity>
     )
