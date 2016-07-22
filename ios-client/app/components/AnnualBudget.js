@@ -12,7 +12,7 @@ import {
 const {width} = Dimensions.get('window')
 const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
 import SwipeableListView from 'SwipeableListView';
-import DateBarView from './DateBarView';
+import DateBar from './DateBar';
 import {reduce,where} from 'lodash-node'
 
 import {all} from '../data/AnnualBudgets';
@@ -315,14 +315,14 @@ class AnnualBudget extends Component {
     const budgetItems = ds.cloneWithRowsAndSections(dataBlob);
 
     return (
-      <DateBarView type='year'
-               style={styles.container}
-               onDateChange={this.onYearChange}
-               showDatePicker={this.state.showDatePicker}
-               beginningYear={2015}
-               endingYear={new Date().getFullYear()+2}
-               year={this.props.year}
-               toggleDatePicker={this.toggleDatePicker}>
+      <View style={styles.container}>
+        <DateBar type='year'
+                 onDateChange={this.onYearChange}
+                 showDatePicker={this.state.showDatePicker}
+                 beginningYear={2015}
+                 endingYear={new Date().getFullYear()+2}
+                 year={this.props.year}
+                 toggleDatePicker={this.toggleDatePicker} />
 
         <SwipeableListView style={styles.list}
                   bounceFirstRowOnMount={true}
@@ -336,7 +336,7 @@ class AnnualBudget extends Component {
                   renderRow={this._renderRow}
                   renderFooter={this.footerRow}
                   renderSeparator={this.separator} />
-        </DateBarView>
+        </View>
     );
   }
 }

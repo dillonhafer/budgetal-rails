@@ -6,7 +6,7 @@ import {
 
 import {map} from 'lodash-node';
 import {find} from '../data/StatisticsRepository';
-import DateBarView from './DateBarView';
+import DateBar from './DateBar';
 import StatsBar from './StatsBar';
 
 import StyleSheet from './StyleSheet'
@@ -82,17 +82,17 @@ class Statistics extends Component {
 
   render() {
     return (
-      <DateBarView onDateChange={this.onDateChange}
-               style={styles.container}
-               toggleDatePicker={this.toggleDatePicker}
-               showDatePicker={this.state.showDatePicker}
-               type='year-month'
-               beginningYear={2015}
-               endingYear={new Date().getFullYear()+2}
-               year={this.props.budget.year}
-               month={this.props.budget.month}>
+      <View style={styles.container}>
+        <DateBar onDateChange={this.onDateChange}
+                 toggleDatePicker={this.toggleDatePicker}
+                 showDatePicker={this.state.showDatePicker}
+                 type='year-month'
+                 beginningYear={2015}
+                 endingYear={new Date().getFullYear()+2}
+                 year={this.props.budget.year}
+                 month={this.props.budget.month} />
         {this.stats()}
-      </DateBarView>
+      </View>
     )
   }
 }

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class DateBarView extends Component {
+class DateBar extends Component {
   constructor(props) {
     super(props)
   }
@@ -143,15 +143,9 @@ class DateBarView extends Component {
                              endingYear={this.props.endingYear}
                              year={this.props.year}
                              month={this.props.month} />;
-    const bar = this._getBar(this.props.type, picker);
 
-    return (
-      <View style={this.props.style}>
-        {bar}
-        {this.props.children}
-      </View>
-    )
+    return this._getBar(this.props.type, picker)
   }
 }
 
-module.exports = DateBarView;
+module.exports = DateBar;

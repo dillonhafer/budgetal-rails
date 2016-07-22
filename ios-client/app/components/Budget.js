@@ -10,7 +10,7 @@ import {
 
 import {findCategory} from '../data/budget_category';
 import {numberToCurrency, categoryIcon} from '../utils/ViewHelpers';
-import DateBarView from './DateBarView';
+import DateBar from './DateBar';
 import {find} from 'lodash-node';
 import StyleSheet from './StyleSheet';
 
@@ -148,15 +148,16 @@ class Budgets extends Component {
     const dataSource = ds.cloneWithRows(this.props.budgetCategories)
 
     return (
-      <DateBarView onDateChange={this.onDateChange}
-               style={styles.container}
-               toggleDatePicker={this.toggleDatePicker}
-               showDatePicker={this.state.showDatePicker}
-               type='year-month'
-               beginningYear={2015}
-               endingYear={new Date().getFullYear()+2}
-               year={this.props.budget.year}
-               month={this.props.budget.month}>
+      <View style={styles.container}>
+        <DateBar onDateChange={this.onDateChange}
+                 toggleDatePicker={this.toggleDatePicker}
+                 showDatePicker={this.state.showDatePicker}
+                 type='year-month'
+                 beginningYear={2015}
+                 endingYear={new Date().getFullYear()+2}
+                 year={this.props.budget.year}
+                 month={this.props.budget.month} />
+
         <ListView style={styles.list}
                   initialListSize={12}
                   scrollsToTop={this.props.scrollsToTop}
@@ -165,7 +166,7 @@ class Budgets extends Component {
                   dataSource={dataSource}
                   renderSeparator={this.separator}
                   renderRow={this._renderRow} />
-      </DateBarView>
+      </View>
     )
   }
 }
