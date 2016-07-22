@@ -16,6 +16,9 @@ import {dismissKeyboard} from '../utils/ViewHelpers'
 import StyleSheet from './StyleSheet'
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    overflow: 'hidden'
+  },
   inputRow: {
     flexDirection: 'row',
     backgroundColor: '$white',
@@ -201,7 +204,7 @@ class FormInput extends Component {
     }
 
     return (
-      <View>
+      <View style={styles.inputContainer}>
         <View style={styles.inputRow}>
           <View style={styles.column}>
             <Text style={[styles.label,validStyles]}>{this.props.label}</Text>
