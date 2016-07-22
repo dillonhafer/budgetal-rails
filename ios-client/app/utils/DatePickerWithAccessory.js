@@ -14,11 +14,6 @@ const {width} = Dimensions.get('window');
 import {range} from 'lodash-node'
 import {monthName} from './ViewHelpers'
 
-// Work around while waiting for RN to fix issue 4547 (stuck in review):
-// https://github.com/facebook/react-native/issues/4547
-DatePickerIOS.propTypes.date = PropTypes.any.isRequired
-DatePickerIOS.propTypes.onDateChange = PropTypes.func
-
 class DatePickerWithAccessory extends Component {
   constructor(props) {
     super(props)
@@ -56,11 +51,6 @@ class DatePickerWithAccessory extends Component {
     const items = years.map((year) => (<Picker.Item key={year} value={year} label={year} />))
     return (
       <View style={this.state.showDatePicker ? styles.yearPicker : styles.hidden}>
-        <View style={styles.inputAccessory}>
-          <TouchableHighlight underlayColor='transparent' onPress={this.props.onDone}>
-            <Text style={styles.doneText}>Done</Text>
-          </TouchableHighlight>
-        </View>
         <Picker selectedValue={String(this.props.year)}
                    itemStyle={{textAlign: 'center'}}
                    onValueChange={this.props.onDateChange}>
@@ -84,11 +74,6 @@ class DatePickerWithAccessory extends Component {
 
     return (
       <View style={this.state.showDatePicker ? styles.yearPicker : styles.hidden}>
-        <View style={styles.inputAccessory}>
-          <TouchableHighlight underlayColor='transparent' onPress={this.props.onDone}>
-            <Text style={styles.doneText}>Done</Text>
-          </TouchableHighlight>
-        </View>
         <View style={styles.yearMonthContainer}>
           <View style={styles.yearMonthPicker}>
             <Picker selectedValue={String(this.props.month)}
@@ -124,7 +109,6 @@ class DatePickerWithAccessory extends Component {
 const styles = StyleSheet.create({
   hidden: {
     height: 0,
-    bottom: -600
   },
   inputAccessory: {
     padding: 10,
@@ -137,18 +121,11 @@ const styles = StyleSheet.create({
   datePicker: {
     width: width,
     flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'flex-end',
-    bottom: 0,
-    position: 'absolute',
   },
   yearPicker: {
     width: width,
     flex: 1,
-    backgroundColor: 'white',
     justifyContent: 'center',
-    bottom: 0,
-    position: 'absolute'
   },
   doneText: {
     fontSize: 14,

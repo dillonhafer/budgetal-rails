@@ -12,13 +12,16 @@ import {monthName,monthStep} from '../utils/ViewHelpers';
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     backgroundColor: '$grayBackground',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     borderWidth: 0.5,
     borderColor: '$white',
-    borderBottomColor: '$grayBorder'
+    borderBottomColor: '$grayBorder',
+    overflow: 'hidden',
+  },
+  barContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   centerYear: {
     textAlign: 'center',
@@ -84,58 +87,68 @@ class DateBarView extends Component {
             </TouchableHighlight>);
   }
 
-  _renderMonthYear = () => {
+  _renderMonthYear = (picker) => {
     const firstEnabled = [this.props.month,this.props.year].join() !== [1,this.props.beginningYear].join()
     const lastEnabled  = [this.props.month,this.props.year].join() !== [12,this.props.endingYear].join()
     return (
       <View style={styles.container}>
-        {this.previousButton(this._changeMonth, firstEnabled, this.props.month, this.props.year)}
-        <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
-          <Text style={styles.centerYear}>{this.menuDate(this.props.month, this.props.year)}</Text>
-        </TouchableHighlight>
-        {this.nextButton(this._changeMonth, lastEnabled, this.props.month, this.props.year)}
+        <View style={styles.barContainer}>
+          {this.previousButton(this._changeMonth, firstEnabled, this.props.month, this.props.year)}
+          <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
+            <Text style={styles.centerYear}>{this.menuDate(this.props.month, this.props.year)}</Text>
+          </TouchableHighlight>
+          {this.nextButton(this._changeMonth, lastEnabled, this.props.month, this.props.year)}
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          {picker}
+        </View>
       </View>
     )
   }
 
-  _renderYear = () => {
+  _renderYear = (picker) => {
     const firstEnabled = this.props.year !== this.props.beginningYear
     const lastEnabled  = this.props.year !== this.props.endingYear
     return (
       <View style={styles.container}>
-        {this.previousButton(this._changeYear, firstEnabled, this.props.year)}
-        <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
-          <Text style={styles.centerYear}>{this.props.year}</Text>
-        </TouchableHighlight>
-        {this.nextButton(this._changeYear, lastEnabled, this.props.year)}
+        <View style={styles.barContainer}>
+          {this.previousButton(this._changeYear, firstEnabled, this.props.year)}
+          <TouchableHighlight underlayColor='transparent' onPress={this.props.toggleDatePicker}>
+            <Text style={styles.centerYear}>{this.props.year}</Text>
+          </TouchableHighlight>
+          {this.nextButton(this._changeYear, lastEnabled, this.props.year)}
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          {picker}
+        </View>
       </View>
     )
   }
 
-  _getBar(type) {
+  _getBar(type, picker) {
     switch (type) {
       case 'year':
-        return this._renderYear();
+        return this._renderYear(picker);
       default:
-        return this._renderMonthYear();
+        return this._renderMonthYear(picker);
     }
   }
 
   render() {
-    const bar = this._getBar(this.props.type);
+    const picker = <DatePickerWithAccessory showDatePicker={this.props.showDatePicker}
+                             type={this.props.type}
+                             onDone={this.props.toggleDatePicker}
+                             onValueChange={this.props.onDateChange}
+                             beginningYear={this.props.beginningYear}
+                             endingYear={this.props.endingYear}
+                             year={this.props.year}
+                             month={this.props.month} />;
+    const bar = this._getBar(this.props.type, picker);
 
     return (
       <View style={this.props.style}>
         {bar}
         {this.props.children}
-        <DatePickerWithAccessory showDatePicker={this.props.showDatePicker}
-                                 type={this.props.type}
-                                 onDone={this.props.toggleDatePicker}
-                                 onValueChange={this.props.onDateChange}
-                                 beginningYear={this.props.beginningYear}
-                                 endingYear={this.props.endingYear}
-                                 year={this.props.year}
-                                 month={this.props.month} />
       </View>
     )
   }
