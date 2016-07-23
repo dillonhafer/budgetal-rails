@@ -17,27 +17,26 @@ class PasswordResetRequest extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: ''
+      email: '',
+      loading: false,
     };
   }
 
   resetPassword = async() => {
     try {
+      this.setState({loading: true});
       let resp = await resetPasswordRequest({email: this.state.email});
       this.props.goBack();
       window.alert({title: 'Password Reset', message: "We just sent you an email with instructions on how to reset your password"});
     } catch (err) {
       console.log(err);
+    } finally {
+      this.setState({loading: false});
     }
   }
 
-  _resetButton() {
-    LayoutAnimation.easeInEaseOut();
-    return <InputButton onPress={this.resetPassword} text='Request Password Reset' />
-  }
-
   render() {
-    const validForm = validEmail(this.state.email);
+    const disabled = !validEmail(this.state.email) || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='RESET PASSWORD' />
@@ -55,7 +54,10 @@ class PasswordResetRequest extends Component {
                      defaultValue={this.state.email} />
         </InputContainer>
 
-        {validForm ? this._resetButton() : null}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.resetPassword}
+                     text='Request Password Reset' />
       </FormContainer>
     )
   }
