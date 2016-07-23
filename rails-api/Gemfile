@@ -8,7 +8,6 @@ gem 'rack-cors', '~> 0.4.0'
 gem 'rails',     '5.0.0'
 
 group :development, :test, :mobile_integration do
-  gem 'flatware', github: 'briandunn/flatware'
   gem 'awesome_print'
   gem 'bullet'
   gem 'capybara'
