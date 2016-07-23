@@ -52,8 +52,8 @@ class DatePickerWithAccessory extends Component {
     return (
       <View style={this.state.showDatePicker ? styles.yearPicker : styles.hidden}>
         <Picker selectedValue={String(this.props.year)}
-                   itemStyle={{textAlign: 'center'}}
-                   onValueChange={this.props.onDateChange}>
+                itemStyle={{textAlign: 'center'}}
+                onValueChange={this.props.onValueChange}>
           {items}
         </Picker>
       </View>

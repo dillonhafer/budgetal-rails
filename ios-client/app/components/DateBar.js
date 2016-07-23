@@ -136,13 +136,13 @@ class DateBar extends Component {
 
   render() {
     const picker = <DatePickerWithAccessory showDatePicker={this.props.showDatePicker}
-                             type={this.props.type}
-                             onDone={this.props.toggleDatePicker}
-                             onValueChange={this.props.onDateChange}
-                             beginningYear={this.props.beginningYear}
-                             endingYear={this.props.endingYear}
-                             year={this.props.year}
-                             month={this.props.month} />;
+                                            type={this.props.type}
+                                            onDone={this.props.toggleDatePicker}
+                                            onValueChange={this.props.onDateChange}
+                                            beginningYear={this.props.beginningYear}
+                                            endingYear={this.props.endingYear}
+                                            year={this.props.year}
+                                            month={this.props.month} />;
 
     return this._getBar(this.props.type, picker)
   }
