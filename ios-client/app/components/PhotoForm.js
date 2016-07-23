@@ -62,6 +62,7 @@ class PhotoForm extends Component {
 
     this.state = {
       user: props.user,
+      loading: false,
     };
   }
 
@@ -73,6 +74,7 @@ class PhotoForm extends Component {
     };
 
     try {
+      this.setState({loading: true});
       const resp = await savePhoto(params);
       if (resp !== null && resp.errors === undefined) {
         this.props.updatePhoto(this.state.user)
@@ -82,6 +84,8 @@ class PhotoForm extends Component {
       }
     } catch (err) {
       this.props.endSession();
+    } finally {
+      this.setState({loading: false});
     }
   }
 
@@ -108,7 +112,10 @@ class PhotoForm extends Component {
             <Text style={styles.text}>Tap to change</Text>
           </TouchableOpacity>
         </InputContainer>
-        <InputButton onPress={this.savePhoto} text='Save' />
+        <InputButton disabled={this.state.loading}
+                     loading={this.state.loading}
+                     onPress={this.savePhoto}
+                     text='Update Photo' />
       </FormContainer>
     )
   }
