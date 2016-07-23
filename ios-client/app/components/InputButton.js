@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {
+  ActivityIndicator,
   Dimensions,
   Text,
+  View,
   TouchableHighlight,
 } from 'react-native'
 
@@ -15,34 +17,45 @@ const styles = StyleSheet.create({
     borderBottomColor: '$formBorder',
     borderBottomWidth: 0.5,
   },
-  buttonText: {
-    textAlign: 'center',
+  textContainer: {
+    flexDirection: 'row',
     backgroundColor: '$white',
-    color: '$blue',
     margin: 0,
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     height: 40,
-    borderColor: '$grayBorder',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '$blue',
+    marginLeft: 10,
+  },
+  indicator: {
+    height: 20,
+    marginLeft: -15,
   },
 })
 
+
 class InputButton extends Component {
   render() {
-    const disabledStyles= this.props.disabled ? {opacity: 0.25} : {};
+    const disabledStyles = this.props.disabled ? {opacity: 0.45} : {opacity: 1};
     return (
       <TouchableHighlight
         style={[styles.button, disabledStyles]}
         disabled={this.props.disabled}
-        activeOpacity={1}
         underlayColor={'#6699ff'}
         onPress={this.props.onPress}
         accessible={true}
         accessibilityLabel={this.props.text}>
-        <Text style={styles.buttonText}>{this.props.text}</Text>
+        <View style={styles.textContainer}>
+          <ActivityIndicator animating={this.props.loading}
+                             color='#69F'
+                             style={styles.indicator}
+                             size="small" />
+          <Text style={styles.buttonText}>{this.props.text}</Text>
+        </View>
       </TouchableHighlight>
     )
   }
