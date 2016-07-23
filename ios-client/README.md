@@ -22,7 +22,6 @@ $ rails server
 $ cd budgetal/ios-client
 $ npm install
 $ bundle install
-$ patches/./patch.sh
 $ react-native run-ios
 ```
 
