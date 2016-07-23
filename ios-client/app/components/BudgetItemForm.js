@@ -20,7 +20,8 @@ class BudgetItemForm extends Component {
     super(props)
 
     this.state = {
-      budgetItem: props.budgetItem
+      budgetItem: props.budgetItem,
+      loading: false,
     };
   }
 
@@ -30,6 +31,7 @@ class BudgetItemForm extends Component {
     let data = {budget_category_id: budgetItem.budget_category_id, budget_item: budgetItem};
 
     try {
+      this.setState({loading: true})
       let budgetItem = await strategy(data);
       if (budgetItem !== null && budgetItem.errors === undefined) {
         if (strategy === createItem) {
@@ -43,15 +45,8 @@ class BudgetItemForm extends Component {
       }
     } catch (err) {
       this.props.signOut();
-    }
-  }
-
-  _saveButton(valid) {
-    LayoutAnimation.easeInEaseOut();
-    if (valid) {
-      return (
-        <InputButton onPress={this.saveItem} text='Save' />
-      )
+    } finally {
+      this.setState({loading: false})
     }
   }
 
@@ -61,7 +56,7 @@ class BudgetItemForm extends Component {
 
   render() {
     let b = this.state.budgetItem;
-    const validForm = this._validForm(b);
+    const disabled = !this._validForm(b) || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='BUDGET ITEM' />
@@ -89,7 +84,10 @@ class BudgetItemForm extends Component {
                      defaultValue={b.amount_budgeted} />
         </InputContainer>
 
-        {this._saveButton(validForm)}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.saveItem}
+                     text='Save' />
       </FormContainer>
     )
   }
