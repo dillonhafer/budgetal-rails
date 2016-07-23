@@ -7,6 +7,7 @@ import AllocationPlans from './components/allocationPlans/allocation-plans';
 import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
 import Statistics from './components/statistics/statistics';
 import Sessions from './components/sessions/sessions';
+import PasswordReset from './components/sessions/PasswordReset';
 import Footer from './components/layout/footer';
 import Nav from './components/layout/nav';
 import NotFound from './components/layout/not-found';
@@ -72,6 +73,7 @@ render((
       <Route path='annual-budgets/:year' component={AnnualBudgetItems} onEnter={requireAuth} />
       <Route path='monthly-statistics/:year/:month' component={Statistics} onEnter={requireAuth} />
       <Route path='account-settings' component={AccountSettings} onEnter={requireAuth} />
+      <Route path='reset-password' component={PasswordReset} />
       <Route path='admin' component={Admin} onEnter={requireAuth} />
       <Route path="503" component={Maintenance}/>
       <Route path="*" component={NotFound}/>

@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   post '/update-avatar'       => 'users#update_avatar'
 
   post '/reset-password' => 'password_resets#create'
-  put '/reset-password' => 'password_resets#update'
+  put  '/reset-password' => 'password_resets#update'
 
   get '/admin/users' => 'admin#users'
 

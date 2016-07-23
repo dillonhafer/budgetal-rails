@@ -27,10 +27,37 @@ feature 'Password Reset', :js do
       expect(find_mail_with_subject('Reset password instructions')).not_to be_blank
     end
 
-    scenario "clicking password link in email resets password" do
-      user.send_reset_password_instructions
-      expect(user.reset_password_token).not_to be_blank
-      expect(find_mail_with_subject('Reset password instructions').links.first).to have_content user.reset_password_token
+    context 'clicking password link in email' do
+      let(:token) { user.reset_password_token }
+
+      before do
+        visit root_path
+        user.send_reset_password_instructions
+        expect(token).not_to be_blank
+
+        reset_link = find_mail_with_subject('Reset password instructions').links.first
+        path = reset_link.gsub('localhost', "localhost:#{Capybara.current_session.server.port}")
+        path.gsub! user.reset_password_token, token
+
+        visit path
+        expect(current_path).to eq('/reset-password')
+
+        fill_in 'password', with: 'new password'
+        fill_in 'password_confirmation', with: 'new password'
+        click_on 'Change Password'
+      end
+
+      context 'with a bad token' do
+        let(:token) { 'bad token' }
+
+        scenario "does not change password" do
+          expect(page).to have_selector '.flash-box', text: "Password Reset Failed. Your email may have expired."
+        end
+      end
+
+      scenario "resets password" do
+        expect(page).to have_selector '.flash-box', text: "Your password has been updated"
+      end
     end
   end
 end
