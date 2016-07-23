@@ -24,7 +24,8 @@ class BudgetItemExpenseForm extends Component {
 
     this.state = {
       budgetItemExpense: initialExpense,
-      pastExpenses: []
+      pastExpenses: [],
+      loading: false,
     };
   }
 
@@ -34,6 +35,7 @@ class BudgetItemExpenseForm extends Component {
     let data = {budget_item_id: budgetItemExpense.budget_item_id, budget_item_expense: budgetItemExpense};
 
     try {
+      this.setState({loading: true})
       let budgetItemExpense = await strategy(data);
       if (budgetItemExpense !== null && budgetItemExpense.errors === undefined) {
         if (strategy === createItemExpense) {
@@ -47,6 +49,8 @@ class BudgetItemExpenseForm extends Component {
       }
     } catch (err) {
       this.props.signOut();
+    } finally {
+      this.setState({loading: false})
     }
   }
 
@@ -65,15 +69,6 @@ class BudgetItemExpenseForm extends Component {
     }
 
     return date
-  }
-
-  _saveButton(valid) {
-    LayoutAnimation.easeInEaseOut();
-    if (valid) {
-      return (
-        <InputButton onPress={this.saveExpense} text='Save' />
-      )
-    }
   }
 
   updateAmount = (amount) => {
@@ -112,7 +107,7 @@ class BudgetItemExpenseForm extends Component {
 
   render() {
     let b = this.state.budgetItemExpense;
-    const validForm = this._validForm(b);
+    const disabled = !this._validForm(b) || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='BUDGET ITEM EXPENSES' />
@@ -149,7 +144,10 @@ class BudgetItemExpenseForm extends Component {
                      onDateChange={this.onDateChange} />
         </InputContainer>
 
-        {this._saveButton(validForm)}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.saveExpense}
+                     text='Save' />
       </FormContainer>
     )
   }
