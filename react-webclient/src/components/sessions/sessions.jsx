@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import SignUp from './sign-up';
 import SignIn from './sign-in';
+import PasswordResetRequest from './PasswordResetRequest';
 
 export default class Sessions extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class Sessions extends React.Component {
   state = {
     signIn: false,
     signUp: false,
+    resetPassword: false,
   }
 
   static contextTypes = {
@@ -21,7 +23,8 @@ export default class Sessions extends React.Component {
     e.preventDefault();
     this.setState({
       signIn: false,
-      signUp: false
+      signUp: false,
+      resetPassword: false,
     });
   }
 
@@ -29,7 +32,8 @@ export default class Sessions extends React.Component {
     e.preventDefault();
     this.setState({
       signIn: true,
-      signUp: false
+      signUp: false,
+      resetPassword: false,
     });
   }
 
@@ -37,26 +41,25 @@ export default class Sessions extends React.Component {
     e.preventDefault();
     this.setState({
       signIn: false,
-      signUp: true
+      signUp: true,
+      resetPassword: false,
     });
   }
 
-  signIn = (e) => {
+  showPasswordReset = (e) => {
     e.preventDefault();
-    let email       = e.target.querySelector('#loginEmail').value;
-    let password    = e.target.querySelector('#loginPassword').value;
-    let remember_me = e.target.querySelector('#remember_me').checked ? 1 : 0;
-    let data = {user: {email, password, remember_me}}
-
-    signIn(data)
-      .done((json) => { this.context.history.replace('/'); })
-      .fail((json) => { showMessage(json.responseJSON.message); })
+    this.setState({
+      signIn: false,
+      signUp: false,
+      resetPassword: true,
+    });
   }
 
   render() {
-    let optionsClasses = classNames('large-12 columns', {hide: this.state.signIn || this.state.signUp});
-    let signInClasses  = classNames('large-12 columns', {hide: !this.state.signIn});
-    let signUpClasses  = classNames('large-12 columns', {hide: !this.state.signUp});
+    const optionsClasses = classNames('large-12 columns', {hide: this.state.signIn || this.state.signUp || this.state.resetPassword});
+    const signInClasses  = classNames('large-12 columns', {hide: !this.state.signIn});
+    const signUpClasses  = classNames('large-12 columns', {hide: !this.state.signUp});
+    const resetPasswordClasses = classNames('large-12 columns', {hide: !this.state.resetPassword});
     return (
       <div className='row'>
         <div className="small-12 large-12 columns">
@@ -70,7 +73,7 @@ export default class Sessions extends React.Component {
             <div className={signInClasses}>
               <h2>Sign in</h2>
               <hr />
-              <SignIn />
+              <SignIn showPasswordReset={this.showPasswordReset} />
               <a className='option-link' onClick={this.showOptions}>Back</a>
             </div>
 
@@ -79,6 +82,13 @@ export default class Sessions extends React.Component {
               <hr />
               <SignUp />
               <a className='option-link' onClick={this.showOptions}>Back</a>
+            </div>
+
+            <div className={resetPasswordClasses}>
+              <h2>Request Password Reset</h2>
+              <hr />
+              <PasswordResetRequest />
+              <a className='option-link' onClick={this.showSignIn}>Back</a>
             </div>
           </div>
         </div>

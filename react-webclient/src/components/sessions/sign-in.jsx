@@ -67,7 +67,7 @@ export default class SignIn extends React.Component {
           </div>
 
           <div className='large-6 large-offset-1 columns'>
-            <a className="tiny button radius dark-blue" href="/sessions/secret/new">Forgot your password?</a>
+            <a className="tiny button radius dark-blue" id='forgotYourPassword' onClick={this.props.showPasswordReset}>Forgot your password?</a>
           </div>
         </div>
       </form>

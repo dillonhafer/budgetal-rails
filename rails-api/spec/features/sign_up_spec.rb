@@ -1,9 +1,10 @@
 require 'rails_helper'
 require 'support/feature_helper'
-require 'support/mailer_helper'
-RSpec.configure {|c| c.include MailerHelper}
+require 'support/email_support'
 
 feature 'Sign up', :js do
+  include EmailSupport
+
   context 'As a visitor' do
     let(:user) do
       {
@@ -28,7 +29,7 @@ feature 'Sign up', :js do
       fill_in 'Password Confirmation', with: user[:password]
       click_on 'Sign up'
       expect(page).to have_selector 'a', text: "Hello, #{user[:first_name]}!"
-      expect(first_email.to).to eq([user[:email]])
+      expect(find_last_email_to(user[:email])).not_to be_blank
     end
   end
 end
