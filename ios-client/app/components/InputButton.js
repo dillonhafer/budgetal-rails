@@ -50,7 +50,7 @@ class InputButton extends Component {
         accessible={true}
         accessibilityLabel={this.props.text}>
         <View style={styles.textContainer}>
-          <ActivityIndicator animating={this.props.loading}
+          <ActivityIndicator animating={this.props.loading === true}
                              color='#69F'
                              style={styles.indicator}
                              size="small" />
