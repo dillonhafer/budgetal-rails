@@ -28,7 +28,8 @@ class AnnualBudgetItemForm extends Component {
     )
 
     this.state = {
-      budgetItem: initialItem
+      budgetItem: initialItem,
+      loading: false,
     };
   }
 
@@ -50,6 +51,7 @@ class AnnualBudgetItemForm extends Component {
     let data = {annual_budget_id: budgetItem.annual_budget_id, annual_budget_item: budgetItem};
 
     try {
+      this.setState({loading: true});
       let budgetItem = await strategy(data);
       if (budgetItem !== null && budgetItem.errors === undefined) {
         if (strategy === create) {
@@ -63,13 +65,8 @@ class AnnualBudgetItemForm extends Component {
       }
     } catch (err) {
       this.props.signOut();
-    }
-  }
-
-  _saveButton(valid) {
-    LayoutAnimation.easeInEaseOut();
-    if (valid) {
-      return <InputButton onPress={this.saveItem} text='Save' />
+    } finally {
+      this.setState({loading: false});
     }
   }
 
@@ -85,7 +82,7 @@ class AnnualBudgetItemForm extends Component {
 
   render() {
     let b = this.state.budgetItem;
-    const validForm = this._validForm(b);
+    const disabled = !this._validForm(b) || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='ANNUAL BUDGET ITEM' />
@@ -126,7 +123,10 @@ class AnnualBudgetItemForm extends Component {
                       label='Paid?' />
         </InputContainer>
 
-        {this._saveButton(validForm)}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.saveItem}
+                     text='Save Item' />
       </FormContainer>
     )
   }
