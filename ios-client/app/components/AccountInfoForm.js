@@ -33,6 +33,7 @@ class AccountInfoForm extends Component {
     };
 
     try {
+      this.setState({loading: true});
       const resp = await saveUser(params);
       if (resp !== null && resp.errors === undefined) {
         this.props.updateUser(this.state.user)
@@ -42,6 +43,8 @@ class AccountInfoForm extends Component {
       }
     } catch (err) {
       this.props.endSession();
+    } finally {
+      this.setState({loading: false});
     }
   }
 
@@ -54,14 +57,8 @@ class AccountInfoForm extends Component {
     )
   }
 
-  saveButton = () => {
-    LayoutAnimation.easeInEaseOut();
-    if (this.validForm()) {
-      return <InputButton onPress={this.saveUser} text='Save' />
-    }
-  }
-
   render() {
+    const disabled = !this.validForm() || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='ACCOUNT INFO' />
@@ -112,7 +109,10 @@ class AccountInfoForm extends Component {
                     label='Password'
                     returnKeyType='done' />
         </InputContainer>
-        {this.saveButton()}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.saveUser}
+                     text='Update Account Info' />
       </FormContainer>
     )
   }
