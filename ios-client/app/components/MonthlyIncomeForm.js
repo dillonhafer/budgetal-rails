@@ -16,13 +16,15 @@ class MonthlyIncomeForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      budget: props.budget
+      budget: props.budget,
+      loading: false,
     };
   }
 
   updateIncome = async() => {
     const budget = Object.assign({}, this.state.budget);
     const params = {monthly_income: budget.monthly_income};
+    this.setState({loading: true})
 
     try {
       let resp = await update(budget.year, budget.month, params);
@@ -34,12 +36,9 @@ class MonthlyIncomeForm extends Component {
       }
     } catch (err) {
       this.props.endSession();
+    } finally {
+      this.setState({loading: false})
     }
-  }
-
-  _saveButton() {
-    LayoutAnimation.easeInEaseOut();
-    return <InputButton onPress={this.updateIncome} text='Update Income' />
   }
 
   _updateIncome = (monthly_income) => {
@@ -48,7 +47,7 @@ class MonthlyIncomeForm extends Component {
   }
 
   render() {
-    const validForm = !!this.state.budget.monthly_income.length;
+    const disabled = !this.state.budget.monthly_income.length || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='BUDGET' />
@@ -63,7 +62,10 @@ class MonthlyIncomeForm extends Component {
                      defaultValue={this.state.budget.monthly_income} />
         </InputContainer>
 
-        {validForm ? this._saveButton() : null}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.updateIncome}
+                     text='Update Income' />
       </FormContainer>
     )
   }
