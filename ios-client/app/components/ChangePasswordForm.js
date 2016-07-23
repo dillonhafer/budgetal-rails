@@ -23,6 +23,7 @@ class ChangePasswordForm extends Component {
         password: '',
         passwordConfirmation: '',
       },
+      loading: false,
     };
   }
 
@@ -36,6 +37,7 @@ class ChangePasswordForm extends Component {
     };
 
     try {
+      this.setState({loading: true});
       const resp = await changePassword(params);
       if (resp !== null && resp.errors === undefined) {
         this.props.goBack();
@@ -45,6 +47,8 @@ class ChangePasswordForm extends Component {
       }
     } catch (err) {
       this.props.endSession();
+    } finally {
+      this.setState({loading: false});
     }
   }
 
@@ -56,14 +60,8 @@ class ChangePasswordForm extends Component {
     )
   }
 
-  saveButton = () => {
-    LayoutAnimation.easeInEaseOut();
-    if (this.validForm()) {
-      return <InputButton onPress={this.saveUser} text='Change Password' />
-    }
-  }
-
   render() {
+    const disabled = !this.validForm() || this.state.loading;
     return (
       <FormContainer>
         <FormLabel label='ACCOUNT PASSWORD' />
@@ -101,7 +99,10 @@ class ChangePasswordForm extends Component {
                     returnKeyType='done' />
         </InputContainer>
 
-        {this.saveButton()}
+        <InputButton disabled={disabled}
+                     loading={this.state.loading}
+                     onPress={this.saveUser}
+                     text='Change Password' />
       </FormContainer>
     )
   }
