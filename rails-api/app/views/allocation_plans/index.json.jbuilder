@@ -7,6 +7,8 @@ json.budget do
     json.tab_date   plan.tab_date
     json.start_date plan.start_date
     json.end_date   plan.end_date
+    json.income     sprintf('%.2f', plan.income)
+    json.amount_not_allocated sprintf('%.2f', plan.amount_not_allocated)
   end
 end
 

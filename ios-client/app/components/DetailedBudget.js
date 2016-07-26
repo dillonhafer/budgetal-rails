@@ -202,12 +202,15 @@ class DetailedBudget extends Component {
 
   _getPlans(plans) {
     return plans.map((plan, index) => {
-      const text = `Pay period from\n${plan.tab_date}`
       return (
         <TouchableHighlight onPress={()=>{}}
                             style={styles.allocationPlanButton}
                             key={`allocation-plan-${index}`}>
-          <Text style={styles.planButtonText}>{text}</Text>
+          <View>
+            <Text style={styles.planButtonText}>{`Pay period from`}</Text>
+            <Text style={styles.planButtonText}>{plan.tab_date}</Text>
+            <Text style={styles.planButtonText}>{`${numberToCurrency(plan.income)} allocated`}</Text>
+          </View>
         </TouchableHighlight>
       )
     })
