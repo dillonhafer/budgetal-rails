@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
 		budgets: () => {
 			dispatch(navigateReset([{key: 'Budgets', title: 'Budgets'}],0))
 		},
+		detailedBudgets: () => {
+			dispatch(navigateReset([{key: 'DetailedBudgets', title: 'Detailed Budgets'}],0))
+		},
 		statistics: () => {
 			dispatch(navigateReset([{key: 'Statistics', title: 'Statistics'}],0))
 		},

@@ -27,6 +27,7 @@ import BudgetInfoButtonContainer from './BudgetInfoButtonContainer';
 import MonthlyIncomeFormContainer from './MonthlyIncomeFormContainer';
 import PasswordResetRequestContainer from './PasswordResetRequestContainer';
 import PasswordResetContainer from './PasswordResetContainer';
+import DetailedBudgetsContainer from './DetailedBudgetsContainer';
 
 import UserDefaults from 'react-native-userdefaults-ios';
 
@@ -262,6 +263,8 @@ class AppContainer extends Component {
 				return <SignUpContainer />
 	    case 'Budgets':
 	      return <BudgetsContainer />
+	    case 'DetailedBudgets':
+	      return <DetailedBudgetsContainer />
 			case 'Statistics':
 	      return <StatisticsContainer />
 			case 'BudgetCategory':
