@@ -18,6 +18,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   state = {
+    loading: false,
     showForm: false,
     budget: {
       month: this.props.params.month,
@@ -124,7 +125,8 @@ export default class CashFlowPlans extends React.Component {
   _fetchDataDone = (data) => {
     this.setState({
       budget: data.budget,
-      category: data.budget_category
+      category: data.budget_category,
+      loading: false,
     });
     title(`${monthName(data.budget.month)} ${data.budget.year}`);
   }
@@ -143,6 +145,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _fetchBudget = (data) => {
+    this.setState({loading: true})
     findCategory(data)
       .then(this._fetchDataDone)
       .catch(this._fetchDataFail);
@@ -407,7 +410,8 @@ export default class CashFlowPlans extends React.Component {
               <Category expenseFunctions={this.expenseFunctions()}
                         itemFunctions={this.itemFunctions()}
                         import={this.openImport}
-                        category={this.state.category} />
+                        category={this.state.category}
+                        loading={this.state.loading} />
 
               <div className='row collapse cash-flow-row overviews'>
                 <CategoryOverview category={this.state.category} monthlyIncome={this.state.budget.monthly_income} />

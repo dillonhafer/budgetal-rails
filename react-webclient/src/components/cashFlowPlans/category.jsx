@@ -1,6 +1,7 @@
 import React from 'react';
 import BudgetItemList from './budgetItems/budget_item_list';
 import classNames from 'classnames';
+import loading from '../../assets/images/loading.gif';
 
 export default class Category extends React.Component {
   constructor(props) {
@@ -14,12 +15,27 @@ export default class Category extends React.Component {
     import: React.PropTypes.func.isRequired
   }
 
+  emptyList(budget_items, loading) {
+    if (!budget_items.length && !loading) {
+      return <p className='text-center'>You haven't added any budget items yet.</p>
+    }
+  }
+
+  getList = () => {
+    if (this.props.loading) {
+      return (
+        <div className='text-center' style={{color: '#69F', fontSize: '20px'}}> <img src={loading} style={{height: '60px', width: '60px', verticalAlign: 'middle'}} /> Loading...</div>
+      )
+    } else {
+      return <BudgetItemList functions={this.props.itemFunctions}
+                             expenseFunctions={this.props.expenseFunctions}
+                             budgetItems={this.props.category.budget_items} />
+    }
+  }
+
 	render() {
     let headerClasses = classNames('row', 'budget-item-labels', {
       hide: this.props.category.budget_items.length === 0
-    });
-    let messageClasses = classNames('text-center', {
-      hide: this.props.category.budget_items.length !== 0
     });
 		return (
 			<div className='row collapse cash-flow-row'>
@@ -46,10 +62,8 @@ export default class Category extends React.Component {
                 </div>
                 <div className="large-4 medium-4 columns"></div>
               </div>
-              <p className={messageClasses}>You haven't added any budget items yet.</p>
-            	<BudgetItemList functions={this.props.itemFunctions}
-                              expenseFunctions={this.props.expenseFunctions}
-                              budgetItems={this.props.category.budget_items} />
+              {this.emptyList(this.props.category.budget_items, this.props.loading)}
+              {this.getList()}
             </li>
           </ul>
         </div>
