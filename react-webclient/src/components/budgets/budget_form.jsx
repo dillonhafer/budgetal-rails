@@ -14,9 +14,10 @@ export default class BudgetForm extends React.Component {
   }
 
   componentWillReceiveProps = (newProps) => {
+    const not_budgeted = newProps.budget.monthly_income - newProps.budget.budgeted;
     this.setState({
       monthly_income: parseFloat(newProps.budget.monthly_income),
-      not_budgeted: parseFloat(newProps.budget.not_budgeted)
+      not_budgeted: parseFloat(not_budgeted)
     })
   }
 
