@@ -36,17 +36,17 @@ class FormContainer extends Component {
 
   renderChildren(props) {
     return React.Children.map(props.children, child => {
+      let newProps = {};
+
       switch(child.type) {
         case InputContainer:
-          return React.cloneElement(child, {children: this.renderChildren(child.props)});
+          newProps['children'] = this.renderChildren(child.props);
         case FormInput:
-          return React.cloneElement(child, {
-            showNumberPadAccessory: this.showNumberPadAccessory,
-            hideNumberPadAccessory: this.hideNumberPadAccessory
-          })
-        default:
-          return React.cloneElement(child)
+          newProps['showNumberPadAccessory'] = this.showNumberPadAccessory
+          newProps['hideNumberPadAccessory'] = this.hideNumberPadAccessory
       }
+
+      return React.cloneElement(child, newProps)
     })
   }
 
