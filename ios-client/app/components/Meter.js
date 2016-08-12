@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     color: '$white',
     justifyContent: 'center',
   },
+  red: {
+    backgroundColor: '$red',
+  },
 })
 
 percentOfWidthInPoints = (widthPoint, percentage) => {
@@ -46,7 +49,7 @@ Meter = (props) => {
 
   return (
     <View style={[styles.meter, {width: props.width}]}>
-      <View style={[styles.meterProgress, {width}]}>
+      <View style={[styles.meterProgress, {width}, styles[props.color]]}>
         <Text style={styles.progressPercent}>{ (width > 34) ? `${props.percent}%` : ''}</Text>
       </View>
     </View>
