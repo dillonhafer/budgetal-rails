@@ -36,15 +36,16 @@ class FormContainer extends Component {
 
   renderChildren(props) {
     return React.Children.map(props.children, child => {
-      if (child.type === InputContainer) {
-        return React.cloneElement(child, {children: this.renderChildren(child.props)});
-      } else if (child.type === FormInput && child.props.inputType === 'number') {
-        return React.cloneElement(child, {
-          showNumberPadAccessory: this.showNumberPadAccessory,
-          hideNumberPadAccessory: this.hideNumberPadAccessory
-        })
-      } else {
-        return React.cloneElement(child)
+      switch(child.type) {
+        case InputContainer:
+          return React.cloneElement(child, {children: this.renderChildren(child.props)});
+        case FormInput:
+          return React.cloneElement(child, {
+            showNumberPadAccessory: this.showNumberPadAccessory,
+            hideNumberPadAccessory: this.hideNumberPadAccessory
+          })
+        default:
+          return React.cloneElement(child)
       }
     })
   }
