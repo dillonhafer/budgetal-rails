@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native'
 
+import Meter from './Meter';
 import {find} from '../data/Budgets';
 import {numberToCurrency, monthName} from '../utils/ViewHelpers';
 import StyleSheet from './StyleSheet';
@@ -125,16 +126,11 @@ class BudgetInfo extends Component {
 
   getPercent(spent, budgeted) {
     const p = spent / budgeted * 100;
-    return p > 99 ? 100 : parseInt(p);
-  }
-
-  getProgressWidth(width, percent) {
-    return width * (percent / 100)
+    return Math.min(100,parseInt(p));
   }
 
   render() {
     const percent = this.getPercent(this.props.budget.spent, this.props.budget.budgeted)
-    const progressWidth = this.getProgressWidth(width-10, percent)
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -154,11 +150,7 @@ class BudgetInfo extends Component {
                   <Text style={styles.remainingText}>{numberToCurrency(this.props.budget.remaining)}</Text>
                 </View>
               </View>
-              <View style={styles.meter}>
-                <View style={[styles.meterProgress, {width: progressWidth}]}>
-                  <Text style={styles.progressPercent}>{ (percent > 9) ? `${percent}%` : ''}</Text>
-                </View>
-              </View>
+              <Meter percent={percent} width={width-15} />
             </View>
             <TouchableOpacity style={styles.editButton} onPress={this.props.editMonthlyIncome}>
               <Text>You have</Text>
