@@ -5,10 +5,7 @@ const {width} = Dimensions.get('window');
 import {dismissKeyboard} from '../utils/ViewHelpers'
 import StyleSheet from './StyleSheet'
 
-const ACCESSORY_HEIGHT = 40;
-const BUTTON_PADDING   = 10;
-const BORDER_HEIGHT    = 0.5;
-const TOTAL_ACCESSORY_HEIGHT = ACCESSORY_HEIGHT + BUTTON_PADDING - (BORDER_HEIGHT * 2);
+const BORDER_HEIGHT = 0.5;
 
 const styles = StyleSheet.create({
   numberDoneContainer: {
@@ -17,14 +14,14 @@ const styles = StyleSheet.create({
     borderBottomColor: '$graySeparator',
     borderBottomWidth: BORDER_HEIGHT,
     backgroundColor: '$inputAccessory',
-    height: ACCESSORY_HEIGHT,
+    height: 40,
     width,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
   },
   numberDoneButton: {
-    padding: BUTTON_PADDING,
+    padding: 10,
     paddingRight: 20,
     alignSelf: 'flex-end',
   },
@@ -52,9 +49,9 @@ class NumberPadAccessory extends Component {
 
   render() {
     if (this.props.numberPadPresent) {
-      const top = this.state.keyboardHeight - TOTAL_ACCESSORY_HEIGHT;
+      const bottom = this.state.keyboardHeight;
       return (
-        <View style={[styles.numberDoneContainer, {top}]}>
+        <View style={[styles.numberDoneContainer, {bottom}]}>
           <TouchableOpacity style={styles.numberDoneButton} onPress={dismissKeyboard}>
             <Text style={styles.doneText}>Done</Text>
           </TouchableOpacity>

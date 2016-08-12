@@ -15,7 +15,6 @@ import PredictiveTextList from './PredictiveTextList'
 import {dismissKeyboard} from '../utils/ViewHelpers'
 import StyleSheet from './StyleSheet'
 
-import NumberPadAccessory from './NumberPadAccessory'
 const styles = StyleSheet.create({
   inputContainer: {
     overflow: 'hidden'
@@ -95,7 +94,6 @@ class FormInput extends Component {
 
     this.state = {
       showDatePicker: false,
-      showNumberPadAccessory: false,
     }
   }
 
@@ -104,23 +102,15 @@ class FormInput extends Component {
     this.setState({showDatePicker: !this.state.showDatePicker})
   }
 
-  showNumberPadAccessory = () => {
-    this.setState({showNumberPadAccessory: true})
-  }
-
-  hideNumberPadAccessory = () => {
-    this.setState({showNumberPadAccessory: false})
-  }
-
   onNumberTypeFocus = (event) => {
-    this.showNumberPadAccessory();
+    this.props.showNumberPadAccessory();
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
   }
 
   onNumberTypeBlur = () => {
-    this.hideNumberPadAccessory();
+    this.props.hideNumberPadAccessory();
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
@@ -258,7 +248,6 @@ class FormInput extends Component {
           {this.datePicker()}
           <PredictiveTextList source={this.props.predictiveSource} onPress={this.onChangeText} />
         </View>
-        <NumberPadAccessory numberPadPresent={this.state.showNumberPadAccessory} />
       </View>
     )
   }

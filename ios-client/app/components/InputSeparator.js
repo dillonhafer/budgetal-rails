@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     backgroundColor: '$formBorder',
     height: 0.5,
     width: '95%',
-    flex: 1,
     alignSelf: 'flex-end',
   },
 })
