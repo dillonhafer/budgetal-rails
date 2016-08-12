@@ -15,6 +15,7 @@ import PredictiveTextList from './PredictiveTextList'
 import {dismissKeyboard} from '../utils/ViewHelpers'
 import StyleSheet from './StyleSheet'
 
+import NumberPadAccessory from './NumberPadAccessory'
 const styles = StyleSheet.create({
   inputContainer: {
     overflow: 'hidden'
@@ -93,13 +94,36 @@ class FormInput extends Component {
     super(props)
 
     this.state = {
-      showDatePicker: false
+      showDatePicker: false,
+      showNumberPadAccessory: false,
     }
   }
 
   pickDate = () => {
     dismissKeyboard()
     this.setState({showDatePicker: !this.state.showDatePicker})
+  }
+
+  showNumberPadAccessory = () => {
+    this.setState({showNumberPadAccessory: true})
+  }
+
+  hideNumberPadAccessory = () => {
+    this.setState({showNumberPadAccessory: false})
+  }
+
+  onNumberTypeFocus = (event) => {
+    this.showNumberPadAccessory();
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
+  }
+
+  onNumberTypeBlur = () => {
+    this.hideNumberPadAccessory();
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
   }
 
   validateRequired = (value='') => {
@@ -146,6 +170,21 @@ class FormInput extends Component {
     );
   }
 
+  numberInput = (props) => {
+    let knownProps = Object.assign({}, this.props, {})
+    delete knownProps.password
+    return (
+      <TextInput {...knownProps}
+                 {...props}
+                 onChangeText={this.onChangeText}
+                 selectionColor='#6699FF'
+                 keyboardType='numeric'
+                 onBlur={this.onNumberTypeBlur}
+                 onFocus={this.onNumberTypeFocus}
+                 style={[styles.inputs, styles.textField]} />
+    );
+  }
+
   switchInput = () => {
     return (
       <View style={[styles.inputs, styles.paidField]}>
@@ -187,6 +226,8 @@ class FormInput extends Component {
         return this.textInput({secureTextEntry: true, keyboardAppearance: 'dark'});
       case 'date':
         return this.dateInput();
+      case 'number':
+        return this.numberInput();
       default:
         return this.textInput();
     }
@@ -204,17 +245,20 @@ class FormInput extends Component {
     }
 
     return (
-      <View style={styles.inputContainer}>
-        <View style={styles.inputRow}>
-          <View style={styles.column}>
-            <Text style={[styles.label,validStyles]}>{this.props.label}</Text>
+      <View>
+        <View style={styles.inputContainer}>
+          <View style={styles.inputRow}>
+            <View style={styles.column}>
+              <Text style={[styles.label,validStyles]}>{this.props.label}</Text>
+            </View>
+            <View style={styles.right}>
+              {this._getInputType(this.props.inputType)}
+            </View>
           </View>
-          <View style={styles.right}>
-            {this._getInputType(this.props.inputType)}
-          </View>
+          {this.datePicker()}
+          <PredictiveTextList source={this.props.predictiveSource} onPress={this.onChangeText} />
         </View>
-        {this.datePicker()}
-        <PredictiveTextList source={this.props.predictiveSource} onPress={this.onChangeText} />
+        <NumberPadAccessory numberPadPresent={this.state.showNumberPadAccessory} />
       </View>
     )
   }
