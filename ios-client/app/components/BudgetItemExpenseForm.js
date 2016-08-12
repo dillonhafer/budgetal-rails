@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import {LayoutAnimation,} from 'react-native'
-
 import {numberToCurrency, showErrors} from '../utils/ViewHelpers';
 import {updateItemExpense, createItemExpense, predictExpenses} from '../data/budgetItemExpense';
 
@@ -125,12 +123,11 @@ class BudgetItemExpenseForm extends Component {
 
           <InputSeparator />
 
-          <FormInput placeholder='($42.00)'
+          <FormInput inputType='number'
+                     placeholder='($42.00)'
                      required={true}
-                     format='number'
                      ref='amount'
-                     keyboardType='numeric'
-                     autoCapitalize='words'
+                     format='number'
                      value={b.amount}
                      onChangeText={this.updateAmount}
                      label='Amount'

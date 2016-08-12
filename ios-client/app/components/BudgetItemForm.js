@@ -72,12 +72,12 @@ class BudgetItemForm extends Component {
                      label='Name'
                      defaultValue={b.name} />
           <InputSeparator />
-          <FormInput placeholder='($42.00)'
+          <FormInput inputType='number'
+                     placeholder='($42.00)'
                      required={true}
                      accessible={true}
                      accessibilityLabel={`Budgeted`}
                      format='number'
-                     keyboardType='decimal-pad'
                      value={b.amount_budgeted}
                      onChangeText={(amount_budgeted)=> this.setState({budgetItem: Object.assign({}, b, {amount_budgeted})})}
                      label='Budgeted'

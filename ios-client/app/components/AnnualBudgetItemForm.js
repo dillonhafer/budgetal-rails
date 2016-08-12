@@ -98,10 +98,10 @@ class AnnualBudgetItemForm extends Component {
 
           <InputSeparator />
 
-          <FormInput placeholder='($400.00)'
+          <FormInput inputType='number'
+                     placeholder='($400.00)'
                      required={true}
                      format='number'
-                     keyboardType='decimal-pad'
                      value={b.amount}
                      onChangeText={(amount) => this._updateField('amount', amount)}
                      label='Budgeted'

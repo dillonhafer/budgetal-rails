@@ -52,10 +52,10 @@ class MonthlyIncomeForm extends Component {
       <FormContainer>
         <FormLabel label='BUDGET' />
         <InputContainer>
-          <FormInput placeholder='($4,000.00)'
+          <FormInput inputType='number'
+                     placeholder='($4,000.00)'
                      required={true}
                      format='number'
-                     keyboardType='decimal-pad'
                      value={this.state.budget.monthly_income}
                      onChangeText={(monthly_income) => this._updateIncome(monthly_income)}
                      label='Monthly Income'
