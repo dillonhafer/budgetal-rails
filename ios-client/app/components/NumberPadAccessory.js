@@ -35,12 +35,16 @@ class NumberPadAccessory extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      keyboardHeight: Dimensions.get('window').height
+      keyboardHeight: 0
     }
   }
 
-  componentWillMount () {
-    Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+  componentWillMount() {
+    this.keyboardListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+  }
+
+  componentWillUnmount() {
+    this.keyboardListener.remove()
   }
 
   keyboardWillShow (e) {
