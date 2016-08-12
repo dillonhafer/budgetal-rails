@@ -308,18 +308,25 @@ class BudgetCategory extends Component {
     return spent
   }
 
+  getRemainingColor(remaining) {
+    let color = 'blue'
+
+    if (remaining < 0)
+      color = 'red'
+
+    if (remaining > 0)
+      color = 'green'
+
+    return color;
+  }
+
   _renderBudgetItemRow = (budgetItem: object, sectionID: number, rowID: number) => {
-    console.log(budgetItem.name)
     const spent = this.amountSpent(budgetItem);
     const remaining = parseFloat(budgetItem.amount_budgeted).toFixed(2) - spent;
     const percentSpent = Math.min(100, parseInt(spent / budgetItem.amount_budgeted * 100));
 
-    let remainingStyle = styles.red
-    if (remaining === 0) {
-      remainingStyle = styles.blue
-    } else if (remaining > 0) {
-      remainingStyle = styles.green
-    }
+    const remainingColor = this.getRemainingColor(remaining);
+    const remainingStyle = styles[remainingColor]
 
     return (
       <TouchableHighlight
@@ -345,7 +352,7 @@ class BudgetCategory extends Component {
               </Text>
             </View>
           </View>
-          <Meter percent={percentSpent} width={width - 20} />
+          <Meter percent={percentSpent} width={width - 20} color={remainingColor} />
         </View>
       </TouchableHighlight>
     );
