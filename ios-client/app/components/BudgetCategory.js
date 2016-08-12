@@ -11,7 +11,7 @@ import {
 const {width} = Dimensions.get('window')
 const SwipeableListViewDataSource = require('SwipeableListViewDataSource');
 import SwipeableListView from 'SwipeableListView';
-
+import Meter from './Meter';
 import {reduce,where} from 'lodash-node'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     padding: 10,
     marginTop: 0,
@@ -105,20 +105,25 @@ const styles = StyleSheet.create({
   },
   numbersContainer: {
     flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    width: width / 2,
-    paddingRight: 14,
-  },
-  paid: {
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+  },
+  amountSpent: {
+    width: width / 2,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 10,
+  },
+  amountRemaining: {
+    width: width / 2,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 10,
   },
   itemTitle: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: width / 2,
   },
   separator: {
     height: 1,
@@ -164,7 +169,6 @@ const styles = StyleSheet.create({
     color: '$blue',
   },
   subTitle: {
-    fontWeight: 'bold'
   },
   icon: {
     color: '$green',
@@ -305,8 +309,11 @@ class BudgetCategory extends Component {
   }
 
   _renderBudgetItemRow = (budgetItem: object, sectionID: number, rowID: number) => {
+    console.log(budgetItem.name)
     const spent = this.amountSpent(budgetItem);
-    const remaining = parseFloat(budgetItem.amount_budgeted) - spent;
+    const remaining = parseFloat(budgetItem.amount_budgeted).toFixed(2) - spent;
+    const percentSpent = Math.min(100, parseInt(spent / budgetItem.amount_budgeted * 100));
+
     let remainingStyle = styles.red
     if (remaining === 0) {
       remainingStyle = styles.blue
@@ -327,25 +334,18 @@ class BudgetCategory extends Component {
             </Text>
           </View>
           <View style={styles.numbersContainer}>
-            <View style={styles.paid}>
-              <Text style={{fontWeight: 'bold'}}>Budgeted: </Text>
-              <Text style={styles.subTitle}>
-                {numberToCurrency(budgetItem.amount_budgeted)}
-              </Text>
-            </View>
-            <View style={styles.paid}>
-              <Text style={{fontWeight: 'bold'}}>Spent: </Text>
-              <Text style={styles.subTitle}>
+            <View style={styles.amountSpent}>
+              <Text>
                 {numberToCurrency(spent)}
               </Text>
             </View>
-            <View style={styles.paid}>
-              <Text style={{fontWeight: 'bold'}}>Remaining: </Text>
-              <Text style={[styles.subTitle, remainingStyle]}>
+            <View style={styles.amountRemaining}>
+              <Text style={remainingStyle}>
                 {numberToCurrency(remaining)}
               </Text>
             </View>
           </View>
+          <Meter percent={percentSpent} width={width - 20} />
         </View>
       </TouchableHighlight>
     );
@@ -371,7 +371,6 @@ class BudgetCategory extends Component {
           <Text style={styles.headerText}>Budget Items</Text>
         </View>
         <SwipeableListView style={styles.list}
-                  bounceFirstRowOnMount={true}
                   maxSwipeDistance={200}
                   renderQuickActions={this.crudButtons}
                   enableEmptySections={true}
