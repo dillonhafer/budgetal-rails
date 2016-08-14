@@ -19,7 +19,8 @@ var config = _.merge({}, baseConfig, {
   cache: false,
   output: {
     path: __dirname + '/build',
-    filename: '[name]-[hash].js'
+    filename: '[name]-[hash].js',
+    publicPath: '/'
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
