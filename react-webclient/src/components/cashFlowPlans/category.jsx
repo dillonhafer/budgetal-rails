@@ -23,8 +23,12 @@ export default class Category extends React.Component {
 
   getList = () => {
     if (this.props.loading) {
+      const loadingStyle = {height: '100px', width: '100px', vericalAlign: 'middle'};
       return (
-        <div className='text-center' style={{color: '#69F', fontSize: '20px'}}> <img src={loading} style={{height: '60px', width: '60px', verticalAlign: 'middle'}} /> Loading...</div>
+        <div className='text-center' style={{color: '#69F', fontSize: '20px', padding: '50px'}}>
+          <img src={loading} style={loadingStyle} />
+          <div>Loading...</div>
+        </div>
       )
     } else {
       return <BudgetItemList functions={this.props.itemFunctions}
