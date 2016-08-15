@@ -2,7 +2,7 @@ import React from 'react';
 import BudgetItemList from './budgetItems/budget_item_list';
 import classNames from 'classnames';
 import loading from '../../assets/images/loading.gif';
-const loadingSrc = window.location.origin + loading;
+const loadingSrc = [window.location.origin, loading].join('/');
 
 export default class Category extends React.Component {
   constructor(props) {
