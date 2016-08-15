@@ -199,33 +199,29 @@ class BudgetCategory extends Component {
     this._updateCategory();
   }
 
-  importBudgetItems = async() => {
-    try {
-      let resp = await importCategory(this.props.budgetCategory.id);
+  importBudgetItems = () => {
+    const id = this.props.budgetCategory.id;
+    this.props.loadingModal(importCategory.bind(this, id), (resp) => {
       if (resp !== null) {
         const budgetCategory = Object.assign({}, this.props.budgetCategory, {budget_items: resp.imported})
         this.props.updateCategory(budgetCategory)
         alert({title: 'Import Finished', message: resp.message})
       }
-    } catch (err) {
-      this.props.signOut();
-    }
+    })
   }
 
-  _updateCategory = async() => {
+  _updateCategory() {
     let params = {
       year: this.props.budget.year,
       month: this.props.budget.month,
       id: this.props.budgetCategory.id
     }
-    try {
-      let resp = await findCategory(params);
+
+    this.props.loadingModal(findCategory.bind(this,params), (resp) => {
       if (resp !== null) {
         this.props.updateCategory(resp.budget_category)
       }
-    } catch (err) {
-      this.props.signOut();
-    }
+    })
   }
 
   crudButtons = (item) => {

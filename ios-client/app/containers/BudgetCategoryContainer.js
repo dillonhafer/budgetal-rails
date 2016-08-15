@@ -18,8 +18,9 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
+    ...ownProps,
     signOut: (r) => {
 		},
 		addBudgetItem: (budgetItem) => {
@@ -36,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		deleteBudgetItem: (budgetItem) => {
 			dispatch(deleteBudgetItem(budgetItem));
-		}
+		},
 	}
 }
 

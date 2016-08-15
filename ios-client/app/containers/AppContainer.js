@@ -4,6 +4,7 @@ import React, {PropTypes,Component} from 'react';
 import {AppState, NavigationExperimental, View,Linking} from 'react-native';
 import StyleSheet from '../components/StyleSheet';
 import { connect } from 'react-redux';
+import LoadingModal from '../components/LoadingModal';
 
 import SignInContainer from './SignInContainer';
 import SignUpContainer from './SignUpContainer';
@@ -42,7 +43,30 @@ const {
 	Header: NavigationHeader
 } = NavigationExperimental
 
+function logError(err) {
+  console.log(err)
+}
+
 class AppContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalVisible: false,
+    }
+  }
+
+  loadingModal = async(asyncFunction, success, failure = logError) => {
+    try {
+      this.setState({modalVisible: true})
+      const response = await asyncFunction();
+      success(response)
+    } catch(err) {
+      failure(err)
+    } finally {
+      this.setState({modalVisible: false})
+    }
+  }
+
 	setServer = async() => {
     try {
       let api_url = await UserDefaults.stringForKey('api_server_preference');
@@ -102,6 +126,7 @@ class AppContainer extends Component {
   				renderOverlay={this._renderOverlay}
   				renderScene={this._renderScene}
   			/>
+        <LoadingModal visible={this.state.modalVisible} />
       </SideMenu>
 		)
 	}
@@ -253,7 +278,7 @@ class AppContainer extends Component {
     return horizontalScenes.includes(key);
   }
 
-	_renderScene(props) {
+	_renderScene = (props) => {
 		const { navigationState } = props
 
 		switch(props.scene.route.key) {
@@ -268,17 +293,17 @@ class AppContainer extends Component {
 			case 'Statistics':
 	      return <StatisticsContainer />
 			case 'BudgetCategory':
-				return <BudgetCategoryContainer budgetCategory={navigationState.budgetCategory} />
+				return <BudgetCategoryContainer loadingModal={this.loadingModal} />
 			case 'BudgetItem':
-				return <BudgetItemContainer budgetItem={navigationState.budgetItem} />
+				return <BudgetItemContainer />
 			case 'BudgetItemForm':
-				return <BudgetItemFormContainer budgetItem={navigationState.budgetItem} />
+				return <BudgetItemFormContainer />
 			case 'BudgetItemExpenseForm':
-				return <BudgetItemExpenseFormContainer budgetItemExpense={navigationState.budgetItemExpense} />
+				return <BudgetItemExpenseFormContainer />
 			case 'AnnualBudgets':
 	      return <AnnualBudgetsContainer />
 			case 'AnnualBudgetItemForm':
-				return <AnnualBudgetItemFormContainer budgetItem={navigationState.budgetItem} />
+				return <AnnualBudgetItemFormContainer />
 			case 'Account':
 				return <AccountContainer />
 			case 'PhotoForm':
