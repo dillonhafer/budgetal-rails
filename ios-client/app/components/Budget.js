@@ -77,22 +77,24 @@ class Budgets extends Component {
   }
 
   componentDidMount() {
-    this._updateList(this.props.budget.year,this.props.budget.month)
+    const params = {
+      year: this.props.budget.year,
+      month: this.props.budget.month,
+    }
+    this._updateList(params)
   }
 
-  _updateList = async (year,month) => {
-    try {
-      let resp = await findCategory({year,month});
-      if (resp !== null)
+  _updateList = (params) => {
+    this.props.loadingModal(findCategory.bind(this, params), (resp) => {
+      if (resp !== null) {
         this.props.updateBudget(resp.budget)
-    } catch(error) {
-      this.props.signOut(error)
-    }
+      }
+    })
   }
 
   onDateChange = (year, month) => {
     this.props.updateBudgetDate(year,month)
-    this._updateList(year,month)
+    this._updateList({year,month})
   }
 
   _pressRow = (id) => {

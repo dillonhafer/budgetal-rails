@@ -287,7 +287,7 @@ class AppContainer extends Component {
 			case 'SignUp':
 				return <SignUpContainer />
 	    case 'Budgets':
-	      return <BudgetsContainer />
+	      return <BudgetsContainer loadingModal={this.loadingModal} />
 	    case 'DetailedBudgets':
 	      return <DetailedBudgetsContainer />
 			case 'Statistics':
