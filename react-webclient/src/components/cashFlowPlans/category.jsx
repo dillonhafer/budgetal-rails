@@ -2,6 +2,7 @@ import React from 'react';
 import BudgetItemList from './budgetItems/budget_item_list';
 import classNames from 'classnames';
 import loading from '../../assets/images/loading.gif';
+const loadingSrc = window.location.origin + loading;
 
 export default class Category extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export default class Category extends React.Component {
       const loadingStyle = {height: '100px', width: '100px', vericalAlign: 'middle'};
       return (
         <div className='text-center' style={{color: '#69F', fontSize: '20px', padding: '50px'}}>
-          <img src={loading} style={loadingStyle} />
+          <img src={loadingSrc} style={loadingStyle} />
           <div>Loading...</div>
         </div>
       )
