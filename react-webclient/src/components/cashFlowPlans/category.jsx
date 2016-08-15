@@ -15,8 +15,8 @@ export default class Category extends React.Component {
     import: React.PropTypes.func.isRequired
   }
 
-  emptyList(budget_items, loading) {
-    if (!budget_items.length && !loading) {
+  emptyList(budget_items, isLoading) {
+    if (!budget_items.length && !isLoading) {
       return <p className='text-center'>You haven't added any budget items yet.</p>
     }
   }
