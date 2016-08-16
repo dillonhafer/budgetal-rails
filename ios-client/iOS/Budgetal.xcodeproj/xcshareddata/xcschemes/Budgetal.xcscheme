@@ -46,7 +46,8 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "APP_PATH=&quot;$WORKSPACE_PATH/../../../../rails-api&quot;&#10;PREPARE=&quot;rake db:mobile_integration:prepare&quot;&#10;DAEMON=&quot;rails s -d -e=mobile_integration -p 3389 -P $APP_PATH/tmp/pids/mobile_integration.pid&quot;&#10;bash -l -c &quot;cd $APP_PATH &amp;&amp; $PREPARE &amp;&amp; $DAEMON&quot;">
+               scriptText = "APP_PATH=&quot;$WORKSPACE_PATH/../../../../rails-api&quot;&#10;PREPARE=&quot;rake db:mobile_integration:prepare&quot;&#10;DAEMON=&quot;rails s -d -e=mobile_integration -p 3389 -P $APP_PATH/tmp/pids/mobile_integration.pid&quot;&#10;bash -l -c &quot;cd $APP_PATH &amp;&amp; $PREPARE &amp;&amp; $DAEMON&quot;"
+               shellToInvoke = "/usr/local/bin/bash">
             </ActionContent>
          </ExecutionAction>
       </PreActions>
