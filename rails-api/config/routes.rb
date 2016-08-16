@@ -50,7 +50,7 @@ Rails.application.routes.draw do
     get "/*path", to: proc {|env| [200, {}, [File.read(Rails.public_path.join('index.html'))]] }
   end
 
-  if Rails.env.mobile_integration?
+  if Rails.env.mobile_integration? || Rails.env.development?
     get '/tests/setup'    => 'tests#setup'
     get '/tests/teardown' => 'tests#teardown'
     get '/tests/reset'    => 'tests#reset'
