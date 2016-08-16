@@ -36,6 +36,9 @@ class FormContainer extends Component {
 
   renderChildren(props) {
     return React.Children.map(props.children, child => {
+      if (!child)
+        return child
+
       let newProps = {};
 
       switch(child.type) {
