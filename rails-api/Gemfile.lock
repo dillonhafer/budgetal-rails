@@ -40,7 +40,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (7.1.1)
-    awesome_print (1.7.0)
     bcrypt (3.1.11)
     builder (3.2.2)
     bullet (5.3.0)
@@ -166,8 +165,6 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    shoulda-matchers (3.1.1)
-      activesupport (>= 4.0.0)
     slop (3.6.0)
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
@@ -194,7 +191,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  awesome_print
   bullet
   capybara
   database_cleaner
@@ -210,7 +206,6 @@ DEPENDENCIES
   rails (= 5.0.0.1)
   rspec-rails (~> 3.5)
   selenium-webdriver
-  shoulda-matchers
 
 BUNDLED WITH
    1.12.5
