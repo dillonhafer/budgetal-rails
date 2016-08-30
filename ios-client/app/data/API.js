@@ -3,6 +3,7 @@ import {
   StatusBar,
 } from 'react-native'
 import {alert} from '../utils/window';
+import { navigateReset } from '../actions/Navigation'
 
 import {
   AUTH_KEY,
@@ -117,6 +118,7 @@ async function request(method, path, body) {
     StatusBar.setNetworkActivityIndicatorVisible(false);
     if (r.message === "You must sign in or up before continuing") {
       alert({title: 'Sign In', message: r.message});
+      navigateReset({index: 0, routes: []}, {key: 'SignIn', title: ''},0)
       throw('unauthorized')
     } else {
       alert({title: 'maint', message: "We are performing maintenance right now. We will be done shortly."})

@@ -71,11 +71,12 @@ class Account extends Component {
     this.getCurrentUser();
   }
 
-  getCurrentUser = async() => {
-    const user = await accountInfo();
-    if (user !== null) {
-      this.props.updateUser(user)
-    }
+  getCurrentUser() => {
+    this.props.authorizedRequest(accountInfo, (resp) => {
+      if (resp !== null) {
+        this.props.updateUser(user)
+      }
+    })
   }
 
   _renderHeader = () => {

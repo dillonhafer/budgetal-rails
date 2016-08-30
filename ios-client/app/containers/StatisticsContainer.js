@@ -10,10 +10,9 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
 	return {
-    endSession: (msg) => {
-    },
+    ...ownProps,
     updateStats: (budget) => {
       dispatch(updateStats(budget));
     },

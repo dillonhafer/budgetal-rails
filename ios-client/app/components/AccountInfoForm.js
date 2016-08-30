@@ -42,7 +42,7 @@ class AccountInfoForm extends Component {
         showErrors(resp.errors);
       }
     } catch (err) {
-      this.props.endSession();
+      this.props.signOut();
     } finally {
       this.setState({loading: false});
     }

@@ -13,9 +13,8 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-    ...ownProps,
     signOut: (r) => {
       window.alert({title: 'Signed Out', message: "Thanks for using Budgetal!"});
 			dispatch(navigateReset([{key: 'SignIn', title: ''}],0))

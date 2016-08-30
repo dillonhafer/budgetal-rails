@@ -11,10 +11,9 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
-    signOut: (r) => {
-		},
+    ...ownProps,
 		save: (budgetItem) => {
 			dispatch(navigatePush({key: 'BudgetItemForm', title: 'New Budget Item', budgetItem}))
 		},

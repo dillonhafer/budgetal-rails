@@ -43,9 +43,7 @@ const {
 	Header: NavigationHeader
 } = NavigationExperimental
 
-function logError(err) {
-  console.log(err)
-}
+import { navigateReset } from '../actions/Navigation'
 
 class AppContainer extends Component {
   constructor(props) {
@@ -55,13 +53,28 @@ class AppContainer extends Component {
     }
   }
 
-  loadingModal = async(asyncFunction, success, failure = logError) => {
+  signOut = () => {
+    this.props.dispatch(navigateReset([{key: 'SignIn', title: ''}],0))
+  }
+
+  authorizedRequest = async(asyncFunction, success) => {
+    try {
+      const response = await asyncFunction();
+      success(response)
+    } catch(err) {
+      this.signOut()
+    } finally {
+    }
+  }
+
+  loadingModal = async(asyncFunction, success, failure = console.warn) => {
     try {
       this.setState({modalVisible: true})
       const response = await asyncFunction();
       success(response)
     } catch(err) {
       failure(err)
+      this.signOut()
     } finally {
       this.setState({modalVisible: false})
     }
@@ -116,7 +129,7 @@ class AppContainer extends Component {
                 touchToClose={true}
 								disableGestures={this._disableGestures(navigationState)}
                 edgeHitWidth={400}
-                menu={<MenuContainer />}>
+                menu={<MenuContainer authorizedRequest={this.authorizedRequest} />}>
   			<NavigationCardStack
   				navigationState={navigationState}
           direction={this._cardDirection(route.key)}
@@ -283,43 +296,43 @@ class AppContainer extends Component {
 
 		switch(props.scene.route.key) {
 			case 'SignIn':
-				return <SignInContainer />
+				return <SignInContainer authorizedRequest={authorizedRequest} />
 			case 'SignUp':
-				return <SignUpContainer />
+				return <SignUpContainer authorizedRequest={authorizedRequest} />
 	    case 'Budgets':
-	      return <BudgetsContainer loadingModal={this.loadingModal} />
+	      return <BudgetsContainer loadingModal={this.loadingModal} authorizedRequest={authorizedRequest} />
 	    case 'DetailedBudgets':
-	      return <DetailedBudgetsContainer />
+	      return <DetailedBudgetsContainer authorizedRequest={authorizedRequest} />
 			case 'Statistics':
-	      return <StatisticsContainer />
+	      return <StatisticsContainer authorizedRequest={authorizedRequest} />
 			case 'BudgetCategory':
-				return <BudgetCategoryContainer loadingModal={this.loadingModal} />
+				return <BudgetCategoryContainer loadingModal={this.loadingModal} authorizedRequest={authorizedRequest} />
 			case 'BudgetItem':
-				return <BudgetItemContainer />
+				return <BudgetItemContainer authorizedRequest={authorizedRequest} />
 			case 'BudgetItemForm':
-				return <BudgetItemFormContainer />
+				return <BudgetItemFormContainer authorizedRequest={authorizedRequest} />
 			case 'BudgetItemExpenseForm':
-				return <BudgetItemExpenseFormContainer />
+				return <BudgetItemExpenseFormContainer authorizedRequest={authorizedRequest} />
 			case 'AnnualBudgets':
-	      return <AnnualBudgetsContainer />
+	      return <AnnualBudgetsContainer authorizedRequest={authorizedRequest} />
 			case 'AnnualBudgetItemForm':
-				return <AnnualBudgetItemFormContainer />
+				return <AnnualBudgetItemFormContainer authorizedRequest={authorizedRequest} />
 			case 'Account':
-				return <AccountContainer />
+				return <AccountContainer authorizedRequest={authorizedRequest} />
 			case 'PhotoForm':
-				return <PhotoFormContainer />
+				return <PhotoFormContainer authorizedRequest={authorizedRequest} />
 			case 'AccountInfoForm':
-				return <AccountInfoFormContainer />
+				return <AccountInfoFormContainer authorizedRequest={authorizedRequest} />
 			case 'ChangePasswordForm':
-				return <ChangePasswordFormContainer />
+				return <ChangePasswordFormContainer authorizedRequest={authorizedRequest} />
       case 'BudgetInfo':
-				return <BudgetInfoContainer />
+				return <BudgetInfoContainer authorizedRequest={authorizedRequest} />
       case 'MonthlyIncomeForm':
-				return <MonthlyIncomeFormContainer />
+				return <MonthlyIncomeFormContainer authorizedRequest={authorizedRequest} />
       case 'PasswordResetRequest':
-				return <PasswordResetRequestContainer />
+				return <PasswordResetRequestContainer authorizedRequest={authorizedRequest} />
       case 'PasswordReset':
-				return <PasswordResetContainer />
+				return <PasswordResetContainer authorizedRequest={authorizedRequest} />
 		}
 	}
 }

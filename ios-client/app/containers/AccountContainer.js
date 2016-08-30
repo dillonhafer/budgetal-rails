@@ -12,10 +12,9 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
 	return {
-    endSession: (r) => {
-		},
+    ...ownProps,
 		updateSessions: (sessions) => {
 			dispatch(updateSessions(sessions));
 		},

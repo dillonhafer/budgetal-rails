@@ -8,10 +8,9 @@ const mapStateToProps = (state) => {
 	return {budget: state.budgetState.budget}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
 	return {
-    endSession: (r) => {
-		},
+    ...ownProps,
     goBack: () => {
       dispatch(navigatePop());
     },

@@ -10,8 +10,9 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
 	return {
+    ...ownProps,
 		budgets: () => {
 			dispatch(navigateReset([{key: 'Budgets', title: 'Budgets'}],0))
 		},
@@ -29,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		signOut: () => {
 			endSession().then(() => {
-				dispatch(navigateReset([{key: 'SignIn', title: ''}],0))
+				ownProps.signOut()
 				alert({title: 'Signed Out', message: 'Thanks for using Budgetal!'});
 	    });
 		}

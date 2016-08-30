@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import {clearSession} from './data/API'
 
 import reducers from './reducers'
 import AppContainer from './containers/AppContainer'
@@ -11,6 +12,9 @@ const store = createStoreWithMiddleware(reducers)
 
 export default class Budgetal extends Component {
   componentDidMount() {
+    if (this.props.testMode) {
+      clearSession();
+    }
   }
 
   _defaultApiUrl = () => {
@@ -29,6 +33,10 @@ export default class Budgetal extends Component {
       default:
         return false
     }
+  }
+
+  _resetSession(key='', secret='') {
+
   }
 
 	render() {
