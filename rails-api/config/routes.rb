@@ -51,9 +51,9 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.mobile_integration? || Rails.env.development?
-    get '/tests/setup'    => 'tests#setup'
-    get '/tests/teardown' => 'tests#teardown'
-    get '/tests/reset'    => 'tests#reset'
+    post '/tests/setup'    => 'tests#setup'
+    post '/tests/teardown' => 'tests#teardown'
+    post '/tests/reset'    => 'tests#reset'
     get '/tests/emails'   => 'tests#emails'
   end
 end

@@ -60,6 +60,7 @@ feature 'User manages budget items', js: true do
 
       scenario 'can import previous budget items' do
         FactoryGirl.create(:budget, :with_budget_items, user: user, month: previous_date.month, year: previous_date.year)
+        expect(BudgetItem.first.budget_category.budget.month).to eq previous_date.month
         budgets_page.import_items
         expect(page).to have_selector('.flash-box', text: 'Finished importing 1 item')
       end

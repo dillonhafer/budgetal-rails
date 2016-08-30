@@ -3,15 +3,26 @@
 //  BudgetalUITests
 //
 //  Created by Dillon Hafer on 6/28/16.
-//  Copyright © 2016 Facebook. All rights reserved.
 //
 
 import XCTest
 
 class BudgetItemTest: XCTestCase {
+  var user = User(email: "dh@dillonhafer.com", password: "password")
+
   override func setUp() {
     super.setUp()
-    TestHelper().setup((self.invocation?.selector.description)!)
+    let testData: [[String: AnyObject]] = [
+      [
+        "factory": "user",
+        "options": [
+          "email": user.email!,
+          "password": user.password!
+        ]
+      ]
+    ]
+
+    TestHelper().setup(testData)
     TestHelper().launchInTestEnvironment()
   }
 
@@ -21,7 +32,6 @@ class BudgetItemTest: XCTestCase {
   }
 
   func testAddBudgetItem() {
-    let user = User(email: "dh@dillonhafer.com", password: "password")
     let budgetItem = BudgetItem(name: "My Charity", budgeted: "200")
 
     SignInScene().signInWith(user)
@@ -29,9 +39,5 @@ class BudgetItemTest: XCTestCase {
     tap_on("Charity Category")
 
     BudgetItemScene().addBudgetItem(budgetItem)
-
-    tap_on("Back Button")
-    
-    SignInScene().signOut()
   }
 }

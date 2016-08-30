@@ -11,7 +11,7 @@ import XCTest
 class SignInTest: XCTestCase {
     override func setUp() {
       super.setUp()
-      TestHelper().setup((self.invocation?.selector.description)!)
+//      TestHelper().setup((self.invocation?.selector.description)!)
       TestHelper().launchInTestEnvironment()
     }
 

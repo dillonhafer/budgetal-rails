@@ -10,27 +10,24 @@ import Foundation
 import XCTest
 
 class TestHelper : XCTestCase {
-  private func request(type: String) {
+  private func request(type: String, params: NSData? = nil) {
     let urlPath: String = "http://localhost:3389/tests/\(type)"
-    let url: NSURL = NSURL(string: urlPath)!
-    let request1: NSURLRequest = NSURLRequest(URL: url)
-    let response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil
+    
+    let request = NSMutableURLRequest(URL: NSURL(string: urlPath)!)
+    let session = NSURLSession.sharedSession()
+    request.HTTPMethod = "POST"
 
-
-    do {
-      let dataVal = try NSURLConnection.sendSynchronousRequest(request1, returningResponse: response)
-      print(response)
-
-      do {
-        if let jsonResult = try NSJSONSerialization.JSONObjectWithData(dataVal, options: []) as? NSDictionary {
-          print("Synchronous\(jsonResult)")
-        }
-      } catch let error as NSError {
-        print(error.localizedDescription)
-      }
-    } catch let error as NSError {
-      print(error.localizedDescription)
+    if ((params) != nil) {
+      request.HTTPBody = params
     }
+
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+    let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+      print("Response: \(response)")})
+
+    task.resume()
   }
 
   func launchInTestEnvironment() {
@@ -40,8 +37,10 @@ class TestHelper : XCTestCase {
     app.launch()
   }
 
-  func setup(test: String) {
-    request("setup?test=\(test)")
+  func setup(json: [[String: AnyObject]]) {
+    let data = ["data": json]
+    let serializedJson = try? NSJSONSerialization.dataWithJSONObject(data, options: [])
+    request("setup", params: serializedJson!)
   }
 
   func teardown(test: String) {

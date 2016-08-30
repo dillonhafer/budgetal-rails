@@ -1,7 +1,9 @@
 class TestsController < ActionController::API
   def setup
-    MobileIntegrationTest.setup(params[:test])
-    head :ok
+    models = params[:data].map do |opt|
+      FactoryGirl.create(opt[:factory].to_sym, {}.merge(opt[:options]))
+    end
+    render json: {factories: models}
   end
 
   def teardown
