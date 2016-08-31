@@ -296,43 +296,43 @@ class AppContainer extends Component {
 
 		switch(props.scene.route.key) {
 			case 'SignIn':
-				return <SignInContainer authorizedRequest={authorizedRequest} />
+				return <SignInContainer authorizedRequest={this.authorizedRequest} />
 			case 'SignUp':
-				return <SignUpContainer authorizedRequest={authorizedRequest} />
+				return <SignUpContainer authorizedRequest={this.authorizedRequest} />
 	    case 'Budgets':
-	      return <BudgetsContainer loadingModal={this.loadingModal} authorizedRequest={authorizedRequest} />
+	      return <BudgetsContainer loadingModal={this.loadingModal} authorizedRequest={this.authorizedRequest} />
 	    case 'DetailedBudgets':
-	      return <DetailedBudgetsContainer authorizedRequest={authorizedRequest} />
+	      return <DetailedBudgetsContainer authorizedRequest={this.authorizedRequest} />
 			case 'Statistics':
-	      return <StatisticsContainer authorizedRequest={authorizedRequest} />
+	      return <StatisticsContainer authorizedRequest={this.authorizedRequest} />
 			case 'BudgetCategory':
-				return <BudgetCategoryContainer loadingModal={this.loadingModal} authorizedRequest={authorizedRequest} />
+				return <BudgetCategoryContainer loadingModal={this.loadingModal} authorizedRequest={this.authorizedRequest} />
 			case 'BudgetItem':
-				return <BudgetItemContainer authorizedRequest={authorizedRequest} />
+				return <BudgetItemContainer authorizedRequest={this.authorizedRequest} />
 			case 'BudgetItemForm':
-				return <BudgetItemFormContainer authorizedRequest={authorizedRequest} />
+				return <BudgetItemFormContainer authorizedRequest={this.authorizedRequest} />
 			case 'BudgetItemExpenseForm':
-				return <BudgetItemExpenseFormContainer authorizedRequest={authorizedRequest} />
+				return <BudgetItemExpenseFormContainer authorizedRequest={this.authorizedRequest} />
 			case 'AnnualBudgets':
-	      return <AnnualBudgetsContainer authorizedRequest={authorizedRequest} />
+	      return <AnnualBudgetsContainer authorizedRequest={this.authorizedRequest} />
 			case 'AnnualBudgetItemForm':
-				return <AnnualBudgetItemFormContainer authorizedRequest={authorizedRequest} />
+				return <AnnualBudgetItemFormContainer authorizedRequest={this.authorizedRequest} />
 			case 'Account':
-				return <AccountContainer authorizedRequest={authorizedRequest} />
+				return <AccountContainer authorizedRequest={this.authorizedRequest} />
 			case 'PhotoForm':
-				return <PhotoFormContainer authorizedRequest={authorizedRequest} />
+				return <PhotoFormContainer authorizedRequest={this.authorizedRequest} />
 			case 'AccountInfoForm':
-				return <AccountInfoFormContainer authorizedRequest={authorizedRequest} />
+				return <AccountInfoFormContainer authorizedRequest={this.authorizedRequest} />
 			case 'ChangePasswordForm':
-				return <ChangePasswordFormContainer authorizedRequest={authorizedRequest} />
+				return <ChangePasswordFormContainer authorizedRequest={this.authorizedRequest} />
       case 'BudgetInfo':
-				return <BudgetInfoContainer authorizedRequest={authorizedRequest} />
+				return <BudgetInfoContainer authorizedRequest={this.authorizedRequest} />
       case 'MonthlyIncomeForm':
-				return <MonthlyIncomeFormContainer authorizedRequest={authorizedRequest} />
+				return <MonthlyIncomeFormContainer authorizedRequest={this.authorizedRequest} />
       case 'PasswordResetRequest':
-				return <PasswordResetRequestContainer authorizedRequest={authorizedRequest} />
+				return <PasswordResetRequestContainer authorizedRequest={this.authorizedRequest} />
       case 'PasswordReset':
-				return <PasswordResetContainer authorizedRequest={authorizedRequest} />
+				return <PasswordResetContainer authorizedRequest={this.authorizedRequest} />
 		}
 	}
 }
