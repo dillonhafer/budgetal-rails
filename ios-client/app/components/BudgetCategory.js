@@ -14,6 +14,7 @@ import SwipeableListView from 'SwipeableListView';
 import Meter from './Meter';
 import {reduce,where} from 'lodash-node'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ConfirmDeleteButton from './ConfirmDeleteButton';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
@@ -81,13 +82,6 @@ const styles = StyleSheet.create({
     backgroundColor: '$blue',
   },
   editButtonText: {
-    color: '$white',
-    textAlign: 'center',
-  },
-  deleteButton: {
-    backgroundColor: '$red',
-  },
-  deleteButtonText: {
     color: '$white',
     textAlign: 'center',
   },
@@ -180,7 +174,7 @@ const styles = StyleSheet.create({
 
 import {findCategory,importCategory}     from '../data/budget_category';
 import {assign, findIndex} from 'lodash-node';
-import {alert, confirm}   from '../utils/window';
+import {alert}   from '../utils/window';
 import {destroyItem}      from '../data/budget_item';
 import {numberToCurrency} from '../utils/ViewHelpers';
 
@@ -225,7 +219,6 @@ class BudgetCategory extends Component {
   }
 
   crudButtons = (item) => {
-    const confirmText = `Are you sure you want to delete\n\n${item.name}\n\nThis cannot be undone.`;
     return (
       <View style={styles.crudContainer}>
         <TouchableOpacity
@@ -234,14 +227,8 @@ class BudgetCategory extends Component {
           underlayColor='#EEE' >
           <Text style={styles.editButtonText}>Edit</Text>
         </TouchableOpacity>
-        <TouchableHighlight
-          style={[styles.button, styles.deleteButton]}
-          onPress={() => {
-            confirm('Confirm Delete', confirmText, this.deleteItem.bind(this, item))
-          }}
-          underlayColor='#EEE' >
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableHighlight>
+        <ConfirmDeleteButton name={item.name}
+                             deleteFunction={this.deleteItem.bind(this, item)} />
       </View>
     )
   }

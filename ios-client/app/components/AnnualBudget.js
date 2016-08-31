@@ -17,9 +17,9 @@ import {reduce,where} from 'lodash-node'
 
 import {all} from '../data/AnnualBudgets';
 import {assign, findIndex} from 'lodash-node';
-import {alert, confirm}   from '../utils/window';
 import {deleteItem} from '../data/AnnualBudgets';
 import {numberToCurrency, dueDate} from '../utils/ViewHelpers';
+import ConfirmDeleteButton from './ConfirmDeleteButton';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
@@ -67,13 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: '$blue',
   },
   editButtonText: {
-    color: '$white',
-    textAlign: 'center',
-  },
-  deleteButton: {
-    backgroundColor: '$red',
-  },
-  deleteButtonText: {
     color: '$white',
     textAlign: 'center',
   },
@@ -205,7 +198,6 @@ class AnnualBudget extends Component {
   }
 
   crudButtons = (item) => {
-    const confirmText = `Are you sure you want to delete\n\n${item.name}\n\nThis cannot be undone.`;
     return (
       <View style={styles.crudContainer}>
         <TouchableOpacity
@@ -214,14 +206,8 @@ class AnnualBudget extends Component {
           underlayColor='blue' >
           <Text style={styles.editButtonText}>Edit</Text>
         </TouchableOpacity>
-        <TouchableHighlight
-          style={[styles.button, styles.deleteButton]}
-          onPress={() => {
-            confirm('Confirm Delete', confirmText, this.deleteItem.bind(this, item))
-          }}
-          underlayColor='red' >
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableHighlight>
+        <ConfirmDeleteButton name={item.name}
+                             deleteFunction={this.deleteItem.bind(this, item)} />
       </View>
     )
   }

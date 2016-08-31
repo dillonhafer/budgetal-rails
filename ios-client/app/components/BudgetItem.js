@@ -11,8 +11,9 @@ import SwipeableListView from 'SwipeableListView';
 
 import {groupBy} from 'lodash-node'
 import {numberToCurrency} from '../utils/ViewHelpers'
-import {confirm}   from '../utils/window';
 import {deleteItemExpense} from '../data/budgetItemExpense'
+
+import ConfirmDeleteButton from './ConfirmDeleteButton';
 
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
@@ -113,13 +114,6 @@ const styles = StyleSheet.create({
     color: '$white',
     textAlign: 'center',
   },
-  deleteButton: {
-    backgroundColor: '$red',
-  },
-  deleteButtonText: {
-    color: '$white',
-    textAlign: 'center',
-  },
   section: {
     backgroundColor: '$grayBackground',
     padding: 5,
@@ -153,7 +147,6 @@ class BudgetItem extends Component {
   }
 
   crudButtons = (expense) => {
-    const confirmText = `Are you sure you want to delete\n\n${expense.name}\n\nThis cannot be undone.`;
     return (
       <View style={styles.crudContainer}>
         <TouchableOpacity
@@ -162,14 +155,8 @@ class BudgetItem extends Component {
           underlayColor='blue' >
           <Text style={styles.editButtonText}>Edit</Text>
         </TouchableOpacity>
-        <TouchableHighlight
-          style={[styles.button, styles.deleteButton]}
-          onPress={() => {
-            confirm('Confirm Delete', confirmText, this.deleteExpense.bind(this, expense))
-          }}
-          underlayColor='red' >
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableHighlight>
+        <ConfirmDeleteButton name={expense.name}
+                             deleteFunction={this.deleteExpense.bind(this, expense)} />
       </View>
     )
   }
