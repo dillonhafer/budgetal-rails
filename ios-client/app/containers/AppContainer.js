@@ -57,10 +57,10 @@ class AppContainer extends Component {
     this.props.dispatch(navigateReset([{key: 'SignIn', title: ''}],0))
   }
 
-  authorizedRequest = async(asyncFunction, success) => {
+  authorizedRequest = async(asyncFunction, successFunction) => {
     try {
       const response = await asyncFunction();
-      success(response)
+      successFunction(response)
     } catch(err) {
       this.signOut()
     } finally {

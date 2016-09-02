@@ -74,7 +74,7 @@ class Account extends Component {
   getCurrentUser = () => {
     this.props.authorizedRequest(accountInfo, (resp) => {
       if (resp !== null) {
-        this.props.updateUser(user)
+        this.props.updateUser(resp)
       }
     })
   }
