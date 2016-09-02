@@ -12,7 +12,7 @@ feature 'User manages budget items', js: true do
         visit root_path
         click_link "Budgets"
 
-        sleep 1
+        find('a', text: 'Add a budget item', wait: 1)
         click_on 'Add a budget item'
         fill_in 'name', with: 'Gifts'
         fill_in 'amount_budgeted', with: '3.00'
@@ -29,8 +29,8 @@ feature 'User manages budget items', js: true do
         FactoryGirl.create(:budget, :with_budget_items, user: user, month: Date.today.month, year: Date.today.year)
         visit root_path
         click_link "Budgets"
-        sleep 1
 
+        find('input[name=name]', wait: 1)
         fill_in 'name', with: 'Saver'
         fill_in 'amount_budgeted', with: '6'
         click_on 'Save'
@@ -46,8 +46,8 @@ feature 'User manages budget items', js: true do
         FactoryGirl.create(:budget, :with_budget_items, user: user, month: Date.today.month, year: Date.today.year)
         visit root_path
         click_link "Budgets"
-        sleep 1
 
+        find('a', text: 'Delete', wait: 1)
         click_on 'Delete'
         click_link 'Delete My Organization'
         expect(page).to have_content("You haven't added any budget items yet.")
@@ -68,11 +68,13 @@ feature 'User manages budget items', js: true do
       scenario 'can import multiple previous budget items' do
         FactoryGirl.create(:budget, :with_multiple_budget_items, user: user, month: previous_date.month, year: previous_date.year)
         budgets_page.import_items
+        find('.flash-box', wait: 1)
         expect(page).to have_selector('.flash-box', text: 'Finished importing 2 items')
       end
 
       scenario 'can import nothing from the previous budget' do
         budgets_page.import_items
+        find('.flash-box', wait: 1)
         expect(page).to have_selector('.flash-box', text: "There wasn't anything to import.")
       end
     end
