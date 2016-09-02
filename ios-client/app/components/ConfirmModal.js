@@ -69,15 +69,13 @@ class ConfirmModal extends Component {
              visible={this.props.visible}
              onRequestClose={() => {}}>
         <BlurView blurType="dark" style={styles.container}>
-          <Text style={styles.text}>Are you sure you want to delete</Text>
-          <Text style={[styles.text, styles.boldText]}>{this.props.name}</Text>
-          <Text style={styles.text}>This cannot be undone</Text>
+          {this.props.message}
 
           <View style={styles.actionContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity onPress={this.deleteFunction}>
                 <View style={styles.iconContainer}>
-                  <Icon name="trash" style={styles.icon} />
+                  <Icon name={this.props.actionIcon} style={styles.icon} />
                 </View>
               </TouchableOpacity>
             </View>

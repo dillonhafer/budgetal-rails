@@ -16,6 +16,7 @@ import {allSessions,signOut} from '../data/sessions'
 
 const {width} = Dimensions.get('window')
 
+import ConfirmDeleteButton from './ConfirmDeleteButton';
 import StyleSheet from './StyleSheet'
 const styles = StyleSheet.create({
   container: {
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '$white',
   },
   deleteButton: {
-    height: 140,
+    height: 124,
     width: 100,
     padding: 10,
     alignItems: 'center',
@@ -121,17 +122,25 @@ class Sessions extends Component {
   crudButtons = (session,section) => {
     if (section === 'expired') return
 
-    const confirmText = `Are you sure you want to end this session?\n\nThis will sign out the device using it. And you will need to sign in again on that device.`;
+    const textStyle = {color: 'white', textAlign: 'center', paddingBottom: 5, paddingLeft: 20, paddingRight: 20}
+    const message = (
+      <View>
+        <Text style={textStyle}>
+          Are you sure you want to end this session?
+        </Text>
+        <Text style={textStyle}>
+          This will sign out the device using it. And you will need to sign in again on that device.
+        </Text>
+      </View>
+    );
+
     return (
       <View style={styles.crudContainer}>
-        <TouchableHighlight
-          style={styles.deleteButton}
-          onPress={() => {
-            confirm('End Session', confirmText, this.signOut.bind(this, session))
-          }}
-          underlayColor='red' >
-          <Text style={styles.deleteButtonText}>End Session</Text>
-        </TouchableHighlight>
+        <ConfirmDeleteButton buttonText='End Session'
+                             buttonStyles={styles.deleteButton}
+                             actionIcon='power-off'
+                             message={message}
+                             deleteFunction={this.signOut.bind(this, session)} />
       </View>
     )
   }
