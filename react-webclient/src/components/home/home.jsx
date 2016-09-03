@@ -38,10 +38,9 @@ export default class Home extends React.Component {
           <div className="row centered-text marketing-row">
             <div className="medium-4 large-4 columns">
               <div className='text-center'>
-                 <img src={saving} />
-                <h4>Plan for Saving</h4>
+                <img src={saving} />
+                <h4>Diligence</h4>
               </div>
-              <p className='text-center'>Start saving.</p>
               <p>
                 Saving money will help you plan for expenses,
                 chase away emergencies, and begin building wealth.
@@ -51,10 +50,9 @@ export default class Home extends React.Component {
             </div>
             <div className="medium-4 large-4 columns">
               <div className='text-center'>
-                 <img src={charity} />
-                <h4>Give to Others</h4>
+                <img src={charity} />
+                <h4>Generosity</h4>
               </div>
-              <p className='text-center'>Become generous.</p>
               <p>
                 Saving and producing wealth for its own sake
                 can lead to a selfish and self-centered life.
@@ -65,9 +63,8 @@ export default class Home extends React.Component {
             <div className="medium-4 large-4 columns">
               <div className='text-center'>
                  <img src={debts} />
-                <h4>Enjoy your Freedom</h4>
+                <h4>Freedom</h4>
               </div>
-              <p className='text-center'>Erase debt.</p>
               <p>
                 The fastest way to build wealth is to be debt free.
                 Having no debts means you have no payments. No

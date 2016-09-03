@@ -292,7 +292,11 @@ fieldset[disabled] {
   justify-content: center;
 }
 
-#main-content { padding-top: 2.75rem; }
+#main-content {
+  padding-top: 2.75rem;
+  background: white;
+  padding-bottom: 20px;
+}
 
 .not-found {
   display: flex;

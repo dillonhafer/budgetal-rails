@@ -70,7 +70,7 @@ export default class Nav extends React.Component {
               <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('graph-pie')} Statistics (for geeks)</Link></li>
               <li><Link to='/account-settings'>{this.icon('widget')} Account Settings</Link></li>
               {this.adminLink(user.admin)}
-              <li><a onClick={this.signOut} title="Sign out" rel="nofollow" href="#">{this.icon('x')} Sign out</a></li>
+              <li><a onClick={this.signOut} title="Sign out" rel="nofollow" href="#">{this.icon('power')} Sign out</a></li>
             </ul>
           </li>
         </ul>
