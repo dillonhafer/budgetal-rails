@@ -1,3 +1,4 @@
+set -e
 source .env
 API_URL=$API_URL WEBPACK_HOSTNAME=$WEBPACK_HOSTNAME npm run build
 aws s3 sync static s3://$S3_BUCKET_NAME --cache-control max-age=315360000
