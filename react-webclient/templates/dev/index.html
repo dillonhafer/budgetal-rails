@@ -9,10 +9,29 @@
     <meta name="application-name" content="Budgetal">
     <link rel="stylesheet" media="screen" href='/main.css'>
     <title>(Dev) Budgetal</title>
+    <style>
+      .budgetal-is-loading {
+        width: 300px;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 8em;
+        color: #6699FF;
+      }
+
+      .budgetal-is-loading img {
+        width: 100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <div class='flash-holder'></div>
-    <div id='main'></div>
+    <div id='main'>
+      <div class='budgetal-is-loading'>
+        <img src='/loading.gif' class='budgetal-is-loading' />
+        <p>Loading...</p>
+      </div>
 
     <script type="text/javascript">
       function downloadJSAtOnload() {

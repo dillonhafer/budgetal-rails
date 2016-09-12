@@ -1,12 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import loading from '../assets/images/loading.gif';
 import BudgetItemListContainer from '../containers/BudgetItemListContainer'
 import BudgetCategoryOverviewContainer from '../containers/BudgetCategoryOverviewContainer'
 import OverviewContainer from '../containers/OverviewContainer'
 import ImportModal from './ImportModal';
 import {importCategory} from '../data/BudgetCategory';
-const loadingSrc = [window.location.origin, loading].join('/');
+const loadingSrc = [window.location.origin, 'loading.gif'].join('/');
 
 export default class BudgetCategory extends React.Component {
   constructor(props) {

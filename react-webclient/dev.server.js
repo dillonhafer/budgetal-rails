@@ -24,7 +24,8 @@ new WebpackDevServer(webpack(config), {
   },
   proxy: {
     '/fonts/OpenSans-400.woff': full_path+'/static',
-    '/fonts/OpenSans-700.woff': full_path+'/static'
+    '/fonts/OpenSans-700.woff': full_path+'/static',
+    '/loading.gif': full_path+'/static'
   }
 }).listen(port, address, function (err, result) {
   if (err) {
