@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default {
+module.exports = {
   getRequest(path) {
     return request('GET', path, {})
   },

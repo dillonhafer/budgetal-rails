@@ -1,6 +1,6 @@
 import {getRequest} from './api';
 
-export default {
+module.exports = {
   users() {
     return getRequest('/admin/users');
   }

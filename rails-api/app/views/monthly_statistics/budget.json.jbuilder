@@ -5,5 +5,6 @@ json.budget do
   json.budget_categories budget.budget_categories do |budget_category|
     json.name           budget_category.name
     json.percent_spent  sprintf('%.2f', budget_category.percent_of_budget_spent)
+    json.amount_spent   sprintf('%.2f', budget_category.total_spent)
   end
 end

@@ -1,3 +1,9 @@
+.budget-section:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
 .overviews ul {
   margin-left: 0;
   li {
@@ -28,7 +34,7 @@
 }
 
 .expense-list div.row {
-  border-bottom: 1px dashed #CCC;
+  border-bottom: 1px solid #CCC;
   background: #f6f6f6;
   padding-top: 15px;
 
@@ -39,10 +45,21 @@
       flex: 1;
     }
   }
+
+  form > .row {
+    border-bottom: 1px dashed #CCC;
+  }
+
+  form:last-child > .row {
+    border-bottom: none;
+  }
 }
 div.row.expense-header-row {
   border-bottom: none;
   label {text-decoration: underline;}
+  & > div {
+    text-align: center;
+  }
 }
 
 .no-expenses {

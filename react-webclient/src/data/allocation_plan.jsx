@@ -1,6 +1,6 @@
 import {getRequest, postRequest, putRequest, deleteRequest} from './api';
 
-export default {
+module.exports = {
   allPlans(date) {
     return getRequest(`/allocation-plans/${date.year}/${date.month}`);
   },

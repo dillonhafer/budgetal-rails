@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import expect from 'expect';
 import {monthName, selectedValue, numberToCurrency, title} from './helpers';
 import {elFactory} from '../test/dom_helpers';

@@ -1,6 +1,6 @@
 import {postRequest, putRequest, deleteRequest, patchRequest} from './api';
 
-export default {
+module.exports = {
   createItem(data) {
     return postRequest('/budget-items', data);
   },

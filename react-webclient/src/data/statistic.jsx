@@ -1,6 +1,6 @@
 import {getRequest} from './api';
 
-export default {
+module.exports = {
   findStatistic(date) {
     return getRequest(`/monthly-statistics-budget/${date.year}/${date.month}`);
   }

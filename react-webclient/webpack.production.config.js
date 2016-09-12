@@ -27,6 +27,7 @@ var config = _.merge({}, baseConfig, {
     new CleanPlugin(['build'], {root: process.cwd(), verbose: false}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
       output: {
         comments: false
       },
@@ -36,9 +37,7 @@ var config = _.merge({}, baseConfig, {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new ExtractTextPlugin('[name]-[hash].css', {
-      allChunks: true
-    }),
+    new ExtractTextPlugin('[name]-[hash].css'),
     new webpack.ProvidePlugin({
       'Promise': 'exports?global.Promise!es6-promise',
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
@@ -62,7 +61,7 @@ var config = _.merge({}, baseConfig, {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        'NODE_ENV': JSON.stringify('production')
       }
     })
   ],

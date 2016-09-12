@@ -1,13 +1,19 @@
 {
   "name": "Budgetal",
   "devDependencies": {
-    "babel-eslint": "^4.1.3",
+    "babel-core": "^6.0.20",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
     "es6-promise": "^3.0.2",
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.6.3",
     "expect": "^1.12.2",
     "exports-loader": "^0.6.2",
     "file-loader": "^0.8.5",
+    "history": "^1.17.0",
     "html-webpack-plugin": "^1.7.0",
     "imports-loader": "^0.6.5",
     "karma": "^0.13.21",
@@ -18,14 +24,17 @@
     "karma-sourcemap-loader": "^0.3.6",
     "karma-super-dots-reporter": "^0.1.0",
     "karma-webpack": "^1.7.0",
+    "mocha": "^3.0.2",
     "react-hot-loader": "^1.3.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0",
+    "sinon": "^1.17.5",
     "webpack-dev-server": "^1.12.1",
     "webpack-notifier": "^1.2.1",
     "whatwg-fetch": "^0.10.1"
   },
   "dependencies": {
-    "babel-core": "^5.8.25",
-    "babel-loader": "^5.3.2",
     "classnames": "^2.2.1",
     "clean-webpack-plugin": "^0.1.5",
     "css-loader": "^0.23.1",
@@ -48,20 +57,21 @@
   },
   "scripts": {
     "test": "karma start",
-    "integration": "API_URL='' WEBPACK_HOSTNAME=www.budgetal.com npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
     "start": "webpack -w --config webpack.dev.config.js",
-    "s": "npm run server",
+    "integration": "rm -f ../rails-api/public/main-* && API_URL='' WEBPACK_HOSTNAME=www.budgetal.com npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
+    "i": "npm run integration",
     "server": "NODE_ENV=development node ./dev.server.js",
+    "s": "npm run server",
     "server:hot": "webpack-dev-server --hot --inline --config webpack.hot-dev.config.js",
-    "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "build": "NODE_ENV=production webpack --progress --profile --config webpack.production.config.js",
     "deploy": "./deploy.sh"
   },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dillonhafer/budgetal-webclient.git"
+    "url": "git+https://github.com/dillonhafer/budgetal.git"
   },
   "engines": {
-    "node": ">= 4.1.1"
+    "node": ">= 5.10.0"
   }
 }

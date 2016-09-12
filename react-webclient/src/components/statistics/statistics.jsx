@@ -7,7 +7,8 @@ import {
   selectedValue,
   yearOptions,
   monthOptions,
-  title
+  title,
+  numberToCurrency
 } from '../../utils/helpers';
 
 export default class Statistics extends React.Component {
@@ -43,6 +44,7 @@ export default class Statistics extends React.Component {
         y: 100,
         layout: 'vertical'
       },
+      plotOptions: {pie: {showInLegend: false}},
       series: [{data}]
     };
   }
@@ -164,7 +166,28 @@ export default class Statistics extends React.Component {
         <div className="small-12 large-12 columns">
           <ul className="main-budget-categories">
             <li>
-              {this.statistics()}
+              <div style={{width: '50%', float: 'left'}}>
+                {this.statistics()}
+              </div>
+              <ul className='stat-list'>
+              {
+                this.state.budget.budget_categories.map((category, key) => {
+                  const statIconClass = 'stat-icon stat-icon-'+category.name.toLowerCase().replace('/','-')
+                  return (
+                    <li key={key}>
+                      <div className='stat-list-item'>
+                        <div className={statIconClass} />
+                        <b>{category.name}</b><br />
+                        <span className='percentSpent'>
+                          {numberToCurrency(category.amount_spent)} - %{parseInt(category.percent_spent)}
+                        </span>
+                      </div>
+                    </li>
+                  )
+                })
+              }
+              </ul>
+              <br style={{clear: 'both'}} />
             </li>
           </ul>
         </div>

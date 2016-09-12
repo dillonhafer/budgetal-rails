@@ -1,12 +1,12 @@
-export default {
+module.exports = {
   showMessage(message) {
-    var box = newBox(message);
+    const box = newBox(message);
     document.querySelector('.flash-holder').appendChild(box);
   }
 }
 
 function newBox(message) {
-  var box = document.createElement('div');
+  let box = document.createElement('div');
   box.setAttribute('class', 'flash-box');
   box.innerHTML = message;
   box.addEventListener("animationend", removeFlash, false);
@@ -15,7 +15,7 @@ function newBox(message) {
 }
 
 function removeFlash(e) {
-  var box = e.target;
+  const box = e.target;
   if (box) {
     box.parentNode.removeChild(box);
   }

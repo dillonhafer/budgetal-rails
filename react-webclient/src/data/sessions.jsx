@@ -1,6 +1,6 @@
 import {getRequest, postRequest, deleteRequest} from './api';
 
-export default {
+module.exports = {
   signIn(data) {
     return postRequest('/sessions/sign-in', data);
   },

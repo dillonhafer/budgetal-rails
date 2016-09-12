@@ -3,6 +3,7 @@ class BudgetItem < ApplicationRecord
   has_many :budget_item_expenses, dependent: :destroy
   has_many :allocation_plan_budget_items, dependent: :destroy
   validates_presence_of :budget_category_id, :amount_budgeted, :name
+  validates :amount_budgeted, numericality: { greater_than: 0.00}
 
   default_scope -> { order(:id) }
 

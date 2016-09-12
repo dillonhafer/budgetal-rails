@@ -30,6 +30,10 @@ button, .button {
     background-color: #1f69ff;
   }
 
+  &.disabled:hover, &.disabled:focus {
+    background-color: $primary-color;
+  }
+
   &.radius {
     border-radius: 3px;
   }
@@ -57,6 +61,10 @@ button, .button {
     &:hover, &:focus {
       background-color: #c12e2c;
     }
+
+    &.disabled:hover, &.disabled:focus {
+      background-color: $alert-color;
+    }
   }
 
   &.dark-blue {
@@ -64,6 +72,10 @@ button, .button {
 
     &:hover, &:focus {
       background-color: #407fbf;
+    }
+
+    &.disabled:hover, &.disabled:focus {
+      background-color: #6699CC;
     }
   }
 
@@ -75,6 +87,10 @@ button, .button {
     &:hover, &:focus {
       background-color: #e3b921;
     }
+
+    &.disabled:hover, &.disabled:focus {
+      background-color: #eacb5a;
+    }
   }
 
   &.success {
@@ -84,6 +100,15 @@ button, .button {
     &:hover, &:focus {
       background-color: #71882c;
     }
+
+    &.disabled:hover, &.disabled:focus {
+      background-color: $success-color;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: default;
   }
 }
 

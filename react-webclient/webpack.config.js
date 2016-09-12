@@ -14,7 +14,10 @@ module.exports = {
         key: 'jsx',
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loaders: ['babel-loader']
+        loader: 'babel-loader',
+        query: {
+          presets: ['react']
+        }
       },
       { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', "css!sass!") },

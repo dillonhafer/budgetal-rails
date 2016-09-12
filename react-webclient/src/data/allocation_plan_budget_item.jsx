@@ -1,6 +1,6 @@
 import {postRequest, putRequest} from './api';
 
-export default {
+module.exports = {
   createItem(data) {
     return postRequest('/allocation-plan-budget-items', data);
   },

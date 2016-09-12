@@ -1,6 +1,6 @@
 import {getRequest, postRequest, putRequest, deleteRequest} from './api';
 
-export default {
+module.exports = {
   createExpense(budget_item_expense) {
     return postRequest(`/budget-item-expenses`, {budget_item_expense});
   },

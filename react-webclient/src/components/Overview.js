@@ -1,7 +1,7 @@
 import React from 'react';
-import BudgetForm from '../budgets/budget_form';
-import Highchart from '../highchart';
-import {numberToCurrency} from '../../utils/helpers';
+import BudgetFormContainer from '../containers/BudgetFormContainer';
+import Highchart from './highchart';
+import {numberToCurrency} from '../utils/helpers';
 import classNames from 'classnames';
 
 export default class Overview extends React.Component {
@@ -10,7 +10,7 @@ export default class Overview extends React.Component {
   }
 
   percentSpent() {
-    var p = this.props.budget.spent / this.props.budget.budgeted * 100;
+    var p = this.props.amountSpent / this.props.amountBudgeted * 100;
     return p > 99 ? 100 : parseInt(p);
   }
 
@@ -24,15 +24,15 @@ export default class Overview extends React.Component {
   meterClasses() {
     return classNames({
       'meter': true,
-      'red-meter': this.props.budget.remaining < 0
+      'red-meter': this.props.amountRemaining < 0
     });
   }
 
   remainingClasses() {
     return classNames({
       'right remaining': true,
-      'alert-color': this.props.budget.remaining < 0,
-      'blue-color': this.props.budget.remaining > 0
+      'alert-color': this.props.amountRemaining < 0,
+      'blue-color': this.props.amountRemaining > 0
     });
   }
 
@@ -47,7 +47,6 @@ export default class Overview extends React.Component {
   }
 
 	render() {
-    var budget = this.props.budget
 		return (
 			<div className='large-6 medium-6 large-offset-1 columns overview-partial'>
         <div className='row collapse monthly-overview-stats'>
@@ -60,10 +59,10 @@ export default class Overview extends React.Component {
                 <div className="row">
                   <div className="large-12 medium-12 columns">
                     <span className='spent success-color'>
-                      Spent: {numberToCurrency(budget.spent)}
+                      Spent: {numberToCurrency(this.props.amountSpent)}
                     </span>
                     <span className={this.remainingClasses()}>
-                      Remaining: {numberToCurrency(budget.remaining)}
+                      Remaining: {numberToCurrency(this.props.amountRemaining)}
                     </span>
                     <div className="progress radius">
                       <span className={this.meterClasses()} style={this.meterWidth()}></span>
@@ -71,7 +70,7 @@ export default class Overview extends React.Component {
                   </div>
                 </div>
                 <hr />
-                <BudgetForm budget={budget} saveBudget={this.props.saveBudget} />
+                <BudgetFormContainer />
                 <Highchart config={this.chartConfig()} />
               </li>
             </ul>

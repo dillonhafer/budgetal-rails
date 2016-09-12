@@ -10,13 +10,6 @@ feature "User's session expired", js: true do
     user.sessions.expire
   end
 
-  it 'gets redirected on Categories' do
-    within('.icon-bar') do
-      click_on 'Saving'
-    end
-    assert_redirected
-  end
-
   it 'gets redirected on Update Budget' do
     click_on 'Save Income'
     assert_redirected

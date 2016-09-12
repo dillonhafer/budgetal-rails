@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import {map} from 'lodash';
 
-export default {
+module.exports = {
   elFactory(options) {
     var el = document.createElement(options.tag);
-    _.map(options.attributes, function(value, key) {
+    map(options.attributes, function(value, key) {
       el.setAttribute(key, value);
     });
     el.innerHTML = options.text;

@@ -9,6 +9,7 @@ module.exports = function (config) {
   }
 
   config.set({
+    entry: ['babel-polyfill'],
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 3,
     browserNoActivityTimeout: 30000,
@@ -38,10 +39,15 @@ module.exports = function (config) {
       module: {
         loaders: [
           {
+            key: 'jsx',
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: 'babel-loader'
-          }]
+            loader: 'babel-loader',
+            query: {
+              presets: ['react']
+            }
+          }
+        ]
       },
       watch: true,
       resolve: {

@@ -1,6 +1,6 @@
 import {postRequest, putRequest} from './api';
 
-export default {
+module.exports = {
   changePassword(data) {
     return postRequest('/change-password', data);
   },

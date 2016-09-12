@@ -12,8 +12,8 @@ feature 'User manages budget items', js: true do
         visit root_path
         click_link "Budgets"
 
-        find('a', text: 'Add a budget item', wait: 1)
-        click_on 'Add a budget item'
+        find('a', text: 'Add a Budget Item', wait: 1)
+        click_on 'Add a Budget Item'
         fill_in 'name', with: 'Gifts'
         fill_in 'amount_budgeted', with: '3.00'
         click_on 'Save'
@@ -95,7 +95,7 @@ feature 'User manages budget items', js: true do
       end
 
       scenario 'saving gets redirected' do
-        click_on 'Add a budget item'
+        click_on 'Add a Budget Item'
         fill_in 'name', with: 'Gifts'
         fill_in 'amount_budgeted', with: '3'
         click_on 'Save'

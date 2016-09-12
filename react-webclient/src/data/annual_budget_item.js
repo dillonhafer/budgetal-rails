@@ -1,6 +1,6 @@
 import {getRequest, postRequest, putRequest, deleteRequest} from './api';
 
-export default {
+module.exports = {
   allItems(year) {
     return getRequest(`/annual-budgets/${year}`);
   },
