@@ -99,9 +99,22 @@ export default class Statistics extends React.Component {
 
   statistics() {
     if (this.state.budget.id) {
-      var data   = this.chartData(this.state.budget.budget_categories);
-      var config = this.chartConfig(data);
-      return <Highchart config={config} />
+      const colors = ['#fc121e',
+                      '#fd8dd7',
+                      '#fd9226',
+                      '#1a98fc',
+                      '#fc2a1c',
+                      '#935211',
+                      '#0a5591',
+                      '#fed37f',
+                      '#1a98fc',
+                      '#929292',
+                      '#fd9226',
+                      '#5e5e5e']
+
+      const data   = this.chartData(this.state.budget.budget_categories);
+      const config = this.chartConfig(data);
+      return <Highchart config={config} colors={colors} />
     } else {
       return this.missing()
     }

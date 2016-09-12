@@ -1,11 +1,11 @@
 import React from 'react';
-import _ from 'lodash';
+import {merge} from 'lodash';
 import ReactHighcharts from 'react-highcharts/bundle/highcharts';
 
 export default class Highchart extends React.Component {
   constructor(props) {
     super(props);
-    this.setTheme();
+    this.setTheme(props.colors);
   }
 
   static propTypes = {
@@ -16,9 +16,12 @@ export default class Highchart extends React.Component {
     config: []
   }
 
-  setTheme() {
+  setTheme(colors) {
+    if (colors === undefined) {
+      colors = ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"]
+    }
     ReactHighcharts.Highcharts.theme = {
-      colors: ["#7cb5ec", "#f6c86f", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+      colors: colors,
       chart: { backgroundColor: null, },
       title: { style: {fontSize: '16px',fontWeight: 'bold',textTransform: 'uppercase'} },
       tooltip: {borderWidth: 0,backgroundColor: 'rgba(219,219,216,0.8)',shadow: false},
@@ -39,7 +42,7 @@ export default class Highchart extends React.Component {
   }
 
   config(config) {
-    return _.merge({
+    return merge({
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
