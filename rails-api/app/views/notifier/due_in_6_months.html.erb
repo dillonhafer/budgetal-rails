@@ -1,0 +1,29 @@
+<h3 style="font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.1; color: #000; font-weight: 500; font-size: 27px; margin: 0 0 15px; padding: 0;">
+  6 months will be here before you know it!
+</h3>
+<p class="lead" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+  Hi <%= user.first_name %>!
+</p>
+<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+</p>
+<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+  Thank you for setting up a budget! We wanted to let you know about an upcoming expense.
+  Six months from now you'll be happy that you saved for it.
+</p>
+
+<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 18px; line-height: 1.6; margin: 0 0 10px; padding: 0; text-align: center">
+  <b><%= @annual_budget_item.name %></b> (<%= number_to_currency @annual_budget_item.amount %>) is due on <b><%= @annual_budget_item.due_date.strftime("%B %d") %></b>
+</p>
+
+<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+  If you haven't been making <b><%= @annual_budget_item.name %></b> part of your
+  monthly budget, now is a great time to start.
+</p>
+<!-- Callout Panel -->
+<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+
+</p>
+<p class="callout" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; background: #FFF; margin: 0 0 15px; padding: 15px;">
+  You can sign in at <%= link_to root_url, root_url, style: 'color: #69F; font-weight: bold' %>
+</p><!-- /Callout Panel -->
+
