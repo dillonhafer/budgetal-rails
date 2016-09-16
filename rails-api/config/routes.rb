@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get  '/past-expenses/:name' => 'users#past_expenses'
   post '/update-account-info' => 'users#update_account_info'
   post '/change-password'     => 'users#change_password'
-  get '/account-info'         => 'users#account_info'
+  get  '/account-info'        => 'users#account_info'
   post '/update-avatar'       => 'users#update_avatar'
 
   post '/reset-password' => 'password_resets#create'
@@ -54,6 +54,6 @@ Rails.application.routes.draw do
     post '/tests/setup'    => 'tests#setup'
     post '/tests/teardown' => 'tests#teardown'
     post '/tests/reset'    => 'tests#reset'
-    get '/tests/emails'   => 'tests#emails'
+    get  '/tests/emails'   => 'tests#emails'
   end
 end
