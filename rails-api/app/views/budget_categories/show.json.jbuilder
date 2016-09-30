@@ -8,8 +8,9 @@ json.budget do
   json.monthly_income sprintf('%.2f', budget_category.budget.monthly_income)
   json.not_budgeted   sprintf('%.2f', budget_category.budget.amount_remaining)
   json.budget_categories budget_category.budget.budget_categories do |category|
-    json.id   category.id
-    json.name category.name
+    json.id         category.id
+    json.name       category.name
+    json.percentage category.percentage
     json.amount_spent     sprintf('%.2f', category.total_spent)
     json.amount_remaining sprintf('%.2f', category.budget_remaining)
   end
@@ -43,8 +44,9 @@ end
 
 # NEW API. ABOVE IS DEPRECATED
 json.budgetCategories budget.budget_categories do |budget_category|
-  json.id   budget_category.id
-  json.name budget_category.name
+  json.id         budget_category.id
+  json.name       budget_category.name
+  json.percentage budget_category.percentage
 end
 
 json.budgetItems budget.budget_categories.map(&:budget_items).flatten do |budget_item|
