@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {moveItem} from '../data/BudgetItem';
 import {find, debounce} from 'lodash';
 import {monthName, selectedValue, monthOptions, yearOptions} from '../utils/helpers';
+import {Link} from 'react-router';
 
 export default class BudgetSideBar extends React.Component {
   constructor(props) {
@@ -39,6 +40,8 @@ export default class BudgetSideBar extends React.Component {
 
   changeCategory(category, e) {
     e.preventDefault();
+    const lowerName = category.name.toLowerCase().replace('/', '-');
+    window.location.hash = `#${lowerName}`
     this.props.changeCategory(category);
   }
 
@@ -120,15 +123,16 @@ export default class BudgetSideBar extends React.Component {
           </span>
           {
             this.props.budget.budget_categories.map((category, index) => {
-              const categoryClass = 'sidebar-'+category.name.toLowerCase().replace('/','-')
+              const lowerName = category.name.toLowerCase().replace('/','-');
+              const categoryClass = `sidebar-${lowerName}`
               const classes = classNames({
                 'item': true,
                 'active': category.id === this.props.currentCategoryId
               }, categoryClass);
               return (
-                <a onDrop={this.drop} onDragOver={this.dragOver} key={index} data-id={category.id} onClick={this.changeCategory.bind(this, category)} href="#" className={classes}>
+                <Link onDrop={this.drop} onDragOver={this.dragOver} key={index} data-id={category.id} onClick={this.changeCategory.bind(this, category)} to='#' hash={`${lowerName}`} className={classes}>
                   <label onDrop={this.drop} onDragOver={this.dragOver} data-id={category.id}>{category.name}</label>
-                </a>
+                </Link>
               );
             })
           }
