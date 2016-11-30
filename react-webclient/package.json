@@ -61,12 +61,9 @@
   },
   "scripts": {
     "test": "karma start",
-    "start": "webpack -w --config webpack.dev.config.js",
+    "start": "NODE_ENV=development node ./dev.server.js",
     "integration": "rm -f ../rails-api/public/main-* && API_URL='' WEBPACK_HOSTNAME=www.budgetal.com npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
     "i": "npm run integration",
-    "server": "NODE_ENV=development node ./dev.server.js",
-    "s": "npm run server",
-    "server:hot": "webpack-dev-server --hot --inline --config webpack.hot-dev.config.js",
     "build": "NODE_ENV=production webpack --progress --profile --config webpack.production.config.js",
     "deploy": "./deploy.sh"
   },
