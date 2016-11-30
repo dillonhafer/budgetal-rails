@@ -11,13 +11,11 @@ var envOpts = {
 };
 
 var config = _.merge({}, baseConfig, {
-  entry: {
-    main: [
-      'webpack-dev-server/client',
-      './src/index.js'
-    ]
-  },
-  hot: false,
+  entry: [
+    './src/index.js',
+    'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:9999',
+  ],
   output: {
     path: __dirname + '/public',
     filename: 'main.js',
@@ -26,6 +24,7 @@ var config = _.merge({}, baseConfig, {
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new WebpackNotifierPlugin(),
     new ExtractTextPlugin(__dirname+'/public/main.css', {
       allChunks: true

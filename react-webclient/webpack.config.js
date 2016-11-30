@@ -20,14 +20,11 @@ module.exports = {
         key: 'jsx',
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react']
-        }
+        loaders: ['react-hot', 'babel-loader?'+JSON.stringify({presets:['react']})],
       },
       { test: /\.css$/, loader: "style-loader!css-loader" },
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader?'+theme},
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', "css!sass!") },
+      { test: /\.(scss|sass)$/, loader: ExtractTextPlugin.extract('style-loader', "css!sass!") },
       { test: /\.(png|gif|otf|eot|svg|ttf|woff)/, loader: 'url-loader?limit=100000' },
       { test: /\.jpg$/, loader: "file-loader" }
     ]

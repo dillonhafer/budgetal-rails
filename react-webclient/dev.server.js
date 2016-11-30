@@ -7,7 +7,7 @@ var address   = process.env.NODE_ADDRESS || 'localhost';
 var full_path = 'http://'+address+':'+port;
 
 new WebpackDevServer(webpack(config), {
-  hot: false,
+  hot: true,
   publicPath: config.output.publicPath,
   historyApiFallback: {
     index: './templates/dev/index.html'
