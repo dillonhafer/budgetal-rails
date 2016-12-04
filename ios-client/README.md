@@ -29,3 +29,11 @@ $ react-native run-ios
 
 1. Unit tests: `npm test`
 2. Integration Tests: `npm run test:ios`
+
+### Preview
+
+<img src="https://image-store.slidesharecdn.com/38b03519-c0d7-4dcb-b829-d0bc8895b537-large.png" width="30%" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://image-store.slidesharecdn.com/aa3f76e5-7c36-4d51-87ed-c6c2071a5c1a-large.png" width="30%" />
+&nbsp;&nbsp;&nbsp;
+<img src="https://image-store.slidesharecdn.com/aba27c06-96d9-4e99-ab2b-4d5bea6df733-large.png" width="30%" />
