@@ -8,9 +8,13 @@ const mapStateToProps = (state) => {
   const budget = state.budgetState.budget;
   const budgetItems = state.budgetState.budgetItems;
   const currentCategoryId = state.budgetState.budgetCategory.id;
+  const currentCategoryName = state.budgetState.budgetCategory.name;
 
   return {
-    budget, budgetItems, currentCategoryId
+    budget,
+    budgetItems,
+    currentCategoryId,
+    currentCategoryName
   }
 }
 
