@@ -25,6 +25,14 @@ new WebpackDevServer(webpack(config), {
   proxy: {
     '/fonts/OpenSans-400.woff': full_path+'/static',
     '/fonts/OpenSans-700.woff': full_path+'/static',
+    '/fonts/iconfont.woff': full_path+'/static',
+    '/fonts/iconfont.svg': full_path+'/static',
+    '/fonts/iconfont.ttf': full_path+'/static',
+    '/fonts/iconfont.eot': full_path+'/static',
+    '/fonts/budgetal-font.woff': full_path+'/static',
+    '/fonts/budgetal-font-bold.woff': full_path+'/static',
+    '/fonts/budgetal-font-boldoblique.woff': full_path+'/static',
+    '/fonts/budgetal-font-oblique.woff': full_path+'/static',
     '/loading.gif': full_path+'/static'
   }
 }).listen(port, address, function (err, result) {
