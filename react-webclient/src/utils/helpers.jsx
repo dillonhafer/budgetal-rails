@@ -6,6 +6,7 @@ import {
   range,
   reduce,
   round,
+  startCase,
 } from 'lodash'
 import parser from 'ua-parser-js';
 
@@ -15,6 +16,35 @@ module.exports = {
       const sum = parseFloat(total) + parseFloat(item[property]);
       return round(sum, 2);
     }, 0.00);
+  },
+  addDecimal(original, amount) {
+    const wholeNumber = amount % 1 === 0;
+    let newAmount = amount
+
+    if (wholeNumber) {
+      newAmount = amount + (original - Math.floor(original))
+    }
+
+    if (newAmount < 0) {
+      newAmount = 0;
+    }
+
+    return newAmount.toFixed(2);
+  },
+  ensureWindowHeight() {
+    const footer = document.querySelector('.footer');
+    const pixelsNeeded = window.innerHeight - footer.offsetTop;
+    const pixelCount = (pixelsNeeded > 0) ? pixelsNeeded : 0;
+    const main = document.querySelector('.main-body');
+    main.style.height = `${main.clientHeight + pixelsNeeded - footer.clientHeight}px`;
+  },
+  prettyServerErrors(errors) {
+    const errs = keys(errors).map(key => {
+      return errors[key].map(msg => {
+        return <p><b>{startCase(key)}</b> {msg}</p>
+      });
+    });
+    return <div>{errs}</div>
   },
   currentUser() {
     return getFromStorage('user');
@@ -96,6 +126,9 @@ module.exports = {
     return map(years, (year, index) => {
       return (<option key={index} value={year}>{year}</option>);
     });
+  },
+  availableYears() {
+    return range(2015, (new Date).getFullYear() + 3);
   },
   monthOptions() {
     const months = range(1, 13);
