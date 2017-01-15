@@ -7,12 +7,11 @@ import ImportModal from './ImportModal';
 import {importCategory} from '../data/BudgetCategory';
 const loadingSrc = [window.location.origin, 'loading.gif'].join('/');
 
+import {Row,Col,Modal,Icon} from 'antd';
+
 export default class BudgetCategory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      importHidden: true,
-    }
   }
 
   static propTypes = {
@@ -24,11 +23,14 @@ export default class BudgetCategory extends React.Component {
 
   _clickImport = (e) => {
     e.preventDefault();
-    this.setState({importHidden: false});
-  }
-
-  _cancelImport = () => {
-    this.setState({importHidden: true});
+    Modal.confirm({
+      okText: `Import ${this.props.budgetCategory.name}`,
+      cancelText: "Cancel",
+      title: 'Import Budget Items',
+      content: `Do you want to import budget items from your previous month's ${this.props.budgetCategory.name} category?`,
+      onOk: this._importPreviousItems.bind(this, this.props.budgetCategory.id),
+      onCancel() {},
+    });
   }
 
   _importPreviousItems = async (budgetCategoryId) => {
@@ -37,16 +39,10 @@ export default class BudgetCategory extends React.Component {
       if (resp !== null) {
         this.props.importedBudgetItems(resp.imported);
         showMessage(resp.message);
-        this._cancelImport();
       }
     } catch(err) {
       apiError(err.message)
     }
-  }
-
-  _import = (e) => {
-    e.preventDefault();
-    this._importPreviousItems(this.props.budgetCategory.id)
   }
 
   emptyList(hasBudgetItems, isLoading) {
@@ -73,47 +69,42 @@ export default class BudgetCategory extends React.Component {
     const headerClasses = classNames('row', 'budget-item-labels', {hide: !this.props.hasBudgetItems});
 
     return (
-      <div className='large-10 medium-10 columns hide-for-small-down'>
-        <div className='row collapse cash-flow-row'>
-          <div className='large-12 medium-12 columns header-row'>
-            <h3>
-              {this.props.budgetCategory.name}
-              <a href='#' onClick={this._clickImport} title='Import items from previous budget' name='importCategory' className='right black-color copy-category'>
-                <i className="fi-icon fi-download"></i>
-              </a>
-            </h3>
-          </div>
-          <div className="small-12 large-12 medium-12 columns">
-            <ul className="main-budget-categories">
-              <li>
-                <div className={headerClasses}>
-                  <div className="large-1 medium-1 large-offset-4 medium-offset-4 columns text-right">
-                    Spent
-                  </div>
-                  <div className="large-2 medium-2 columns text-right">
-                    Budgeted
-                  </div>
-                  <div className="large-1 medium-1 columns">
-                    Difference
-                  </div>
-                  <div className="large-4 medium-4 columns"></div>
-                </div>
-                {this.emptyList(this.props.hasBudgetItems, this.props.isLoading)}
-                {this.getList(this.props.isLoading)}
-              </li>
-            </ul>
-          </div>
-          <ImportModal category={this.props.budgetCategory}
-                       hidden={this.state.importHidden}
-                       import={this._import}
-                       cancel={this._cancelImport} />
-        </div>
-
-        <div className='row collapse cash-flow-row overviews'>
-          <BudgetCategoryOverviewContainer />
-          <OverviewContainer />
-        </div>
-      </div>
+      <Col span={20}>
+        <Row>
+          <Col span={24}>
+            <div className='budget-category-row'>
+              <div className='large-12 medium-12 columns header-row'>
+                <h3>
+                  {this.props.budgetCategory.name}
+                  <a href='#' onClick={this._clickImport} title='Import items from previous budget' name='importCategory' className='right black-color copy-category'>
+                    <Icon type="export" />
+                  </a>
+                </h3>
+              </div>
+              <div className="body-row">
+                <ul className="main-budget-categories">
+                  <li>
+                    {this.emptyList(this.props.hasBudgetItems, this.props.isLoading)}
+                    {this.getList(this.props.isLoading)}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <div className='budget-overview-row'>
+              <BudgetCategoryOverviewContainer />
+            </div>
+          </Col>
+          <Col span={12}>
+            <div className='budget-overview-row'>
+              <OverviewContainer />
+            </div>
+          </Col>
+        </Row>
+      </Col>
     );
   }
 }

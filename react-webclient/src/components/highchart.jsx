@@ -1,6 +1,6 @@
 import React from 'react';
 import {merge} from 'lodash';
-import ReactHighcharts from 'react-highcharts/bundle/highcharts';
+import ReactHighcharts from 'react-highcharts';
 
 export default class Highchart extends React.Component {
   constructor(props) {

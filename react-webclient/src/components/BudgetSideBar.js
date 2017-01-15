@@ -2,20 +2,17 @@ import React from 'react';
 import classNames from 'classnames';
 import {moveItem} from '../data/BudgetItem';
 import {find, debounce} from 'lodash';
-import {monthName, selectedValue, monthOptions, yearOptions} from '../utils/helpers';
-import {Link} from 'react-router';
+import {monthName} from '../utils/helpers';
+import {browserHistory,Link} from 'react-router';
+
+import { Row, Col, Menu, Icon, DatePicker } from 'antd';
+import enUS from 'antd/lib/date-picker/locale/en_US';
+const SubMenu = Menu.SubMenu;
 
 export default class BudgetSideBar extends React.Component {
   constructor(props) {
     super(props);
     this.dropped = debounce(this.dropped, 100)
-    this.state = {
-      showForm: false
-    }
-  }
-
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
   }
 
   static propTypes = {
@@ -24,37 +21,17 @@ export default class BudgetSideBar extends React.Component {
     currentCategoryId: React.PropTypes.number.isRequired,
   }
 
-  incrementMonth(date, number) {
-    const year     = date.getFullYear();
-    const month    = date.getMonth();
-    const newMonth = month + number;
-    return new Date(year, newMonth);
+  handleOnChange = (date, dateString) => {
+    browserHistory.push(`/budgets/${date.year()}/${date.month()+1}`);
   }
 
-  changeMonth = (number) => {
-    const currentDate = new Date(this.props.budget.year, this.props.budget.month-1, 1);
-    const newDate = this.incrementMonth(currentDate, number);
-    const date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
-    this.context.history.push(`/budgets/${date.year}/${date.month}`)
-  }
-
-  changeCategory(category, e) {
-    e.preventDefault();
-    const lowerName = category.name.toLowerCase().replace('/', '-');
-    window.location.hash = `#${lowerName}`
-    this.props.changeCategory(category);
-  }
-
-  toggleChangeBudget = (e) => {
-    e.preventDefault()
-    this.setState({showForm: !this.state.showForm})
-  }
-
-  changeBudget = () => {
-    const year  = selectedValue('#budget_year');
-    const month = selectedValue('#budget_month');
-    this.context.history.push(`/budgets/${year}/${month}`)
-    this.setState({showForm: !this.state.showForm})
+  handleOnClick = (item, key, keyPath) => {
+    const cat = this.props.budget.budget_categories.find((cat) => {return cat.name === item.key});
+    if (cat !== undefined) {
+      const lowerName = cat.name.toLowerCase().replace('/', '-');
+      window.location.hash = `#${lowerName}`
+      this.props.changeCategory(cat);
+    }
   }
 
   dropped = (newCategoryId, budgetItem, message) => {
@@ -95,49 +72,39 @@ export default class BudgetSideBar extends React.Component {
     link.focus()
   }
 
+  findDisabledDate(date) {
+    const year = date.year();
+    return (year < 2015 || year > 2018) ? true : false;
+  }
+
   render() {
-    const changeYear = classNames('tooltip animate', {
-      fadeIn: this.state.showForm,
-      hide: !this.state.showForm
-    });
     return (
-      <div className='large-2 medium-2 hide-for-small-down columns category-list'>
-        <div className="icon-bar vertical six-up label-right">
-          <a onClick={this.toggleChangeBudget} className='item header text-center' href='#'>
-            <label><i className='fi-calendar'></i> {monthName(this.props.budget.month)} {this.props.budget.year}</label>
-          </a>
-          <span className={changeYear}>
-            <p className='text-center size-12'>
-              <i onClick={this.changeMonth.bind(this,-1)} className='fi-arrow-left size-16'></i>
-              Change Budget
-              <i onClick={this.changeMonth.bind(this,1)} className='fi-arrow-right size-16'></i>
-            </p>
-            <p>
-              <select id="budget_month" name='budget_month' value={this.props.budget.month} onChange={this.changeBudget}>
-                {monthOptions()}
-              </select>
-              <select id="budget_year" name='budget_year' value={this.props.budget.year} onChange={this.changeBudget}>
-                {yearOptions()}
-              </select>
-            </p>
-          </span>
-          {
-            this.props.budget.budget_categories.map((category, index) => {
-              const lowerName = category.name.toLowerCase().replace('/','-');
-              const categoryClass = `sidebar-${lowerName}`
-              const classes = classNames({
-                'item': true,
-                'active': category.id === this.props.currentCategoryId
-              }, categoryClass);
-              return (
-                <Link onDrop={this.drop} onDragOver={this.dragOver} key={index} data-id={category.id} onClick={this.changeCategory.bind(this, category)} to='#' hash={`${lowerName}`} className={classes}>
-                  <label onDrop={this.drop} onDragOver={this.dragOver} data-id={category.id}>{category.name}</label>
-                </Link>
-              );
-            })
-          }
+      <Col span={4}>
+        <div className="icon-bar">
+          <Menu theme="light"
+                style={{ width: '100%' }}
+                onClick={this.handleOnClick}
+                selectedKeys={[this.props.currentCategoryName]}
+                mode="inline">
+            <SubMenu key="sub1" title={<span><Icon type="calendar" /><span>{monthName(this.props.budget.month)} {this.props.budget.year}</span></span>}>
+              <Menu.Item disabled={true} key='date'>
+                <DatePicker.MonthPicker onChange={this.handleOnChange} disabledDate={this.findDisabledDate} cellContentRender={(date) => {return date}} />
+              </Menu.Item>
+            </SubMenu>
+            <Menu.Divider key="divider1" />
+              {
+                this.props.budget.budget_categories.map((category) => {
+                  const itemClass = category.name.toLowerCase().replace('/','-');
+                  return (
+                    <Menu.Item id={category.id} key={category.name}>
+                      <span className={itemClass}>{category.name}</span>
+                    </Menu.Item>
+                  );
+                })
+              }
+          </Menu>
         </div>
-      </div>
+      </Col>
     )
   }
 }

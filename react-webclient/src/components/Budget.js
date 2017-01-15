@@ -5,7 +5,9 @@ import BudgetSideBarContainer  from '../containers/BudgetSideBarContainer';
 import BudgetCategoryContainer from '../containers/BudgetCategoryContainer';
 import {find} from 'lodash';
 
-export default class CashFlowPlans extends React.Component {
+import {Row,Col} from 'antd';
+
+export default class Budgets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,10 +49,10 @@ export default class CashFlowPlans extends React.Component {
 
   render() {
     return (
-      <section className='budget-section'>
+      <Row>
         <BudgetSideBarContainer />
         <BudgetCategoryContainer isLoading={this.state.loading} />
-      </section>
+      </Row>
     );
   }
 }

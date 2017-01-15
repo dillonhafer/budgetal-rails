@@ -1,90 +1,115 @@
 import React from 'react';
-import classNames from 'classnames';
+import { browserHistory } from 'react-router';
 import {signUp} from '../../data/sessions';
-import InputField from '../forms/input_field';
+import {prettyServerErrors} from '../../utils/helpers';
+import {
+  Button,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Row,
+} from 'antd';
+const FormItem = Form.Item;
 
-export default class SignIn extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  state = {
-    showPassword: false,
-    newUser: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
+  signUp = async(user) => {
+    try {
+      const resp = await signUp(user);
+      if (!!resp.errors) {
+        showError(prettyServerErrors(resp.errors));
+      } else {
+        localStorage.setItem('session', JSON.stringify(resp.session));
+        localStorage.setItem('user', JSON.stringify(resp.user));
+        showMessage('Welcome to Budgetal!');
+        browserHistory.replace('/');
+      }
+    } catch(err) {
+      apiError(err);
     }
   }
 
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
-  }
-
-  togglePassword = () => {
-    let showPassword = !this.state.showPassword;
-    this.setState({showPassword})
-  }
-
-  signUp = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    let data = {user: this.state.newUser}
-    let self = this;
-    signUp(data)
-      .then((resp) => {
-        if (!!resp.errors) {
-          let newUser = data.user;
-          newUser.errors = resp.errors;
-          self.setState({newUser});
-          showMessage('Oh no! Sign up failed');
-        } else {
-          localStorage.setItem('session', JSON.stringify(resp.session));
-          localStorage.setItem('user', JSON.stringify(resp.user));
-          showMessage('Welcome to Budgetal!');
-          this.context.history.replace('/');
-        }
-      })
+    this.props.form.validateFields((err, user) => {
+      if (!err) {
+        this.signUp({user})
+      }
+    })
   }
 
-  updateForm = (e) => {
-    let newUser = this.state.newUser;
-    newUser[e.target.name] = e.target.value;
-    this.setState({newUser});
+  checkPasswordConfirmation = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Passwords do not match');
+    } else {
+      callback();
+    }
   }
 
   render() {
-    let passwordType = this.state.showPassword ? 'text' : 'password';
-    let lockClass    = classNames({hidden_password: !this.state.showPassword});
-    let newUser      = this.state.newUser;
+    const {getFieldDecorator} = this.props.form;
     return (
-      <form onSubmit={this.signUp} data-abide id='new_user'>
-        <label htmlFor='email'>Email</label>
-        <InputField type='email' onChange={this.updateForm} id='email' name='email' required={true} tabIndex={5} placeholder='email@example.org' value={newUser.email} errors={newUser.errors} />
-        <div className='row collapse'>
-          <div className='small-6 columns'>
-            <label htmlFor='first_name'>First Name</label>
-            <InputField type='text' onChange={this.updateForm} id='first_name' name='first_name' required={true} tabIndex={6} value={newUser.first_name} errors={newUser.errors} />
-          </div>
-          <div className='small-5 small-offset-1 columns'>
-            <label htmlFor='last_name'>Last Name</label>
-            <InputField type='text' onChange={this.updateForm} id='last_name' name='last_name' required={true} tabIndex={7} value={newUser.last_name} errors={newUser.errors} />
-          </div>
-        </div>
-
-        <div className='clearfix'>
-          <label htmlFor='password' className='left'>Password</label>
-          <small className='right'><a id="hide_password" className={lockClass} onClick={this.togglePassword}></a></small>
-          <InputField type={passwordType} id='password' name='password' onChange={this.updateForm} value={newUser.password} errors={newUser.errors} required={true} tabIndex={8} />
-        </div>
-
-        <label htmlFor='password_confirmation'>Password Confirmation</label>
-        <InputField type={passwordType} onChange={this.updateForm} value={newUser.password_confirmation} errors={newUser.errors} id='password_confirmation' name='password_confirmation' required={true} data-eualto='new_user_password' tabIndex={9} />
-        <div>
-          <input type='submit' className='small button radius nice' tabIndex={10} value='Sign up' />
-        </div>
-      </form>
+      <Form onSubmit={this.handleSubmit} className="login-form">
+        <FormItem>
+          {getFieldDecorator('email', {
+            rules: [{ type: 'email', required: true, message: "Email is not a valid format" }],
+          })(
+            <Input addonBefore={<Icon type="mail" />} placeholder="email@example.com" />
+          )}
+        </FormItem>
+        <Row>
+          <Col span={11}>
+            <FormItem>
+              {getFieldDecorator('first_name', {
+                rules: [{ required: true, message: "First Name is required" }],
+              })(
+                <Input addonBefore={<Icon type="user" />} placeholder="First Name" />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={11} offset={2}>
+            <FormItem>
+              {getFieldDecorator('last_name', {
+                rules: [{ required: true, message: "Last Name is required" }],
+              })(
+                <Input addonBefore={<Icon type="user" />} placeholder="Last Name" />
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <FormItem>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Password is required' }],
+          })(
+            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('password_confirmation', {
+            rules: [{
+              required: true, message: "Password Confirmation is required"
+            }, {
+              validator: this.checkPasswordConfirmation
+            }],
+          })(
+            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password Confirmation" />
+          )}
+        </FormItem>
+        <Row type="flex" justify="end">
+          <Col span={8} offset={4}>
+            <Button size="large" type="primary" htmlType="submit" className="login-form-button">
+              Sign Up
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     )
   }
 }
+
+export default Form.create()(SignUp);

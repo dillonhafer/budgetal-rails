@@ -1,30 +1,33 @@
 import React from 'react';
 import {title, currentSession, humanUA, pluralize} from '../../utils/helpers';
-import Modal from '../../utils/modal';
 import EndSession from './end-session';
 import {allSessions, endSession} from '../../data/sessions';
 import ChangePassword from './change-password';
 import UpdateAccountInfo from './update-account-info';
 
+import {
+  Col,
+  Row,
+  Table,
+  Modal,
+  Icon,
+  Button,
+} from 'antd';
+
 export default class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  state = {
-    sessions: {
-      expired: [
-      ],
-      active: [
-      ]
-    },
-    showEndSession: false,
-    endSession: {},
-    currentTime: (new Date).getTime()
-  }
-
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
+    this.state = {
+      sessions: {
+        expired: [
+        ],
+        active: [
+        ]
+      },
+      showEndSession: false,
+      endSession: {},
+      currentTime: (new Date).getTime()
+    }
   }
 
   componentWillUnmount() {
@@ -38,34 +41,33 @@ export default class AccountSettings extends React.Component {
   }
 
   _startTimer = () => {
-    let intervalId = setInterval(this.updateTime, 60000);
+    const intervalId = setInterval(this.updateTime, 60000);
     this.setState({intervalId});
   }
 
   updateTime = () => {
-    let currentTime = (new Date).getTime();
+    const currentTime = (new Date).getTime();
     this.setState({currentTime});
   }
 
-  _fetchSessions = () => {
-    allSessions()
-      .then((resp) => {
-        this._fetchDataDone(resp);
-      })
-      .catch(this._fetchDataFail)
+  _fetchSessions = async() => {
+    try {
+      const resp = await allSessions();
+      if (resp !== null) {
+        this.setState({sessions: resp.sessions});
+      }
+    } catch(err) {
+      apiError(err);
+    }
   }
 
   _fetchDataFail = (e) => {
     showMessage(e.message)
-    this.context.history.replace('/');
-  }
-
-  _fetchDataDone = (data) => {
-    this.setState({sessions: data.sessions});
+    browserHistory.replace('/');
   }
 
   fullSessionDate(date) {
-    let sessionDate = new Date(date);
+    const sessionDate = new Date(date);
     return `${sessionDate.toDateString()} at ${sessionDate.toLocaleTimeString()}`;
   }
 
@@ -89,111 +91,143 @@ export default class AccountSettings extends React.Component {
   endSessionDone(sessions) {
     showMessage('Session Ended');
     this.setState({sessions})
-    this.cancelEndSession();
   }
 
-  cancelEndSession = (e) => {
-    if (e) { e.preventDefault() }
-    this.setState({
-      showEndSession: false,
-      endSession: {}
+  browser(ua) {
+    const hua = humanUA(ua);
+    let icon = "desktop";
+
+    if (/chrome/i.test(hua)) {
+      icon = "chrome";
+    }
+
+    if (/explorer/i.test(hua)) {
+      icon = "windows";
+    }
+
+    if (/safari/i.test(hua)) {
+      icon = "apple";
+    }
+
+    return <div><Icon type={icon} /> {hua}</div>;
+  }
+
+  handleOnClick = (session) => {
+    Modal.error({
+      className: 'delete-modal',
+      okText: "End Session",
+      title: "End Session",
+      content: `Are you sure you want to end this session?\n\n This will sign out the device using it. And you will need to sign in again on that device.`,
+      onOk: ()=> { this.endSession(session) },
+      onCancel() {},
     });
   }
 
-  showEndSession = (session, e) => {
-    e.preventDefault();
-    this.setState({
-      showEndSession: true,
-      endSession: session
+  activeDataSource = (sessions, currentTime) => {
+    const current = [{
+      key: "00",
+      browser: this.browser(currentSession().user_agent),
+      sign_in: this.sessionDate(currentTime, currentSession().created_at),
+      sign_out: '(Current Session)',
+    }];
+
+    return current.concat(sessions.map((session,key) => {
+      const onClick = () => {this.handleOnClick(session)};
+      return {
+        key,
+        browser: this.browser(session.user_agent),
+        sign_in: this.sessionDate(currentTime, session.created_at),
+        sign_out: <Button onClick={onClick} className="delete-button">End Session</Button>,
+      }
+    }));
+  }
+
+
+  expiredDataSource = (sessions, currentTime) => {
+    return sessions.map((session,key) => {
+      return {
+        key,
+        browser: this.browser(session.user_agent),
+        sign_in: this.sessionDate(currentTime, session.created_at),
+        sign_out: this.fullSessionDate(session.expired_at),
+      }
     });
+  }
+
+  activeHeaders() {
+    return [
+      {
+        title: 'Browser',
+        dataIndex: 'browser',
+        key: 'browser',
+      },
+      {
+        title: 'Signed In',
+        dataIndex: 'sign_in',
+        key: 'sign_in',
+      },
+      {
+        title: '',
+        dataIndex: 'sign_out',
+        key: 'sign_out',
+      },
+    ]
+  }
+
+  expiredHeaders() {
+    return [
+      {
+        title: 'Browser',
+        dataIndex: 'browser',
+        key: 'browser',
+      },
+      {
+        title: 'Signed In',
+        dataIndex: 'sign_in',
+        key: 'sign_in',
+      },
+      {
+        title: 'Signed Out',
+        dataIndex: 'sign_out',
+        key: 'sign_out',
+      },
+    ]
   }
 
   render() {
-    let user       = this.state.user;
-    let session    = currentSession();
-    let endSession = <EndSession end={this.endSession} session={this.state.endSession} />;
     return (
-      <div className='row'>
-        <div className='large-7 columns'>
-          <UpdateAccountInfo />
-        </div>
+      <Row className="space-around">
+        <Col span={18} offset={3}>
+          <Row>
+            <Col span={13}>
+              <UpdateAccountInfo />
+            </Col>
+            <Col span={10} offset={1}>
+              <ChangePassword />
+            </Col>
+          </Row>
 
-        <div className='large-5 columns'>
-          <ChangePassword />
-        </div>
+          <br />
+          <br />
 
-        <div className='large-12 columns header-row'>
-          <h3>Sessions</h3>
-        </div>
-        <div className="small-12 large-12 columns">
-          <ul className="main-budget-categories">
-            <li>
-              <div className='row'>
-                <div className="small-12 large-12 columns">
-                  <Modal title='End Session' hidden={this.state.showEndSession} cancel={this.cancelEndSession} modalType='alert' modalSize='tiny' content={endSession} />
-                  <table>
-                    <caption><b>Active Sessions</b></caption>
-                    <thead>
-                      <tr>
-                        <th>Browser</th>
-                        <th>Signed in</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr title={`Signed in from ${session.ip}`}>
-                        <td>{humanUA(session.user_agent)}</td>
-                        <td>{this.sessionDate(this.state.currentTime, session.created_at)}</td>
-                        <td>(Current Session)</td>
-                      </tr>
-                    {
-                      this.state.sessions.active.map((session, index) => {
-                        let ipTitle = `Signed in from ${session.ip}`;
-                        return (
-                          <tr key={index} title={ipTitle}>
-                            <td>{humanUA(session.user_agent)}</td>
-                            <td>{this.sessionDate(this.state.currentTime, session.created_at)}</td>
-                            <td><a onClick={this.showEndSession.bind(null, session)} className='tiny alert button radius'>End Session</a></td>
-                          </tr>
-                        )
-                      })
-                    }
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className='row'>
-                <div className="small-12 large-12 columns">
-                  <table>
-                    <caption><b>Expired Sessions (last 10)</b></caption>
-                    <thead>
-                      <tr>
-                        <th>Browser</th>
-                        <th>Signed in</th>
-                        <th>Signed out</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {
-                      this.state.sessions.expired.map((session, index) => {
-                        let ipTitle = `Signed in from ${session.ip}`;
-                        return (
-                          <tr key={index} title={ipTitle}>
-                            <td>{humanUA(session.user_agent)}</td>
-                            <td>{this.sessionDate(this.state.currentTime, session.created_at)}</td>
-                            <td>{this.fullSessionDate(session.expired_at)}</td>
-                          </tr>
-                        )
-                      })
-                    }
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+          <div className="header-row">
+            <h3>Sessions</h3>
+          </div>
+          <div className="body-row">
+            <Table dataSource={this.activeDataSource(this.state.sessions.active, this.state.currentTime)}
+                   title={()=>{ return <b>Active Sessions</b>}}
+                   pagination={false}
+                   locale={{emptyText: "You don't have any active sessions."}}
+                   columns={this.activeHeaders()} />
+            <br />
+            <Table dataSource={this.expiredDataSource(this.state.sessions.expired, this.state.currentTime)}
+                   title={()=>{ return <b>Expired Sessions (last 10)</b>}}
+                   pagination={false}
+                   locale={{emptyText: "You don't have any expired sessions yet."}}
+                   columns={this.expiredHeaders()} />
+          </div>
+        </Col>
+      </Row>
     );
   }
 }

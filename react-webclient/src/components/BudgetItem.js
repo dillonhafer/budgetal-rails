@@ -3,22 +3,38 @@ import classNames from 'classnames';
 import InputField from './forms/input_field';
 import BudgetItemExpenseListContainer from '../containers/BudgetItemExpenseListContainer';
 import {createItem, updateItem, destroyItem} from '../data/BudgetItem';
-import {numberToCurrency} from '../utils/helpers';
+import {addDecimal, numberToCurrency, prettyServerErrors} from '../utils/helpers';
 import Confirm from '../utils/confirm';
+import {startCase} from 'lodash';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-export default class BudgetItem extends React.Component {
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Progress,
+  Row,
+  Switch,
+} from 'antd';
+const FormItem = Form.Item;
+
+class BudgetItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hideExpenses: false
+    }
   }
 
   static propTypes = {
     budgetItem: React.PropTypes.object.isRequired,
   }
 
-  state = { hideExpenses: true, deleteModalHidden: true }
-
-  update = (item,e) => {
-    const updatedItem = Object.assign({}, item, {[e.target.name]: e.target.value})
+  update = (e,a) => {
+    const updatedItem = Object.assign({}, this.props.budgetItem, {[e.target.id]: e.target.value})
     this.props.updateBudgetItem(updatedItem)
   }
 
@@ -30,8 +46,7 @@ export default class BudgetItem extends React.Component {
       const resp = await strategy(budgetItem);
 
       if (!!resp.errors) {
-        const budgetItemWithErrors = Object.assign({}, budgetItem, {errors: resp.errors})
-        this.props.updateBudgetItem(budgetItemWithErrors)
+        showMessage(prettyServerErrors(resp.errors), "error")
       } else {
         showMessage(`Saved ${resp.name}`);
         afterSaveStrategy(resp);
@@ -52,7 +67,6 @@ export default class BudgetItem extends React.Component {
         const resp = destroyItem(this.props.budgetItem.id);
         if (resp !== null) {
           showMessage("Deleted "+this.props.budgetItem.name);
-          this.onDeleteCancel();
         }
       }
 
@@ -82,20 +96,18 @@ export default class BudgetItem extends React.Component {
     e.dataTransfer.setData('original_category_id', this.props.budgetItem.budget_category_id)
   }
 
-  getExpensesList(budgetItemId, hideExpenses) {
-    if (budgetItemId) {
-      const expensesClasses = classNames('expense-list', {hide: hideExpenses, fadeIn: !hideExpenses});
+  getExpensesList(budgetItem, hideExpenses) {
+    if (budgetItem.id > 0) {
+      const items = hideExpenses ? <BudgetItemExpenseListContainer key="budget-expenses-list" budgetItem={budgetItem} budgetItemId={budgetItem.id} /> : null
       return (
-        <div className={expensesClasses}>
-          <BudgetItemExpenseListContainer budgetItemId={budgetItemId} />
-        </div>
+        <ReactCSSTransitionGroup
+          transitionName="expense-list"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}>
+          {items}
+        </ReactCSSTransitionGroup>
       )
     }
-  }
-
-  persistedOnDeleteClick = (e) => {
-    e.preventDefault()
-    this.setState({deleteModalHidden: false})
   }
 
   onDeleteClick = (e) => {
@@ -103,48 +115,142 @@ export default class BudgetItem extends React.Component {
     this.props.deleteBudgetItem(this.props.budgetItem);
   }
 
-  onDeleteCancel = (e) => {
-    this.setState({deleteModalHidden: true})
+  handleDeleteClick = (e) => {
+    e.preventDefault()
+    Modal.confirm({
+      wrapClassName: 'delete-button',
+      okText: `Delete ${this.props.budgetItem.name}`,
+      cancelText: "Cancel",
+      title: `Delete ${this.props.budgetItem.name}`,
+      content: `Are you sure you want to delete ${this.props.budgetItem.name}? This cannot be undone.`,
+      onOk: () => {this.deleteBudgetItem(this.props.budgetItem)},
+      onCancel() {},
+    });
+  }
+
+  percentSpent = () => {
+    const p = this.props.amountSpent / this.props.budgetItem.amount_budgeted * 100;
+    return p > 99.99 ? 100 : parseInt(p);
+  }
+
+  handleOnChange = (hideExpenses) => {
+    this.setState({hideExpenses});
+  }
+
+  amountChanged = (newAmount) => {
+    const component = this.props.form.getFieldInstance('amount_budgeted');
+    const original  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
+    let amount_budgeted = original;
+    const diff = (original - newAmount).toFixed(2)
+
+    if (diff !== 0.00.toFixed(2)) {
+      if (newAmount < original) {
+        amount_budgeted -= 1.00
+      } else {
+        amount_budgeted += 1.00
+      }
+    }
+
+    this.props.updateBudgetItem(Object.assign({}, this.props.budgetItem, {amount_budgeted}))
+    return String(amount_budgeted);
   }
 
   render() {
     const item = this.props.budgetItem;
-    const isPersisted = item.id > 0;
-    const toggleClasses = classNames('fi-play move-cursor', {'expanded-list': !this.state.hideExpenses, 'hide': !isPersisted});
-    const formClass = isPersisted ? '' : 'not-persisted';
-    const deleteFunction = isPersisted ? this.persistedOnDeleteClick : this.onDeleteClick;
+    const deleteFunction = item.id > 0 ? this.handleDeleteClick : this.props.deleteBudgetItem.bind(this,item);
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: { span: 8 },
+      wrapperCol: { span: 16 },
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        offset: 8,
+        span: 16,
+      },
+    };
+
+    let status;
+    if (this.props.amountRemaining < 0) {
+      status = 'exception';
+    } else if (this.props.amountRemaining === 0.00) {
+      status = 'success'
+    }
 
     return (
       <div>
-        <div className='row'>
-          <form onSubmit={this.save} className={formClass} data-abide>
-            <div className="large-4 medium-4 columns budget-item-name">
-              <a href='#' onClick={this.toggleExpenses} className={'show-expenses'}><i draggable onDragStart={this.drag} className={toggleClasses}></i></a>
-              <InputField onChange={this.update.bind(this, item)} required={true} type='text' name='name' placeholder='Name' value={item.name} errors={item.errors} />
-            </div>
-            <div className="large-1 medium-1 columns text-right budget-item-amount-spent">
-              {numberToCurrency(this.props.amountSpent)}
-            </div>
-            <div className="large-2 medium-2 columns text-right budget-item-amount-budgeted">
-              <InputField onChange={this.update.bind(this, item)} required={true} type='number' name='amount_budgeted' step='any' min='0.01' required placeholder='0.00' defaultValue={numberToCurrency(this.amount_budgeted, '')} value={item.amount_budgeted} errors={item.errors} />
-            </div>
-            <div className="large-1 medium-1 columns text-right">
-              <span className={this.remainingClass(this.props.amountRemaining)}>{numberToCurrency(this.props.amountRemaining)}</span>
-            </div>
-            <div className='large-4 medium-4 columns'>
-              <button type='submit' title='Save Budget Item' className='tiny success radius button'><i className='fi-icon fi-check'></i> Save</button>
-              &nbsp;
-              <a href='#' onClick={deleteFunction} title='Delete Budget Item' className='tiny alert radius button'><i className='fi-icon fi-trash'></i> Delete</a>
-            </div>
-          </form>
-        </div>
-        {this.getExpensesList(item.id, this.state.hideExpenses)}
-        <ul data-dropdown-content className="f-dropdown"></ul>
-        <Confirm name={item.name}
-                 hidden={this.state.deleteModalHidden}
-                 cancel={this.onDeleteCancel}
-                 delete={this.deleteBudgetItem} />
+        <Row>
+          <Col span={6}>
+            <Form horizontal onSubmit={this.save}>
+              <FormItem
+                {...formItemLayout}
+                label="Name"
+              >
+                {getFieldDecorator('name', {
+                  initialValue: item.name,
+                  rules: [{
+                    required: true, message: 'Name is required',
+                  }],
+                })(
+                  <Input onChange={this.update} />
+                )}
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="Amount"
+              >
+                {getFieldDecorator('amount_budgeted', {
+                  initialValue: item.amount_budgeted,
+                  getValueFromEvent: this.amountChanged,
+                  rules: [{
+                    required: true, message: 'Amount Budgeted is required',
+                  }],
+                })(
+                  <InputNumber min={0.01} />
+                )}
+              </FormItem>
+              <FormItem {...tailFormItemLayout} className='text-right'>
+                <Button type="primary" htmlType="submit">Save</Button>
+              </FormItem>
+            </Form>
+          </Col>
+          <Col span={18}>
+            <Row type="flex" justify="center">
+              <Col span={8}>
+                <div className='text-right'>
+                  <Progress type="circle" status={status} percent={this.percentSpent()} />
+                </div>
+              </Col>
+              <Col span={12}>
+                <p className='text-center'>
+                  You have spent <b>{numberToCurrency(this.props.amountSpent)}</b> of <b>{numberToCurrency(item.amount_budgeted)}</b>.
+                </p>
+                <p className='text-center'>
+                  You have <b>{numberToCurrency(this.props.amountRemaining)}</b> remaining to spend.
+                </p>
+              </Col>
+              <Col span={4} style={{alignSelf: 'flex-start'}}>
+                <Button onClick={deleteFunction}
+                        type="primary"
+                        className="delete-button right"
+                        shape="circle"
+                        icon="delete" />
+              </Col>
+            </Row>
+          </Col>
+          <div className='right text-center'>
+            Toggle Expenses
+            <br />
+            <Switch disabled={item.id === undefined} checked={this.state.hideExpenses} onChange={this.handleOnChange} checkedChildren='show' unCheckedChildren='hide' />
+            <br />
+            <br />
+          </div>
+          <hr />
+        </Row>
+        {this.getExpensesList(item, this.state.hideExpenses)}
       </div>
     );
   }
 }
+
+export default Form.create()(BudgetItem)

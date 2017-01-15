@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 import {findStatistic} from '../../data/statistic';
 import Highchart from '../highchart';
 import classNames from 'classnames';
@@ -11,22 +12,25 @@ import {
   numberToCurrency
 } from '../../utils/helpers';
 
+import {
+  Col,
+  Row,
+  DatePicker,
+  Icon,
+  Popover,
+} from 'antd';
+
 export default class Statistics extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  state = {
-    showForm: false,
-    budget: {
-      month: this.props.params.month,
-      year: this.props.params.year,
-      budget_categories: []
+    this.state = {
+      showForm: false,
+      budget: {
+        month: this.props.params.month,
+        year: this.props.params.year,
+        budget_categories: []
+      }
     }
-  }
-
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
   }
 
   chartData(categories) {
@@ -53,7 +57,7 @@ export default class Statistics extends React.Component {
     var year  = selectedValue('#budget_year')
     var month = selectedValue('#budget_month')
 
-    this.context.history.push(`/monthly-statistics/${year}/${month}`)
+    browserHistory.push(`/monthly-statistics/${year}/${month}`)
     this.setState({showForm: false})
   }
 
@@ -145,66 +149,74 @@ export default class Statistics extends React.Component {
     var currentDate = new Date(this.props.params.year, this.props.params.month-1, 1);
     var newDate = this.incrementMonth(currentDate, number);
     var date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
-    this.context.history.push(`/monthly-statistics/${date.year}/${date.month}`)
+    browserHistory.push(`/monthly-statistics/${date.year}/${date.month}`)
+  }
+
+  handleOnChange = (date, dateString) => {
+    browserHistory.push(`/monthly-statistics/${date.year()}/${date.month()+1}`);
+  }
+
+  findDisabledDate(date) {
+    const year = date.year();
+    return (year < 2015 || year > 2018) ? true : false;
+  }
+
+  handleVisibleChange = (showForm) => {
+    this.setState({showForm});
   }
 
   render() {
-    let formClasses = classNames({
-      'tooltip annual-budget-tooltip animate': true,
-      fadeInUpBig2: this.state.showForm,
-      hide: !this.state.showForm
-    });
-    let budget = this.state.budget
     return (
-      <div className='row collapse'>
-        <div className='large-12 columns header-row'>
-          <h3>
-            {this.title()}
-            <a href='#' onClick={this.showForm} title='Change Budget' className='right black-color copy-category'>
-              <i className="fi-icon fi-calendar"></i>
-            </a>
-            <span className={formClasses}>
-              <p className='text-center size-12'>
-                <i onClick={this.changeMonth.bind(null,-1)} className='fi-arrow-left size-16'></i>
-                Change Budget
-                <i onClick={this.changeMonth.bind(null,1)} className='fi-arrow-right size-16'></i>
-              </p>
-              <p>
-                <select id="budget_month" value={budget.month} onBlur={this.hideForm} onChange={this.changeBudget}>{monthOptions()}</select>
-                <select id="budget_year" value={budget.year} onBlur={this.hideForm} onChange={this.changeBudget}>{yearOptions()}</select>
-              </p>
-            </span>
-          </h3>
-        </div>
-        <div className="small-12 large-12 columns">
-          <ul className="main-budget-categories">
-            <li>
-              <div style={{width: '50%', float: 'left'}}>
+      <Row className="space-around">
+        <Col span={18} offset={3}>
+          <div className='header-row'>
+            <h3>
+              {this.title()}
+              <Popover
+                content={
+                  <DatePicker.MonthPicker onChange={this.handleOnChange} disabledDate={this.findDisabledDate} />
+                }
+                title="Change Date"
+                placement="leftTop"
+                trigger="click"
+                visible={this.state.showForm}
+                onVisibleChange={this.handleVisibleChange}>
+                <a href="#" onClick={this.showForm} className="right">
+                  <Icon type="calendar" />
+                </a>
+              </Popover>
+            </h3>
+          </div>
+          <div className="body-row">
+            <Row>
+              <Col span={12}>
                 {this.statistics()}
-              </div>
-              <ul className='stat-list'>
-              {
-                this.state.budget.budget_categories.map((category, key) => {
-                  const statIconClass = 'stat-icon stat-icon-'+category.name.toLowerCase().replace('/','-')
-                  return (
-                    <li key={key}>
-                      <div className='stat-list-item'>
-                        <div className={statIconClass} />
-                        <b>{category.name}</b><br />
-                        <span className='percentSpent'>
-                          {numberToCurrency(category.amount_spent)} - %{parseInt(category.percent_spent)}
-                        </span>
-                      </div>
-                    </li>
-                  )
-                })
-              }
-              </ul>
-              <br style={{clear: 'both'}} />
-            </li>
-          </ul>
-        </div>
-      </div>
+              </Col>
+              <Col span={12}>
+                <ul className='stat-list'>
+                {
+                  this.state.budget.budget_categories.map((category, key) => {
+                    const statIconClass = 'stat-icon stat-icon-'+category.name.toLowerCase().replace('/','-')
+                    return (
+                      <li key={key}>
+                        <div className='stat-list-item'>
+                          <div className={statIconClass} />
+                          <b>{category.name}</b><br />
+                          <span className='percentSpent'>
+                            {numberToCurrency(category.amount_spent)} - %{parseInt(category.percent_spent)}
+                          </span>
+                        </div>
+                      </li>
+                    )
+                  })
+                }
+                </ul>
+              </Col>
+            </Row>
+            <br style={{clear: 'both'}} />
+          </div>
+        </Col>
+      </Row>
     );
   }
 }

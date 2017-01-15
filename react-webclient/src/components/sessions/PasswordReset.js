@@ -1,98 +1,115 @@
 import React, {Component} from 'react';
-import classNames from 'classnames';
 import {resetPassword} from '../../data/user';
 import InputField from '../forms/input_field';
+import {ensureWindowHeight} from '../../utils/helpers';
 
-export default class PasswordReset extends Component {
+import {
+  Button,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Row,
+} from 'antd';
+
+class PasswordReset extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showPassword: false,
-      newUser: {
-        password: '',
-        password_confirmation: ''
-      }
-    }
+  }
+
+  componentDidMount() {
+    ensureWindowHeight();
   }
 
   static contextTypes = {
     history: React.PropTypes.object.isRequired
   }
 
-  updateForm = (e) => {
-    let newUser = this.state.newUser;
-    newUser[e.target.name] = e.target.value;
-    this.setState({newUser});
-  }
-
-  togglePassword = () => {
-    let showPassword = !this.state.showPassword;
-    this.setState({showPassword})
-  }
-
-  resetPassword = async() => {
+  resetPassword = async(user) => {
     try {
-      const resp = await resetPassword({
-        password_reset_token: this.props.password_reset_token,
-        user: this.state.user
+      const resp = await resetPassword({user,
+        password_reset_token: this.props.location.query.reset_password_token
       });
 
       if (resp && resp.success) {
-        this.props.goBack();
-        window.alert({title: 'Password Reset', message: "Your password has been updated"});
+        showMessage("Your password has been updated");
+        this.context.history.replace('/');
       } else {
-        this.props.goBack();
-        window.alert({title: 'Password Reset Failed', message: "Your email may have expired."});
+        showError("The link in your email may have expired.");
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  resetPassword = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    const params = {
-      password_reset_token: this.props.location.query.reset_password_token,
-      user: this.state.newUser
-    }
-
-    resetPassword(params).then((resp) => {
-      if (resp && resp.success) {
-        showMessage("Your password has been updated");
+    this.props.form.validateFields((err, user) => {
+      if (!err) {
+        this.resetPassword(user);
       } else {
-        showMessage("Password Reset Failed. Your email may have expired.");
+        showError("Please check form for errors")
       }
-      this.context.history.replace('/');
-    })
+    });
   }
 
+  checkPasswordConfirmation = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Passwords do not match');
+    } else {
+      callback();
+    }
+  }
+
+  formItemLayout = {
+    labelCol: { span: 10 },
+    wrapperCol: { span: 14 },
+  };
+
   render() {
-    let passwordType = this.state.showPassword ? 'text' : 'password';
-    let lockClass    = classNames({hidden_password: !this.state.showPassword});
-    let newUser      = this.state.newUser;
-
+    const { getFieldDecorator } = this.props.form;
     return (
-      <div className='row changePasswordContainer small-centered'>
-        <div className='large-5 columns'>
-          <h1>Change your password</h1>
-          <form data-abide onSubmit={this.resetPassword}>
-            <div className='clearfix'>
-              <label htmlFor='password' className='left'>Password</label>
-              <small className='right'><a id="hide_password" className={lockClass} onClick={this.togglePassword}></a></small>
-              <InputField type={passwordType} id='password' name='password' onChange={this.updateForm} value={newUser.password} errors={newUser.errors} required={true} tabIndex={1} />
-            </div>
-
-            <label htmlFor='password_confirmation'>Password Confirmation</label>
-            <InputField type={passwordType} onChange={this.updateForm} value={newUser.password_confirmation} errors={newUser.errors} id='password_confirmation' name='password_confirmation' required={true} data-eualto='new_user_password' tabIndex={2} />
-
-            <div className='row collapse'>
-              <div className='large-12 columns'>
-                <input type="submit" value="Change Password" className="small button radius nice expand" tabIndex="3" />
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      <Row className="space-around">
+        <Col span={8} offset={8}>
+          <div className='header-row'>
+            <h3>Change your password</h3>
+          </div>
+          <div className="body-row clearfix">
+            <Form horizontal onSubmit={this.handleSubmit}>
+              <Col span={24}>
+                <Form.Item {...this.formItemLayout} label="New Password" hasFeedback>
+                  {getFieldDecorator('password', {
+                    onChange: this.update,
+                    rules: [{
+                      required: true, message: "You need to provide a new password"
+                    }],
+                  })(
+                    <Input addonBefore={<Icon type="lock"/>} type="password" />
+                  )}
+                </Form.Item>
+                <Form.Item {...this.formItemLayout} label="Password Confirmation" hasFeedback>
+                  {getFieldDecorator('password_confirmation', {
+                    onChange: this.update,
+                    rules: [{
+                        required: true, message: "Password Confirmation is required"
+                      }, {
+                        validator: this.checkPasswordConfirmation
+                      }],
+                  })(
+                    <Input addonBefore={<Icon type="lock"/>} type="password" />
+                  )}
+                </Form.Item>
+                <Col span={12} offset={12}>
+                  <Button type="primary" htmlType="submit" className="right" size="large">Change Password</Button>
+                </Col>
+              </Col>
+            </Form>
+          </div>
+        </Col>
+      </Row>
     )
   }
 }
+
+export default Form.create()(PasswordReset);

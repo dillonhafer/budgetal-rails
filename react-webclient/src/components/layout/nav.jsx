@@ -1,114 +1,109 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import {signOut} from '../../data/sessions';
 import {userAuthenticated} from '../../utils/helpers';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/app_logo.png';
 import SignInLink from '../sessions/sign-in-link';
+import {Row, Col, Menu, Icon} from 'antd';
 
 export default class Nav extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      menuOpen: false
-    }
-  }
-
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
   }
 
   signOut = (e) => {
     e.preventDefault();
-    var self = this;
     signOut().then((resp) => {
       localStorage.removeItem('session');
       localStorage.removeItem('user');
       showMessage('You are now signed out');
-      this.context.history.replace('/');
+      browserHistory.replace('/');
     });
   }
 
   adminLink(admin) {
     if (admin) {
-      return (
-        <li><Link to='/admin'><i className='fi-lock'></i> Admin Panel</Link></li>
-      );
+      return ([
+        <Menu.Item key="admin-link">
+          <Link to='/admin'><Icon type='lock' />Admin Panel</Link>
+        </Menu.Item>,
+        <Menu.Divider key="divider3" />
+      ]);
     }
   }
 
-  icon(name) {
-    return <i className={`fi-${name}`}></i>
-  }
-
-  leftSection(signedIn) {
+  renderMenuItems() {
+    const signedIn = userAuthenticated();
     if (signedIn) {
-      var year  = (new Date).getFullYear();
-      var month = (new Date).getMonth()+1;
-      var user = JSON.parse(localStorage['user'])
-      return (
-        <ul className="right">
-        </ul>
-      );
-    }
-  }
-
-  rightSection(signedIn) {
-    if (signedIn) {
-      var year  = (new Date).getFullYear();
-      var month = (new Date).getMonth()+1;
-      var user = JSON.parse(localStorage['user'])
-      return (
-        <ul className="right">
-          <li><Link to={`/budgets/${year}/${month}`}> Budgets</Link></li>
-          <li><Link to={`/detailed-budgets/${year}/${month}`}> Detailed Budgets</Link></li>
-          <li><Link to={`/annual-budgets/${year}`}> Annual Budgets</Link></li>
-          <li className="has-dropdown not-click">
-            <a href="javascript:void(0)" id='js-user-greeting' title='this is you!'>
-              <img src={user.avatar} />Hello, {user.first_name}!
-            </a>
-            <ul className="dropdown shadow nav-links">
-              <li><Link to={`/monthly-statistics/${year}/${month}`}>{this.icon('graph-pie')} Statistics (for geeks)</Link></li>
-              <li><Link to='/account-settings'>{this.icon('widget')} Account Settings</Link></li>
-              {this.adminLink(user.admin)}
-              <li><a onClick={this.signOut} title="Sign out" rel="nofollow" href="#">{this.icon('power')} Sign out</a></li>
-            </ul>
-          </li>
-        </ul>
-      );
+      const year  = (new Date).getFullYear();
+      const month = (new Date).getMonth()+1;
+      const user  = JSON.parse(localStorage['user'])
+      return ([
+        <Menu.Item key="budgets">
+          <Link to={`/budgets/${year}/${month}`}> Budgets</Link>
+        </Menu.Item>,
+        <Menu.Item key="detailed-budgets">
+          <Link to={`/detailed-budgets/${year}/${month}`}> Detailed Budgets</Link>
+        </Menu.Item>,
+        <Menu.Item key="annual-budgets">
+          <Link to={`/annual-budgets/${year}`}> Annual Budgets</Link>
+        </Menu.Item>,
+        <Menu.SubMenu key='submenu' title={<span><img className='nav-user-logo' src={user.avatar} />Hello, {user.first_name}!</span>}>
+          <Menu.Item key="stats">
+            <Link to={`/monthly-statistics/${year}/${month}`}><Icon type='pie-chart' />Statistics (for geeks)</Link>
+          </Menu.Item>
+          <Menu.Divider key="divider1" />
+          <Menu.Item key="account-settings">
+            <Link to='/account-settings'><Icon type="setting" />Account Settings</Link>
+          </Menu.Item>
+          <Menu.Divider key="divider2" />
+          {this.adminLink(user.admin)}
+          <Menu.Item key="sign-out">
+            <a onClick={this.signOut} title="Sign out" rel="nofollow" href="#"><Icon type='logout' />Sign out</a>
+          </Menu.Item>
+        </Menu.SubMenu>
+      ]);
     } else {
-      return (
-        <ul className="right">
-          <li><SignInLink /></li>
-        </ul>
-      );
+      return <Menu.Item key='sign-in'><SignInLink /></Menu.Item>
     }
   }
 
-  toggleMenu = () => {
-    this.setState({menuOpen: !this.state.menuOpen})
+  selectedKeys(location) {
+    switch (true) {
+      case /\/budgets/.test(location):
+        return ["budgets"];
+      case /\/detailed-budgets/.test(location):
+        return ["detailed-budgets"];
+      case /\/annual-budgets/.test(location):
+        return ["annual-budgets"];
+      default:
+        return [];
+    }
   }
 
   render() {
-    var signedIn = userAuthenticated();
-    const navClasses = (this.state.menuOpen) ? 'top-bar expanded' : 'top-bar';
+    const selectedKeys = this.selectedKeys(this.props.location);
 
     return (
-      <nav className={navClasses} data-topbar>
-        <ul className="title-area">
-          <li className="name">
-            <h1><Link to='/'><img src={logo} style={{width: '200px'}}/></Link></h1>
-          </li>
-          <li className="toggle-topbar menu-icon"><a href="#" onClick={this.toggleMenu}><span></span></a></li>
-        </ul>
-        <section className="top-bar-section">
-          <ul className="left">
-            {this.leftSection(signedIn)}
-          </ul>
-          <ul className="right">
-            {this.rightSection(signedIn)}
-          </ul>
-        </section>
-      </nav>
+      <header className="clearfix">
+        <Row type="flex" justify="space-between">
+          <Col span={4}>
+            <Link id="logo" to='/'>
+              <img src={logo} />
+              <span>Budgetal</span>
+            </Link>
+          </Col>
+          <Col span={20}>
+            <Row type="flex" justify="end">
+              <Col>
+                <Menu mode='horizontal' id="nav" selectedKeys={selectedKeys}>
+                  {this.renderMenuItems()}
+               </Menu>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </header>
     );
   }
 }
