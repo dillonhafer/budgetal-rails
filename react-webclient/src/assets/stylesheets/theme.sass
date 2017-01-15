@@ -1,0 +1,290 @@
+@import mixins
+@import flash-box
+@import side-bar
+@import budgets
+@import footer
+@import statistics
+
+@font-face
+  font-family: "budgetal"
+  src: url("/fonts/budgetal-font.woff") format('woff')
+
+@font-face
+  font-family: "budgetal"
+  src: url("/fonts/budgetal-font-bold.woff") format('woff')
+  font-weight: bold
+
+@font-face
+  font-family: "budgetal"
+  src: url("/fonts/budgetal-font-boldoblique.woff") format('woff')
+  font-weight: bold
+  font-style: italic
+
+@font-face
+  font-family: "budgetal"
+  src: url("/fonts/budgetal-font-oblique.woff") format('woff')
+  font-style: italic
+
+$primary-color: #1a98fc
+$secondary-color: #EACB5A
+$alert-color: #f50
+$success-color: #8DAA37
+$gray: #e6e7eb
+
+.primary-color
+  color: $primary-color !important
+
+.alert-color
+  color: $alert-color !important
+
+body
+  font-family: "budgetal" !important
+  background: $gray !important
+
+.ant-table-title
+  font-weight: bold
+  text-align: center
+
+.ant-table-thead > tr > th
+  padding: 10px 8px !important
+
+.ant-input-group-addon
+  padding: 4px 10px !important
+
+.ant-row-flex-center
+  align-items: center
+
+.ant-input-number
+  width: 100% !important
+
+.category-overview
+  .ant-progress-line
+    .ant-progress-text
+      i.anticon
+        font-size: 20px
+        margin-top: 4px
+      .ant-progress-text
+        margin-top: 4px
+
+.item-actions
+  .ant-btn-primary
+    margin-right: 8px
+
+.ant-btn-primary.delete-button,
+.ant-btn.delete-button,
+.delete-modal .ant-btn.ant-btn-primary.ant-btn-lg,
+.delete-popover .ant-popover-buttons .ant-btn.ant-btn-primary
+  background-color: $alert-color
+  border-color: $alert-color
+  color: white
+
+  &:hover
+    background-color: lighten($alert-color,10%)
+    border-color: lighten($alert-color,10%)
+    color: white
+
+.ant-calendar-input-wrap,.ant-calendar-input
+  display: none !important;
+
+div.ant-notification
+  margin-right: 12px
+
+.ant-upload-list-picture-card .ant-upload-list-item-info:before
+  left: 0
+
+.nav-user-logo
+  vertical-align: middle
+  margin-right: 10px
+  border: 2px solid #6699FF
+  width: 50px
+  height: 50px
+  border-radius: 25px
+
+header
+  -webkit-transition: opacity 0.5s
+  transition: opacity 0.5s
+  background: #fff
+  border-bottom: 1px solid #eee
+  height: 80px
+  margin-bottom: 24px
+  padding: 0 4%
+  width: 100%
+  div > .ant-col-4
+    text-align: center
+
+#nav > li
+  height: 80px
+  line-height: 80px
+  min-width: 72px
+  text-align: center
+  border-bottom-width: 3px
+
+  &, a
+    font-size: .875rem
+
+  .ant-menu-sub
+    text-align: left
+
+#logo
+  float: left
+  height: 80px
+  line-height: 80px
+  margin: 0 auto
+  width: 170px
+  span
+    float: right
+    font-size: 16px
+    font-family: 'Raleway', 'Hiragino Sans GB', sans-serif
+    height: 80px
+    line-height: 80px
+
+  img
+    height: 60px
+    line-height: 60px
+    margin-top: 10px
+
+.no-modal-footer .ant-modal-footer
+  display: none
+
+.masthead
+  height: 64px
+
+.text-center
+  text-align: center
+
+.text-right
+  text-align: right
+
+td.expense-row
+  &[colspan="24"]
+    background: #f7f7f7
+    padding: 5px 8px
+
+.right
+  float: right
+
+.alert-color
+  color: $alert-color
+
+.primary-color
+  color: $primary-color
+
+.footer
+  clear: both
+  border-top: 1px solid #eee
+  font-size: 12px
+  background: #333
+  position: relative
+  z-index: 1
+  color: #fff
+  box-shadow: 0 1000px 0 1000px #fff
+
+.space-around
+  padding: 25px 0;
+
+.ant-confirm .ant-modal-close
+  display: block !important;
+
+hr
+  border: solid #ddd
+  border-width: 1px 0 0
+  clear: both
+  margin: 1.1875rem 0 1.1875rem !important
+  height: 0
+
+span.ant-upload
+  font-size: 24px
+  margin-top: 20px
+
+div.ant-upload.ant-upload-select-picture-card,
+.ant-upload-list-picture-card div.ant-upload-list-item
+  width: 160px
+  height: 160px
+
+ul.ant-menu
+  margin-right: 30px
+
+.card-grid .card
+  padding: 6px
+
+.add-item-button
+  margin-top: 75px !important
+  margin-bottom: 75px !important
+
+div.ant-card-extra
+  right: 10px
+  top: 9px
+
+.annual-item-crud
+  .ant-btn
+    margin-right: 5px
+    background: white
+
+.ant-card-body .ant-tag
+  margin: auto
+  cursor: default
+
+i.anticon.anticon-buck:before
+  content: "\0024"
+  font-family: monospace !important
+  font-size: 19px
+
+.ant-card-head
+  background: #f6f6f9
+
+.marketing-row
+  h4
+    font-size: 1.4375rem
+    line-height: 1.4
+
+  img
+    width: 80px
+    height: 80px
+
+p
+  font-weight: 400
+  font-size: 1rem
+  line-height: 1.6
+  margin-bottom: 1.25rem
+  text-rendering: optimizeLegibility
+
+.ant-carousel
+  .slick-slide
+    max-height: 500px
+
+  img
+    width: 100%
+    position: relative
+
+  .slider-text
+    position: absolute
+    top: 9rem
+    width: 100%
+    color: white
+    font: 24px/45px Helvetica, Sans-Serif
+    letter-spacing: -1px
+    text-shadow: 0px 1px 10px rgba(0,0,0,0.8)
+    padding: 45px
+
+    h2
+      font-weight: lighter
+      color: $primary-color
+      text-shadow: 0px 1px 6px rgba(255,255,255,0.4)
+
+.ant-table-placeholder
+  border-right: 1px solid #e9e9e9
+  border-left: 1px solid #e9e9e9
+
+.expense-list-enter
+  transform: translate(0%,100%)
+
+  &.expense-list-enter-active
+    transform: translate(0%)
+    transition: transform 500ms ease-in-out
+
+.expense-list-leave
+  transform: translate(0%)
+
+  &.expense-list-leave-active
+    transform: translate(0%,100%)
+    transition: transform 500ms ease-in-out
