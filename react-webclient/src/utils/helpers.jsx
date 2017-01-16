@@ -3,6 +3,7 @@ import {
   keys,
   lt,
   map,
+  padStart,
   range,
   reduce,
   round,
@@ -139,7 +140,9 @@ module.exports = {
   },
   budgetMonth(budget) {
     const {month,year} = budget;
-    return moment(`${year}-${month}-01`).format("MMMM YYYY");
+    if (month && year) {
+      return moment(`${year}-${padStart(month, 2, '0')}-01`).format("MMMM YYYY");
+    }
   }
 }
 

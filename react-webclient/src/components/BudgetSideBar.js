@@ -13,7 +13,7 @@ export default class BudgetSideBar extends React.Component {
 
   static propTypes = {
     budget: React.PropTypes.object.isRequired,
-    currentCategoryName: React.PropTypes.number.isRequired,
+    currentCategoryName: React.PropTypes.string.isRequired,
   }
 
   handleOnChange = (date, dateString) => {
@@ -31,7 +31,7 @@ export default class BudgetSideBar extends React.Component {
 
   findDisabledDate(date) {
     const year = date.year();
-    return (year < 2015 || year > 2018) ? true : false;
+    return year < 2015 || year > 2018;
   }
 
   render() {
