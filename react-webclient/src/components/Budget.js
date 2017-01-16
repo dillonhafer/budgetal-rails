@@ -4,6 +4,7 @@ import {findCategory}          from '../data/BudgetCategory';
 import BudgetSideBarContainer  from '../containers/BudgetSideBarContainer';
 import BudgetCategoryContainer from '../containers/BudgetCategoryContainer';
 import {find} from 'lodash';
+import {browserHistory} from 'react-router';
 
 import {Row,Col} from 'antd';
 
@@ -47,10 +48,14 @@ export default class Budgets extends React.Component {
     }
   }
 
+  handleOnChange = (date, dateString) => {
+    browserHistory.push(`/budgets/${date.year()}/${date.month()+1}`);
+  }
+
   render() {
     return (
       <Row>
-        <BudgetSideBarContainer />
+        <BudgetSideBarContainer handleOnChange={this.handleOnChange} />
         <BudgetCategoryContainer isLoading={this.state.loading} />
       </Row>
     );

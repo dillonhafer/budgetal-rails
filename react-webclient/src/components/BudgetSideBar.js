@@ -1,7 +1,7 @@
 import React from 'react';
 import {find} from 'lodash';
 import {budgetMonth} from '../utils/helpers';
-import {browserHistory,Link} from 'react-router';
+import {Link} from 'react-router';
 
 import { Row, Col, Menu, Icon, DatePicker } from 'antd';
 const SubMenu = Menu.SubMenu;
@@ -14,10 +14,8 @@ export default class BudgetSideBar extends React.Component {
   static propTypes = {
     budget: React.PropTypes.object.isRequired,
     currentCategoryName: React.PropTypes.string.isRequired,
-  }
-
-  handleOnChange = (date, dateString) => {
-    browserHistory.push(`/budgets/${date.year()}/${date.month()+1}`);
+    handleOnChange: React.PropTypes.func.isRequired,
+    changeCategory: React.PropTypes.func.isRequired,
   }
 
   handleOnClick = (item, key, keyPath) => {
@@ -45,7 +43,7 @@ export default class BudgetSideBar extends React.Component {
                 mode="inline">
             <SubMenu key="sub1" title={<span><Icon type="calendar" /><span>{budgetMonth(this.props.budget)}</span></span>}>
               <Menu.Item disabled={true} key='date'>
-                <DatePicker.MonthPicker onChange={this.handleOnChange} disabledDate={this.findDisabledDate} cellContentRender={(date) => {return date}} />
+                <DatePicker.MonthPicker onChange={this.props.handleOnChange} disabledDate={this.findDisabledDate} cellContentRender={(date) => {return date}} />
               </Menu.Item>
             </SubMenu>
             <Menu.Divider key="divider1" />
