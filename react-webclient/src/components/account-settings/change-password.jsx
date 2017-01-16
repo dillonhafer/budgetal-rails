@@ -22,8 +22,7 @@ class ChangePassword extends React.Component {
     }
   }
 
-  update = (e, f) => {
-    console.log(e.target.id)
+  update = (e) => {
     this.setState({[e.target.id]: e.target.value});
   }
 
@@ -85,7 +84,7 @@ class ChangePassword extends React.Component {
                 {getFieldDecorator('password', {
                   onChange: this.update,
                   rules: [{
-                    required: true, message: "You need to provide a new password"
+                    required: true, message: "Password is required"
                   }],
                 })(
                   <Input addonBefore={<Icon type="lock"/>} type="password" />
@@ -107,7 +106,7 @@ class ChangePassword extends React.Component {
                 {getFieldDecorator('current_password', {
                   onChange: this.update,
                   rules: [{
-                    required: true, message: 'Current Password is needed to authorize change',
+                    required: true, message: 'Current Password is required',
                   }],
                 })(
                   <Input addonBefore={<Icon type="lock"/>} type="password" />
