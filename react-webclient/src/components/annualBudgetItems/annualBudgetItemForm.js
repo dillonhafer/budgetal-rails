@@ -23,20 +23,23 @@ class AnnualBudgetItemForm extends React.Component {
     this.props.form.validateFields((err, annual_budget_item) => {
       if (!err) {
         this.props.handleOnSubmit(Object.assign({}, this.props.budgetItem, annual_budget_item));
-        this.props.form.resetFields();
+        setTimeout(this.props.form.resetFields, 500);
       }
     })
   }
 
-  amountChanged = (amount=0) => {
+  amountChanged = (newAmount) => {
     const component = this.props.form.getFieldInstance('amount');
     const original  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
     let amount_budgeted = original;
+    const diff = (original - newAmount).toFixed(2)
 
-    if (amount < original) {
-      amount_budgeted -= 1.00
-    } else {
-      amount_budgeted += 1.00
+    if (diff !== "0.00") {
+      if (newAmount < original) {
+        amount_budgeted -= 1.00
+      } else {
+        amount_budgeted += 1.00
+      }
     }
 
     return String(amount_budgeted);
