@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
     budget,
     budgetItems,
     currentCategoryId,
-    currentCategoryName
+    currentCategoryName,
+    budgetCategories: budget.budget_categories
   }
 }
 

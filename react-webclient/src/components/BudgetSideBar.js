@@ -13,13 +13,14 @@ export default class BudgetSideBar extends React.Component {
 
   static propTypes = {
     budget: React.PropTypes.object.isRequired,
+    budgetCategories: React.PropTypes.array.isRequired,
     currentCategoryName: React.PropTypes.string.isRequired,
     handleOnChange: React.PropTypes.func.isRequired,
     changeCategory: React.PropTypes.func.isRequired,
   }
 
   handleOnClick = (item, key, keyPath) => {
-    const cat = this.props.budget.budget_categories.find((cat) => {return cat.name === item.key});
+    const cat = this.props.budgetCategories.find((cat) => {return cat.name === item.key});
     if (cat !== undefined) {
       const lowerName = cat.name.toLowerCase().replace('/', '-');
       window.location.hash = `#${lowerName}`
@@ -48,7 +49,7 @@ export default class BudgetSideBar extends React.Component {
             </SubMenu>
             <Menu.Divider key="divider1" />
               {
-                this.props.budget.budget_categories.map((category) => {
+                this.props.budgetCategories.map((category) => {
                   const itemClass = category.name.toLowerCase().replace('/','-');
                   return (
                     <Menu.Item id={category.id} key={category.name}>
