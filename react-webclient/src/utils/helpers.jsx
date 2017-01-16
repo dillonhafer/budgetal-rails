@@ -9,6 +9,7 @@ import {
   startCase,
 } from 'lodash'
 import parser from 'ua-parser-js';
+import moment from 'moment';
 
 module.exports = {
   reduceSum(array, property='amount') {
@@ -135,6 +136,10 @@ module.exports = {
     return map(months, (month, index) => {
       return (<option key={index} value={month}>{module.exports.monthName(month)}</option>);
     });
+  },
+  budgetMonth(budget) {
+    const {month,year} = budget;
+    return moment(`${year}-${month}-01`).format("MMMM YYYY");
   }
 }
 
