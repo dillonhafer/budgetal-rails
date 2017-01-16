@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {resetPassword} from '../../data/user';
 import InputField from '../forms/input_field';
 import {ensureWindowHeight} from '../../utils/helpers';
+import {browserHistory} from 'react-router';
 
 import {
   Button,
@@ -21,10 +22,6 @@ class PasswordReset extends Component {
     ensureWindowHeight();
   }
 
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
-  }
-
   resetPassword = async(user) => {
     try {
       const resp = await resetPassword({user,
@@ -33,7 +30,7 @@ class PasswordReset extends Component {
 
       if (resp && resp.success) {
         showMessage("Your password has been updated");
-        this.context.history.replace('/');
+        browserHistory.replace('/');
       } else {
         showError("The link in your email may have expired.");
       }

@@ -3,6 +3,7 @@ import {updateAccountInfo} from '../../data/user';
 import {currentUser,prettyServerErrors} from '../../utils/helpers';
 import InputField from '../forms/input_field';
 import {get, round, assign} from 'lodash';
+import {browserHistory} from 'react-router';
 import {
   Button,
   Col,
@@ -23,7 +24,7 @@ class UpdateAccountInfoClass extends React.Component {
       previewImage: '',
       fileList: [{
         uid: -1,
-        name: 'xxx.png',
+        name: '',
         status: 'done',
         url: currentUser().avatar,
       }],
@@ -44,13 +45,8 @@ class UpdateAccountInfoClass extends React.Component {
 
   handleChange = ({ fileList }) => this.setState({ fileList })
 
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
-  }
-
   _fetchDataFail = (e) => {
-    showMessage(e.message)
-    this.context.history.replace('/');
+    apiError(e.message)
   }
 
   update = (e) => {
@@ -81,7 +77,7 @@ class UpdateAccountInfoClass extends React.Component {
 
     this.setState({user});
     localStorage.setItem('user', JSON.stringify(current));
-    this.context.history.replace('/account-settings');
+    browserHistory.replace('/account-settings');
   }
 
   handleFile = (file) => {
@@ -209,7 +205,7 @@ class UpdateAccountInfoClass extends React.Component {
               </Col>
             </Col>
           </Form>
-          <Modal width="300" title="Confirm Password To Continue" visible={this.state.confirmPasswordVisible} onOk={this.handleOnOk} okText="Confirm Password" onCancel={this.handleCancel}>
+          <Modal width="300px" title="Confirm Password To Continue" visible={this.state.confirmPasswordVisible} onOk={this.handleOnOk} okText="Confirm Password" onCancel={this.handleCancel}>
             <Form onSubmit={this.handleOnOk}>
               <Form.Item label="Password" hasFeedback>
                         {this.props.form.getFieldDecorator('current_password', {

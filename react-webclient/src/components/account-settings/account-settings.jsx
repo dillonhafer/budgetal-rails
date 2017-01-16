@@ -62,8 +62,7 @@ export default class AccountSettings extends React.Component {
   }
 
   _fetchDataFail = (e) => {
-    showMessage(e.message)
-    browserHistory.replace('/');
+    apiError(e.message)
   }
 
   fullSessionDate(date) {

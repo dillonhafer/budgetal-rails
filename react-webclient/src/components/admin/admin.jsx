@@ -17,10 +17,6 @@ export default class Admin extends React.Component {
     }
   }
 
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
-  }
-
   componentDidMount() {
     title('Admin');
     this.fetchUsers();
@@ -32,8 +28,7 @@ export default class Admin extends React.Component {
         if (resp.error === undefined) {
           this.usersFetched(resp)
         } else {
-          showMessage(resp.error);
-          this.context.history.replace('/');
+          apiError(resp.error);
         }
       })
   }

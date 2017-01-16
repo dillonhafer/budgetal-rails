@@ -81,8 +81,7 @@ export default class Statistics extends React.Component {
   }
 
   _fetchDataFail = (e) => {
-    showMessage(e.message)
-    this.context.history.replace('/');
+    apiError(e.message)
   }
 
   changeCategory(id) {

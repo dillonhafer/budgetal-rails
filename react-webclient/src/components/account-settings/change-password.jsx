@@ -22,10 +22,6 @@ class ChangePassword extends React.Component {
     }
   }
 
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
-  }
-
   update = (e, f) => {
     console.log(e.target.id)
     this.setState({[e.target.id]: e.target.value});
