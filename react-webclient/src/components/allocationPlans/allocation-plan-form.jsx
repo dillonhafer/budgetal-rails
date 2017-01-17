@@ -1,9 +1,18 @@
 import React from 'react';
-import InputField from '../forms/input_field';
-import {numberToCurrency} from '../../utils/helpers';
-import _ from 'lodash';
+import moment from 'moment';
+import {
+  numberStep
+} from '../../utils/helpers';
+import {merge} from 'lodash';
+import {
+  Button,
+  DatePicker,
+  Form,
+  InputNumber,
+} from 'antd';
+const {RangePicker} = DatePicker;
 
-export default class AllocationPlanForm extends React.Component {
+class AllocationPlanForm extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -14,45 +23,67 @@ export default class AllocationPlanForm extends React.Component {
     update: React.PropTypes.func.isRequired
   }
 
-  update = (date_field, e) => {
-    let plan = _.merge({}, this.props.plan);
-    if (['start_date', 'end_date'].includes(date_field)) {
-      let date = e;
-      e = {target: {name: date_field, value: date}};
-    }
-
-    plan[e.target.name] = e.target.value;
+  handleOnRangeChange = (moments,dates) => {
+    const plan = merge({}, this.props.plan, {start_date: dates[0], end_date: dates[1]});
     this.props.update(plan);
   }
 
+  handleOnSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.save();
+      }
+    });
+  }
+
+  amountChanged = (newIncome) => {
+    const component = this.props.form.getFieldInstance('income');
+    const income    = numberStep(newIncome, component)
+    const plan = merge({}, this.props.plan, {income});
+    this.props.update(plan);
+    return income;
+  }
+
   render() {
-    var plan = this.props.plan;
+    const {plan} = this.props;
+    const {getFieldDecorator} = this.props.form;
+    const formItemLayout = {
+      labelCol: { span: 14 },
+      wrapperCol: { span: 10 },
+    };
+
+    const tailItemLayout = {
+      wrapperCol: {
+        span: 8,
+        offset: 18,
+      }
+    };
     return (
-      <form onSubmit={this.props.save}>
-        <div className='row'>
-          <div className='large-5 columns start-date'>
-            <label htmlFor='start_date'>Start Date</label>
-            <InputField type='date' date={plan.start_date} onChange={this.update.bind(null, 'start_date')} name='start_date' errors={plan.errors} />
-          </div>
-          <div className='large-2 columns centered'><br />TO</div>
-          <div className='large-5 columns end-date'>
-            <label htmlFor='end_date'>End Date</label>
-            <InputField type='date' date={plan.end_date} onChange={this.update.bind(null, 'end_date')} name='end_date' errors={plan.errors} />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='large-7 columns'>
-            <label htmlFor='income'>Pay Period Income</label>
-            <InputField onChange={this.update.bind(this,plan)} required type="number" name='income' defaultValue={numberToCurrency(plan.income,'')} value={plan.income} step='any' min='0.01' placeholder='0.00' errors={plan.errors} />
-          </div>
-          <div className='large-5 columns text-center'>
-            <label>&nbsp;</label>
-            <button type='submit' title='Save Plan' className="tiny success button radius">
-              <i className='fi-icon fi-check'></i> Save
-            </button>
-          </div>
-        </div>
-      </form>
+      <Form onSubmit={this.handleOnSubmit}>
+        <Form.Item label="Start and End Date">
+          {getFieldDecorator('dates', {
+            initialValue: [moment(plan.start_date), moment(plan.end_date)],
+            rules: [{required: true}]
+          })(
+            <RangePicker onChange={this.handleOnRangeChange} />
+          )}
+        </Form.Item>
+        <Form.Item label="Income"  {...formItemLayout}>
+          {getFieldDecorator('income', {
+            initialValue: plan.income,
+            getValueFromEvent: this.amountChanged,
+            rules: [{required: true, message: 'Income is required'}]
+          })(
+            <InputNumber onChange={this.handleOnChange} min={0.01} placeholder="(10.00)" />
+          )}
+        </Form.Item>
+        <Form.Item {...tailItemLayout}>
+          <Button type="primary" htmlType="submit" size="large">Save</Button>
+        </Form.Item>
+      </Form>
     );
   }
 }
+
+export default Form.create()(AllocationPlanForm)

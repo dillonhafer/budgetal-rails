@@ -1,35 +1,69 @@
 import React from 'react';
-import CategoryList from './category-list';
 import classNames from 'classnames';
-import ItemForm from './item-form';
-import {allPlans, find, createPlan, updatePlan, deletePlan} from '../../data/allocation_plan';
-import {createItem, updateItem} from '../../data/allocation_plan_budget_item';
-import {monthName, selectedValue, title, today, numberToCurrency, remainingClass} from '../../utils/helpers';
-import Confirm from '../../utils/confirm';
 import AllocationPlanForm from './allocation-plan-form';
-import Modal from '../../utils/modal';
+import BudgetSideBar from '../BudgetSideBar';
+import PlanOverview from './PlanOverview';
+import {browserHistory} from 'react-router';
+import {createItem, updateItem} from '../../data/allocation_plan_budget_item';
+import {
+  allPlans,
+  createPlan,
+  updatePlan,
+  deletePlan
+} from '../../data/allocation_plan';
+import {
+  currency,
+  monthName,
+  remainingClass,
+  title,
+  today,
+  numberStep,
+} from '../../utils/helpers';
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Icon,
+  InputNumber,
+  Menu,
+  Modal,
+  Row,
+  Table,
+  Tabs,
+} from 'antd';
+const TabPane = Tabs.TabPane;
 
 export default class AllocationPlans extends React.Component {
   constructor(props) {
     super(props);
     window.addEventListener('scroll', this.handleScroll);
+    this.state = {
+      budget: {
+        month: parseInt(this.props.params.month),
+        year: parseInt(this.props.params.year),
+        allocation_plans: []
+      },
+      showPlanForm: false,
+      modalPlan: {},
+      fixer: false,
+      hideDeleteModal: true,
+      currentPlan: "0",
+      currentCategoryName: "Charity"
+    }
   }
 
-  state = {
-    budget: {
-      month: parseInt(this.props.params.month),
-      year: parseInt(this.props.params.year),
-      allocation_plans: []
-    },
-    allocation_plan: {item_groups:[]},
-    showPlanForm: false,
-    modalPlan: {},
-    fixer: false,
-    hideDeleteModal: true
-  }
-
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
+  menu() {
+    return (
+      <Menu>
+        <Menu.Item>
+          <a className="primary-color" onClick={this.editPlan}><Icon type="edit" /> Edit</a>
+        </Menu.Item>
+        <Menu.Item>
+          <a className="alert-color" onClick={this.deletePlan}><Icon type="delete" /> Delete</a>
+        </Menu.Item>
+      </Menu>
+    )
   }
 
   componentDidMount = () => {
@@ -40,8 +74,12 @@ export default class AllocationPlans extends React.Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  handleOnChange = (date, dateString) => {
+    browserHistory.push(`/detailed-budgets/${date.year()}/${date.month()+1}`);
+  }
+
   handleScroll = (event) => {
-    if (window.scrollY >= 122) {
+    if (window.scrollY >= 80) {
       if (!this.state.fixer) {
         this.setState({fixer: true});
       }
@@ -50,37 +88,19 @@ export default class AllocationPlans extends React.Component {
     }
   }
 
-  incrementMonth(date, number) {
-    const year     = date.getFullYear();
-    const month    = date.getMonth();
-    const newMonth = month + number;
-    return new Date(year, newMonth);
-  }
-
-  changeMonth = (number) => {
-    const currentDate = new Date(this.state.budget.year, this.state.budget.month-1, 1);
-    const newDate = this.incrementMonth(currentDate, number);
-    const date = {year: newDate.getFullYear(), month: newDate.getMonth() + 1}
-    this.context.history.push(`/detailed-budgets/${date.year}/${date.month}`)
-  }
-
-  changeBudget = () => {
-    const year  = selectedValue('#budget_year');
-    const month = selectedValue('#budget_month');
-    this.context.history.push(`/detailed-budgets/${year}/${month}`)
-  }
-
   _fetchDataDone = (data) => {
+    const {budget} = data;
     this.setState({
-      budget: data.budget,
-      allocation_plan: data.allocation_plan || {item_groups: []}
+      budget: budget,
+      currentPlan: budget.allocation_plans.length ? budget.allocation_plans[0].allocation_plan.id.toString() : undefined,
+      allocation_plan: budget.allocation_plans.length ? budget.allocation_plans[0].allocation_plan : undefined
     });
-    title(`${monthName(data.budget.month)} ${data.budget.year} | Detailed Budgets`);
+    title(`${monthName(data.budget.month)} ${budget.year} | Detailed Budgets`);
   }
 
   _fetchDataFail = (e) => {
-    showMessage(e.message)
-    this.context.history.replace('/');
+    showMessage(e)
+    apiError(e.message)
   }
 
   _fetchBudget = (data) => {
@@ -89,11 +109,16 @@ export default class AllocationPlans extends React.Component {
       .catch(this._fetchDataFail)
   }
 
-  updateBudgetItem = (index, group, updatedItem) => {
+  updateBudgetItem = (index, group, updatedItem, newAmount) => {
     let allocation_plan = _.merge({}, this.state.allocation_plan);
     let group_index     = _.findIndex(allocation_plan.item_groups, {name: group});
-    allocation_plan.item_groups[group_index].budget_items[index] = updatedItem;
-    this.setState({allocation_plan});
+
+    allocation_plan.item_groups[group_index].budget_items[index].amount_budgeted = newAmount;
+    const idx = _.findIndex(this.state.budget.allocation_plans, (p) => {return p.allocation_plan.id === allocation_plan.id})
+    let budget = this.state.budget;
+    budget.allocation_plans[idx].allocation_plan = allocation_plan;
+
+    this.setState({budget,allocation_plan});
   }
 
   saveBudgetItem = (item) => {
@@ -164,7 +189,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   editPlan = () => {
-    let modalPlan = _.merge({}, this.state.allocation_plan);
+    const modalPlan = this.state.allocation_plan;
     this.setState({showPlanForm: true, modalPlan});
   }
 
@@ -172,17 +197,8 @@ export default class AllocationPlans extends React.Component {
     this.setState({showPlanForm: true, modalPlan: {income: 0, start_date: today(), end_date: today()}});
   }
 
-  changePlan = (plan, e) => {
-    e.preventDefault();
-    find(plan.id)
-      .then((resp) => {
-        this.setState({allocation_plan: resp.allocation_plan});
-      })
-      .catch(this._fetchDataFail)
-  }
-
   cancelPlanModal = () => {
-    this.setState({showPlanForm: false, modalPlan: {}});
+    this.setState({showPlanForm: false});
   }
 
   updateModalPlan = (plan) => {
@@ -193,21 +209,20 @@ export default class AllocationPlans extends React.Component {
   planSaved = (plan) => {
     let allocation_plan = _.merge({}, this.state.allocation_plan, plan);
     let budget = _.merge({}, this.state.budget);
-    let idx    = _.findIndex(budget.allocation_plans, {id: plan.id});
+    let idx    = _.findIndex(budget.allocation_plans, (p) => {return p.allocation_plan.id === plan.id});
 
     if (idx == -1) {
-      budget.allocation_plans.push(plan);
+      budget.allocation_plans.push({allocation_plan});
     } else {
-      budget.allocation_plans[idx] = plan;
+      budget.allocation_plans[idx] = {allocation_plan: plan};
     }
 
-    this.setState({budget, allocation_plan});
+    this.setState({budget, allocation_plan, currentPlan: allocation_plan.id.toString()});
     showMessage('Saved Pay Period');
     this.cancelPlanModal();
   }
 
-  savePlan = (e) => {
-    e.preventDefault();
+  savePlan = () => {
     let data = {allocation_plan: _.merge({}, this.state.modalPlan)};
     let strategy = createPlan;
 
@@ -227,37 +242,33 @@ export default class AllocationPlans extends React.Component {
       .catch(this._fetchDataFail)
   }
 
-  deletePlan = () => {
-    const id = this.state.allocation_plan.id
-    deletePlan(id)
-      .then((resp) => {
-        if (resp.success) {
-          const modalPlan       = {};
-          const allocation_plan = {item_groups:[]};
-          let budget  = _.merge({}, this.state.budget);
-          let planIdx = _.findIndex(budget.allocation_plans, {id: id});
-          budget.allocation_plans.splice(planIdx,1);
+  deletePlan = async() => {
+    try {
+      const id = this.state.allocation_plan.id
+      const resp = await deletePlan(id);
 
-          this.setState({modalPlan, budget, allocation_plan})
+      if (resp.success) {
+        const planIdx = _.findIndex(this.state.budget.allocation_plans, {id: id});
+        const allocation_plans = _.merge({}, {}, this.state.budget.allocation_plans.splice(planIdx,1));
+        const budget  = _.merge({}, this.state.budget, allocation_plans);
+
+        let allocation_plan = undefined;
+        if (budget.allocation_plans.length) {
+          allocation_plan = budget.allocation_plans[0].allocation_plan;
+          this.handleChange(allocation_plan.id.toString());
         }
-        showMessage(resp.message);
-        this.cancelDelete();
-      })
-      .catch(this._fetchDataFail)
+
+        this.setState({modalPlan: {}, budget, allocation_plan})
+      }
+      showMessage(resp.message);
+      this.cancelDelete();
+    } catch(err) {
+      apiError(err);
+    }
   }
 
   cancelDelete = () => {
     this.setState({hideDeleteModal: true});
-  }
-
-  notAllocated(allocation_plan) {
-    let items = _.flatten(allocation_plan.item_groups.map((group) => {
-                  return group.budget_items
-                }))
-    let allocated = _.reduce(items, function(total, item) {
-                         return total + parseFloat(item.amount_budgeted);
-                       }, 0.00);
-    return _.round((allocation_plan.income - allocated), 2);
   }
 
   dateParts(dateString) {
@@ -265,120 +276,117 @@ export default class AllocationPlans extends React.Component {
     return {year: parts[0], month: parts[1], day: parts[2]}
   }
 
-  tabDate(plan) {
-    let dateString = 'No Date';
-    if (plan.start_date && plan.end_date) {
-      const start = this.dateParts(plan.start_date);
-      const end   = this.dateParts(plan.end_date);
-      dateString  = `${start.month}/${start.day} - ${end.month}/${end.day}`
-    }
-    return dateString;
-  }
-
   hidePlan() {
     return !this.state.allocation_plan.id;
   }
 
+  categories() {
+    return [
+      {id: 1, name: "Charity"},
+      {id: 2, name: "Saving"},
+      {id: 3, name: "Housing"},
+      {id: 4, name: "Utilities"},
+      {id: 5, name: "Food"},
+      {id: 6, name: "Clothing"},
+      {id: 7, name: "Transportation"},
+      {id: 8, name: "Medical/Health"},
+      {id: 9, name: "Insurance"},
+      {id: 10, name: "Personal"},
+      {id: 11, name: "Recreation"},
+      {id: 12, name: "Debts"}
+    ]
+  }
+
+  changeCategory = (category) => {
+    this.setState({currentCategoryName: category.name});
+  }
+
+  handleChange = (currentPlan) => {
+    const allocation_plan = _.find(this.state.budget.allocation_plans, (p) => {return p.allocation_plan.id === parseInt(currentPlan)}).allocation_plan;
+    this.setState({currentPlan, allocation_plan});
+  }
+
   render() {
-    const planForm = <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updateModalPlan} />
-    const allocation_plan = this.state.allocation_plan;
-    const notAllocated = this.notAllocated(allocation_plan)
-    const fixClasses = classNames('row collapse fixer hide-for-small', {'plan-fixer': this.state.fixer, 'hide': this.hidePlan()});
+    const {budget, allocation_plan} = this.state;
+    const budgetDate = {year: budget.year, month: budget.month};
     return (
-      <div>
-        <section>
-          <CategoryList budget={this.state.budget} categories={allocation_plan.item_groups} changeBudget={this.changeBudget} changeMonth={this.changeMonth} />
-          <Modal title='Pay Period' hidden={this.state.showPlanForm} cancel={this.cancelPlanModal} content={planForm} modalType='blue' modalSize='tiny' />
-          <div className='large-10 medium-10 columns hide-for-small-down'>
-            <div>
-              <dl className="tabs" data-tab>
-                {
-                  this.state.budget.allocation_plans.map((plan, index) => {
-                    const ddClass = classNames({active: allocation_plan.id == plan.id})
-                    return (
-                      <dd key={index} className={ddClass}>
-                        <a href="#" onClick={this.changePlan.bind(null, plan)}>{this.tabDate(plan)}</a>
-                      </dd>
-                    );
-                  })
-                }
-                <dd className='new'>
-                  <a href='#' onClick={this.addPlan} className='add-pay-period'><i className='fi-plus'></i></a>
-                </dd>
-              </dl>
-
-              <div className="tabs-content">
-                <div className="content active" id={`panel-${allocation_plan.id}`}>
-                  <div className="large-8 medium-8 columns">
-                    {this.nothing()}
+      <Row>
+        <BudgetSideBar
+          budget={budgetDate}
+          budgetCategories={this.categories()}
+          handleOnChange={this.handleOnChange}
+          changeCategory={this.changeCategory}
+          currentCategoryName={this.state.currentCategoryName} />
+        <Col span={20}>
+          <Row>
+            <Col span={16}>
+              <div className='budget-category-row'>
+                <div className="body-row">
+                  <Tabs hideAdd
+                        onChange={this.handleChange}
+                        activeKey={this.state.currentPlan}
+                        tabBarExtraContent={
+                          <Button type="primary" onClick={this.addPlan}><Icon type="plus-circle"/>New Plan</Button>
+                        }>
                     {
-                      this.state.allocation_plan.item_groups.map((group, index) => {
+                      budget.allocation_plans.map((_plan,key) => {
+                        const plan = _plan.allocation_plan;
                         return (
-                          <div key={index} id={group.name.toLowerCase().replace('/','-')} className='row collapse'>
-                            <div className='large-12 medium-12 columns header-row'>
-                              <h3>{group.name}</h3>
-                            </div>
-
-                            <div className="small-12 large-12 medium-12 columns">
-                              <ul className="main-budget-categories">
-                                <li>
-                                  <div className="row">
-                                    <div className="large-2 medium-2 large-offset medium-offset-4 columns">
-                                      Budgeted
-                                    </div>
-                                    <div className="large-6 medium-6 columns">
-                                      Remaining
-                                    </div>
-                                    <div className="large-4 medium-4 columns"></div>
-                                  </div>
-                                  <br />
-                                  {
-                                    group.budget_items.map((item, index) => {
-                                      return (
-                                        <ItemForm index={index} key={index} group={group.name} item={item} save={this.saveBudgetItem} update={this.updateBudgetItem} />
-                                      );
-                                    })
+                          <TabPane tab={plan.tab_date} key={plan.id}>
+                            {
+                              plan.item_groups.map((group, index) => {
+                                const data = group.budget_items.map((i,k) => {
+                                  const total     = parseFloat(i.other_allocated) + parseFloat(i.amount_budgeted);
+                                  const remaining =  _.round(parseFloat(i.budget_item.amount) - total, 2)
+                                  return {
+                                    key: String(k),
+                                    name: i.budget_item.name,
+                                    budgeted: <InputNumber onChange={this.updateBudgetItem.bind(this,k,group.name,i)} value={i.amount_budgeted} />,
+                                    remaining: currency(remaining),
+                                    action: <Button type="primary" onClick={this.saveBudgetItem.bind(this,i)}>Save</Button>
                                   }
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        );
+                                });
+
+                                const columns = [
+                                  {title: '',          dataIndex: 'name', key: 'name'},
+                                  {title: 'Budgeted',  dataIndex: 'budgeted', key: 'budgeted'},
+                                  {title: 'Remaining', dataIndex: 'remaining', key: 'remaining'},
+                                  {title: '',          dataIndex: 'action', key: 'action'}
+                                ];
+
+                                return (
+                                  <div
+                                    key={`group-${group.name}-${plan.id}`}
+                                    id={group.name.toLowerCase().replace('/','-')}>
+                                    <Card title={group.name}>
+                                      <Table pagination={false} bordered dataSource={data} columns={columns} />
+                                    </Card>
+                                    <br />
+                                  </div>
+                                )
+                              })
+                            }
+                          </TabPane>
+                        )
                       })
                     }
-                  </div>
-                  <div className='large-4 medium-4 columns'>
-                    <div className={fixClasses}>
-                      <div className='large-12 medium-12 columns header-row'>
-                        <h3>{this.tabDate(allocation_plan)}
-                          <span className='right'>
-                            <a href='#' onClick={this.editPlan}><i className='fi-pencil'></i></a>
-                            &nbsp;
-                            <Confirm name='Pay Period' hidden={this.state.hideDeleteModal} delete={this.deletePlan} cancel={this.cancelDelete} />
-                            <a href='#' onClick={()=>{this.setState({hideDeleteModal: false})}} className='alert-color'><i className='fi-trash'></i></a>
-                          </span>
-                        </h3>
-                      </div>
-                      <div className="small-12 large-12 medium-12 columns">
-                        <ul className="main-budget-categories">
-                          <li>
-                            <b>Pay Period Income:</b><br />
-                            <span className='green pay-period-income'>{numberToCurrency(allocation_plan.income)}</span>
-                            <br />
-                            <b>Amount Not Allocated:</b><br />
-                            <span className={remainingClass(notAllocated)}>{numberToCurrency(notAllocated)}</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  </Tabs>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-        <div className='row'></div>
-      </div>
+            </Col>
+            <Col span={8}>
+              <PlanOverview plan={allocation_plan} fixed={this.state.fixer} menu={this.menu()} />
+              <Modal title="Pay Period"
+                     width={300}
+                     className="no-modal-footer"
+                     visible={this.state.showPlanForm}
+                     onCancel={this.cancelPlanModal}>
+                <AllocationPlanForm plan={this.state.modalPlan} save={this.savePlan} update={this.updateModalPlan} />
+              </Modal>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     );
   }
 }

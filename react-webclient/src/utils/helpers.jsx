@@ -122,6 +122,9 @@ module.exports = {
     const newNumber = parseFloat(number).toFixed(2);
     return dollarSign + newNumber.replace(group3Regex, '$1,');
   },
+  currency(number, dollarSign='$') {
+    return module.exports.numberToCurrency(number, dollarSign);
+  },
   yearOptions() {
     const maxYear = (new Date).getFullYear() + 3;
     const years = range(2015, maxYear);
@@ -143,6 +146,20 @@ module.exports = {
     if (month && year) {
       return moment(`${year}-${padStart(month, 2, '0')}-01`).format("MMMM YYYY");
     }
+  },
+  numberStep(newNumber, component) {
+    let number  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
+    const stepperUsed = (number - newNumber).toFixed(2) !== "0.00";
+
+    if (stepperUsed) {
+      if (newNumber < number) {
+        number -= 1.00
+      } else {
+        number += 1.00
+      }
+    }
+
+    return number.toString();
   }
 }
 
