@@ -6,12 +6,12 @@ feature 'Password Reset', :js do
   include EmailSupport
 
   let!(:user) { FactoryGirl.create(:user) }
-  let(:notice_modal) { NoticeModal.new }
+  let(:notice_modal) { Pages::NoticeModal.new }
 
   context 'As a signed out user' do
     let(:forgot_password_modal) { ForgotPasswordModal.new }
-    let(:home_page) { HomePage.new }
-    let(:nav_page) { NavPage.new }
+    let(:home_page) { Pages::HomePage.new }
+    let(:nav_page) { Pages::NavPage.new }
 
     scenario 'I can request a password reset' do
       home_page.sign_out
@@ -37,7 +37,7 @@ feature 'Password Reset', :js do
       before do
         user.send_reset_password_instructions
         reset_link = find_mail_with_subject('Reset password instructions').links.first
-        password_reset_page = PasswordResetPage.new(email_link: reset_link, test_token: token, bad_token: user.reset_password_token)
+        password_reset_page = Pages::PasswordResetPage.new(email_link: reset_link, test_token: token, bad_token: user.reset_password_token)
         password_reset_page.visit_page
         expect(password_reset_page).to be_on_page
 

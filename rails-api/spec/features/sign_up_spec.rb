@@ -13,9 +13,9 @@ feature 'Sign up', :js do
         password: 'Password1'
       }
     end
-    let(:home_page) { HomePage.new }
-    let(:nav_page) { NavPage.new }
-    let(:sign_up_modal) { SignUpModal.new }
+    let(:home_page) { Pages::HomePage.new }
+    let(:nav_page) { Pages::NavPage.new }
+    let(:sign_up_modal) { Pages::SignUpModal.new }
 
     scenario 'I can sign up for budgetal' do
       home_page.sign_out

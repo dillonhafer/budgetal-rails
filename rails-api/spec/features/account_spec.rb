@@ -2,10 +2,10 @@ require 'rails_helper'
 require 'support/feature_helper'
 
 feature 'Account', :js do
-  let(:notice_modal) { NoticeModal.new }
-  let(:home_page)    { HomePage.new }
-  let(:nav_page)     { NavPage.new }
-  let(:account_settings_page) { AccountSettingsPage.new }
+  let(:notice_modal) { Pages::NoticeModal.new }
+  let(:home_page)    { Pages::HomePage.new }
+  let(:nav_page)     { Pages::NavPage.new }
+  let(:account_settings_page) { Pages::AccountSettingsPage.new }
 
   context 'Without a logged in user' do
     scenario 'gets redirected' do

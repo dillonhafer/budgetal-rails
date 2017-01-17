@@ -2,9 +2,9 @@ require 'rails_helper'
 require 'support/feature_helper'
 
 feature "Budget navigation", :js do
-  let(:budgets_page) { BudgetsPage.new }
-  let(:home_page)    { HomePage.new }
-  let(:nav_page)     { NavPage.new }
+  let(:budgets_page) { Pages::BudgetsPage.new }
+  let(:home_page)    { Pages::HomePage.new }
+  let(:nav_page)     { Pages::NavPage.new }
 
   scenario "A user visiting a budget creates a budget" do
     user = login

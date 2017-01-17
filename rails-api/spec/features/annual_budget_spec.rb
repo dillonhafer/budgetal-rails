@@ -7,7 +7,7 @@ feature 'Annual Budgets', :js do
       let(:annual_budget) { FactoryGirl.create(:annual_budget, year: Date.today.year, user: user) }
       let(:annual_budgets_page) { Pages::AnnualBudgets.new }
       let(:annual_budget_modal) { Pages::AnnualBudgetModal.new }
-      let(:notice_modal) { NoticeModal.new }
+      let(:notice_modal) { Pages::NoticeModal.new }
       let!(:user) { login }
       let(:item) do
         FactoryGirl.create(:annual_budget_item,

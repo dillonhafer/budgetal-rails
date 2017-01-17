@@ -2,10 +2,10 @@ require 'rails_helper'
 
 feature 'Sign in', :js do
   let(:user) { FactoryGirl.create(:user) }
-  let(:home_page) { HomePage.new }
-  let(:nav_page) { NavPage.new }
-  let(:sign_in_modal) { SignInModal.new }
-  let(:notice_modal) { NoticeModal.new }
+  let(:home_page) { Pages::HomePage.new }
+  let(:nav_page) { Pages::NavPage.new }
+  let(:sign_in_modal) { Pages::SignInModal.new }
+  let(:notice_modal) { Pages::NoticeModal.new }
 
   context 'As a signed out user' do
     it 'I can sign in to/out of budgetal' do
