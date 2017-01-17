@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/feature_helper'
 require 'support/email_support'
 
 feature 'Sign up', :js do
@@ -19,7 +18,7 @@ feature 'Sign up', :js do
     let(:sign_up_modal) { SignUpModal.new }
 
     scenario 'I can sign up for budgetal' do
-      sign_out
+      home_page.sign_out
       home_page.visit_page
       expect(home_page).to be_on_page
 
