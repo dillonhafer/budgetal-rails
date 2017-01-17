@@ -38,6 +38,11 @@ class NavPage < PageObject
     click_on "Sign out"
   end
 
+  def click_account_settings
+    find('.ant-menu-submenu-title').click
+    click_on "Account Settings"
+  end
+
   def click_budgets
     within "header" do
       click_on "Budgets"

@@ -57,7 +57,7 @@ export default class AccountSettings extends React.Component {
         this.setState({sessions: resp.sessions});
       }
     } catch(err) {
-      apiError(err);
+      apiError(err.message);
     }
   }
 
