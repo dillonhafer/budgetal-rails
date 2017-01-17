@@ -2,12 +2,17 @@ require 'rails_helper'
 require 'support/feature_helper'
 
 feature "Budget navigation", :js do
-  scenario "A user can visit a budgets when they done exist" do
+  let(:budgets_page) { BudgetsPage.new }
+  let(:home_page)    { HomePage.new }
+  let(:nav_page)     { NavPage.new }
+
+  scenario "A user visiting a budget creates a budget" do
     user = login
-    visit root_path
-    expect(page).to have_content("Hello, #{user.first_name}!")
-    click_link 'Budgets'
-    sleep 0.2
-    expect(page).to have_selector('h3', text: 'MONTHLY OVERVIEW', count: 1)
+    home_page.visit_page
+    expect(home_page).to be_on_page
+    expect(nav_page).to be_signed_in_as(user.first_name)
+
+    nav_page.click_budgets
+    expect(budgets_page).to be_on_page
   end
 end
