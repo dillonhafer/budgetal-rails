@@ -62,10 +62,10 @@
   },
   "scripts": {
     "test": "karma start",
-    "start": "./patch_icons && NODE_ENV=development node ./dev.server.js",
+    "start": "NODE_ENV=development node ./dev.server.js",
     "integration": "rm -f ../rails-api/public/main-* && API_URL='' WEBPACK_HOSTNAME=www.budgetal.com npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
     "i": "npm run integration",
-    "build": "./patch_icons && NODE_ENV=production webpack --progress --profile --config webpack.production.config.js",
+    "build": "NODE_ENV=production webpack --progress --profile --config webpack.production.config.js",
     "deploy": "./deploy.sh"
   },
   "license": "Apache-2.0",
