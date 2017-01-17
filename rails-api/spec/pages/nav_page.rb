@@ -23,4 +23,9 @@ class NavPage < PageObject
       has_selector? 'span', text: "Hello, #{first_name}!", visible: false
     end
   end
+
+  def click_sign_out
+    find('.ant-menu-submenu-title').click
+    click_on "Sign out"
+  end
 end

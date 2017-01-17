@@ -22,14 +22,16 @@ export default class Nav extends React.Component {
   }
 
   adminLink(admin) {
+    let items = [];
     if (admin) {
-      return ([
+      items.push(
         <Menu.Item key="admin-link">
           <Link to='/admin'><Icon type='lock' />Admin Panel</Link>
-        </Menu.Item>,
-        <Menu.Divider key="divider3" />
-      ]);
+        </Menu.Item>
+      );
+      items.push(<Menu.Divider key="divider3" />);
     }
+    return items;
   }
 
   renderMenuItems() {

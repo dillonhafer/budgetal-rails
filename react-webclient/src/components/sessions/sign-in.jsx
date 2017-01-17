@@ -69,7 +69,7 @@ const SignIn = Form.create()(React.createClass({
           </Col>
           <Col span={8} offset={4}>
             <Button size="large" type="primary" htmlType="submit" className="login-form-button">
-              Log in
+              Sign In
             </Button>
           </Col>
         </Row>
