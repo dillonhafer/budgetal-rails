@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/feature_helper'
 
 feature 'User manages budget items', js: true do
-  let(:budgets_page) { Pages::Budgets.new }
+  let(:budgets_page) { Pages::BudgetsPage.new }
 
   context 'As a logged in user' do
     context 'I can manage budget items' do

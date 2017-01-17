@@ -9,7 +9,7 @@ feature 'Password Reset', :js do
   let(:notice_modal) { Pages::NoticeModal.new }
 
   context 'As a signed out user' do
-    let(:forgot_password_modal) { ForgotPasswordModal.new }
+    let(:forgot_password_modal) { Pages::ForgotPasswordModal.new }
     let(:home_page) { Pages::HomePage.new }
     let(:nav_page) { Pages::NavPage.new }
 
