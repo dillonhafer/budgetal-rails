@@ -49,6 +49,7 @@ class IncomeInput extends React.Component {
       <InputNumber
         size="large"
         min={0.00}
+        name="monthly_income"
         value={this.state.monthly_income}
         onChange={this.handleNumberChange}
       />

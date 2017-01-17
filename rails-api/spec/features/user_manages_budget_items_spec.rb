@@ -1,6 +1,5 @@
 require 'rails_helper'
 require 'support/feature_helper'
-require 'support/pages/budgets'
 
 feature 'User manages budget items', js: true do
   let(:budgets_page) { Pages::Budgets.new }
