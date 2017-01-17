@@ -1,6 +1,8 @@
 class SignUpModal < PageObject
   def click_sign_up
-    click_on 'Sign Up'
+    within '.ant-tabs-tabpane.ant-tabs-tabpane-active' do
+      click_on "Sign Up"
+    end
   end
 
   %w(email first_name last_name password password_confirmation).each do |field|

@@ -22,10 +22,10 @@ feature 'Sign up', :js do
       home_page.visit_page
       expect(home_page).to be_on_page
 
-      nav_page.click_sign_in
+      nav_page.click_sign_in_up
       expect(nav_page).to be_on_sign_in
 
-      nav_page.click_sign_up
+      nav_page.click_sign_up_tab
       expect(nav_page).to be_on_sign_up
 
       sign_up_modal.fill_in_email(user[:email])

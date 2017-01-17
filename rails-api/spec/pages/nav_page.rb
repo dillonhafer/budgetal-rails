@@ -1,11 +1,11 @@
 class NavPage < PageObject
-  def click_sign_in
+  def click_sign_in_up
     within "header" do
       click_on 'Sign in / Sign up'
     end
   end
 
-  def click_sign_up
+  def click_sign_up_tab
     has_selector?('.ant-tabs-tab', text: 'Sign Up')
     find('.ant-tabs-tab', text: 'Sign Up').click
   end
