@@ -63,7 +63,7 @@ class AnnualBudgetItemForm extends React.Component {
             initialValue: item.amount,
             getValueFromEvent: this.amountChanged,
           })(
-            <InputNumber  min={0.01} placeholder="(10.00)" />
+            <InputNumber id="amount" name="amount" min={0.01} placeholder="(10.00)" />
           )}
         </Form.Item>
         <Form.Item {...this.layout} label="Due Date">
