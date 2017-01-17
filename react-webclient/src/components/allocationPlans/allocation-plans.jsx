@@ -177,12 +177,11 @@ export default class AllocationPlans extends React.Component {
     this.setState({allocation_plan});
   }
 
-  nothing() {
-    if (this.hidePlan()) {
+  nothing(showEmptyMessage) {
+    if (showEmptyMessage) {
       return (
         <div className='text-center add-pay-period-button'>
           <p>You haven't added any pay periods yet.</p>
-          <a href='#' onClick={this.addPlan} className='tiny success button radius add-pay-period'><i className='fi-plus'></i> New Pay Period</a>
         </div>
       )
     }
@@ -308,6 +307,7 @@ export default class AllocationPlans extends React.Component {
 
   render() {
     const {budget, allocation_plan} = this.state;
+    const showEmptyMessage = budget.allocation_plans.length === 0;
     const budgetDate = {year: budget.year, month: budget.month};
     return (
       <Row>
@@ -326,7 +326,7 @@ export default class AllocationPlans extends React.Component {
                         onChange={this.handleChange}
                         activeKey={this.state.currentPlan}
                         tabBarExtraContent={
-                          <Button type="primary" onClick={this.addPlan}><Icon type="plus-circle"/>New Plan</Button>
+                          <Button type="primary" onClick={this.addPlan}><Icon type="plus-circle"/>New Pay Period</Button>
                         }>
                     {
                       budget.allocation_plans.map((_plan,key) => {
@@ -371,6 +371,7 @@ export default class AllocationPlans extends React.Component {
                       })
                     }
                   </Tabs>
+                  {this.nothing(showEmptyMessage)}
                 </div>
               </div>
             </Col>

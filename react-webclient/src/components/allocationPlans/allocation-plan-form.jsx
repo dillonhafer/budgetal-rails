@@ -75,7 +75,7 @@ class AllocationPlanForm extends React.Component {
             getValueFromEvent: this.amountChanged,
             rules: [{required: true, message: 'Income is required'}]
           })(
-            <InputNumber onChange={this.handleOnChange} min={0.01} placeholder="(10.00)" />
+            <InputNumber onChange={this.handleOnChange} min={0.01} placeholder="(10.00)" name="income" />
           )}
         </Form.Item>
         <Form.Item {...tailItemLayout}>
