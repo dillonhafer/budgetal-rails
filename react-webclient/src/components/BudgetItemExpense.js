@@ -231,7 +231,7 @@ class ExpenseActionCell extends React.Component {
   render() {
     return (
       <div className='item-actions text-center'>
-        <Button onClick={this.handleOnClick} icon="save" shape="circle" type="primary" title="Save Expense"></Button>
+        <Button onClick={this.handleOnClick} icon="check" shape="circle" type="primary" title="Save Expense"></Button>
         <Popconfirm arrowPointAtCenter={true}
           title={this.title}
           overlayClassName='delete-popover'
