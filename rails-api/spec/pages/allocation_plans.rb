@@ -1,8 +1,5 @@
 module Pages
-  class AllocationPlans
-    include Capybara::DSL
-    include RSpec::Matchers
-
+  class AllocationPlans < PageObject
     def fill_in_pay_period(income:)
       expect(page).to have_selector('.overlay.fadeIn')
       fill_in 'income', with: income
