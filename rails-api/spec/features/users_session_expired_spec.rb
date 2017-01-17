@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/feature_helper'
 
-feature "User's session expired", js: true do
+feature "User's session expired", :js do
   before(:each) do
     user = login
     visit root_path
