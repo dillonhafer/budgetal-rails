@@ -100,7 +100,7 @@ class ExpenseAmountCell extends React.Component {
             initialValue: this.props.expense.amount,
             getValueFromEvent: this.amountChanged,
           })(
-            <InputNumber onChange={this.handleOnChange} min={0.01} placeholder="(10.00)" />
+            <InputNumber onChange={this.handleOnChange} name="expense_amount" min={0.01} step="1.00" placeholder="(10.00)" />
           )}
         </Form.Item>
       </Form>

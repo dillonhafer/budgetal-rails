@@ -93,6 +93,31 @@ module Pages
       find("[name=importCategory]").click
       click_on "Import Charity"
     end
+
+    def show_expenses
+      find(".ant-switch").click
+    end
+
+    def missing_expenses?
+      has_selector? ".ant-table-placeholder", text: "You haven't added any expenses yet"
+    end
+
+    def click_add_expense
+      click_on "Add an Expense"
+    end
+
+    def fill_in_expense_name(name)
+      find(".ant-select-search__field__wrap input").set(name)
+    end
+
+    def fill_in_expense_amount(amount)
+      fill_in "expense_amount", with: ""
+      fill_in "expense_amount", with: amount
+    end
+
+    def click_save_expense
+      click_on "Save Expense"
+    end
   end
 
   class BudgetIncomeModal < PageObject
