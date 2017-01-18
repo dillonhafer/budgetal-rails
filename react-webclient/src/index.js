@@ -34,7 +34,11 @@ window.ReactDOM = ReactDOM;
 window.showMessage = showMessage;
 window.showError = showError;
 window.apiError = function(message) {
-  showError(message);
+  if (message.message) {
+    showError(message.message);
+  } else {
+    showError(message);
+  }
   browserHistory.replace('/');
 };
 

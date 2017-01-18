@@ -204,8 +204,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   _budgetFetchFailed = (e) => {
-    showMessage(e.message)
-    browserHistory.replace('/');
+    apiError(e);
   }
 
   changeYear = (year) => {

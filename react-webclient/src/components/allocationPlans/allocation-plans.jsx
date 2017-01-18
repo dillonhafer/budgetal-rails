@@ -99,8 +99,7 @@ export default class AllocationPlans extends React.Component {
   }
 
   _fetchDataFail = (e) => {
-    showMessage(e)
-    apiError(e.message)
+    apiError(e)
   }
 
   _fetchBudget = (data) => {
