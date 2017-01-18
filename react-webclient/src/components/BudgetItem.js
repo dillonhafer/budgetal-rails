@@ -206,7 +206,7 @@ class BudgetItem extends React.Component {
                     required: true, message: 'Amount Budgeted is required',
                   }],
                 })(
-                  <InputNumber min={0.01} />
+                  <InputNumber name="amount_budgeted" min={0.01} step="1.00" />
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout} className='text-right'>

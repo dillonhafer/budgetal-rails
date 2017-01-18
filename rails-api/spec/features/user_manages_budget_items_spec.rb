@@ -1,26 +1,26 @@
 require 'rails_helper'
 require 'support/feature_helper'
 
-feature 'User manages budget items', js: true do
+feature 'User manages budget items', :js do
   let(:budgets_page) { Pages::BudgetsPage.new }
+  let(:notice_modal) { Pages::NoticeModal.new }
 
   context 'As a logged in user' do
     context 'I can manage budget items' do
       scenario 'I can add budget items' do
         login
-        visit root_path
-        click_link "Budgets"
+        budgets_page.visit_page
+        expect(budgets_page).to be_on_page
 
-        find('a', text: 'Add a Budget Item', wait: 1)
-        click_on 'Add a Budget Item'
-        fill_in 'name', with: 'Gifts'
-        fill_in 'amount_budgeted', with: '3.00'
-        click_on 'Save'
-        expect(page).to have_content("Saved Gifts")
+        budgets_page.click_add_budget_item
+        budgets_page.fill_in_name("Gifts")
+        budgets_page.fill_in_amount_budgeted("3.00")
+        budgets_page.click_save
+
+        expect(notice_modal).to have_notice("Saved Gifts")
         expect(page).to have_field('name', with: 'Gifts')
         expect(page).to have_field('amount_budgeted', with: '3.00')
-        expect(page).not_to have_content "You haven't added any budget items yet."
-        expect(page).not_to have_selector 'h5', text: 'You have $1,234.56 Remaining to budget'
+        expect(budgets_page).not_to have_empty_message
       end
 
       scenario 'I can edit a budget item' do

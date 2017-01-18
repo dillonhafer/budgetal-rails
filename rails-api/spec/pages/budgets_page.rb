@@ -6,6 +6,10 @@ module Pages
     end
 
     def on_page?
+      has_selector? ".ant-menu-item-selected", text: "Budgets"
+    end
+
+    def has_empty_message?
       has_selector? ".main-budget-categories", text: "You haven't added any budget items yet."
     end
 
@@ -50,6 +54,23 @@ module Pages
 
     def on_year?(year)
       has_selector? ".ant-menu-submenu-title span", text: "#{Date.today.strftime("%B")} #{year}"
+    end
+
+    def click_add_budget_item
+      click_on "Add a Budget Item"
+    end
+
+    def fill_in_name(name)
+      fill_in "name", with: name
+    end
+
+    def fill_in_amount_budgeted(amount)
+      fill_in "amount_budgeted", with: ""
+      fill_in "amount_budgeted", with: amount
+    end
+
+    def click_save
+      click_on "Save"
     end
   end
 
