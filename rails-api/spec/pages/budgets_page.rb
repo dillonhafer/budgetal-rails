@@ -17,6 +17,22 @@ module Pages
       has_selector? 'p', text: "You still need to budget #{amount}"
     end
 
+    def has_item?(name)
+      has_selector? ".ant-tabs-tab-active", text: name
+    end
+
+    def has_item_amount?(amount)
+      has_field?('amount_budgeted', with: amount)
+    end
+
+    def click_delete
+      find(".ant-btn-icon-only.delete-button").click
+    end
+
+    def confirm_delete
+      find(".ant-confirm-btns .ant-btn-primary").click
+    end
+
     def click_edit_income
       within ".monthly-overview-stats h3" do
         find("button").click
@@ -71,6 +87,11 @@ module Pages
 
     def click_save
       click_on "Save"
+    end
+
+    def click_import_items
+      find("[name=importCategory]").click
+      click_on "Import Charity"
     end
   end
 
