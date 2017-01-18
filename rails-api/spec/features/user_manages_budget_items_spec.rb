@@ -54,28 +54,32 @@ feature 'User manages budget items', :js do
 
     context 'I can import previous budget items' do
       let(:previous_date) { Date.today.advance(months: -1) }
-      let!(:user) { login }
 
       scenario 'can import previous budget items' do
+        user = login
         FactoryGirl.create(:budget, :with_budget_items, user: user, month: previous_date.month, year: previous_date.year)
-        expect(BudgetItem.first.budget_category.budget.month).to eq previous_date.month
+
         budgets_page.visit_page
         expect(budgets_page).to be_on_page
+        expect(budgets_page).to have_empty_message
 
         budgets_page.click_import_items
         expect(notice_modal).to have_notice("Finished importing 1 item")
       end
 
       scenario 'can import multiple previous budget items' do
+        user = login
         FactoryGirl.create(:budget, :with_multiple_budget_items, user: user, month: previous_date.month, year: previous_date.year)
         budgets_page.visit_page
         expect(budgets_page).to be_on_page
+        expect(budgets_page).to have_empty_message
 
         budgets_page.click_import_items
         expect(notice_modal).to have_notice("Finished importing 2 items")
       end
 
       scenario 'can import nothing from the previous budget' do
+        user = login
         budgets_page.visit_page
         expect(budgets_page).to be_on_page
         budgets_page.click_import_items
