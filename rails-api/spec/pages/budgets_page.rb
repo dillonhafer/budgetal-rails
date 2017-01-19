@@ -107,16 +107,38 @@ module Pages
     end
 
     def fill_in_expense_name(name)
-      find(".ant-select-search__field__wrap input").set(name)
+      within '.ant-table' do
+        find(".ant-select-search__field__wrap input").set(name)
+      end
     end
 
     def fill_in_expense_amount(amount)
-      fill_in "expense_amount", with: ""
-      fill_in "expense_amount", with: amount
+      within '.ant-table' do
+        fill_in "expense_amount", with: ""
+        fill_in "expense_amount", with: amount
+      end
     end
 
     def click_save_expense
-      click_on "Save Expense"
+      within '.ant-table' do
+        click_on "Save Expense"
+      end
+    end
+
+    def click_delete_expense(name)
+      within '.ant-table' do
+        click_on "Delete Expense"
+      end
+
+      within ".delete-popover" do
+        click_on "Delete #{name}"
+      end
+    end
+
+    def click_predicted_expense(name)
+      within ".ant-select-dropdown-menu" do
+        find("li", text: name).click
+      end
     end
   end
 
