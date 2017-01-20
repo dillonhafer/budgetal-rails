@@ -111,7 +111,7 @@ class ExpenseAmountCell extends React.Component {
 class ExpenseNameCell extends React.Component {
   constructor(props) {
     super(props);
-    this.predict = debounce(this._predict, 500)
+    this.predict = debounce(this._predict, 200)
     this.state = {
       predictions: [],
       didSelect: false
@@ -150,6 +150,10 @@ class ExpenseNameCell extends React.Component {
     this.setState({predictions: [], didSelect: true})
   }
 
+  filterOption(inputValue, option) {
+    return option.key.toLowerCase().startsWith(inputValue.toLowerCase());
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const validateStatus = this.props.expense.name.length > 0 ? "" : "error";
@@ -165,6 +169,7 @@ class ExpenseNameCell extends React.Component {
               style={{ width: 200 }}
               onSelect={this.handleSelect}
               onChange={this.handleChange}
+              filterOption={this.filterOption}
               placeholder="(Rent Payment)"
             />
           )}
