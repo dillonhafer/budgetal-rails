@@ -1,34 +1,35 @@
 require 'rails_helper'
-require 'support/feature_helper'
 
-feature 'Sign in', js: true do
+feature 'Sign in', :js do
   let(:user) { FactoryGirl.create(:user) }
+  let(:home_page) { Pages::HomePage.new }
+  let(:nav_page) { Pages::NavPage.new }
+  let(:sign_in_modal) { Pages::SignInModal.new }
+  let(:notice_modal) { Pages::NoticeModal.new }
 
   context 'As a signed out user' do
     it 'I can sign in to/out of budgetal' do
-      sign_out
-      visit root_path
-      expect(user.sign_in_count).to eq 0
+      home_page.sign_out
+      home_page.visit_page
+      expect(home_page).to be_on_page
 
-      # Sign In Spec
-      click_on 'Sign in / Sign up'
-      expect(page).to have_selector 'h2', text: 'Welcome!'
-      click_on 'Sign in'
-      expect(page).to have_selector '#loginEmail'
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_on 'Sign in'
-      expect(page).to have_selector '.flash-box', text: "You are now signed in"
-      find('.flash-box').click
-      expect(page).to have_selector 'a', text: "Hello, #{user.first_name}!"
-      expect(user.reload.sign_in_count).to eq 1
+      # Signing In
+      nav_page.click_sign_in_up
+      expect(nav_page).to be_on_sign_in
+
+      sign_in_modal.fill_in_email(user.email)
+      sign_in_modal.fill_in_password(user.password)
+      sign_in_modal.click_sign_in
+
+      expect(notice_modal).to have_notice("You are now signed in")
+      notice_modal.dismiss
+      expect(nav_page).to be_signed_in_as(user.first_name)
 
       # Sign Out Spec
-      find('#js-user-greeting').click
-      click_on 'Sign out'
-      expect(page).to have_selector '.flash-box', text: "You are now signed out"
-      expect(page).to have_selector 'a', text: "Sign in / Sign up"
-      expect(page).not_to have_selector 'a', text: "Hello, #{user.first_name}!"
+      nav_page.click_sign_out
+      expect(notice_modal).to have_notice("You are now signed out")
+      notice_modal.dismiss
+      expect(nav_page).not_to be_signed_in_as(user.first_name)
     end
   end
 end

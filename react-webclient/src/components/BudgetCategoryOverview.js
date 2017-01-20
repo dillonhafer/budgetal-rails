@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import Highchart from './highchart';
-import _ from 'lodash';
-import {numberToCurrency} from '../utils/helpers';
+import { numberToCurrency } from '../utils/helpers';
+import { Progress } from 'antd';
 
 export default class BudgetCategoryOverview extends React.Component {
   constructor(props) {
@@ -31,11 +30,12 @@ export default class BudgetCategoryOverview extends React.Component {
     }
   }
 
-  meterClasses() {
-    return classNames({
-      'meter': true,
-      'red-meter': this.props.amountRemaining < 0
-    });
+  status() {
+    if (this.props.amountRemaining < 0) {
+      return 'exception';
+    } else if (this.props.amountRemaining === 0) {
+      return 'success';
+    }
   }
 
   remainingClasses() {
@@ -51,18 +51,19 @@ export default class BudgetCategoryOverview extends React.Component {
             {y: parseFloat(this.percentSpent()), name: 'Spent'},
             {y: parseFloat(100 - this.percentSpent()), name: 'Remaining'}
           ]
-    return {
-      series: [{data}]
+    return { series: [{data}]
     }
   }
 
   render() {
+    const spent = this.percentSpent();
+    const status = this.status();
     return (
       <div className='large-5 medium-5 columns'>
         <div className='header-row'>
           <h3>{this.props.categoryName} Overview</h3>
         </div>
-        <div className='category-overview'>
+        <div className='body-row category-overview'>
           <ul>
             <li>
               <span className='spent success-color'>
@@ -71,14 +72,15 @@ export default class BudgetCategoryOverview extends React.Component {
               <span className={this.remainingClasses()}>
                 Remaining: {numberToCurrency(this.props.amountRemaining)}
               </span>
-              <div className="progress radius" title={this.percentSpent()+'%'}>
-                <span className={this.meterClasses()} style={this.meterWidth()}></span>
+              <Progress strokeWidth={20} status={status} percent={spent} />
+              <br />
+              <br />
+              <div className='text-center'>
+                <p>
+                  You have budgeted <b>{numberToCurrency(this.props.amountBudgeted)} ({this.percentOfBudget()}%)</b> towards {this.props.categoryName}, we recommend you budget somewhere between <b>{this.props.recommendedPercentage}</b>.
+                </p>
+                <Progress type="circle" status={status} percent={spent} />
               </div>
-              <hr />
-              <p>
-                You have budgeted {numberToCurrency(this.props.amountBudgeted)} ({this.percentOfBudget()}%) towards {this.props.categoryName}, we recommend you only budget {this.props.recommendedPercentage}.
-              </p>
-              <Highchart config={this.chartConfig()} />
             </li>
           </ul>
         </div>

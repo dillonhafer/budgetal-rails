@@ -1,5 +1,6 @@
 *.log
 .DS_Store
 .env
+.env.staging
 build
 node_modules

@@ -1,6 +1,19 @@
 import React from 'react';
-import classNames from 'classnames';
-import {numberToCurrency, monthName} from '../../utils/helpers';
+import {numberToCurrency} from '../../utils/helpers';
+import moment from 'moment';
+import {round} from 'lodash';
+
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  Icon,
+  Menu,
+  Tag,
+} from 'antd';
+const CheckableTag = Tag.CheckableTag;
+
 
 export default class AnnualBudgetItem extends React.Component {
   constructor(props) {
@@ -11,35 +24,49 @@ export default class AnnualBudgetItem extends React.Component {
     budgetItem: React.PropTypes.object.isRequired
   };
 
-  paidLabel(isPaid) {
-    var classes = classNames('label radius', {success: isPaid, alert: !isPaid});
-    return (<span className={classes}>{isPaid ? 'Paid' : 'Not Paid'}</span>);
+  editItem = () => {
+    this.props.handleOnCardClick(this.props.budgetItem);
   }
 
-  dueDate(date) {
-    var dateArray = date.split('-');
-    var parts = {
-      year: dateArray[0],
-      month: monthName(dateArray[1]),
-      day: parseInt(dateArray[2])
-    };
-    return `${parts.month} ${parts.day}, ${parts.year}`;
+  deleteItem = () => {
+    this.props.handleOnDeleteClick(this.props.budgetItem);
   }
 
   render() {
-    let item    = this.props.budgetItem
-    let hide    = item.id === undefined;
-    let classes = classNames('no-container', {hide});
+    const name   = this.props.budgetItem.name;
+    const loading = this.props.budgetItem.loading;
+    const amount = numberToCurrency(this.props.budgetItem.amount);
+    const date   = moment(this.props.budgetItem.due_date).format('LL');
+    const month  = numberToCurrency(round((this.props.budgetItem.amount / 12)));
+    const color  = this.props.budgetItem.paid ? '#87d068' : '#cacaca';
+   const menu = <Menu>
+                  <Menu.Item>
+                    <a className="primary-color" onClick={this.editItem}><Icon type="edit" /> Edit</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a className="alert-color" onClick={this.deleteItem}><Icon type="delete" /> Delete</a>
+                  </Menu.Item>
+                </Menu>
     return (
-      <li className={classes}>
-        <ul className="pricing-table">
-          <li className="title">{ item.name }</li>
-          <li className="price">{ numberToCurrency(item.amount) }</li>
-          <li className="description"><b>Due:</b> { this.dueDate(item.due_date) }</li>
-          <li className="bullet-item">{ numberToCurrency(item.amount / 12) } / month</li>
-          <li className="bullet-item">{ this.paidLabel(item.paid) }</li>
-        </ul>
-      </li>
+      <Col className="card" xs={24} sm={12} md={8} lg={6}>
+        <Card loading={loading} title={name} extra={
+            <div className="annual-item-crud">
+              <Dropdown overlay={menu} trigger={['click']}>
+                <Button type="ghost" shape="circle" icon="ellipsis" />
+              </Dropdown>
+            </div>
+          }>
+          <div className='text-center'>
+            <p>
+              In order to reach <b>{amount}</b><br />
+              by <b>{date}</b><br />
+              you need to save
+              <br/><b>{month}/month</b><br />
+            </p>
+            <Tag color={color}>Paid</Tag>
+          </div>
+        </Card>
+      </Col>
     );
   }
 }

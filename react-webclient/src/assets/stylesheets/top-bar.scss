@@ -299,13 +299,15 @@
   }
 }
 
-.has-dropdown {
-  img {
-    vertical-align: middle;
-    margin-right: 10px;
-    border: 1px solid white;
-    width: 30px;
-    height: 30px;
-    @include vendor(border-radius, 15px);
-  }
+.nav-user-logo {
+  vertical-align: middle;
+  margin-right: 10px;
+  border: 1px solid white;
+  width: 30px;
+  height: 30px;
+  @include vendor(border-radius, 15px);
+}
+
+.no-modal-footer .ant-modal-footer {
+  display: none;
 }

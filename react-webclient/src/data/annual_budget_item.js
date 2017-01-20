@@ -4,11 +4,11 @@ module.exports = {
   allItems(year) {
     return getRequest(`/annual-budgets/${year}`);
   },
-  createItem(budget_item) {
-    return postRequest('/annual-budget-items', budget_item);
+  createItem(annual_budget_item) {
+    return postRequest('/annual-budget-items', {annual_budget_item});
   },
-  updateItem(data) {
-    return putRequest(`/annual-budget-items/${data.annual_budget_item.id}`, data);
+  updateItem(annual_budget_item) {
+    return putRequest(`/annual-budget-items/${annual_budget_item.id}`, {annual_budget_item});
   },
   destroyItem(id) {
     return deleteRequest(`/annual-budget-items/${id}`);

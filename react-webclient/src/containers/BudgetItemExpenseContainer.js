@@ -25,6 +25,26 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	}
 }
 
+export const DateCell = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Expense.DateCell);
+
+export const AmountCell = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Expense.AmountCell);
+
+export const ActionCell = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Expense.ActionCell);
+
+export const NameCell = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Expense.NameCell);
+
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/feature_helper'
 require 'support/email_support'
 
 feature 'Sign up', :js do
@@ -14,21 +13,29 @@ feature 'Sign up', :js do
         password: 'Password1'
       }
     end
+    let(:home_page) { Pages::HomePage.new }
+    let(:nav_page) { Pages::NavPage.new }
+    let(:sign_up_modal) { Pages::SignUpModal.new }
 
     scenario 'I can sign up for budgetal' do
-      sign_out
-      visit root_path
-      click_on 'Sign in / Sign up'
-      expect(page).to have_selector 'h2', text: 'Welcome!'
-      click_on 'Join Us'
-      expect(page).to have_selector '#new_user'
-      fill_in 'Email', with: user[:email]
-      fill_in 'First Name', with: user[:first_name]
-      fill_in 'Last Name', with: user[:last_name]
-      fill_in 'Password', with: user[:password]
-      fill_in 'Password Confirmation', with: user[:password]
-      click_on 'Sign up'
-      expect(page).to have_selector 'a', text: "Hello, #{user[:first_name]}!"
+      home_page.sign_out
+      home_page.visit_page
+      expect(home_page).to be_on_page
+
+      nav_page.click_sign_in_up
+      expect(nav_page).to be_on_sign_in
+
+      nav_page.click_sign_up_tab
+      expect(nav_page).to be_on_sign_up
+
+      sign_up_modal.fill_in_email(user[:email])
+      sign_up_modal.fill_in_first_name(user[:first_name])
+      sign_up_modal.fill_in_last_name(user[:last_name])
+      sign_up_modal.fill_in_password(user[:password])
+      sign_up_modal.fill_in_password_confirmation(user[:password])
+      sign_up_modal.click_sign_up
+
+      expect(nav_page).to be_signed_in_as(user[:first_name])
       expect(find_last_email_to(user[:email])).not_to be_blank
     end
   end

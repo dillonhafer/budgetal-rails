@@ -1,8 +1,8 @@
 import 'babel-polyfill';
-import './assets/stylesheets/app';
+import './assets/stylesheets/theme.sass';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {showMessage} from './utils/flash-box';
+import {showMessage,showError} from './utils/flash-box';
 import {userAuthenticated} from './utils/helpers';
 import AllocationPlans from './components/allocationPlans/allocation-plans';
 import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
@@ -19,42 +19,50 @@ import Admin from './components/admin/admin';
 import AccountSettings from './components/account-settings/account-settings';
 import { render } from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { Router, Route, IndexRoute, Link } from 'react-router';
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 import BudgetContainer from './containers/BudgetContainer';
-import { createHistory } from 'history'
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
-const history = createHistory();
 
 window.React = React;
 window.ReactDOM = ReactDOM;
 window.showMessage = showMessage;
+window.showError = showError;
 window.apiError = function(message) {
-  showMessage(message);
-  history.replace('/');
+  if (message.message) {
+    showError(message.message);
+  } else {
+    showError(message);
+  }
+  browserHistory.replace('/');
 };
 
+import {LocaleProvider} from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <Nav />
-        <ReactCSSTransitionGroup
-          component="div"
-          transitionName="example"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}>
-          {React.cloneElement(this.props.children, {
-            key: this.props.location.pathname
-          })}
-        </ReactCSSTransitionGroup>
-        <Footer />
-      </div>
+      <LocaleProvider locale={enUS}>
+        <div>
+          <Nav location={this.props.location.pathname} />
+            <ReactCSSTransitionGroup
+              component="div"
+              className="main-body"
+              transitionName="example"
+              transitionEnterTimeout={300}
+              transitionLeaveTimeout={300}>
+              {React.cloneElement(this.props.children, {
+                key: this.props.location.pathname
+              })}
+            </ReactCSSTransitionGroup>
+          <Footer />
+        </div>
+      </LocaleProvider>
     );
   }
 }
@@ -62,13 +70,13 @@ class App extends React.Component {
 function requireAuth(nextState, replace) {
   if (!userAuthenticated()) {
     replace(null, '/', null);
-    showMessage('You need to sign in.');
+    showError("You need to sign in.");
   }
 }
 
 render((
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Home}/>
         <Route path="privacy" component={Privacy} />

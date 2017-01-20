@@ -5,13 +5,16 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'database_cleaner'
+require 'page_object'
+Dir[Rails.root.join("spec/pages/**/*.rb")].each { |f| require f }
 
 Selenium::WebDriver::Chrome::Service.executable_path = ENV.fetch('CHROME_DRIVER', '/usr/local/bin/chromedriver')
+
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, switches: %w[—-test-type --no-sandbox])
 end
 
-Capybara.javascript_driver = ENV.fetch('selenium', 'chrome').to_sym
+Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = 5
 
 ActiveRecord::Migration.maintain_test_schema!

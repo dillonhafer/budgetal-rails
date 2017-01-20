@@ -6,7 +6,7 @@
 @import 'buttons';
 @import 'pricing-table';
 @import 'block-grid';
-@import 'forms';
+// @import 'forms';
 @import './vendor/foundation-icons';
 @import './vendor/jquery.minical.sass';
 @import 'animations';
@@ -305,4 +305,8 @@ fieldset[disabled] {
   justify-content: center;
   height: 400px;
   padding: 1rem;
+}
+
+.ant-input-group-addon {
+  padding: 4px 10px !important;
 }

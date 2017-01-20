@@ -36,8 +36,8 @@ module FeatureHelper
   end
 
   def assert_redirected
-    expect(page).to have_selector('.flash-box')
-    expect(page).not_to have_selector('a', text: 'Budgets')
+    notice_modal = Pages::NoticeModal.new
+    expect(notice_modal).to have_error("You must sign in or up before continuing")
     expect(current_path).to eq('/')
   end
 end

@@ -1,42 +1,70 @@
 import React from 'react';
 import {updateAccountInfo} from '../../data/user';
-import {currentUser} from '../../utils/helpers';
+import {currentUser,prettyServerErrors} from '../../utils/helpers';
 import InputField from '../forms/input_field';
+import {get, round, assign} from 'lodash';
+import {browserHistory} from 'react-router';
+import {
+  Button,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Modal,
+  Row,
+  Upload,
+} from 'antd';
 
-export default class UpdateAccountInfo extends React.Component {
+class UpdateAccountInfoClass extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: currentUser(),
+      previewVisible: false,
+      previewImage: '',
+      fileList: [{
+        uid: -1,
+        name: '',
+        status: 'done',
+        url: currentUser().avatar,
+      }],
+    };
   }
 
-  state = {
-    user: currentUser()
+  handleCancel = () => {
+    this.props.form.resetFields();
+    this.setState({ previewVisible: false, confirmPasswordVisible: false })
   }
 
-  static contextTypes = {
-    history: React.PropTypes.object.isRequired
+  handlePreview = (file) => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
   }
+
+  handleChange = ({ fileList }) => this.setState({ fileList })
 
   _fetchDataFail = (e) => {
-    showMessage(e.message)
-    this.context.history.replace('/');
+    apiError(e.message)
   }
 
   update = (e) => {
-    let user = this.state.user;
-    user[e.target.name] = e.target.value;
+    const user = Object.assign({}, this.state.user, {[e.target.id]: e.target.value});
     this.setState({user});
   }
 
-  save = (e) => {
-    e.preventDefault();
+  save = () => {
     const data = {user: this.state.user, current_password: this.state.user.current_password}
     updateAccountInfo(data)
       .then((resp) => {
-        const user = _.assign({}, this.state.user, resp);
+        const user = assign({}, this.state.user, resp);
         this.setState({user})
 
         if (!resp.errors) {
           this.saveDone(resp.message);
+        } else {
+          showError(prettyServerErrors(resp.errors));
         }
       })
       .catch(this._fetchDataFail)
@@ -44,25 +72,29 @@ export default class UpdateAccountInfo extends React.Component {
 
   saveDone = (message) => {
     showMessage(message);
-    let user    = _.assign({}, this.state.user, {current_password:'', errors: ''});
-    let current = _.assign({}, currentUser(), user);
+    let user    = assign({}, this.state.user, {current_password:'', errors: ''});
+    let current = assign({}, currentUser(), user);
 
     this.setState({user});
     localStorage.setItem('user', JSON.stringify(current));
-    this.context.history.replace('/account-settings');
+    browserHistory.replace('/account-settings');
   }
 
-  handleFile = (e) => {
+  handleFile = (file) => {
     const reader = new FileReader();
-    const file = e.target.files[0];
-    let user = this.state.user;
 
-    if (_.round(e.target.files[0].size / 1048576, 2) > 1) {
-      showMessage('Your photo is too large. The limit is 1 MB')
+    if (round(file.size / 1048576, 2) > 1) {
+      showError('Your photo is too large. The limit is 1 MB')
     } else {
       reader.onload = (upload) => {
-        user.avatar = upload.target.result;
-        this.setState({user});
+        const user = assign({}, this.state.user, {avatar: upload.target.result});
+        const fileList = [{
+          uid: -1,
+          name: file.name,
+          status: 'done',
+          url: user.avatar,
+        }];
+        this.setState({user, fileList});
       }
 
       reader.readAsDataURL(file);
@@ -74,50 +106,123 @@ export default class UpdateAccountInfo extends React.Component {
     this.refs.file.click();
   }
 
+  handleOnOk = (e) => {
+    if (e)
+      e.preventDefault();
+
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.handleCancel();
+        this.save();
+        this.props.form.resetFields();
+      } else {
+        showError("Please check form for errors")
+      }
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({confirmPasswordVisible: true});
+  }
+
+  uploadButton = (
+    <div>
+      <Icon type="plus" />
+      <div className="ant-upload-text">Upload</div>
+    </div>
+  );
+
+  formItemLayout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+
   render() {
+    const { previewVisible, previewImage, fileList } = this.state;
+    const uploadButton = get({0: this.uploadButton}, fileList.length, null);
     const user = this.state.user;
+    const { getFieldDecorator } = this.props.form;
+
     return (
-      <div className='row collapse'>
-        <div className='large-12 columns header-row'>
+      <Row>
+        <div className='header-row'>
           <h3>Account Info</h3>
         </div>
-        <div className="small-12 large-12 columns">
-          <ul className="main-budget-categories account-settings">
-            <li>
-              <div className='row collapse'>
-                <form onSubmit={this.save} ref='form'>
-                  <div className='large-4 columns text-center'>
-                    <img className='shadow' style={{height: '140px', width: '140px', border: '5px solid white'}} onClick={this.selectFile} src={user.avatar} />
-                    <br />
-                    <a onClick={this.selectFile} className='button tiny radius'>Upload Photo</a>
-                    <input className='hide' type="file" ref='file' onChange={this.handleFile} />
-                  </div>
-                  <div className="large-8 medium-8 columns">
-                    <label htmlFor='first_name'>First Name</label>
-                    <InputField onChange={this.update} required={true} type='text' id='first_name' name='first_name' placeholder='First Name' value={user.first_name} errors={user.errors} />
-                  </div>
-                  <div className="large-8 medium-8 columns">
-                    <label htmlFor='last_name'>Last Name</label>
-                    <InputField onChange={this.update} required={true} type='text' id='last_name' name='last_name' placeholder='Last Name' value={user.last_name} errors={user.errors} />
-                  </div>
-                  <div className='large-8 medium-8 columns'>
-                    <label htmlFor='email'>Email</label>
-                    <InputField onChange={this.update} required={true} type='email' id='email' name='email' placeholder='email@example.com' value={user.email} errors={user.errors} />
-                  </div>
-                  <hr />
-                  <div className='large-7 medium-7 columns'>
-                    <label htmlFor='current_password'>Current Password</label>
-                    <InputField onChange={this.update} required={true} type='password' id='current_password' name='current_password' placeholder='Current Password' value={user.current_password} errors={user.errors} />
-                  </div>
-                  <div className='large-5 medium-5 columns'>
-                    <button type='submit' title='Update' className='tiny success radius button'><i className='fi-icon fi-check'></i> Update Account Info</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-          </ul>
+        <div className="body-row account-settings clearfix">
+          <Form horizontal onSubmit={this.handleSubmit}>
+            <Col span={8} className='text-center'>
+              <Upload action="/"
+                beforeUpload={(file) => {this.handleFile(file);return false}}
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={this.handlePreview}
+                onChange={this.handleChange}>
+                  {uploadButton}
+              </Upload>
+              <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                <img alt="avatar" style={{ width: '100%' }} src={previewImage} />
+              </Modal>
+            </Col>
+            <Col span={16}>
+              <Form.Item {...this.formItemLayout} label="First Name" hasFeedback>
+                {getFieldDecorator('first_name', {
+                  initialValue: user.first_name,
+                  onChange: this.update,
+                  rules: [{
+                    required: true, message: "First Name is required"
+                  }],
+                })(
+                  <Input addonBefore={<Icon type="user" />} />
+                )}
+              </Form.Item>
+              <Form.Item {...this.formItemLayout} label="Last Name" hasFeedback>
+                {getFieldDecorator('last_name', {
+                  initialValue: user.last_name,
+                  onChange: this.update,
+                  rules: [{
+                    required: true, message: "Last Name is required"
+                  }],
+                })(
+                  <Input addonBefore={<Icon type="user" />} />
+                )}
+              </Form.Item>
+              <Form.Item {...this.formItemLayout} label="Email" hasFeedback>
+                {getFieldDecorator('email', {
+                  initialValue: user.email,
+                  onChange: this.update,
+                  rules: [{
+                    type: 'email', message: 'That does not look like a valid E-mail!',
+                  }, {
+                    required: true, message: 'E-mail is required',
+                  }],
+                })(
+                  <Input addonBefore={<Icon type="mail" />} type="email" />
+                )}
+              </Form.Item>
+              <Col span={8} offset={16}>
+                <Button type="primary" htmlType="submit" className="right" size="large">Update Account Info</Button>
+              </Col>
+            </Col>
+          </Form>
+          <Modal width="300px" title="Confirm Password To Continue" visible={this.state.confirmPasswordVisible} onOk={this.handleOnOk} okText="Confirm Password" onCancel={this.handleCancel}>
+            <Form onSubmit={this.handleOnOk}>
+              <Form.Item label="Password" hasFeedback>
+                        {this.props.form.getFieldDecorator('current_password', {
+                          onChange: this.update,
+                          rules: [{
+                            required: true, message: 'Current Password is required',
+                          }],
+                        })(
+                        <Input addonBefore={<Icon type="lock" />} type="password" />
+                        )}
+              </Form.Item>
+            </Form>
+          </Modal>
         </div>
-      </div>
+      </Row>
     )
   }
 }
+
+export default Form.create()(UpdateAccountInfoClass);
