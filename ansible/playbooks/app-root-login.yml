@@ -1,0 +1,28 @@
+---
+- hosts: application
+  remote_user: root
+  gather_facts: no
+
+  tasks:
+    - name: Ensure Python on Xenial
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+    - name: Ensure aptitude on Xenial
+      raw: apt -y update && apt install -y aptitude
+
+    - name: Create deploy user
+      user:
+        name: "{{ deploy_user }}"
+        createhome: yes
+        state: present
+        shell: /bin/bash
+      register: deployuser
+
+    - name: Disable password for deploy on creation
+      shell: /usr/bin/passwd -l '{{ deploy_user }}'
+      when: deployuser.changed
+
+    - name: Upload ansible users public key
+      authorized_key:
+        user: '{{ deploy_user }}'
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"

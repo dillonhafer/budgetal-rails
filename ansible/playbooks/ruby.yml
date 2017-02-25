@@ -1,0 +1,14 @@
+---
+- hosts: application
+  remote_user: root
+  roles:
+    - {
+        role: rvm_io.rvm1-ruby,
+        tags: ruby,
+        rvm1_rubies: ['ruby-2.3.1'],
+      }
+  tasks:
+    - name: Add deploy to rvm group
+      user:
+        name: "{{ deploy_user }}"
+        group: rvm

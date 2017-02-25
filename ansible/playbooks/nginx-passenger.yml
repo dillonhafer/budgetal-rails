@@ -1,0 +1,84 @@
+---
+- hosts: application
+  remote_user: root
+  tasks:
+    - name: Add Phusion Passenger repo key
+      apt_key:
+        url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x561F9B9CAC40B2F7
+        state: present
+
+    - name: Install packages to enable apt over HTTPS
+      action: apt pkg="{{item}}" state=installed
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+
+    - name: Add Phusion Passenger repo
+      apt_repository:
+        repo: 'deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main'
+
+    - name: Install nginx-extras and passenger
+      action: apt pkg="{{item}}" state=installed
+      with_items:
+        - nginx-extras
+        - passenger
+
+    - name: Remove the default nginx app's config
+      file:
+        path: /etc/nginx/sites-available/default
+        state: absent
+
+    - name: Remove the default nginx app's symlink if it exists
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Configure nginx for the app
+      template:
+        src: "budgetal.nginx"
+        dest: "/etc/nginx/sites-available/{{ app_name }}"
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        force: yes
+
+    - name: Enable the app
+      file:
+        src: "/etc/nginx/sites-available/{{ app_name }}"
+        dest: "/etc/nginx/sites-enabled/{{ app_name }}"
+        state: link
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+
+    - name: Copy nginx.conf
+      template:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+
+    - name: Make sure app folder exists
+      file:
+        path: "/home/{{ deploy_user }}/{{ app_name }}"
+        state: directory
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+
+    - name: Ensures shared/config dir exists
+      file:
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/config"
+        state: directory
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+
+    - name: Configure rails env var file
+      template:
+        src: ".env"
+        dest: "/home/{{ deploy_user }}/{{ app_name }}/shared"
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        force: yes
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: restarted
+      changed_when: >
+        "Will always run, don't show that it changed" == 1

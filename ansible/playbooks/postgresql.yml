@@ -1,0 +1,54 @@
+---
+- hosts: application
+  remote_user: root
+
+  tasks:
+    - name: Add PostgreSQL repository
+      apt_repository:
+        repo: "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
+        state: present
+
+    - name: Add PostgreSQL repository key
+      apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install postgresql
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - postgresql-9.5
+        - libpq-dev
+        - python-psycopg2
+
+    - name: Add app database user
+      postgresql_user:
+        name:  "{{ postgres_user }}"
+        role_attr_flags: CREATEDB,NOSUPERUSER
+      become: yes
+      become_user: postgres
+
+    - name: Create application database
+      postgresql_db:
+        name: "{{ postgres_app_db }}"
+      become: yes
+      become_user: postgres
+
+    - name: Allow local socket logins
+      lineinfile:
+        dest: /etc/postgresql/9.5/main/pg_hba.conf
+        insertafter: "^# TYPE.*DATABASE.*USER"
+        line: "local all all trust"
+        state: present
+      notify: restart postgres
+
+  handlers:
+    - name: restart postgres
+      service:
+        name: postgresql
+        state: restarted

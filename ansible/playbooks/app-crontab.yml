@@ -1,0 +1,17 @@
+---
+- hosts: application
+  vars:
+    letsencrypt_domain_flags:
+      - "--domain"
+      - "{{domain}}"
+
+  remote_user: root
+  become: yes
+  become_user: "{{ deploy_user }}"
+  tasks:
+    - name: Install certificate renewals
+      cron:
+        name: 'Lets Encrypt'
+        minute: "0"
+        hour: "3"
+        job: "/home/{{ deploy_user }}/certbot-auto certonly --webroot -w /home/{{ deploy_user }}/{{ app_name }}/current/public {{ letsencrypt_domain_flags | join(' ') }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"

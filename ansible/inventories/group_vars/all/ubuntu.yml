@@ -1,0 +1,7 @@
+---
+deploy_user: deploy
+postgres_user: budgetal
+postgres_app_db: budgetal_production
+app_name: budgetal
+domain: api.budgetal.com
+letsencrypt_email: 'tls@budgetal.com'
