@@ -58,7 +58,7 @@ namespace :git do
     comment "Extracting subdirectory"
     command "mv #{fetch :subdir}/* ."
     command "rm -rf #{fetch :subdir}"
-    command "rm -rf ios-client react-webclient README.md"
+    command "rm -rf ansible ios-client react-webclient README.md"
   end
 end
 
