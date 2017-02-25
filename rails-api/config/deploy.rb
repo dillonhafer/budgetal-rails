@@ -9,7 +9,7 @@ set :repository, 'https://github.com/dillonhafer/budgetal.git'
 set :subdir, 'rails-api'
 set :domain, 'api.budgetal.com'
 set :deploy_to, '/home/deploy/budgetal'
-set :branch, 'production'
+set :branch, 'master'
 set :rails_env, 'production'
 set :user, 'deploy'
 set :keep_releases, 4
@@ -73,10 +73,8 @@ end
 namespace :pg do
   desc "Creates a postgres backup."
   task backup: :environment do
-    backup_date = Time.now.strftime("%Y%m%d%H%M%S")
-    command     = "pg_dump -Fc budgets > #{deploy_to}/db-backups/#{backup_date}.dump"
-    queue "echo -e '\e[32m----->\e[0m Dumping database\n       #{command}'"
-    queue command
+    comment "Dumping database"
+    command "pg_dump -Fc budgets > #{fetch :deploy_to}/db-backups/#{Time.now.strftime("%Y%m%d%H%M%S")}.dump"
   end
 end
 
