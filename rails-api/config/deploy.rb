@@ -9,7 +9,7 @@ set :repository, 'https://github.com/dillonhafer/budgetal.git'
 set :subdir, 'rails-api'
 set :domain, 'api.budgetal.com'
 set :deploy_to, '/home/deploy/budgetal'
-set :branch, 'ansible'
+set :branch, 'production'
 set :rails_env, 'production'
 set :user, 'deploy'
 set :keep_releases, 4

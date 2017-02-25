@@ -39,6 +39,13 @@
       become: yes
       become_user: postgres
 
+    - name: Create pgcrypto extension
+      postgresql_ext:
+        name: pgcrypto
+        db: "{{ postgres_app_db }}"
+      become: yes
+      become_user: postgres
+
     - name: Allow local socket logins
       lineinfile:
         dest: /etc/postgresql/9.5/main/pg_hba.conf
