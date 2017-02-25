@@ -5,7 +5,6 @@ defaults: &defaults
   host:     <%= ENV.fetch('RAILS_DATABASE_HOST', 'localhost') %>
   database: <%= ENV.fetch('RAILS_DATABASE', 'budgetal_development') %>
   user:     <%= ENV['RAILS_DATABASE_USER'] %>
-  password: <%= ENV['RAILS_DATABASE_PASSWD'] %>
 
 development:
   <<: *defaults
