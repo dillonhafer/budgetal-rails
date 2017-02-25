@@ -1,0 +1,10 @@
+---
+- include: playbooks/app-root-login.yml
+- include: playbooks/app-configure-ssh.yml
+- include: playbooks/bootstrap-system.yml
+- include: playbooks/app-ufw.yml
+- include: playbooks/postgresql.yml
+- include: playbooks/ruby.yml
+- include: playbooks/lets-encrypt.yml
+- include: playbooks/nginx-passenger.yml
+- include: playbooks/app-crontab.yml

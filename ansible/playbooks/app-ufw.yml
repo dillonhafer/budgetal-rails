@@ -1,0 +1,26 @@
+---
+- hosts: application
+  remote_user: root
+  tasks:
+    - name: Allow ssh traffic
+      ufw:
+        rule: allow
+        port: 22
+        proto: tcp
+
+    - name: Allow http traffic
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+
+    - name: Allow https traffic
+      ufw:
+        rule: allow
+        port: 443
+        proto: tcp
+
+    - name: Enable ufw and deny everything else
+      ufw:
+        state: enabled
+        policy: deny
