@@ -1,0 +1,12 @@
+checkout:
+  post:
+    - cd ./react-webclient && yarn install && yarn run integration
+    - cd ./rails-api && bundle
+database:
+  override:
+    - cd ./rails-api && bundle exec rake db:create && bundle exec rake db:structure:load
+test:
+  override:
+    - cd ./react-webclient && yarn test
+    - cd ./rails-api && bundle exec rake
+    - cd ./rails-api && bundle exec rake features
