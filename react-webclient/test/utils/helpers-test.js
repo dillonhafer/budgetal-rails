@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import expect from 'expect';
-import {monthName, selectedValue, numberToCurrency, title} from '../helpers';
+import {monthName, selectedValue, numberToCurrency, title} from '../../src/utils/helpers';
 import {elFactory} from './dom_helpers';
 
 describe('Helpers', () => {

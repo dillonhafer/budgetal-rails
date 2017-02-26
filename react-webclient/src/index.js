@@ -9,8 +9,6 @@ import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
 import Statistics from './components/statistics/statistics';
 import Sessions from './components/sessions/sessions';
 import PasswordReset from './components/sessions/PasswordReset';
-import Footer from './components/layout/footer';
-import Nav from './components/layout/nav';
 import NotFound from './components/layout/not-found';
 import Maintenance from './components/layout/maintenance';
 import Home from './components/home/home';
@@ -18,7 +16,6 @@ import Privacy from './components/home/privacy';
 import Admin from './components/admin/admin';
 import AccountSettings from './components/account-settings/account-settings';
 import { render } from 'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
@@ -28,6 +25,7 @@ import BudgetContainer from './containers/BudgetContainer';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
+import App from './components/app';
 
 window.React = React;
 window.ReactDOM = ReactDOM;
@@ -42,30 +40,6 @@ window.apiError = function(message) {
   browserHistory.replace('/');
 };
 
-import {LocaleProvider} from 'antd';
-import enUS from 'antd/lib/locale-provider/en_US';
-class App extends React.Component {
-  render() {
-    return (
-      <LocaleProvider locale={enUS}>
-        <div>
-          <Nav location={this.props.location.pathname} />
-            <ReactCSSTransitionGroup
-              component="div"
-              className="main-body"
-              transitionName="example"
-              transitionEnterTimeout={300}
-              transitionLeaveTimeout={300}>
-              {React.cloneElement(this.props.children, {
-                key: this.props.location.pathname
-              })}
-            </ReactCSSTransitionGroup>
-          <Footer />
-        </div>
-      </LocaleProvider>
-    );
-  }
-}
 
 function requireAuth(nextState, replace) {
   if (!userAuthenticated()) {
