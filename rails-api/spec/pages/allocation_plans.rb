@@ -24,7 +24,7 @@ module Pages
 
     def click_edit
       find(".ant-dropdown-trigger").click
-      find(".ant-dropdown-menu-item a", text: "Edit").click
+      find(".ant-dropdown-menu-item a", text: "Edit", wait: 5).click
     end
   end
 

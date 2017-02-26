@@ -4,7 +4,8 @@ dependencies:
     - "./rails-api/vendor/bundle"
 checkout:
   post:
-    - cd ./react-webclient && yarn install && yarn run integration
+    - cd ./react-webclient && yarn install
+    - cd ./react-webclient && yarn run integration
     - cd ./rails-api && gem install bundler --no-ri --no-rdoc
     - cd ./rails-api && bundle --path vendor/bundle
 database:

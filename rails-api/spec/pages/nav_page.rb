@@ -35,9 +35,7 @@ module Pages
     end
 
     def click_sign_out
-      2.times {
-        find('.ant-menu-submenu-title').click
-      }
+      find('.ant-menu-submenu-title').click
       click_on "Sign out"
     end
 
