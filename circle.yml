@@ -1,6 +1,7 @@
 checkout:
   post:
     - cd ./react-webclient && yarn install && yarn run integration
+    - cd ./rails-api && gem install bundler --no-ri --no-rdoc
     - cd ./rails-api && bundle
 database:
   override:
