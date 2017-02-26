@@ -1,18 +1,27 @@
 import { expect } from '../test_helper';
 
 import * as types from '../../src/constants/ActionTypes';
-import { saveComment } from '../../src/actions/BudgetCategory';
+import { updateBudget } from '../../src/actions/BudgetCategory';
 
 describe('actions', () => {
-  describe('saveComment', () => {
+  const budget = {
+    id: 37
+  };
+
+  describe('updateBudget', () => {
     it('has the correct type', () => {
-      // const action = saveComment();
-      // expect(action.type).to.eq(types.SAVE_COMMENT)
+      const action = updateBudget({budget});
+      expect(action.type).toEqual(types.BUDGET_UPDATED)
     });
 
-    it('has the correct payload', () => {
-      // const action = saveComment('new comment');
-      // expect(action.payload).to.eq('new comment')
+    it('has the correct budget', () => {
+      const action = updateBudget({budget});
+      expect(action.budget.id).toEqual(37)
+    });
+
+    it('has the correct expenses', () => {
+      const action = updateBudget({budget, budgetItemExpenses: [1,2,3]});
+      expect(action.budgetItemExpenses).toEqual([1,2,3])
     });
   });
 });

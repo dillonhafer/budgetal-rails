@@ -1,13 +1,8 @@
-import 'babel-polyfill';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import TestUtils from 'react-addons-test-utils';
-
 import { renderComponent , expect } from '../test_helper';
 import Expense from '../../src/components/BudgetItemExpense';
 
 describe('BudgetItemExpense', () => {
-  let component;
+  let dateCell, nameCell, amountCell;
   const expense = {
     name: 'Amazon',
     amount: 12.12,
@@ -15,10 +10,24 @@ describe('BudgetItemExpense', () => {
   };
 
   beforeEach(() => {
-    component = renderComponent(Expense.DateCell, {expense: expense});
+    dateCell   = renderComponent(Expense.DateCell,   {expense: expense});
+    nameCell   = renderComponent(Expense.NameCell,   {expense: expense});
+    amountCell = renderComponent(Expense.AmountCell, {expense: expense});
   });
 
   it('displays a date field', () => {
-    expect(component.find('.ant-calendar-picker input')).to.exist;
+    expect(dateCell.find('.ant-calendar-picker input').val()).toEqual("2015-03-12");
+  });
+
+  it('displays a name field', () => {
+    expect(nameCell.find('.ant-select-search__field').val()).toEqual("Amazon");
+  });
+
+  it('displays an auto-complete field', () => {
+    expect(nameCell.find('.ant-select-search__field').val()).toEqual("Amazon");
+  });
+
+  it('displays an amount field', () => {
+    expect(amountCell.find('input[name="expense_amount"]').val()).toEqual("12.12");
   });
 });
