@@ -23,5 +23,20 @@ describe('actions', () => {
       const action = updateBudget({budget, budgetItemExpenses: [1,2,3]});
       expect(action.budgetItemExpenses).toEqual([1,2,3])
     });
+
+    it('has the correct expenses if there are new ones', () => {
+      const action = updateBudget({budget});
+      expect(action.budgetItemExpenses).toNotExist()
+    });
+
+    it('has the correct items if there are new ones', () => {
+      const action = updateBudget({budget});
+      expect(action.budgetItems).toNotExist()
+    });
+
+    it('has the correct categories if there are new ones', () => {
+      const action = updateBudget({budget});
+      expect(action.budgetCategories).toNotExist()
+    });
   });
 });

@@ -13,21 +13,9 @@ import {
 import {flatten, map} from 'lodash'
 
 export function updateBudget(data) {
-  let newData = {budget: data.budget}
-  if (data.budgetItems) {
-    newData.budgetItems = data.budgetItems;
-  }
-  if (data.budgetItemExpenses) {
-    newData.budgetItemExpenses = data.budgetItemExpenses;
-  }
-
-  if (data.budgetCategories) {
-    newData.budgetCategories = data.budgetCategories;
-  }
-
   return {
     type: BUDGET_UPDATED,
-    ...newData,
+    ...data,
   }
 }
 
