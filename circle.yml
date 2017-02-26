@@ -1,3 +1,8 @@
+dependencies:
+  cache_directories:
+    - "./react-webclient/node_modules"
+    - "./rails-api/vendor/bundle"
+    - "./rails-api/.bundle"
 checkout:
   post:
     - cd ./react-webclient && yarn install && yarn run integration
