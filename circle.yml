@@ -2,12 +2,11 @@ dependencies:
   cache_directories:
     - "./react-webclient/node_modules"
     - "./rails-api/vendor/bundle"
-    - "./rails-api/.bundle"
 checkout:
   post:
     - cd ./react-webclient && yarn install && yarn run integration
     - cd ./rails-api && gem install bundler --no-ri --no-rdoc
-    - cd ./rails-api && bundle
+    - cd ./rails-api && bundle --path vendor/bundle
 database:
   override:
     - cd ./rails-api && bundle exec rake db:create && bundle exec rake db:structure:load
