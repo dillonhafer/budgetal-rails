@@ -58,7 +58,11 @@ class BudgetItem extends React.Component {
 
   save = (e) => {
     e.preventDefault();
-    this.persistBudgetItem(this.props.budgetItem);
+    const component = this.props.form.getFieldInstance('amount_budgeted');
+    const original  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
+    const amount_budgeted = this.amountChanged(original);
+    const item = Object.assign({}, this.props.budgetItem, {amount_budgeted});
+    this.persistBudgetItem(item);
   }
 
   deleteBudgetItem = async() => {
