@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import AnnualBudgetItemList from './item_list';
 import AnnualBudgetFormList from './form_list';
 import Confirm from '../../utils/confirm';
-import {ensureWindowHeight, availableYears, selectedValue, yearOptions, title, today} from '../../utils/helpers';
+import {availableYears, selectedValue, yearOptions, title, today} from '../../utils/helpers';
 
 import {
   Col,
@@ -46,7 +46,6 @@ export default class CashFlowPlans extends React.Component {
 
   componentDidMount() {
     title(`${this.props.params.year} | Annual Budgets`);
-    ensureWindowHeight();
     this._fetchBudget(this.props.params.year);
   }
 

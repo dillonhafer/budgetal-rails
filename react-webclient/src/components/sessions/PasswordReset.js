@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {resetPassword} from '../../data/user';
 import InputField from '../forms/input_field';
-import {ensureWindowHeight} from '../../utils/helpers';
 import {browserHistory} from 'react-router';
 
 import {
@@ -16,10 +15,6 @@ import {
 class PasswordReset extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    ensureWindowHeight();
   }
 
   resetPassword = async(user) => {

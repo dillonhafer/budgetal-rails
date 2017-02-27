@@ -33,13 +33,6 @@ module.exports = {
 
     return newAmount.toFixed(2);
   },
-  ensureWindowHeight() {
-    const footer = document.querySelector('.footer');
-    const pixelsNeeded = window.innerHeight - footer.offsetTop;
-    const pixelCount = (pixelsNeeded > 0) ? pixelsNeeded : 0;
-    const main = document.querySelector('.main-body');
-    main.style.height = `${main.clientHeight + pixelsNeeded - footer.clientHeight}px`;
-  },
   prettyServerErrors(errors) {
     const errs = keys(errors).map(key => {
       return errors[key].map(msg => {
