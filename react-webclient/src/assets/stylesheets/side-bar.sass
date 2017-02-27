@@ -6,16 +6,19 @@
   background-repeat: no-repeat
   background-size: 30px
 
-.icon-bar .ant-menu-item-disabled:hover
-  cursor: default
+.icon-bar
+  @include shadow
 
-.icon-bar ul > li.ant-menu-item
-  font-size: .875rem !important
-  line-height: 55px
-  height: 55px
+  .ant-menu-item-disabled:hover
+    cursor: default
 
-.icon-bar .ant-menu-item:not(.ant-menu-item-disabled) span
-  @include category-background
+  ul > li.ant-menu-item
+    font-size: .875rem !important
+    line-height: 55px
+    height: 55px
+
+  .ant-menu-item:not(.ant-menu-item-disabled) span
+    @include category-background
 
 .ant-menu-item .charity
   background-position: 0px 0px
