@@ -33,9 +33,21 @@ class BudgetItem extends React.Component {
     budgetItem: React.PropTypes.object.isRequired,
   }
 
-  update = (e,a) => {
-    const updatedItem = Object.assign({}, this.props.budgetItem, {[e.target.id]: e.target.value})
-    this.props.updateBudgetItem(updatedItem)
+  updateFromEvent = (e) => {
+    switch (e.target.name) {
+      case 'name':
+        const updatedItem = Object.assign({}, this.props.budgetItem, {[e.target.name]: e.target.value});
+        this.props.updateBudgetItem(updatedItem);
+        break;
+      case 'amount_budgeted':
+        this.updateAmount(e.target.value);
+        break;
+    }
+  }
+
+  updateAmount = (amount_budgeted) => {
+    const updatedItem = Object.assign({}, this.props.budgetItem, {amount_budgeted: amount_budgeted});
+    this.props.updateBudgetItem(updatedItem);
   }
 
   persistBudgetItem = async(budgetItem) => {
@@ -58,11 +70,11 @@ class BudgetItem extends React.Component {
 
   save = (e) => {
     e.preventDefault();
-    const component = this.props.form.getFieldInstance('amount_budgeted');
-    const original  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
-    const amount_budgeted = this.amountChanged(original);
-    const item = Object.assign({}, this.props.budgetItem, {amount_budgeted});
-    this.persistBudgetItem(item);
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.persistBudgetItem(this.props.budgetItem);
+      }
+    });
   }
 
   deleteBudgetItem = async() => {
@@ -134,29 +146,20 @@ class BudgetItem extends React.Component {
 
   percentSpent = () => {
     const p = this.props.amountSpent / this.props.budgetItem.amount_budgeted * 100;
-    return p > 99.99 ? 100 : parseInt(p);
+
+    if (p > 99.99) {
+      return 100
+    }
+
+    if (isNaN(p)) {
+      return 0;
+    }
+
+    return parseInt(p);
   }
 
   handleOnChange = (hideExpenses) => {
     this.setState({hideExpenses});
-  }
-
-  amountChanged = (newAmount) => {
-    const component = this.props.form.getFieldInstance('amount_budgeted');
-    const original  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
-    let amount_budgeted = original;
-    const diff = (original - newAmount).toFixed(2)
-
-    if (diff !== 0.00.toFixed(2)) {
-      if (newAmount < original) {
-        amount_budgeted -= 1.00
-      } else {
-        amount_budgeted += 1.00
-      }
-    }
-
-    this.props.updateBudgetItem(Object.assign({}, this.props.budgetItem, {amount_budgeted}))
-    return String(amount_budgeted);
   }
 
   render() {
@@ -185,7 +188,7 @@ class BudgetItem extends React.Component {
       <div>
         <Row>
           <Col span={6}>
-            <Form horizontal onSubmit={this.save}>
+            <Form horizontal onSubmit={this.save} onChange={this.updateFromEvent}>
               <FormItem
                 {...formItemLayout}
                 label="Name"
@@ -196,7 +199,7 @@ class BudgetItem extends React.Component {
                     required: true, message: 'Name is required',
                   }],
                 })(
-                  <Input onChange={this.update} />
+                  <Input name="name" />
                 )}
               </FormItem>
               <FormItem
@@ -205,12 +208,11 @@ class BudgetItem extends React.Component {
               >
                 {getFieldDecorator('amount_budgeted', {
                   initialValue: item.amount_budgeted,
-                  getValueFromEvent: this.amountChanged,
                   rules: [{
-                    required: true, message: 'Amount Budgeted is required',
+                    required: true, type: "number", min: 1, message: 'Amount is required',
                   }],
                 })(
-                  <InputNumber name="amount_budgeted" min={0.01} step="1.00" />
+                  <InputNumber name="amount_budgeted" min={1} onChange={this.updateAmount} />
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout} className='text-right'>
