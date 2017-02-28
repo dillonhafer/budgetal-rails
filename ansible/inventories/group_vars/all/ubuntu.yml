@@ -5,3 +5,11 @@ postgres_app_db: budgetal_production
 app_name: budgetal
 domain: api.budgetal.com
 letsencrypt_email: 'tls@budgetal.com'
+letsencrypt_api_domain_flags:
+  - "--domain"
+  - "{{domain}}"
+letsencrypt_frontend_domain_flags:
+  - "--domain"
+  - "budgetal.com"
+  - "--domain"
+  - "www.budgetal.com"

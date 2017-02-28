@@ -1,12 +1,6 @@
 ---
 - hosts: application
-  vars:
-    letsencrypt_domain_flags:
-      - "--domain"
-      - "{{domain}}"
-
   remote_user: root
-
   tasks:
     - name: Install certbot dependencies
       apt: name={{ item }} state=present
@@ -30,15 +24,26 @@
         url: https://dl.eff.org/certbot-auto
         dest: "/home/{{ deploy_user }}/certbot-auto"
         mode: "u+rwx"
+      become: yes
+      become_user: "{{deploy_user}}"
 
     - name: Check for exists cert
       stat:
         path: "/etc/letsencrypt/live/{{ domain }}/fullchain.pem"
       register: cert_stats
 
+    - name: Check for exists cert
+      stat:
+        path: "/etc/letsencrypt/live/budgetal.com/fullchain.pem"
+      register: frontend_cert_stats
+
     - name: Generate first certificate
-      shell: "/home/{{ deploy_user }}/certbot-auto certonly --standalone {{ letsencrypt_domain_flags | join(' ') }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
+      shell: "/home/{{ deploy_user }}/certbot-auto certonly --standalone {{ letsencrypt_api_domain_flags | join(' ') }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
       when: cert_stats.stat.exists == False
+
+    - name: Generate first frontend certificate
+      shell: "/home/{{ deploy_user }}/certbot-auto certonly --standalone {{ letsencrypt_frontend_domain_flags | join(' ') }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
+      when: frontend_cert_stats.stat.exists == False
 
     - name: Check for app path
       stat:
