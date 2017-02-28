@@ -60,47 +60,34 @@ class ExpenseAmountCell extends React.Component {
     super(props);
   }
 
-  addDecimal(originalAmount, newAmount) {
-    let wholeNumber = newAmount % 1 === 0;
-    let amount = newAmount
-
-    if (wholeNumber) {
-      amount = newAmount + (originalAmount - Math.floor(originalAmount))
-    }
-
-    if (amount < 0) {
-      amount = 0;
-    }
-
-    return amount.toFixed(2);
+  updateFromEvent = (e) => {
+    this.updateAmount(e.target.value);
   }
 
-  handleOnChange = (amount=0) => {
-    let component = this.props.form.getFieldInstance('amount');
-    const originalAmount = ReactDOM.findDOMNode(component).querySelector('input').value
-    amount = this.addDecimal(originalAmount, amount);
-
-    const updatedExpense = Object.assign({}, this.props.expense, {amount})
-    this.props.updateBudgetItemExpense(updatedExpense)
+  updateAmount = (amount) => {
+    const updatedExpense = Object.assign({}, this.props.expense, {amount});
+    this.props.updateBudgetItemExpense(updatedExpense);
   }
 
-  amountChanged = (amount=0) => {
-    let component = this.props.form.getFieldInstance('amount');
-    const originalAmount = ReactDOM.findDOMNode(component).querySelector('input').value
-    return this.addDecimal(originalAmount, amount);
+  handleOnSubmit = (e) => {
+    e.preventDefault();
+    const callback = this.props.expense.id > 0 ? this.props.updateBudgetItemExpense : this.props.saveBudgetItemExpense;
+    persistExpense(this.props.expense, callback);
   }
 
   render() {
     const { setFieldsValue, getFieldDecorator } = this.props.form;
     const validateStatus = this.props.expense.amount > 0 ? "" : "error";
     return (
-      <Form inline>
+      <Form inline onSubmit={this.handleOnSubmit} onChange={this.updateFromEvent}>
         <Form.Item validateStatus={validateStatus}>
           {getFieldDecorator('amount', {
             initialValue: this.props.expense.amount,
-            getValueFromEvent: this.amountChanged,
+            rules: [{
+              required: true, type: "number", min: 1, message: 'Amount is required',
+            }],
           })(
-            <InputNumber onChange={this.handleOnChange} name="expense_amount" min={0.01} step="1.00" placeholder="(10.00)" />
+            <InputNumber onChange={this.updateAmount} name="expense_amount" min={1} placeholder="(10.00)" />
           )}
         </Form.Item>
       </Form>
@@ -154,11 +141,17 @@ class ExpenseNameCell extends React.Component {
     return option.key.toLowerCase().startsWith(inputValue.toLowerCase());
   }
 
+  handleOnSubmit = (e) => {
+    e.preventDefault();
+    const callback = this.props.expense.id > 0 ? this.props.updateBudgetItemExpense : this.props.saveBudgetItemExpense;
+    persistExpense(this.props.expense, callback);
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const validateStatus = this.props.expense.name.length > 0 ? "" : "error";
     return (
-      <Form inline>
+      <Form inline onSubmit={this.handleOnSubmit}>
         <Form.Item validateStatus={validateStatus}>
           {getFieldDecorator('name', {
             initialValue: this.props.expense.name
@@ -176,6 +169,30 @@ class ExpenseNameCell extends React.Component {
         </Form.Item>
       </Form>
     )
+  }
+}
+
+const persistStrategy = (expense) => {
+  return expense.id > 0 ? updateExpense(expense) : createExpense(expense);
+}
+const validExpense = (expense) => {
+  return (expense.amount > 0) && (expense.name.length > 0) && (expense.date.length > 0)
+}
+const persistExpense = async(expense, callback) => {
+  try {
+    if (!validExpense(expense)) {
+      return
+    }
+
+    const resp = await persistStrategy(expense);
+    if (!!resp.errors) {
+      showMessage(prettyServerErrors(resp.errors), "error")
+    } else {
+      showMessage(`Saved ${resp.name}`);
+      callback(resp);
+    }
+  } catch(err) {
+    apiError(err.message)
   }
 }
 
@@ -200,30 +217,9 @@ class ExpenseActionCell extends React.Component {
     }
   }
 
-  validExpense(expense) {
-    return (expense.amount > 0) && (expense.name.length > 0) && (expense.date.length > 0)
-  }
-
-  persistExpense = async(expense) => {
-    try {
-      if (!this.validExpense(expense)) {
-        return
-      }
-
-      const resp = await this.persistStrategy(expense);
-      if (!!resp.errors) {
-        showMessage(prettyServerErrors(resp.errors), "error")
-      } else {
-        showMessage(`Saved ${resp.name}`)
-        this.action(resp)
-      }
-    } catch(err) {
-      apiError(err.message)
-    }
-  }
-
   handleOnClick = () => {
-    this.persistExpense(this.props.expense);
+    const callback = this.props.expense.id > 0 ? this.props.updateBudgetItemExpense : this.props.saveBudgetItemExpense;
+    persistExpense(this.props.expense, callback);
   }
 
   handleOnConfirm = () => {
