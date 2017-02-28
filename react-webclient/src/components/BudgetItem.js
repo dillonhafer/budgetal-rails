@@ -33,6 +33,12 @@ class BudgetItem extends React.Component {
     budgetItem: React.PropTypes.object.isRequired,
   }
 
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.budgetItem.id !== nextProps.budgetItem.id) {
+      this.props.form.resetFields();
+    }
+  }
+
   updateFromEvent = (e) => {
     switch (e.target.name) {
       case 'name':

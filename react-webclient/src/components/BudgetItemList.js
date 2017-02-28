@@ -16,6 +16,21 @@ export default class BudgetItemList extends React.Component {
 
   static propTypes = {
     budgetItems: React.PropTypes.array.isRequired,
+    budgetCategory: React.PropTypes.object.isRequired
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.budgetCategory.id !== this.props.budgetCategory.id) {
+      this.resetTabs();
+    }
+
+    if (this.props.budgetItems.length > nextProps.budgetItems.length) {
+      this.resetTabs();
+    }
+  }
+
+  resetTabs = () => {
+    this.setState({activeKey: 'tab0'});
   }
 
   newBudgetItem = (budgetItem, index) => {
