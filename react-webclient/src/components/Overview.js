@@ -20,8 +20,16 @@ export default class Overview extends React.Component {
   }
 
   percentSpent() {
-    var p = this.props.amountSpent / this.props.amountBudgeted * 100;
-    return p > 99 ? 100 : parseInt(p);
+    const p = this.props.amountSpent / this.props.amountBudgeted * 100;
+
+    if (isNaN(p)) {
+      return 0;
+    }
+    if (p > 99) {
+      return 100;
+    }
+
+    return parseInt(p);
   }
 
   meterWidth() {

@@ -9,7 +9,16 @@ export default class BudgetCategoryOverview extends React.Component {
   }
 
   percentOfBudget() {
-    return parseInt(this.props.amountBudgeted / this.props.monthlyIncome * 100);
+    const p = parseInt(this.props.amountBudgeted / this.props.monthlyIncome * 100);
+
+    if (isNaN(p)) {
+      return 0;
+    }
+    if (p > 99) {
+      return 100;
+    }
+
+    return p;
   }
 
   percentSpent() {
