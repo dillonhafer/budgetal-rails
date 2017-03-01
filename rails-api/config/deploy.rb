@@ -15,8 +15,18 @@ set :user, 'deploy'
 set :keep_releases, 4
 set :rvm_use_path, '/usr/local/rvm/scripts/rvm'
 
-set :shared_dirs, fetch(:shared_dirs, []).concat(['log', 'tmp/pids', 'tmp/cache', 'public/assets', 'public/system'])
-set :shared_files, ['.env']
+set :shared_dirs, fetch(:shared_dirs, []).concat(%w(
+  log
+  tmp/pids
+  tmp/cache
+  public/assets
+  public/system
+  public/frontend
+))
+
+set :shared_files, fetch(:shared_files, []).concat(%w(
+  .env
+))
 
 task :environment do
   invoke :'rvm:use', 'ruby-2.3.1'
