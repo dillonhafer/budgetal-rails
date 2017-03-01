@@ -67,10 +67,10 @@
   },
   "scripts": {
     "test": "mocha --reporter dot --compilers js:babel-core/register --require babel-polyfill --require ignore-styles --require ./test/test_helper.js --recursive ./test",
-    "start": "npm run patch-icons && NODE_ENV=development node ./dev.server.js",
-    "integration": "rm -f ../rails-api/public/main-* && API_URL='' WEBPACK_HOSTNAME=www.budgetal.com npm run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
-    "i": "npm run integration",
-    "build": "npm run patch-icons && NODE_ENV=production webpack --progress --profile --config webpack.production.config.js",
+    "start": "yarn run patch-icons && NODE_ENV=development node ./dev.server.js",
+    "integration": "rm -f ../rails-api/public/main-* && API_URL='' WEBPACK_HOSTNAME=www.budgetal.com yarn run build && cp -r static/* ../rails-api/public && cp -r build/* ../rails-api/public",
+    "i": "yarn run integration",
+    "build": "yarn run patch-icons && NODE_ENV=production webpack --progress --profile --config webpack.production.config.js",
     "patch-icons": "./patch-icon-url.sh",
     "deploy": "./deploy.sh"
   },
