@@ -100,18 +100,12 @@ class ExpenseNameCell extends React.Component {
     super(props);
     this.predict = debounce(this._predict, 200)
     this.state = {
-      predictions: [],
-      didSelect: false
+      predictions: []
     }
   }
 
   _predict = async(word) => {
     try {
-      if (this.state.didSelect) {
-        this.setState({didSelect: false});
-        return;
-      }
-
       const resp = await predictionsExpense(word);
       if (resp !== null) {
         const predictions = difference(resp, [word]);
@@ -126,7 +120,7 @@ class ExpenseNameCell extends React.Component {
     const updatedExpense = Object.assign({}, this.props.expense, {name})
     this.props.updateBudgetItemExpense(updatedExpense)
 
-    if (name.length > 2) {
+    if (name.length > 1) {
       this.predict(name);
     } else {
       this.setState({predictions: []})
@@ -134,11 +128,11 @@ class ExpenseNameCell extends React.Component {
   }
 
   handleSelect = (name) => {
-    this.setState({predictions: [], didSelect: true})
+    this.setState({predictions: []})
   }
 
   filterOption(inputValue, option) {
-    return option.key.toLowerCase().startsWith(inputValue.toLowerCase());
+    return option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
   }
 
   handleOnSubmit = (e) => {

@@ -14,12 +14,12 @@ feature 'User manages budget items', :js do
 
         budgets_page.click_add_budget_item
         budgets_page.fill_in_name("Gifts")
-        budgets_page.fill_in_amount_budgeted("3.00")
+        budgets_page.fill_in_amount_budgeted("3.01")
         budgets_page.click_save
 
         expect(notice_modal).to have_notice("Saved Gifts")
         expect(budgets_page).to have_item("Gifts")
-        expect(budgets_page).to have_item_amount("3.00")
+        expect(budgets_page).to have_item_amount("3.01")
         expect(budgets_page).not_to have_empty_message
       end
 
@@ -30,13 +30,13 @@ feature 'User manages budget items', :js do
         expect(budgets_page).to be_on_page
 
         budgets_page.fill_in_name("Saver")
-        budgets_page.fill_in_amount_budgeted("6.00")
+        budgets_page.fill_in_amount_budgeted("6.01")
         budgets_page.click_save
 
         expect(notice_modal).to have_notice("Saved Saver")
         expect(budgets_page).to have_item("Saver")
         expect(budgets_page).not_to have_item("Gifts")
-        expect(budgets_page).to have_item_amount("6.00")
+        expect(budgets_page).to have_item_amount("6.01")
       end
 
       scenario 'I can delete a budget item' do

@@ -205,7 +205,7 @@ class BudgetItem extends React.Component {
                     required: true, message: 'Name is required',
                   }],
                 })(
-                  <Input name="name" />
+                  <Input name="name" placeholder="Name" />
                 )}
               </FormItem>
               <FormItem
@@ -218,7 +218,7 @@ class BudgetItem extends React.Component {
                     required: true, type: "number", min: 1, message: 'Amount is required',
                   }],
                 })(
-                  <InputNumber name="amount_budgeted" min={1} onChange={this.updateAmount} />
+                  <InputNumber name="amount_budgeted" min={1} placeholder="(1.00)" onChange={this.updateAmount} />
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout} className='text-right'>

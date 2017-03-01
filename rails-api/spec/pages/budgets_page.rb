@@ -77,6 +77,7 @@ module Pages
     end
 
     def fill_in_name(name)
+      fill_in "name", with: ""
       fill_in "name", with: name
     end
 
@@ -108,6 +109,7 @@ module Pages
 
     def fill_in_expense_name(name)
       within '.ant-table' do
+        find(".ant-select-search__field__wrap input").set("")
         find(".ant-select-search__field__wrap input").set(name)
       end
     end
@@ -126,10 +128,12 @@ module Pages
     end
 
     def click_delete_expense(name)
+      has_selector? ".ant-table"
       within '.ant-table' do
         click_on "Delete Expense"
       end
 
+      has_selector? ".delete-popover"
       within ".delete-popover" do
         click_on "Delete #{name}"
       end

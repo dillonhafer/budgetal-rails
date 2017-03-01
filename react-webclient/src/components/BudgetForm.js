@@ -8,55 +8,6 @@ import {updateBudget} from '../data/Budget';
 import { Form, Modal, Button, InputNumber } from 'antd';
 const FormItem = Form.Item;
 
-class IncomeInput extends React.Component {
-  constructor(props) {
-    super(props)
-    const value = props.value || {};
-    this.state = {
-      monthly_income: value.monthly_income || 0,
-    }
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    // Should be a controlled component.
-    if ('value' in nextProps) {
-      const value = nextProps.value;
-      this.setState(value);
-    }
-  }
-
-  handleNumberChange = (number) => {
-    const monthly_income = parseFloat(number).toFixed(2) || 0;
-    if (isNaN(monthly_income)) {
-      return;
-    }
-    if (!('value' in this.props)) {
-      this.setState({ monthly_income });
-    }
-    this.triggerChange({ monthly_income });
-  }
-
-  triggerChange = (changedValue) => {
-    // Should provide an event to pass value to Form.
-    const onChange = this.props.onChange;
-    if (onChange) {
-      onChange(Object.assign({}, this.state, changedValue));
-    }
-  }
-
-  render() {
-    return (
-      <InputNumber
-        size="large"
-        min={0.00}
-        name="monthly_income"
-        value={this.state.monthly_income}
-        onChange={this.handleNumberChange}
-      />
-    );
-  }
-}
-
 class BudgetForm extends React.Component {
   constructor(props) {
     super(props);
@@ -65,9 +16,13 @@ class BudgetForm extends React.Component {
     }
   }
 
+  updateFromEvent = (e) => {
+    this.updateBudget(e.target.value);
+  }
+
   updateBudget = (updatedIncome) => {
-    const updatedBudget = Object.assign({}, this.props.budget, updatedIncome)
-    this.props.updateBudget({budget: updatedBudget});
+    const budget = Object.assign({}, this.props.budget, {monthly_income: updatedIncome})
+    this.props.updateBudget({budget});
   }
 
   persistBudget = async (budget) => {
@@ -112,7 +67,8 @@ class BudgetForm extends React.Component {
     callback('Income must greater than zero!');
   }
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.saveBudget(this.props.budget);
@@ -136,12 +92,14 @@ class BudgetForm extends React.Component {
              cancelText="Cancel"
              onCancel={this.props.onCancel}>
 
-        <Form inline onSubmit={this.handleSubmit}>
+        <Form inline onSubmit={this.handleSubmit} onChange={this.updateFromEvent}>
           <FormItem label="Monthly Income">
             {getFieldDecorator('monthly_income', {
-              initialValue: { monthly_income: this.props.budget.monthly_income },
-              rules: [{ validator: this.checkPrice }],
-            })(<IncomeInput onChange={this.updateBudget} />)}
+              initialValue: this.props.budget.monthly_income,
+              rules: [{
+                required: true, type: "number", min: 1, message: 'Monthly Income is required',
+              }],
+            })(<InputNumber size="large" name="monthly_income" onChange={this.updateBudget} min={1} />)}
           </FormItem>
         </Form>
       </Modal>

@@ -54,6 +54,7 @@ module Pages
     end
 
     def fill_in_name(val)
+      fill_in 'name', with: ""
       fill_in 'name', with: val
     end
 

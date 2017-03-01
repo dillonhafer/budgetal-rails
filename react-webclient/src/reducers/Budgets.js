@@ -73,7 +73,7 @@ export default function budgetState(state = initialBudgetState, action) {
   case BUDGET_ITEM_NEW:
     return {
       ...state,
-			budgetItems: [...state.budgetItems, {budget_category_id: state.budgetCategory.id, name: 'New Item', amount_budgeted: 0}]
+			budgetItems: [...state.budgetItems, {budget_category_id: state.budgetCategory.id, name: '', amount_budgeted: 0}]
     }
   case BUDGET_ITEM_SAVED:
     let savedBudgetItems = state.budgetItems.map((item, i) => {

@@ -3,7 +3,7 @@ import BudgetItemContainer from '../containers/BudgetItemContainer';
 import {map,find} from 'lodash';
 import classNames from 'classnames';
 
-import { Button, Tabs } from 'antd';
+import { Button, Tabs, Icon } from 'antd';
 const TabPane = Tabs.TabPane;
 
 export default class BudgetItemList extends React.Component {
@@ -34,8 +34,9 @@ export default class BudgetItemList extends React.Component {
   }
 
   newBudgetItem = (budgetItem, index) => {
+    const tab = budgetItem.name.length ? budgetItem.name : <Icon type="question" />;
     return (
-      <TabPane tab={budgetItem.name} key={'tab'+index}>
+      <TabPane tab={tab} key={'tab'+index}>
         <BudgetItemContainer budgetItem={budgetItem} />
       </TabPane>
     );

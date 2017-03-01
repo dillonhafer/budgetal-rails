@@ -14,6 +14,8 @@ feature "User's session expired", :js do
     user.sessions.expire
 
     budgets_page.click_add_budget_item
+    budgets_page.fill_in_name("my name")
+    budgets_page.fill_in_amount_budgeted("3")
     budgets_page.click_save
     assert_redirected
   end
