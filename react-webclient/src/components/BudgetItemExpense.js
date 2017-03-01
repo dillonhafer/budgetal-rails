@@ -3,7 +3,7 @@ import InputField from './forms/input_field';
 import PredictedExpenses from './forms/predicted_expenses';
 import {numberToCurrency,prettyServerErrors} from '../utils/helpers';
 import {createExpense, updateExpense, destroyExpense, predictionsExpense} from '../data/BudgetItemExpense';
-import {debounce,difference} from 'lodash';
+import {difference} from 'lodash';
 import Confirm from '../utils/confirm';
 
 import moment from 'moment';
@@ -98,13 +98,12 @@ class ExpenseAmountCell extends React.Component {
 class ExpenseNameCell extends React.Component {
   constructor(props) {
     super(props);
-    this.predict = debounce(this._predict, 200)
     this.state = {
       predictions: []
     }
   }
 
-  _predict = async(word) => {
+  predict = async(word) => {
     try {
       const resp = await predictionsExpense(word);
       if (resp !== null) {
