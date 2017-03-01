@@ -114,6 +114,15 @@ module Pages
       end
     end
 
+    def fill_in_prediction(name)
+      within '.ant-table' do
+        find(".ant-select-search__field__wrap input").set("")
+        find(".ant-select-search__field__wrap input").native.send_keys(name[0,2])
+        sleep 0.5
+        find(".ant-select-search__field__wrap input").native.send_keys(name[2])
+      end
+    end
+
     def fill_in_expense_amount(amount)
       within '.ant-table' do
         fill_in "expense_amount", with: ""

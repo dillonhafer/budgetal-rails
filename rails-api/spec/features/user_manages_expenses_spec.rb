@@ -59,7 +59,7 @@ feature 'User manages expenses', :js do
           expect(budgets_page).to be_on_page
 
           budgets_page.show_expenses
-          budgets_page.fill_in_expense_name(expense.name[0,3])
+          budgets_page.fill_in_prediction(expense.name)
           budgets_page.click_predicted_expense(expense.name)
           budgets_page.click_save_expense
 
