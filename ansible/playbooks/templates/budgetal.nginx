@@ -1,7 +1,7 @@
 server {
   listen 80 default_server;
   listen [::]:80 default_server ipv6only=on;
-  server_name budgetal.com;
+  server_name budgetal.com www.budgetal.com;
   return 301 https://www.budgetal.com$request_uri;
 }
 
@@ -18,23 +18,30 @@ server {
   server_name www.budgetal.com;
   root /home/{{deploy_user}}/{{ app_name }}/current/public;
 
-  # SSL
+  # HSTS
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+  # Secure Headers
+  add_header X-Frame-Options DENY;
+  add_header X-XSS-Protection "1; mode=block";
+  add_header X-Content-Type-Options nosniff;
+  add_header X-Permitted-Cross-Domain-Policies none;
+
+  # TLS
   ssl_session_cache shared:SSL:20m;
   ssl_session_timeout 10m;
   ssl_certificate     /etc/letsencrypt/live/www.budgetal.com/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/www.budgetal.com/privkey.pem;
-  add_header Strict-Transport-Security "max-age=16070400; includeSubdomains";
-  add_header X-Frame-Options DENY;
   ssl_protocols      TLSv1 TLSv1.1 TLSv1.2;
   ssl_prefer_server_ciphers on;
   ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:!DH+3DES:!ADH:!AECDH:!MD5;
 
-  location ~ ^/ {
+  location / {
     gzip_static on;
     try_files $uri /frontend/$uri /frontend/index.html;
 
-    add_header Cache-Control public;
-    expires 4w;
+    #add_header Cache-Control public;
+    #expires 4w;
     gzip on;
     gzip_vary on;
     gzip_proxied any;
@@ -55,13 +62,20 @@ server {
   server_name api.budgetal.com;
   root /home/{{deploy_user}}/{{ app_name }}/current/public;
 
-  # SSL
+  # HSTS
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+  # Secure Headers
+  add_header X-Frame-Options DENY;
+  add_header X-XSS-Protection "1; mode=block";
+  add_header X-Content-Type-Options nosniff;
+  add_header X-Permitted-Cross-Domain-Policies none;
+
+  # TLS
   ssl_session_cache shared:SSL:20m;
   ssl_session_timeout 10m;
   ssl_certificate     /etc/letsencrypt/live/{{domain}}/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/{{domain}}/privkey.pem;
-  add_header Strict-Transport-Security "max-age=16070400; includeSubdomains";
-  add_header X-Frame-Options DENY;
   ssl_protocols      TLSv1 TLSv1.1 TLSv1.2;
   ssl_prefer_server_ciphers on;
   ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:!DH+3DES:!ADH:!AECDH:!MD5;
