@@ -24,9 +24,6 @@ const FormItem = Form.Item;
 class BudgetItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      hideExpenses: false
-    }
   }
 
   static propTypes = {
@@ -98,13 +95,6 @@ class BudgetItem extends React.Component {
     }
   }
 
-  toggleExpenses = (e) => {
-    e.preventDefault();
-    if (this.props.budgetItem.id > 0) {
-      this.setState({hideExpenses: !this.state.hideExpenses});
-    }
-  }
-
   remainingClass(amountRemaining) {
     return classNames({
       'success-color': amountRemaining > 0,
@@ -162,10 +152,6 @@ class BudgetItem extends React.Component {
     }
 
     return parseInt(p);
-  }
-
-  handleOnChange = (hideExpenses) => {
-    this.setState({hideExpenses});
   }
 
   render() {
@@ -250,16 +236,8 @@ class BudgetItem extends React.Component {
               </Col>
             </Row>
           </Col>
-          <div className='right text-center'>
-            Toggle Expenses
-            <br />
-            <Switch disabled={item.id === undefined} checked={this.state.hideExpenses} onChange={this.handleOnChange} checkedChildren='show' unCheckedChildren='hide' />
-            <br />
-            <br />
-          </div>
-          <hr />
         </Row>
-        {this.getExpensesList(item, this.state.hideExpenses)}
+        {this.getExpensesList(item, (item.id !== undefined))}
       </div>
     );
   }
