@@ -34,6 +34,7 @@ feature 'Allocation Plans', js: true do
       end
 
       scenario 'I can update a pay period' do
+        expect(plans_page).to be_on_page
         expect(plans_page).to have_overview_income("$400.00")
         plans_page.click_edit
 
@@ -46,6 +47,7 @@ feature 'Allocation Plans', js: true do
       end
 
       scenario 'I can delete a pay period' do
+        expect(plans_page).to be_on_page
         expect(plans_page).to have_overview_income("$400.00")
         plans_page.click_delete
 

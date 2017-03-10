@@ -142,10 +142,7 @@ module Pages
         click_on "Delete Expense"
       end
 
-      has_selector? ".delete-popover"
-      within ".delete-popover" do
-        click_on "Delete #{name}"
-      end
+      click_on "Delete #{name}"
     end
 
     def click_predicted_expense(name)

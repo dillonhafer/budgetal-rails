@@ -5,6 +5,10 @@ module Pages
       click_on "Detailed Budgets"
     end
 
+    def on_page?
+      has_selector? "span", text: "New Pay Period"
+    end
+
     def has_empty_message?
       has_selector? ".body-row p", text:"You haven't added any pay periods yet."
     end
