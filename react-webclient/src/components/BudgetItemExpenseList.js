@@ -1,5 +1,5 @@
 import React from 'react';
-import {map, groupBy, sortBy} from 'lodash';
+import {map, groupBy, orderBy} from 'lodash';
 import {monthName} from '../utils/helpers';
 import {
   ActionCell,
@@ -103,7 +103,7 @@ export default class ExpenseList extends React.Component {
   ];
 
 	render() {
-    const sections = groupBy(sortBy(this.props.expenses, 'date'), 'date');
+    const sections = groupBy(orderBy(this.props.expenses, 'date', 'desc'), 'date');
     let dataSource = []
     Object.keys(sections).map((section) => {
       const date = moment(section, 'YYYY-MM-DD').format("dddd - MMM DD, YYYY");
