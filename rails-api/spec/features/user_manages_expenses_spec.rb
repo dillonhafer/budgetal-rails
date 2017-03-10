@@ -15,7 +15,6 @@ feature 'User manages expenses', :js do
         budgets_page.visit_page
         expect(budgets_page).to be_on_page
 
-        budgets_page.show_expenses
         expect(budgets_page).to be_missing_expenses
 
         budgets_page.click_add_expense
@@ -36,7 +35,6 @@ feature 'User manages expenses', :js do
 
         scenario 'I can edit an expense' do
           expect(budgets_page).to be_on_page
-          budgets_page.show_expenses
 
           budgets_page.fill_in_expense_name("Donuts")
           budgets_page.fill_in_expense_amount("6.00")
@@ -48,7 +46,6 @@ feature 'User manages expenses', :js do
 
         scenario 'I can delete an expense' do
           expect(budgets_page).to be_on_page
-          budgets_page.show_expenses
 
           budgets_page.click_delete_expense(expense.name)
           expect(notice_modal).to have_notice "Deleted CC Gift"
@@ -58,7 +55,6 @@ feature 'User manages expenses', :js do
         scenario 'I can see predicted expenses' do
           expect(budgets_page).to be_on_page
 
-          budgets_page.show_expenses
           budgets_page.fill_in_prediction(expense.name)
           budgets_page.click_predicted_expense(expense.name)
           budgets_page.click_save_expense

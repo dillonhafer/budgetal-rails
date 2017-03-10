@@ -95,10 +95,6 @@ module Pages
       click_on "Import Charity"
     end
 
-    def show_expenses
-      find(".ant-switch").click
-    end
-
     def missing_expenses?
       has_selector? ".ant-table-placeholder", text: "You haven't added any expenses yet"
     end
