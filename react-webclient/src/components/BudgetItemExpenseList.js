@@ -115,7 +115,7 @@ export default class ExpenseList extends React.Component {
     });
 		return (
       <Table dataSource={dataSource}
-             pagination={{pageSize: 8}}
+             pagination={{pageSize: 10}}
              title={()=>`Expenses for ${this.props.budgetItem.name}`}
              bordered
              locale={{emptyText: "You haven't added any expenses yet"}}
