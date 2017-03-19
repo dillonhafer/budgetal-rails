@@ -1,6 +1,6 @@
 class AnnualBudgetItem < ApplicationRecord
   belongs_to :annual_budget
-  validates_presence_of :name, :amount, :due_date
+  validates_presence_of :name, :amount, :due_date, :payment_intervals
   default_scope -> { order(:name) }
 
   def self.due_in_6_months

@@ -37,6 +37,6 @@ class AnnualBudgetItemsController < AuthenticatedController
   end
 
   def budget_item_params
-    params.require(:annual_budget_item).permit(:name, :due_date, :paid, :amount)
+    params.require(:annual_budget_item).permit(:name, :due_date, :paid, :amount, :payment_intervals)
   end
 end

@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.1
--- Dumped by pg_dump version 9.5.1
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -126,7 +126,8 @@ CREATE TABLE annual_budget_items (
     amount numeric(10,2) NOT NULL,
     paid boolean DEFAULT false NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    payment_intervals integer DEFAULT 12 NOT NULL
 );
 
 
@@ -158,7 +159,8 @@ CREATE TABLE annual_budgets (
     user_id integer NOT NULL,
     year integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    CONSTRAINT year_range CHECK (((year >= 2013) AND (year <= 2100)))
 );
 
 
@@ -749,6 +751,6 @@ ALTER TABLE ONLY budgets
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20130309203554'), ('20130309203611'), ('20130309203620'), ('20130309203629'), ('20130312024021'), ('20130312033713'), ('20130313023406'), ('20130614194616'), ('20130908170524'), ('20140228021003'), ('20140228021734'), ('20140305123349'), ('20140306011622'), ('20150222232818'), ('20150222235043'), ('20151010144448'), ('20151221065100'), ('20160113144631'), ('20160127002618');
+INSERT INTO schema_migrations (version) VALUES ('20130309203554'), ('20130309203611'), ('20130309203620'), ('20130309203629'), ('20130312024021'), ('20130312033713'), ('20130313023406'), ('20130614194616'), ('20130908170524'), ('20140228021003'), ('20140228021734'), ('20140305123349'), ('20140306011622'), ('20150222232818'), ('20150222235043'), ('20151010144448'), ('20151221065100'), ('20160113144631'), ('20160127002618'), ('20170319163530');
 
 
