@@ -46,10 +46,10 @@ export default class AnnualBudgetItem extends React.Component {
   }
 
   getProgressModal(item, visible) {
-    const startDate = moment(item.due_date).subtract(13, "months");
-    const month   = round((item.amount / 12));
+    const startDate = moment(item.due_date).subtract((item.payment_intervals+1), "months");
+    const month   = round((item.amount / item.payment_intervals));
     const title   = `Accumulation Progress for ${item.name}`;
-    const dataSource = times(12, (key) => {
+    const dataSource = times(item.payment_intervals, (key) => {
       const date = startDate.add(1, "months").format("LL");
       const badgeStatus = moment().diff(startDate) > 0 ? "success" : "error";
       return {
@@ -96,7 +96,7 @@ export default class AnnualBudgetItem extends React.Component {
     const loading = item.loading;
     const amount  = numberToCurrency(item.amount);
     const date    = moment(item.due_date).format('LL');
-    const month   = numberToCurrency(round((item.amount / 12)));
+    const month   = numberToCurrency(round((item.amount / item.payment_intervals)));
     const color   = item.paid ? '#87d068' : '#cacaca';
     const menu    = this.getMenu();
     return (

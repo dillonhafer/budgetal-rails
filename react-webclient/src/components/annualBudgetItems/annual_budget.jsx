@@ -218,7 +218,7 @@ export default class CashFlowPlans extends React.Component {
   addItem = (e) => {
     e.preventDefault()
     const budget = Object.assign({}, this.state.budget, {});
-    budget.annual_budget_items.push({annual_budget_id: budget.id, due_date: today(), name: 'Name', amount: 100});
+    budget.annual_budget_items.push({annual_budget_id: budget.id, due_date: today(), name: 'Name', amount: 100, payment_intervals: 12});
     this.setState({budget});
   }
 
@@ -237,7 +237,7 @@ export default class CashFlowPlans extends React.Component {
   }
 
   showNewModal = () => {
-    this.setState({selectedBudgetItem: {id: 0, name: '', amount: 0, paid: false}, visible: true});
+    this.setState({selectedBudgetItem: {id: 0, name: '', amount: 0, paid: false, payment_intervals: 12}, visible: true});
   }
 
   handleOnSubmit = (budgetItem) => {

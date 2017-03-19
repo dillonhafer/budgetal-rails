@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   Button,
-  DatePicker,
-  Icon,
   Col,
+  DatePicker,
   Form,
+  Icon,
   Input,
   InputNumber,
   Row,
+  Select,
   Switch,
 } from 'antd';
 import moment from 'moment';
@@ -28,23 +29,6 @@ class AnnualBudgetItemForm extends React.Component {
     })
   }
 
-  amountChanged = (newAmount) => {
-    const component = this.props.form.getFieldInstance('amount');
-    const original  = parseFloat(ReactDOM.findDOMNode(component).querySelector('input').value);
-    let amount_budgeted = original;
-    const diff = (original - newAmount).toFixed(2)
-
-    if (diff !== "0.00") {
-      if (newAmount < original) {
-        amount_budgeted -= 1.00
-      } else {
-        amount_budgeted += 1.00
-      }
-    }
-
-    return String(amount_budgeted);
-  }
-
   render() {
     const item = this.props.budgetItem;
     const {getFieldDecorator} = this.props.form;
@@ -60,10 +44,9 @@ class AnnualBudgetItemForm extends React.Component {
         </Form.Item>
         <Form.Item {...this.layout} label="Amount">
           {getFieldDecorator('amount', {
-            initialValue: item.amount,
-            getValueFromEvent: this.amountChanged,
+            initialValue: item.amount
           })(
-            <InputNumber id="amount" name="amount" min={0.01} placeholder="(10.00)" />
+            <InputNumber name="amount" min={1} placeholder="(10.00)" />
           )}
         </Form.Item>
         <Form.Item {...this.layout} label="Due Date">
@@ -74,6 +57,26 @@ class AnnualBudgetItemForm extends React.Component {
                         size="large"
                         allowClear={false}
                         format={'YYYY-MM-DD'} />
+          )}
+        </Form.Item>
+        <Form.Item {...this.layout} label="Months">
+          {getFieldDecorator('payment_intervals', {
+            initialValue: item.payment_intervals
+          })(
+            <Select>
+              <Select.Option value="1">1</Select.Option>
+              <Select.Option value="2">2</Select.Option>
+              <Select.Option value="3">3</Select.Option>
+              <Select.Option value="4">4</Select.Option>
+              <Select.Option value="5">5</Select.Option>
+              <Select.Option value="6">6</Select.Option>
+              <Select.Option value="7">7</Select.Option>
+              <Select.Option value="8">8</Select.Option>
+              <Select.Option value="9">9</Select.Option>
+              <Select.Option value="10">10</Select.Option>
+              <Select.Option value="11">11</Select.Option>
+              <Select.Option value="12">12</Select.Option>
+            </Select>
           )}
         </Form.Item>
         <Row type="flex" justify="end">
