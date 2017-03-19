@@ -114,13 +114,18 @@ export default class ExpenseList extends React.Component {
       });
     });
 		return (
-      <Table dataSource={dataSource}
-             pagination={{pageSize: 10}}
-             title={()=>`Expenses for ${this.props.budgetItem.name}`}
-             bordered
-             locale={{emptyText: "You haven't added any expenses yet"}}
-             footer={() => this.addExpenseLink(this.props.expenses, this.newExpenseHandler)}
-             columns={this.columns} />
+      <div>
+        <hr />
+        {this.addExpenseLink(this.props.expenses, this.newExpenseHandler)}
+        <br />
+        <br />
+        <Table dataSource={dataSource}
+               pagination={{pageSize: 10}}
+               title={()=>`Expenses for ${this.props.budgetItem.name}`}
+               bordered
+               locale={{emptyText: "You haven't added any expenses yet"}}
+               columns={this.columns} />
+      </div>
 		);
 	}
 }
