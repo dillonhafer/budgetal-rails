@@ -147,6 +147,8 @@ GEM
     rake (11.2.2)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
+    rollbar (2.14.1)
+      multi_json
     rspec-core (3.5.2)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -209,6 +211,7 @@ DEPENDENCIES
   puma
   rack-cors (~> 0.4.0)
   rails (= 5.0.0.1)
+  rollbar (~> 2.14)
   rspec-rails (~> 3.5)
   selenium-webdriver
 
