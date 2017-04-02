@@ -54,6 +54,7 @@ var config = _.merge({}, baseConfig, {
         string: buildDate.toString(),
         date: buildDate.toDateString()
       },
+      rollbarAccessToken: process.env.ROLLBAR_ACCESS_TOKEN,
       hostname: process.env.WEBPACK_HOSTNAME
     }),
     new webpack.DefinePlugin({
