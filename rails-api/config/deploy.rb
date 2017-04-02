@@ -2,6 +2,7 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
+require_relative 'mina/rollbar'
 
 ENV['to'] = 'production'
 
@@ -57,6 +58,7 @@ task deploy: :environment do
       in_path(fetch(:current_path)) do
         invoke :'passenger:restart'
         invoke :'maintenance:off'
+        invoke :'rollbar:track_deploy'
       end
     end
   end
@@ -106,4 +108,3 @@ namespace :maintenance do
     command "rm -f #{fetch :deploy_to}/current/public/maintenance"
   end
 end
-
