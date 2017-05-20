@@ -1,3 +1,5 @@
+limit_req_zone $binary_remote_addr zone=budgetal:10m rate=1r/s;
+
 server {
   listen 80 default_server;
   listen [::]:80 default_server ipv6only=on;
@@ -61,6 +63,9 @@ server {
   passenger_enabled on;
   server_name api.budgetal.com;
   root /home/{{deploy_user}}/{{ app_name }}/current/public;
+
+  # Rate limit
+  limit_req zone=budgetal burst=5;
 
   # HSTS
   add_header Strict-Transport-Security "max-age=31536000" always;
