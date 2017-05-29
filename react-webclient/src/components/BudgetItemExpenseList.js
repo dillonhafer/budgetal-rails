@@ -113,6 +113,7 @@ export default class ExpenseList extends React.Component {
         dataSource.push({expense, key: `expense-${expense.id}`});
       });
     });
+
 		return (
       <div>
         <hr />

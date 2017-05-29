@@ -283,6 +283,20 @@ p
     transform: translate(0%,100%)
     transition: transform 500ms ease-in-out
 
+.main-enter
+  opacity: 0.01
+
+  &.main-enter-active
+    opacity: 1
+    transition: opacity 500ms ease-in
+
+.main-leave
+  opacity: 1
+
+  &.main-leave-active
+    opacity: 0.01
+    transition: opacity 300ms ease-in
+
 .plan-fixer
   position: fixed
   top: 0px
@@ -294,3 +308,7 @@ p
 
 .main-body
   padding-bottom: 115px
+
+.ant-modal
+  -webkit-transition: width 1s
+  transition: width 1s

@@ -6,7 +6,7 @@ import {createItem, updateItem, destroyItem} from '../data/BudgetItem';
 import {addDecimal, numberToCurrency, prettyServerErrors} from '../utils/helpers';
 import Confirm from '../utils/confirm';
 import {startCase} from 'lodash';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 import {
   Button,
@@ -112,12 +112,13 @@ class BudgetItem extends React.Component {
     if (budgetItem.id > 0) {
       const items = hideExpenses ? <BudgetItemExpenseListContainer key="budget-expenses-list" budgetItem={budgetItem} budgetItemId={budgetItem.id} /> : null
       return (
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
+          component="div"
           transitionName="expense-list"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}>
           {items}
-        </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
       )
     }
   }

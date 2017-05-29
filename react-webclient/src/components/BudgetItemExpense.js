@@ -193,8 +193,8 @@ class ExpenseActionCell extends React.Component {
   constructor(props) {
     super(props);
     this.isPersisted = props.expense.id > 0;
-    this.title  = `Are you sure you want to delete ${props.expense.name}?`;
-    this.okText = `Delete ${props.expense.name}`;
+    this.title  = `Are you sure you want to delete this expense?`;
+    this.okText = `Delete`;
     this.persistStrategy = this.isPersisted ? updateExpense : createExpense;
     this.action = this.isPersisted ? this.props.updateBudgetItemExpense : this.props.saveBudgetItemExpense;
   }

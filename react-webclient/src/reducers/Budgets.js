@@ -10,6 +10,7 @@ import {
   BUDGET_ITEM_MOVED,
   BUDGET_ITEM_EXPENSE_NEW,
   BUDGET_ITEM_EXPENSE_SAVED,
+  BUDGET_ITEM_EXPENSE_IMPORTED,
   BUDGET_ITEM_EXPENSE_UPDATED,
   BUDGET_ITEM_EXPENSE_DELETED,
 } from '../constants/ActionTypes'
@@ -122,6 +123,14 @@ export default function budgetState(state = initialBudgetState, action) {
       return expense
     })
     return {...state, budgetItemExpenses}
+	case BUDGET_ITEM_EXPENSE_IMPORTED:
+    return {
+      ...state,
+      budgetItemExpenses: [
+        ...state.budgetItemExpenses,
+        action.budgetItemExpense
+      ]
+    }
 	case BUDGET_ITEM_EXPENSE_UPDATED:
 		budgetItemExpenses = state.budgetItemExpenses.map((expense, i) => {
 			if (expense.id === action.budgetItemExpense.id && expense.budget_item_id === action.budgetItemExpense.budget_item_id) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import {LocaleProvider} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import Nav from './layout/nav';
@@ -11,16 +11,16 @@ class App extends React.Component {
       <LocaleProvider locale={enUS}>
         <div>
           <Nav location={this.props.location.pathname} />
-            <ReactCSSTransitionGroup
+            <CSSTransitionGroup
               component="div"
               className="main-body"
-              transitionName="example"
-              transitionEnterTimeout={300}
+              transitionName="main"
+              transitionEnterTimeout={500}
               transitionLeaveTimeout={300}>
               {React.cloneElement(this.props.children, {
                 key: this.props.location.pathname
               })}
-            </ReactCSSTransitionGroup>
+            </CSSTransitionGroup>
           <Footer />
         </div>
       </LocaleProvider>

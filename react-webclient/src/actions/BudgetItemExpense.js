@@ -1,6 +1,7 @@
 import {
   BUDGET_ITEM_EXPENSE_NEW,
   BUDGET_ITEM_EXPENSE_SAVED,
+  BUDGET_ITEM_EXPENSE_IMPORTED,
   BUDGET_ITEM_EXPENSE_UPDATED,
   BUDGET_ITEM_EXPENSE_DELETED,
 } from '../constants/ActionTypes'
@@ -11,9 +12,17 @@ export function newBudgetItemExpense(budgetItemId) {
     budgetItemId
   }
 }
+
 export function saveBudgetItemExpense(budgetItemExpense) {
   return {
     type: BUDGET_ITEM_EXPENSE_SAVED,
+    budgetItemExpense
+  }
+}
+
+export function importBudgetItemExpense(budgetItemExpense) {
+  return {
+    type: BUDGET_ITEM_EXPENSE_IMPORTED,
     budgetItemExpense
   }
 }

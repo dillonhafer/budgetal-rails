@@ -2,6 +2,7 @@ import React from 'react';
 import {find} from 'lodash';
 import {budgetMonth} from '../utils/helpers';
 import {Link} from 'react-router';
+import ImportExpenseModal from './ImportExpenseModal';
 
 import { Row, Col, Menu, Icon, DatePicker } from 'antd';
 const SubMenu = Menu.SubMenu;
@@ -9,6 +10,9 @@ const SubMenu = Menu.SubMenu;
 export default class BudgetSideBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showImportExpenseModal: false
+    };
   }
 
   static propTypes = {
@@ -20,11 +24,15 @@ export default class BudgetSideBar extends React.Component {
   }
 
   handleOnClick = (item, key, keyPath) => {
-    const cat = this.props.budgetCategories.find((cat) => {return cat.name === item.key});
-    if (cat !== undefined) {
-      const lowerName = cat.name.toLowerCase().replace('/', '-');
-      window.location.hash = `#${lowerName}`
-      this.props.changeCategory(cat);
+    if (item.key === "import-csv") {
+      this.setState({showImportExpenseModal: true});
+    } else {
+      const cat = this.props.budgetCategories.find((cat) => {return cat.name === item.key});
+      if (cat !== undefined) {
+        const lowerName = cat.name.toLowerCase().replace('/', '-');
+        window.location.hash = `#${lowerName}`
+        this.props.changeCategory(cat);
+      }
     }
   }
 
@@ -58,7 +66,12 @@ export default class BudgetSideBar extends React.Component {
                   );
                 })
               }
+            <Menu.Divider key="divider2" />
+            <Menu.Item id={'import-csv'} key={'import-csv'}>
+              <span className={'import-csv'}>Import Expenses</span>
+            </Menu.Item>
           </Menu>
+          <ImportExpenseModal hidden={this.state.showImportExpenseModal} cancel={()=> this.setState({showImportExpenseModal: false})} />
         </div>
       </Col>
     )
