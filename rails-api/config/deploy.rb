@@ -8,7 +8,7 @@ ENV['to'] = 'production'
 
 set :repository, 'https://github.com/dillonhafer/budgetal.git'
 set :subdir, 'rails-api'
-set :domain, 'api.budgetal.com'
+set :domain, 'budgetal' # create your own SSH alias for budgetal
 set :deploy_to, '/home/deploy/budgetal'
 set :branch, 'master'
 set :rails_env, 'production'
