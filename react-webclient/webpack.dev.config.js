@@ -7,7 +7,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var envOpts = {
-  API_URL: process.env.API_URL || 'http://localhost:3000'
+  API_URL: process.env.API_URL || 'http://localhost:3000',
+  HELP_FRAME: process.env.HELP_FRAME || '',
 };
 
 var config = _.merge({}, baseConfig, {
@@ -38,7 +39,8 @@ var config = _.merge({}, baseConfig, {
       template: __dirname + '/templates/dev/index.html'
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify(envOpts.API_URL)
+      API_URL: JSON.stringify(envOpts.API_URL),
+      HELP_FRAME: JSON.stringify(envOpts.HELP_FRAME),
     })
   ]
 })

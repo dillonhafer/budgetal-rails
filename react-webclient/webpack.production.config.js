@@ -58,7 +58,8 @@ var config = _.merge({}, baseConfig, {
       hostname: process.env.WEBPACK_HOSTNAME
     }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify(process.env.API_URL)
+      API_URL: JSON.stringify(process.env.API_URL),
+      HELP_FRAME: JSON.stringify(process.env.HELP_FRAME),
     }),
     new webpack.DefinePlugin({
       'process.env': {
