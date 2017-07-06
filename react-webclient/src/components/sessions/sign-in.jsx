@@ -46,7 +46,7 @@ const SignIn = Form.create()(React.createClass({
           {getFieldDecorator('email', {
             rules: [{ type: 'email', required: true, message: "Email is not a valid format" }],
           })(
-            <Input addonBefore={<Icon type="mail" />} placeholder="email@example.com" />
+            <Input addonBefore={<Icon type="mail" />} type="email" placeholder="email@example.com" />
           )}
         </FormItem>
         <FormItem>
