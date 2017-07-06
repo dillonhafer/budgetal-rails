@@ -366,7 +366,7 @@ export default class ImportExpenseModal extends React.Component {
              onOk={this.close}
              onCancel={this.close}>
         <div className='choose-file-container'>
-          <input type="file" id="import-csv" onChange={this.parseFile} style={{display: 'none'}} />
+          <input type="file" accept=".csv" id="import-csv" onChange={this.parseFile} style={{display: 'none'}} />
           {this.content()}
         </div>
       </Modal>
