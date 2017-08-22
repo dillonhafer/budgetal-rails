@@ -22,7 +22,7 @@
         name: "{{ item }}"
         state: present
       with_items:
-        - postgresql-9.5
+        - postgresql-9.6
         - libpq-dev
         - python-psycopg2
 
@@ -48,7 +48,7 @@
 
     - name: Allow local socket logins
       lineinfile:
-        dest: /etc/postgresql/9.5/main/pg_hba.conf
+        dest: /etc/postgresql/9.6/main/pg_hba.conf
         insertafter: "^# TYPE.*DATABASE.*USER"
         line: "local all all trust"
         state: present
