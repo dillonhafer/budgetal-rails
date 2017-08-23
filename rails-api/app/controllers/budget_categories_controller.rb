@@ -21,7 +21,7 @@ class BudgetCategoriesController < AuthenticatedController
   def budget
     year  = params[:year]
     month = params[:month]
-    @budget ||= current_user.budgets.includes(:budget_categories).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
+    @budget ||= current_user.budgets.includes(budget_categories: :budget_items).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
   end
 
   def budget_category
