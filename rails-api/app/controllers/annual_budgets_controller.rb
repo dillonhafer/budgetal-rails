@@ -4,7 +4,7 @@ class AnnualBudgetsController < AuthenticatedController
   private
 
   def annual_budget
-    current_user.annual_budgets.includes(:annual_budget_items).find_or_create_by(year: year)
+    @annual_budget ||= current_user.annual_budgets.includes(:annual_budget_items).find_or_create_by(year: year)
   end
 
   def year
