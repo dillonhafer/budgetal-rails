@@ -8,8 +8,6 @@ require 'database_cleaner'
 require 'page_object'
 Dir[Rails.root.join("spec/pages/**/*.rb")].each { |f| require f }
 
-Selenium::WebDriver::Chrome::Service.executable_path = ENV.fetch('CHROME_DRIVER', '/usr/local/bin/chromedriver')
-
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, switches: %w[—-test-type --no-sandbox])
 end

@@ -30,7 +30,7 @@ set :shared_files, fetch(:shared_files, []).concat(%w(
 ))
 
 task :environment do
-  invoke :'rvm:use', 'ruby-2.3.1'
+  invoke :'rvm:use', 'ruby-2.4.1'
 end
 
 desc 'Make sure local git is in sync with remote.'
