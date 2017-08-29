@@ -21,14 +21,20 @@ class BudgetCategoriesController < AuthenticatedController
   def budget
     year  = params[:year]
     month = params[:month]
-    @budget ||= current_user.budgets.includes(budget_categories: :budget_items).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
+    @budget ||= current_user.budgets.includes(budget_categories: {budget_items: :budget_item_expenses}).find_by(month: month, year: year) || Budget.create_template(month, year, current_user.id)
   end
 
   def budget_category
-    @budget_category ||= current_user.budget_categories.includes(:budget, :budget_items, :budget_item_expenses).find(category_id)
+    cat_id = category_id
+    @budget_category ||= current_user.budget_categories.includes(:budget).find(cat_id)
   end
 
   def category_id
-    params[:id] == 'undefined' ? budget.budget_categories.first.id : params[:id]
+    if params[:id] == 'undefined'
+      @budget_category = budget.budget_categories.first
+      @budget_category.id
+    else
+      params[:id]
+    end
   end
 end
