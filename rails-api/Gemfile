@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.4.1'
+
 gem 'devise',    '~> 4.2'
 gem 'jbuilder',  '~> 2.5'
 gem 'mina',      '~> 1.0'
