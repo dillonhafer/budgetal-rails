@@ -2,8 +2,8 @@ import 'babel-polyfill';
 import './assets/stylesheets/theme.sass';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {showMessage,showError} from './utils/flash-box';
-import {userAuthenticated} from './utils/helpers';
+import { showMessage, showError } from './utils/flash-box';
+import { userAuthenticated } from './utils/helpers';
 import AllocationPlans from './components/allocationPlans/allocation-plans';
 import AnnualBudgetItems from './components/annualBudgetItems/annual_budget';
 import Statistics from './components/statistics/statistics';
@@ -17,14 +17,15 @@ import Admin from './components/admin/admin';
 import AccountSettings from './components/account-settings/account-settings';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import reducers from './reducers'
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
 import BudgetContainer from './containers/BudgetContainer';
+import MortgageCalculator from './components/MortgageCalculator';
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-const store = createStoreWithMiddleware(reducers)
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
 import App from './components/app';
 
 window.React = React;
@@ -40,30 +41,51 @@ window.apiError = function(message) {
   browserHistory.replace('/');
 };
 
-
 function requireAuth(nextState, replace) {
   if (!userAuthenticated()) {
     replace(null, '/', null);
-    showError("You need to sign in.");
+    showError('You need to sign in.');
   }
 }
 
-render((
+render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
+        <IndexRoute component={Home} />
         <Route path="privacy" component={Privacy} />
-        <Route path="budgets/:year/:month" component={BudgetContainer} onEnter={requireAuth} />
-        <Route path='detailed-budgets/:year/:month' component={AllocationPlans} onEnter={requireAuth} />
-        <Route path='annual-budgets/:year' component={AnnualBudgetItems} onEnter={requireAuth} />
-        <Route path='monthly-statistics/:year/:month' component={Statistics} onEnter={requireAuth} />
-        <Route path='account-settings' component={AccountSettings} onEnter={requireAuth} />
-        <Route path='reset-password' component={PasswordReset} />
-        <Route path='admin' component={Admin} onEnter={requireAuth} />
-        <Route path="503" component={Maintenance}/>
-        <Route path="*" component={NotFound}/>
+        <Route
+          path="budgets/:year/:month"
+          component={BudgetContainer}
+          onEnter={requireAuth}
+        />
+        <Route
+          path="detailed-budgets/:year/:month"
+          component={AllocationPlans}
+          onEnter={requireAuth}
+        />
+        <Route
+          path="annual-budgets/:year"
+          component={AnnualBudgetItems}
+          onEnter={requireAuth}
+        />
+        <Route
+          path="monthly-statistics/:year/:month"
+          component={Statistics}
+          onEnter={requireAuth}
+        />
+        <Route
+          path="account-settings"
+          component={AccountSettings}
+          onEnter={requireAuth}
+        />
+        <Route path="reset-password" component={PasswordReset} />
+        <Route path="calculators/mortgage" component={MortgageCalculator} />
+        <Route path="admin" component={Admin} onEnter={requireAuth} />
+        <Route path="503" component={Maintenance} />
+        <Route path="*" component={NotFound} />
       </Route>
     </Router>
-  </Provider>
-), document.getElementById('main'));
+  </Provider>,
+  document.getElementById('main')
+);
