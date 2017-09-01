@@ -22,10 +22,19 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import BudgetContainer from './containers/BudgetContainer';
-import MortgageCalculator from './components/MortgageCalculator';
+import MortgageCalculator from './containers/MortgageCalculatorContainer';
 
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-const store = createStoreWithMiddleware(reducers);
+import { throttle } from 'lodash';
+import { loadState, saveState } from './utils/PersistantState';
+const persistedState = loadState();
+
+const store = createStore(reducers, { mortgageCalculator: persistedState });
+store.subscribe(
+  throttle(() => {
+    saveState(store.getState().mortgageCalculator);
+  }, 1000)
+);
+
 import App from './components/app';
 
 window.React = React;

@@ -15,53 +15,53 @@ import moment from 'moment';
 
 class AnnualBudgetItemForm extends React.Component {
   layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 16},
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
   };
 
-  handleOnSubmit = (e) => {
+  handleOnSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, annual_budget_item) => {
       if (!err) {
-        this.props.handleOnSubmit(Object.assign({}, this.props.budgetItem, annual_budget_item));
+        this.props.handleOnSubmit(
+          Object.assign({}, this.props.budgetItem, annual_budget_item)
+        );
         setTimeout(this.props.form.resetFields, 500);
       }
-    })
-  }
+    });
+  };
 
   render() {
     const item = this.props.budgetItem;
-    const {getFieldDecorator} = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleOnSubmit}>
         <Form.Item {...this.layout} label="Name">
           {getFieldDecorator('name', {
             initialValue: item.name,
-            rules: [{ required: true, message: "Name is required" }],
-          })(
-            <Input placeholder="Life Insurance" />
-          )}
+            rules: [{ required: true, message: 'Name is required' }],
+          })(<Input placeholder="Life Insurance" />)}
         </Form.Item>
         <Form.Item {...this.layout} label="Amount">
           {getFieldDecorator('amount', {
-            initialValue: item.amount
-          })(
-            <InputNumber name="amount" min={1} placeholder="(10.00)" />
-          )}
+            initialValue: item.amount,
+          })(<InputNumber name="amount" min={1} placeholder="(10.00)" />)}
         </Form.Item>
         <Form.Item {...this.layout} label="Due Date">
           {getFieldDecorator('due_date', {
             initialValue: moment(item.due_date),
           })(
-            <DatePicker onChange={this.handleOnChange}
-                        size="large"
-                        allowClear={false}
-                        format={'YYYY-MM-DD'} />
+            <DatePicker
+              onChange={this.handleOnChange}
+              size="large"
+              allowClear={false}
+              format={'YYYY-MM-DD'}
+            />
           )}
         </Form.Item>
         <Form.Item {...this.layout} label="Months">
           {getFieldDecorator('payment_intervals', {
-            initialValue: item.payment_intervals
+            initialValue: item.payment_intervals,
           })(
             <Select>
               <Select.Option value="1">1</Select.Option>
@@ -83,14 +83,17 @@ class AnnualBudgetItemForm extends React.Component {
           <Form.Item {...this.layout}>
             {getFieldDecorator('paid', {
               initialValue: item.paid,
-              valuePropName: 'checked'
-            })(
-              <Switch checkedChildren="paid" unCheckedChildren="paid" />
-            )}
+              valuePropName: 'checked',
+            })(<Switch checkedChildren="paid" unCheckedChildren="paid" />)}
           </Form.Item>
         </Row>
         <Row type="flex" justify="end">
-          <Button size="large" type="primary" htmlType="submit" className="login-form-button">
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
             Save Item
           </Button>
         </Row>

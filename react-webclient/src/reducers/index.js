@@ -1,9 +1,11 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
-import budgetState from './Budgets'
+import budgetState from './Budgets';
+import mortgageCalculator from './MortgageCalculator';
 
 const appReducers = combineReducers({
-	budgetState,
-})
+  budgetState,
+  mortgageCalculator,
+});
 
-export default appReducers
+export default appReducers;

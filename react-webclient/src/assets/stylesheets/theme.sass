@@ -5,26 +5,6 @@
 @import footer
 @import statistics
 
-@font-face
-  font-family: "budgetal"
-  src: url("/fonts/budgetal-font.woff") format('woff')
-
-@font-face
-  font-family: "budgetal"
-  src: url("/fonts/budgetal-font-bold.woff") format('woff')
-  font-weight: bold
-
-@font-face
-  font-family: "budgetal"
-  src: url("/fonts/budgetal-font-boldoblique.woff") format('woff')
-  font-weight: bold
-  font-style: italic
-
-@font-face
-  font-family: "budgetal"
-  src: url("/fonts/budgetal-font-oblique.woff") format('woff')
-  font-style: italic
-
 $primary-color: #1a98fc
 $secondary-color: #EACB5A
 $alert-color: #f50
@@ -38,7 +18,6 @@ $gray: #e6e7eb
   color: $alert-color !important
 
 body
-  font-family: "budgetal" !important
   background: $gray !important
 
 .ant-table-title
@@ -69,6 +48,9 @@ body
 .item-actions
   .ant-btn-primary
     margin-right: 8px
+
+.ant-btn.ant-btn-lg
+  height: 42px
 
 .ant-btn-primary.delete-button,
 .ant-btn.delete-button,
@@ -312,3 +294,7 @@ p
 .ant-modal
   -webkit-transition: width 1s
   transition: width 1s
+
+.monthChart
+  .ant-tag, .ant-tag a, .ant-tag a:hover
+    height: 18px !important

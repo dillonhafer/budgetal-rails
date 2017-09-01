@@ -1,49 +1,43 @@
-import React, {Component} from 'react';
-import {resetPassword} from '../../data/user';
+import React, { Component } from 'react';
+import { resetPassword } from '../../data/user';
 import InputField from '../forms/input_field';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 
-import {
-  Button,
-  Col,
-  Form,
-  Icon,
-  Input,
-  Row,
-} from 'antd';
+import { Button, Col, Form, Icon, Input, Row } from 'antd';
 
 class PasswordReset extends Component {
   constructor(props) {
     super(props);
   }
 
-  resetPassword = async(user) => {
+  resetPassword = async user => {
     try {
-      const resp = await resetPassword({user,
-        password_reset_token: this.props.location.query.reset_password_token
+      const resp = await resetPassword({
+        user,
+        password_reset_token: this.props.location.query.reset_password_token,
       });
 
       if (resp && resp.success) {
-        showMessage("Your password has been updated");
+        showMessage('Your password has been updated');
         browserHistory.replace('/');
       } else {
-        showError("The link in your email may have expired.");
+        showError('The link in your email may have expired.');
       }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, user) => {
       if (!err) {
         this.resetPassword(user);
       } else {
-        showError("Please check form for errors")
+        showError('Please check form for errors');
       }
     });
-  }
+  };
 
   checkPasswordConfirmation = (rule, value, callback) => {
     const form = this.props.form;
@@ -52,7 +46,7 @@ class PasswordReset extends Component {
     } else {
       callback();
     }
-  }
+  };
 
   formItemLayout = {
     labelCol: { span: 10 },
@@ -64,43 +58,65 @@ class PasswordReset extends Component {
     return (
       <Row className="space-around">
         <Col span={8} offset={8}>
-          <div className='header-row'>
+          <div className="header-row">
             <h3>Change your password</h3>
           </div>
           <div className="body-row clearfix">
-            <Form horizontal onSubmit={this.handleSubmit}>
+            <Form layout="horizontal" onSubmit={this.handleSubmit}>
               <Col span={24}>
-                <Form.Item {...this.formItemLayout} label="New Password" hasFeedback>
+                <Form.Item
+                  {...this.formItemLayout}
+                  label="New Password"
+                  hasFeedback
+                >
                   {getFieldDecorator('password', {
                     onChange: this.update,
-                    rules: [{
-                      required: true, message: "You need to provide a new password"
-                    }],
+                    rules: [
+                      {
+                        required: true,
+                        message: 'You need to provide a new password',
+                      },
+                    ],
                   })(
-                    <Input addonBefore={<Icon type="lock"/>} type="password" />
+                    <Input addonBefore={<Icon type="lock" />} type="password" />
                   )}
                 </Form.Item>
-                <Form.Item {...this.formItemLayout} label="Password Confirmation" hasFeedback>
+                <Form.Item
+                  {...this.formItemLayout}
+                  label="Password Confirmation"
+                  hasFeedback
+                >
                   {getFieldDecorator('password_confirmation', {
                     onChange: this.update,
-                    rules: [{
-                        required: true, message: "Password Confirmation is required"
-                      }, {
-                        validator: this.checkPasswordConfirmation
-                      }],
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Password Confirmation is required',
+                      },
+                      {
+                        validator: this.checkPasswordConfirmation,
+                      },
+                    ],
                   })(
-                    <Input addonBefore={<Icon type="lock"/>} type="password" />
+                    <Input addonBefore={<Icon type="lock" />} type="password" />
                   )}
                 </Form.Item>
                 <Col span={12} offset={12}>
-                  <Button type="primary" htmlType="submit" className="right" size="large">Change Password</Button>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="right"
+                    size="large"
+                  >
+                    Change Password
+                  </Button>
                 </Col>
               </Col>
             </Form>
           </div>
         </Col>
       </Row>
-    )
+    );
   }
 }
 
