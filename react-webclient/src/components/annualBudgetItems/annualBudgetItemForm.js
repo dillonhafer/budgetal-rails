@@ -44,8 +44,17 @@ class AnnualBudgetItemForm extends React.Component {
         </Form.Item>
         <Form.Item {...this.layout} label="Amount">
           {getFieldDecorator('amount', {
-            initialValue: item.amount,
-          })(<InputNumber name="amount" min={1} placeholder="(10.00)" />)}
+            initialValue: parseInt(item.amount, 10),
+          })(
+            <InputNumber
+              formatter={value =>
+                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value.replace(/\$\s?|(,*)/g, '')}
+              name="amount"
+              min={1}
+              placeholder="(10.00)"
+            />
+          )}
         </Form.Item>
         <Form.Item {...this.layout} label="Due Date">
           {getFieldDecorator('due_date', {

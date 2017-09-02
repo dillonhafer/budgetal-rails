@@ -226,9 +226,11 @@ class BudgetItem extends React.Component {
               </FormItem>
               <FormItem {...formItemLayout} label="Amount">
                 {getFieldDecorator('amount_budgeted', {
-                  initialValue: item.amount_budgeted,
+                  initialValue: parseFloat(item.amount_budgeted),
                   rules: [
                     {
+                      type: 'number',
+                      min: 1,
                       required: true,
                       message: 'Amount is required',
                     },

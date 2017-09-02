@@ -86,7 +86,7 @@ class BudgetForm extends React.Component {
         >
           <FormItem label="Monthly Income">
             {getFieldDecorator('monthly_income', {
-              initialValue: budget.monthly_income,
+              initialValue: parseInt(budget.monthly_income, 10),
               rules: [
                 {
                   required: true,
