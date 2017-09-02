@@ -230,8 +230,6 @@ class BudgetItem extends React.Component {
                   rules: [
                     {
                       required: true,
-                      type: 'number',
-                      min: 1,
                       message: 'Amount is required',
                     },
                   ],
@@ -240,6 +238,9 @@ class BudgetItem extends React.Component {
                     name="amount_budgeted"
                     min={1}
                     placeholder="(1.00)"
+                    formatter={value =>
+                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
                     onChange={this.updateAmount}
                   />
                 )}
