@@ -22,7 +22,7 @@ class BudgetForm extends React.Component {
 
   updateBudget = updatedIncome => {
     const budget = Object.assign({}, this.props.budget, {
-      monthly_income: updatedIncome,
+      monthly_income: String(updatedIncome),
     });
     this.props.updateBudget({ budget });
   };
@@ -51,26 +51,6 @@ class BudgetForm extends React.Component {
 
   saveBudget(budget) {
     this.persistBudget(budget);
-  }
-
-  budgetedMessage(not_budgeted) {
-    if (not_budgeted > 0) {
-      return `You have ${numberToCurrency(not_budgeted)} Remaining to budget`;
-    } else if (not_budgeted < 0) {
-      return `Oh no! You have over-budgeted by ${numberToCurrency(
-        Math.abs(not_budgeted)
-      )}!`;
-    } else {
-      return `Congratulations! You have budgeted all your income!`;
-    }
-  }
-
-  checkPrice(rule, value, callback) {
-    if (value.monthly_income > 0) {
-      callback();
-      return;
-    }
-    callback('Income must greater than zero!');
   }
 
   handleSubmit = e => {
@@ -106,7 +86,7 @@ class BudgetForm extends React.Component {
         >
           <FormItem label="Monthly Income">
             {getFieldDecorator('monthly_income', {
-              initialValue: this.props.budget.monthly_income,
+              initialValue: budget.monthly_income,
               rules: [
                 {
                   required: true,
@@ -119,6 +99,10 @@ class BudgetForm extends React.Component {
               <InputNumber
                 size="large"
                 name="monthly_income"
+                step={100}
+                formatter={value =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 onChange={this.updateBudget}
                 min={1}
               />
