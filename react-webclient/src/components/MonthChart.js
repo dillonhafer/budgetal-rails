@@ -21,10 +21,21 @@ class MonthChart extends Component {
   };
 
   renderGrid(months, startYear, startMonth) {
-    return months.map((month, i) => {
+    const squares = months.map((month, i) => {
       const date = moment([startYear, startMonth, 1]).add(i, 'M');
       return <Month key={i} month={month} date={date} />;
     });
+    return (
+      <div
+        style={{
+          borderRadius: '4px',
+          padding: '18px 8px 18px 18px',
+          border: '1px solid #e9e9e9',
+        }}
+      >
+        {squares}
+      </div>
+    );
   }
 
   renderList(months, startYear, startMonth) {
