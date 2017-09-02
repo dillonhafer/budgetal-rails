@@ -28,10 +28,13 @@ import { throttle } from 'lodash';
 import { loadState, saveState } from './utils/PersistantState';
 const persistedState = loadState();
 
-const store = createStore(reducers, { mortgageCalculator: persistedState });
+const store = createStore(reducers, { ...persistedState });
 store.subscribe(
   throttle(() => {
-    saveState(store.getState().mortgageCalculator);
+    saveState({
+      mortgageCalculator: store.getState().mortgageCalculator,
+      budgetState: store.getState().budgetState,
+    });
   }, 1000)
 );
 

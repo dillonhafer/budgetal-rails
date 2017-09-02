@@ -1,4 +1,4 @@
-const ITEM = 'MORTGAGE_CALCULATOR_V1';
+const ITEM = 'BUDGETAL_STATE_V1';
 export const loadState = async => {
   try {
     const serializedState = localStorage.getItem(ITEM);

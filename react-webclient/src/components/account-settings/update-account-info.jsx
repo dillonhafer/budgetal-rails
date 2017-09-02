@@ -155,20 +155,22 @@ class UpdateAccountInfoClass extends React.Component {
         </div>
         <div className="body-row account-settings clearfix">
           <Form layout="horizontal" onSubmit={this.handleSubmit}>
-            <Col span={8} className="text-center">
-              <Upload
-                action="/"
-                beforeUpload={file => {
-                  this.handleFile(file);
-                  return false;
-                }}
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={this.handlePreview}
-                onChange={this.handleChange}
-              >
-                {uploadButton}
-              </Upload>
+            <Col md={8} xs={24} sm={24} className="text-center">
+              <div style={{ textAlign: 'center' }}>
+                <Upload
+                  action="/"
+                  beforeUpload={file => {
+                    this.handleFile(file);
+                    return false;
+                  }}
+                  listType="picture-card"
+                  fileList={fileList}
+                  onPreview={this.handlePreview}
+                  onChange={this.handleChange}
+                >
+                  {uploadButton}
+                </Upload>
+              </div>
               <Modal
                 visible={previewVisible}
                 footer={null}
@@ -181,7 +183,7 @@ class UpdateAccountInfoClass extends React.Component {
                 />
               </Modal>
             </Col>
-            <Col span={16}>
+            <Col md={16}>
               <Form.Item
                 {...this.formItemLayout}
                 label="First Name"
