@@ -45,6 +45,14 @@ class AnnualBudgetItemForm extends React.Component {
         <Form.Item {...this.layout} label="Amount">
           {getFieldDecorator('amount', {
             initialValue: parseInt(item.amount, 10),
+            rules: [
+              {
+                type: 'number',
+                min: 1,
+                required: true,
+                message: 'Amount is required',
+              },
+            ],
           })(
             <InputNumber
               formatter={value =>
@@ -70,7 +78,7 @@ class AnnualBudgetItemForm extends React.Component {
         </Form.Item>
         <Form.Item {...this.layout} label="Months">
           {getFieldDecorator('payment_intervals', {
-            initialValue: item.payment_intervals,
+            initialValue: String(item.payment_intervals),
           })(
             <Select>
               <Select.Option value="1">1</Select.Option>
