@@ -126,7 +126,7 @@ class MortgageCalculator extends Component {
               <div className="App-intro">
                 <Row>
                   <div className="formRow">
-                    <Col span={11}>
+                    <Col md={11} xs={24} sm={24}>
                       <Card title="Loan Details">
                         <Row>
                           <Col span={10}>
@@ -240,8 +240,13 @@ class MortgageCalculator extends Component {
                           </Row>
                         </FormItem>
                       </Card>
+
+                      <br />
+                      <br />
                     </Col>
-                    <Col span={11} offset={2}>
+
+                    <Col md={2} xs={24} sm={24} />
+                    <Col md={11} xs={24} sm={24}>
                       <Card title="Extra Payments">
                         <Row>
                           <Col span={6}>
@@ -290,8 +295,6 @@ class MortgageCalculator extends Component {
                     </Col>
                   </div>
                 </Row>
-                <br />
-                <br />
 
                 <MonthChart
                   months={_months}
@@ -301,6 +304,8 @@ class MortgageCalculator extends Component {
               </div>
             </div>
           </div>
+          <br />
+          <br />
         </Col>
       </Row>
     );

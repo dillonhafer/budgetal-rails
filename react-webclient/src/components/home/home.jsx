@@ -41,8 +41,14 @@ export default class Home extends React.Component {
 
         <Row type="flex" align="center" className="space-around">
           <Col span={24}>
-            <Row className="marketing-row space-around">
-              <Col span={6} offset={2} className="space-around">
+            <Row
+              className="marketing-row"
+              type="flex"
+              justify="space-around"
+              align="middle"
+            >
+              <Col md={3} sm={24} xs={24} />
+              <Col md={6} sm={24} xs={24} className="space-around">
                 <div className="text-center">
                   <img src={saving} />
                   <h4>Saving</h4>
@@ -53,7 +59,8 @@ export default class Home extends React.Component {
                   to go instead of wondering where it went.
                 </p>
               </Col>
-              <Col span={6} offset={1} className="space-around">
+
+              <Col md={6} sm={24} xs={24} className="space-around">
                 <div className="text-center">
                   <img src={charity} />
                   <h4>Generosity</h4>
@@ -64,7 +71,7 @@ export default class Home extends React.Component {
                   don't stop being generous, give even more.
                 </p>
               </Col>
-              <Col span={6} offset={1} className="space-around">
+              <Col md={6} sm={24} xs={24} className="space-around">
                 <div className="text-center">
                   <img src={debts} />
                   <h4>Freedom</h4>
@@ -75,6 +82,7 @@ export default class Home extends React.Component {
                   money. Money enables you give and build wealth.
                 </p>
               </Col>
+              <Col md={3} sm={24} xs={24} />
             </Row>
           </Col>
         </Row>
