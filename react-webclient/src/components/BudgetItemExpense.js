@@ -113,6 +113,9 @@ class ExpenseAmountCell extends React.Component {
               onChange={this.updateAmount}
               name="expense_amount"
               min={1}
+              formatter={value =>
+                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value.replace(/\$\s?|(,*)/g, '')}
               placeholder="(10.00)"
             />
           )}
