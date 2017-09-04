@@ -28,6 +28,9 @@ const FormItem = Form.Item;
 class BudgetItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false,
+    };
   }
 
   static propTypes = {
@@ -63,6 +66,7 @@ class BudgetItem extends React.Component {
 
   persistBudgetItem = async budgetItem => {
     try {
+      this.setState({ loading: true });
       const isPersisted = budgetItem.id > 0;
       const strategy = isPersisted ? updateItem : createItem;
       const afterSaveStrategy = isPersisted
@@ -78,6 +82,8 @@ class BudgetItem extends React.Component {
       }
     } catch (err) {
       apiError(err.message);
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
@@ -248,7 +254,12 @@ class BudgetItem extends React.Component {
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout} className="text-right">
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  loading={this.state.loading}
+                  disabled={this.state.loading}
+                  htmlType="submit"
+                >
                   Save
                 </Button>
               </FormItem>
