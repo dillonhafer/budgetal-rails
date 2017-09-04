@@ -1,6 +1,6 @@
 import React from 'react';
-import {map, groupBy, orderBy} from 'lodash';
-import {monthName} from '../utils/helpers';
+import { map, groupBy, orderBy } from 'lodash';
+import { monthName } from '../utils/helpers';
 import {
   ActionCell,
   AmountCell,
@@ -8,42 +8,52 @@ import {
   NameCell,
 } from '../containers/BudgetItemExpenseContainer';
 
-import {find} from 'lodash'
+import { find } from 'lodash';
 import classNames from 'classnames';
-import {Button, Popconfirm, Table} from 'antd';
+import { Button, Popconfirm, Table } from 'antd';
 import moment from 'moment';
 
 export default class ExpenseList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: false,
+    };
   }
 
   static propTypes = {
-		expenses: React.PropTypes.array.isRequired,
-		budgetItemId: React.PropTypes.number.isRequired,
-  }
+    expenses: React.PropTypes.array.isRequired,
+    budgetItemId: React.PropTypes.number.isRequired,
+  };
 
-  newExpenseHandler = (e) => {
+  newExpenseHandler = e => {
     e.preventDefault();
     this.props.newBudgetItemExpense(this.props.budgetItemId);
-  }
+  };
+
+  toggleLoading = () => {
+    this.setState({ loading: !this.state.loading });
+  };
 
   addExpenseLink(expenses, newFunction) {
-    const disabled = find(expenses, (expense) => (expense.id === undefined)) !== undefined;
+    const disabled =
+      find(expenses, expense => expense.id === undefined) !== undefined;
     return (
-      <Button icon='plus-circle'
+      <Button
+        icon="plus-circle"
         onClick={newFunction}
-        type='primary'
-        disabled={disabled}>
+        type="primary"
+        disabled={disabled}
+      >
         Add an Expense
       </Button>
-    )
+    );
   }
 
   emptyCell = {
     children: <div />,
-    props: {colSpan: 0}
-  }
+    props: { colSpan: 0 },
+  };
 
   columns = [
     {
@@ -53,12 +63,16 @@ export default class ExpenseList extends React.Component {
       className: 'expense-row',
       render: expense => {
         if (expense.name === 'date-group') {
-					return {
-            children: <h4>{expense.date}</h4>,
+          return {
+            children: (
+              <h4>
+                {expense.date}
+              </h4>
+            ),
             props: {
               colSpan: 24,
-            }
-          }
+            },
+          };
         } else {
           return <DateCell expense={expense} />;
         }
@@ -70,9 +84,15 @@ export default class ExpenseList extends React.Component {
       key: 'name',
       render: expense => {
         if (expense.name === 'date-group') {
-					return this.emptyCell;
+          return this.emptyCell;
         } else {
-          return <NameCell expense={expense} />;
+          return (
+            <NameCell
+              expense={expense}
+              loading={this.state.loading}
+              toggleLoading={this.toggleLoading}
+            />
+          );
         }
       },
     },
@@ -82,9 +102,15 @@ export default class ExpenseList extends React.Component {
       key: 'amount',
       render: expense => {
         if (expense.name === 'date-group') {
-					return this.emptyCell;
+          return this.emptyCell;
         } else {
-          return <AmountCell expense={expense} />;
+          return (
+            <AmountCell
+              expense={expense}
+              loading={this.state.loading}
+              toggleLoading={this.toggleLoading}
+            />
+          );
         }
       },
     },
@@ -94,39 +120,50 @@ export default class ExpenseList extends React.Component {
       key: 'actions',
       render: expense => {
         if (expense.name === 'date-group') {
-					return this.emptyCell;
+          return this.emptyCell;
         } else {
-          return <ActionCell expense={expense} />;
+          return (
+            <ActionCell
+              expense={expense}
+              loading={this.state.loading}
+              toggleLoading={this.toggleLoading}
+            />
+          );
         }
-      }
-    }
+      },
+    },
   ];
 
-	render() {
-    const sections = groupBy(orderBy(this.props.expenses, 'date', 'desc'), 'date');
-    let dataSource = []
-    Object.keys(sections).map((section) => {
-      const date = moment(section, 'YYYY-MM-DD').format("dddd - MMM DD, YYYY");
-      dataSource.push({expense: {name: 'date-group', date}, key: section});
+  render() {
+    const sections = groupBy(
+      orderBy(this.props.expenses, 'date', 'desc'),
+      'date'
+    );
+    let dataSource = [];
+    Object.keys(sections).map(section => {
+      const date = moment(section, 'YYYY-MM-DD').format('dddd - MMM DD, YYYY');
+      dataSource.push({ expense: { name: 'date-group', date }, key: section });
 
-      sections[section].map((expense) => {
-        dataSource.push({expense, key: `expense-${expense.id}`});
+      sections[section].map(expense => {
+        dataSource.push({ expense, key: `expense-${expense.id}` });
       });
     });
 
-		return (
+    return (
       <div>
         <hr />
         {this.addExpenseLink(this.props.expenses, this.newExpenseHandler)}
         <br />
         <br />
-        <Table dataSource={dataSource}
-               pagination={{pageSize: 10}}
-               title={()=>`Expenses for ${this.props.budgetItem.name}`}
-               bordered
-               locale={{emptyText: "You haven't added any expenses yet"}}
-               columns={this.columns} />
+        <Table
+          dataSource={dataSource}
+          pagination={{ pageSize: 10 }}
+          title={() => `Expenses for ${this.props.budgetItem.name}`}
+          bordered
+          locale={{ emptyText: "You haven't added any expenses yet" }}
+          columns={this.columns}
+        />
       </div>
-		);
-	}
+    );
+  }
 }

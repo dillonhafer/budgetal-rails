@@ -87,7 +87,7 @@ class ExpenseAmountCell extends React.Component {
       this.props.expense.id > 0
         ? this.props.updateBudgetItemExpense
         : this.props.saveBudgetItemExpense;
-    persistExpense(this.props.expense, callback);
+    persistExpense(this.props.expense, callback, this.props.toggleLoading);
   };
 
   render() {
@@ -175,7 +175,7 @@ class ExpenseNameCell extends React.Component {
       this.props.expense.id > 0
         ? this.props.updateBudgetItemExpense
         : this.props.saveBudgetItemExpense;
-    persistExpense(this.props.expense, callback);
+    persistExpense(this.props.expense, callback, this.props.toggleLoading);
   };
 
   render() {
@@ -211,8 +211,9 @@ const validExpense = expense => {
     expense.amount > 0 && expense.name.length > 0 && expense.date.length > 0
   );
 };
-const persistExpense = async (expense, callback) => {
+const persistExpense = async (expense, callback, toggleLoading) => {
   try {
+    toggleLoading();
     if (!validExpense(expense)) {
       return;
     }
@@ -226,6 +227,8 @@ const persistExpense = async (expense, callback) => {
     }
   } catch (err) {
     apiError(err.message);
+  } finally {
+    toggleLoading();
   }
 };
 
@@ -257,7 +260,7 @@ class ExpenseActionCell extends React.Component {
       this.props.expense.id > 0
         ? this.props.updateBudgetItemExpense
         : this.props.saveBudgetItemExpense;
-    persistExpense(this.props.expense, callback);
+    persistExpense(this.props.expense, callback, this.props.toggleLoading);
   };
 
   handleOnConfirm = () => {
@@ -268,11 +271,14 @@ class ExpenseActionCell extends React.Component {
   };
 
   render() {
+    const { loading } = this.props;
+    const icon = loading ? 'loading' : 'check';
     return (
       <div className="item-actions text-center">
         <Button
           onClick={this.handleOnClick}
-          icon="check"
+          icon={icon}
+          disabled={loading}
           shape="circle"
           type="primary"
           title="Save Expense"
