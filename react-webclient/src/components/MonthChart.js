@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Month from './Month';
-import MonthListItem from './MonthListItem';
 import moment from 'moment';
 import { Radio, Table, Icon } from 'antd';
 import { numberToCurrency } from '../utils/helpers';
