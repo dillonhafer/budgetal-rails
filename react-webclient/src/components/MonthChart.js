@@ -5,6 +5,7 @@ import { Radio, Table, Icon } from 'antd';
 import { numberToCurrency } from '../utils/helpers';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+import { times } from 'lodash';
 
 class MonthChart extends Component {
   constructor(props) {
@@ -88,10 +89,19 @@ class MonthChart extends Component {
       };
     });
 
+    const years = dataSource.length / 12 + 1;
+    const pageSizeOptions = times(years, i => {
+      return (i + 1) * 12;
+    });
+
     return (
       <Table
         bordered={true}
-        pagination={false}
+        pagination={{
+          pageSize: 12,
+          pageSizeOptions,
+          showSizeChanger: true,
+        }}
         dataSource={dataSource}
         rowClassName={(r, i) => (r.date.startsWith('January') ? 'newYear' : '')}
         columns={columns}
