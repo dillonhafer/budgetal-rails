@@ -56,7 +56,7 @@ class BudgetItem extends React.Component {
 
   updateAmount = amount_budgeted => {
     const updatedItem = Object.assign({}, this.props.budgetItem, {
-      amount_budgeted: amount_budgeted,
+      amount_budgeted: String(amount_budgeted).replace(/\$\s?|(,*)/g, ''),
     });
     this.props.updateBudgetItem(updatedItem);
   };
@@ -207,7 +207,7 @@ class BudgetItem extends React.Component {
     return (
       <div>
         <Row>
-          <Col span={6}>
+          <Col span={8}>
             <Form
               layout="horizontal"
               onSubmit={this.save}
@@ -254,7 +254,7 @@ class BudgetItem extends React.Component {
               </FormItem>
             </Form>
           </Col>
-          <Col span={18}>
+          <Col span={16}>
             <Row type="flex" justify="center">
               <Col span={8}>
                 <div className="text-right">
