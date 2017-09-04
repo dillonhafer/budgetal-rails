@@ -204,7 +204,7 @@ class MortgageCalculator extends Component {
 
                         <FormItem label="Origin Date">
                           <Row>
-                            <Col span={6}>
+                            <Col span={8}>
                               <Select
                                 size="large"
                                 defaultValue={String(startMonth)}
