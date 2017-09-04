@@ -75,7 +75,9 @@ class ExpenseAmountCell extends React.Component {
   };
 
   updateAmount = amount => {
-    const updatedExpense = Object.assign({}, this.props.expense, { amount });
+    const updatedExpense = Object.assign({}, this.props.expense, {
+      amount: String(amount).replace(/\$\s?|(,*)/g, ''),
+    });
     this.props.updateBudgetItemExpense(updatedExpense);
   };
 
