@@ -49,7 +49,7 @@ server {
     gzip_proxied any;
     gzip_disable "MSIE [1-6]\.";
     gzip_comp_level 6;
-    gzip_types application/x-javascript text/css image/x-icon image/png image/jpeg image/gif;
+    gzip_types application/javascript application/x-javascript text/css image/x-icon image/png image/jpeg image/gif;
   }
 
   client_max_body_size 4G;
