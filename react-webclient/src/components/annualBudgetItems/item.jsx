@@ -127,6 +127,7 @@ export default class AnnualBudgetItem extends React.Component {
       <Col className="card" xs={24} sm={12} md={8} lg={8}>
         <Card
           loading={loading}
+          noHovering
           title={name}
           extra={
             <div className="annual-item-crud">

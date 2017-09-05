@@ -127,7 +127,7 @@ class MortgageCalculator extends Component {
                 <Row>
                   <div className="formRow">
                     <Col md={11} xs={24} sm={24}>
-                      <Card title="Loan Details">
+                      <Card noHovering title="Loan Details">
                         <Row>
                           <Col span={10}>
                             <FormItem label="Original Balance">
@@ -247,7 +247,7 @@ class MortgageCalculator extends Component {
 
                     <Col md={2} xs={24} sm={24} />
                     <Col md={11} xs={24} sm={24}>
-                      <Card title="Extra Payments">
+                      <Card noHovering title="Extra Payments">
                         <Row>
                           <Col span={6}>
                             <FormItem label="Monthly">
@@ -272,6 +272,7 @@ class MortgageCalculator extends Component {
                       <br />
 
                       <Card
+                        noHovering
                         title={`${totalMonths} Month Mortgage - ${numberToCurrency(
                           monthlyPayment
                         )}/month`}
