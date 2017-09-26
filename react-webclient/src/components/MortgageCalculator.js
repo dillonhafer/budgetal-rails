@@ -106,6 +106,7 @@ class MortgageCalculator extends Component {
       const early = Math.max(_balance, 0) === 0;
       return {
         pastMonth,
+        extra: extraMonthlyPayment,
         principal: _principal,
         interest: _interest,
         balance: Math.max(_balance, 0),

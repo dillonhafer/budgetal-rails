@@ -57,6 +57,11 @@ class MonthChart extends Component {
         key: 'payment',
       },
       {
+        title: 'Extra Principle',
+        dataIndex: 'extra',
+        key: 'extra',
+      },
+      {
         title: 'Principle',
         dataIndex: 'principle',
         key: 'principle',
@@ -83,7 +88,8 @@ class MonthChart extends Component {
         key: i,
         date: date.format('MMMM YYYY'),
         payment: numberToCurrency(month.principal + month.interest),
-        principle: numberToCurrency(month.principal),
+        principle: numberToCurrency(month.principal - month.extra),
+        extra: numberToCurrency(month.extra),
         interest: numberToCurrency(month.interest),
         balance: numberToCurrency(month.balance),
       };
@@ -91,7 +97,7 @@ class MonthChart extends Component {
 
     const years = dataSource.length / 12 + 1;
     const pageSizeOptions = times(years, i => {
-      return (i + 1) * 12;
+      return String((i + 1) * 12);
     });
 
     return (

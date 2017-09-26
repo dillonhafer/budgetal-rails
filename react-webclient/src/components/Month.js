@@ -17,8 +17,14 @@ class Month extends Component {
 
     let div = (
       <div style={{ textAlign: 'center' }}>
-        {numberToCurrency(month.principal)} / {numberToCurrency(month.interest)}
-        <br /> {numberToCurrency(month.balance)}
+        <Tag color="blue">
+          {numberToCurrency(month.extra)} / {numberToCurrency(month.principal - month.extra)}
+        </Tag>
+        <br />
+        <Tag color="red">
+          {numberToCurrency(month.interest)}
+        </Tag>
+        <h3>{numberToCurrency(month.balance)}</h3>
       </div>
     );
 
