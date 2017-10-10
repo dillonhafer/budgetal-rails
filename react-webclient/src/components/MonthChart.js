@@ -23,7 +23,8 @@ class MonthChart extends Component {
   renderGrid(months, startYear, startMonth) {
     const squares = months.map((month, i) => {
       const date = moment([startYear, startMonth, 1]).add(i, 'M');
-      return <Month key={i} month={month} date={date} />;
+      const key = `grid-${date.year()}-${date.month()}`;
+      return <Month key={key} month={month} date={date} />;
     });
     return (
       <div
@@ -85,7 +86,7 @@ class MonthChart extends Component {
       );
 
       return {
-        key: i,
+        key: `ds-${date.format('MMMM-YYY')}`,
         date: date.format('MMMM YYYY'),
         payment: numberToCurrency(month.principal + month.interest),
         principle: numberToCurrency(month.principal - month.extra),
