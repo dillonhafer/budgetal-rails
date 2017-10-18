@@ -1,3 +1,5 @@
+> Currently under re-write with golang and create-react-app. This repo may become unused/or dramatically different. Experimental repo can be found at https://github.com/dillonhafer/budgetal-go
+
 Budgetal [![CircleCI](https://img.shields.io/circleci/project/github/dillonhafer/budgetal/master.svg?style=flat-square)](https://circleci.com/gh/dillonhafer/budgetal)
 --------
 
